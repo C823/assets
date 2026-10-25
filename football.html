@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Gridiron Tycoon</title>
-<meta name="description" content="Buy a made-up pro football team with money from a retiring investor, then run it: draft and sign players, set ticket prices, upgrade the stadium, and coach or watch every game on an animated field.">
+<meta name="description" content="Buy a pro football team with money from a retiring investor, then run it: draft and sign players, set ticket prices, upgrade the stadium, and coach or watch every game on an animated field.">
 <meta name="theme-color" content="#0e1013">
 <meta property="og:title" content="Gridiron Tycoon">
-<meta property="og:description" content="Buy a made-up pro football team with money from a retiring investor, then run it: draft and sign players, set ticket prices, upgrade the stadium, and coach or watch every game on an animated field.">
+<meta property="og:description" content="Buy a pro football team with money from a retiring investor, then run it: draft and sign players, set ticket prices, upgrade the stadium, and coach or watch every game on an animated field.">
 <meta property="og:image" content="assets/gridiron_thumbnail.png">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
@@ -723,6 +723,19 @@ const TEAMS_DATA = [
   ['San Francisco', 'Miners', 'SF', '#b91c1c', '#d4a017', 'NC', 'West', 4, 84],
   ['Seattle', 'Ospreys', 'SEA', '#0f2a4a', '#65a30d', 'NC', 'West', 3, 72],
 ];
+// city, name, abbr, primary, secondary
+const TEAMS_REAL = [
+  ['Buffalo', 'Bills', 'BUF', '#00338D', '#C60C30'], ['Miami', 'Dolphins', 'MIA', '#008E97', '#FC4C02'], ['New England', 'Patriots', 'NE', '#002244', '#C60C30'], ['New York', 'Jets', 'NYJ', '#125740', '#FFFFFF'],
+  ['Baltimore', 'Ravens', 'BAL', '#241773', '#9E7C0C'], ['Cincinnati', 'Bengals', 'CIN', '#FB4F14', '#000000'], ['Cleveland', 'Browns', 'CLE', '#311D00', '#FF3C00'], ['Pittsburgh', 'Steelers', 'PIT', '#101820', '#FFB612'],
+  ['Houston', 'Texans', 'HOU', '#03202F', '#A71930'], ['Indianapolis', 'Colts', 'IND', '#002C5F', '#A2AAAD'], ['Jacksonville', 'Jaguars', 'JAX', '#006778', '#D7A22A'], ['Tennessee', 'Titans', 'TEN', '#0C2340', '#4B92DB'],
+  ['Denver', 'Broncos', 'DEN', '#FB4F14', '#002244'], ['Kansas City', 'Chiefs', 'KC', '#E31837', '#FFB81C'], ['Las Vegas', 'Raiders', 'LV', '#000000', '#A5ACAF'], ['Los Angeles', 'Chargers', 'LAC', '#0080C6', '#FFC20E'],
+  ['Dallas', 'Cowboys', 'DAL', '#041E42', '#869397'], ['New York', 'Giants', 'NYG', '#0B2265', '#A71930'], ['Philadelphia', 'Eagles', 'PHI', '#004C54', '#A5ACAF'], ['Washington', 'Commanders', 'WAS', '#5A1414', '#FFB612'],
+  ['Chicago', 'Bears', 'CHI', '#0B162A', '#C83803'], ['Detroit', 'Lions', 'DET', '#0076B6', '#B0B7BC'], ['Green Bay', 'Packers', 'GB', '#203731', '#FFB612'], ['Minnesota', 'Vikings', 'MIN', '#4F2683', '#FFC62F'],
+  ['Atlanta', 'Falcons', 'ATL', '#A71930', '#000000'], ['Carolina', 'Panthers', 'CAR', '#0085CA', '#101820'], ['New Orleans', 'Saints', 'NO', '#D3BC8D', '#101820'], ['Tampa Bay', 'Buccaneers', 'TB', '#D50A0A', '#34302B'],
+  ['Arizona', 'Cardinals', 'ARI', '#97233F', '#FFB612'], ['Los Angeles', 'Rams', 'LAR', '#003594', '#FFA300'], ['San Francisco', '49ers', 'SF', '#AA0000', '#B3995D'], ['Seattle', 'Seahawks', 'SEA', '#002244', '#69BE28'],
+];
+const confName = c => G && G.real ? (c === 'AC' ? 'AFC' : 'NFC') : CONF[c];
+const confShort = c => G && G.real ? (c === 'AC' ? 'AFC' : 'NFC') : c;
 const POS = ['QB', 'RB', 'WR', 'TE', 'OL', 'DL', 'LB', 'CB', 'S', 'K'];
 const POS_NAME = { QB: 'Quarterback', RB: 'Running Back', WR: 'Wide Receiver', TE: 'Tight End', OL: 'Offensive Line', DL: 'Defensive Line', LB: 'Linebacker', CB: 'Cornerback', S: 'Safety', K: 'Kicker' };
 const STARTERS = { QB: 1, RB: 1, WR: 3, TE: 1, OL: 5, DL: 4, LB: 3, CB: 2, S: 2, K: 1 };
@@ -730,6 +743,9 @@ const ROSTER_GEN = { QB: 3, RB: 3, WR: 6, TE: 3, OL: 8, DL: 7, LB: 5, CB: 5, S: 
 const POS_SAL = { QB: 1.6, RB: 0.8, WR: 1.0, TE: 0.8, OL: 0.9, DL: 1.0, LB: 0.85, CB: 0.95, S: 0.8, K: 0.35 };
 const MAX_ROSTER = 53, SALARY_CAP = 240, SEASON_WEEKS = 17;
 const ROUNDS = ['Wild Card', 'Divisional Round', 'Conference Championship', 'Grand Bowl'];
+// the title game is the Super Bowl with real teams, the Grand Bowl in the fictional league
+const bowl = () => G && G.real ? 'Super Bowl' : 'Grand Bowl';
+const roundName = i => i === 3 ? bowl() : ROUNDS[i];
 const FAC = {
   stadium: { name: 'Stadium', ico: '🏟️', cost: [0, 0, 90, 160, 260, 400], desc: l => `${CAPACITY[l].toLocaleString()} seats. Bigger, nicer stadiums sell more tickets and raise team value.` },
   training: { name: 'Training Center', ico: '🏋️', cost: [0, 0, 35, 70, 120, 190], desc: l => `Young players develop faster each offseason. Level ${l} bonus: +${(l - 1) * 20}% growth chance.` },
@@ -746,7 +762,7 @@ const FIN_LABELS = { tickets: 'Ticket & concessions', merch: 'Merchandise', spon
 /* ================= STATE ================= */
 let G = null;
 let SAVED = null;
-const UI = { view: 'home', rf: 'ALL', ff: 'ALL', df: 'ALL', live: null, pickSort: 'price', pickConf: 'ALL', setup: { diff: 'normal', coach: false, name: '' } };
+const UI = { view: 'home', rf: 'ALL', ff: 'ALL', df: 'ALL', live: null, pickSort: 'price', pickConf: 'ALL', setup: { diff: 'normal', coach: false, name: '', real: true } };
 
 const team = id => G.teams[id];
 const userTeam = () => G.teams[G.user];
@@ -1086,11 +1102,12 @@ function makeSchedule() {
   return shuffle(rounds).slice(0, SEASON_WEEKS).map(wk => wk.map(g => ({ ...g, hs: null, as: null, played: false })));
 }
 function freshFin() { return { last: null, season: {}, weekly: [] }; }
-function newCareer(owner, diff, coach) {
-  G = { v: 1, owner, diff, coachMode: coach, cash: DIFF[diff].cash, user: null, year: 2026, phase: 'preseason', week: 0, nextPid: 1, teams: [], fa: [], news: [], champions: [], history: [], fin: freshFin(), schedule: [], po: null, draft: null, lastWeek: [], helpSeen: false };
+function newCareer(owner, diff, coach, real = false) {
+  G = { v: 1, owner, diff, coachMode: coach, real, cash: DIFF[diff].cash, user: null, year: 2026, phase: 'preseason', week: 0, nextPid: 1, teams: [], fa: [], news: [], champions: [], history: [], fin: freshFin(), schedule: [], po: null, draft: null, lastWeek: [], helpSeen: false };
   const tiers = shuffle(Array.from({ length: 32 }, (_, i) => 62 + i * 13 / 31));
   TEAMS_DATA.forEach((d, i) => {
-    const t = { id: i, city: d[0], name: d[1], abbr: d[2], c1: d[3], c2: d[4], conf: d[5], div: d[6], market: d[7], fanbase: d[8], mood: ri(40, 65), stadium: ri(1, 3), training: ri(1, 3), medical: ri(1, 3), scouting: ri(1, 3), plan: randomPlan(), w: 0, l: 0, t: 0, pf: 0, pa: 0, roster: [] };
+    const look = real ? TEAMS_REAL[i] : d;
+    const t = { id: i, city: look[0], name: look[1], abbr: look[2], c1: look[3], c2: look[4], conf: d[5], div: d[6], market: d[7], fanbase: d[8], mood: ri(40, 65), stadium: ri(1, 3), training: ri(1, 3), medical: ri(1, 3), scouting: ri(1, 3), plan: randomPlan(), w: 0, l: 0, t: 0, pf: 0, pa: 0, roster: [] };
     genRoster(t, tiers[i] + gauss(0, 1));
     t.ticket = fairPrice(t);
     G.teams.push(t);
@@ -1120,7 +1137,7 @@ function completeWeek(userG) {
   for (const t of G.teams) for (const p of t.roster) if (p.inj > 0) p.inj--;
   for (const [gm, g] of pairs) applyResult(gm, g, po);
   G.lastWeek = games.map(g => ({ h: g.h, a: g.a, hs: g.hs, as: g.as, ot: g.ot }));
-  G.lastWeekLabel = po ? ROUNDS[G.po.round - 1] : `Week ${G.week}`;
+  G.lastWeekLabel = po ? roundName(G.po.round - 1) : `Week ${G.week}`;
   const ug = games.find(g => g.h === G.user || g.a === G.user);
   if (ug || !po) weekFinances(ug, po);
   mentorAfterWeek(ug ? UI.lastRes : null); UI.lastRes = null;
@@ -1143,7 +1160,7 @@ function applyResult(gm, g, po) {
   if (gm.h === G.user || gm.a === G.user) {
     const me = gm.h === G.user ? 0 : 1, my = g.score[me], th = g.score[1 - me], opp = g.t[1 - me];
     const res = my > th ? 'W' : my < th ? 'L' : 'T';
-    news(`${res} ${my}-${th} ${me === 0 ? 'vs' : 'at'} ${opp.city} ${opp.name}${gm.ot ? ' (OT)' : ''}${po ? ' — ' + ROUNDS[G.po.round - 1] : ''}`, res === 'W' ? 'good' : res === 'L' ? 'bad' : 'info');
+    news(`${res} ${my}-${th} ${me === 0 ? 'vs' : 'at'} ${opp.city} ${opp.name}${gm.ot ? ' (OT)' : ''}${po ? ' — ' + roundName(G.po.round - 1) : ''}`, res === 'W' ? 'good' : res === 'L' ? 'bad' : 'info');
     gm.box = boxData(g); UI.lastRes = res;
   }
   rollInjuries(H); rollInjuries(A);
@@ -1193,7 +1210,7 @@ function startPlayoffs() {
   G.po = { round: 1, seeds: { AC: confSeeds('AC'), NC: confSeeds('NC') }, games: [], results: [], champion: null };
   G.po.alive = { AC: G.po.seeds.AC.slice(), NC: G.po.seeds.NC.slice() };
   const inIt = [...G.po.seeds.AC, ...G.po.seeds.NC].includes(G.user);
-  if (inIt) { const conf = userTeam().conf, seed = G.po.seeds[conf].indexOf(G.user) + 1; news(`PLAYOFFS! You clinched the #${seed} seed in the ${CONF[conf]}.`, 'gold'); mentorPlayoffs(seed); }
+  if (inIt) { const conf = userTeam().conf, seed = G.po.seeds[conf].indexOf(G.user) + 1; news(`PLAYOFFS! You clinched the #${seed} seed in the ${confName(conf)}.`, 'gold'); mentorPlayoffs(seed); }
   else { news(`Your season is over. You missed the playoffs at ${recStr(userTeam())}.`, 'bad'); mentorMissed(); }
   makeRoundGames();
 }
@@ -1218,8 +1235,8 @@ function advancePlayoffs() {
     const win = gm.hs > gm.as ? gm.h : gm.a, lose = win === gm.h ? gm.a : gm.h;
     P.results.push({ round: P.round, h: gm.h, a: gm.a, hs: gm.hs, as: gm.as, ot: gm.ot });
     for (const c of ['AC', 'NC']) P.alive[c] = P.alive[c].filter(id => id !== lose);
-    if (lose === G.user) { P.userResult = `Lost in ${ROUNDS[P.round - 1]}`; news(`Eliminated in the ${ROUNDS[P.round - 1]}. There's always next year.`, 'bad'); }
-    if (win === G.user && P.round < 4) news(`Advancing! You won the ${ROUNDS[P.round - 1]}.`, 'gold');
+    if (lose === G.user) { P.userResult = `Lost in ${roundName(P.round - 1)}`; news(`Eliminated in the ${roundName(P.round - 1)}. There's always next year.`, 'bad'); }
+    if (win === G.user && P.round < 4) news(`Advancing! You won the ${roundName(P.round - 1)}.`, 'gold');
     if (P.round === 4) P.champion = win;
   }
   if (P.round === 4) { endSeason(); return; }
@@ -1230,8 +1247,8 @@ function endSeason() {
   G.champions.unshift({ year: G.year, id: champ.id, name: `${champ.city} ${champ.name}` });
   champ.mood = clamp(champ.mood + 10, 0, 100);
   let result = P.userResult || 'Missed playoffs';
-  if (P.champion === G.user) { mentorChamp(); result = 'GRAND BOWL CHAMPIONS'; addFin('bonus', 25); news(`You won the ${G.year} Grand Bowl. +$25M championship bonus.`, 'gold'); }
-  else news(`The ${champ.city} ${champ.name} win the ${G.year} Grand Bowl.`, 'info');
+  if (P.champion === G.user) { mentorChamp(); result = `${bowl().toUpperCase()} CHAMPIONS`; addFin('bonus', 25); news(`You won the ${G.year} ${bowl()}. +$25M championship bonus.`, 'gold'); }
+  else news(`The ${champ.city} ${champ.name} win the ${G.year} ${bowl()}.`, 'info');
   const playoffTeams = [...P.seeds.AC, ...P.seeds.NC];
   for (const t of G.teams) {
     let d = (t.w - 8.5) * 0.5 + (playoffTeams.includes(t.id) ? 2 : 0) + (t.id === champ.id ? 5 : 0) + gauss(0, 1);
@@ -1429,7 +1446,7 @@ function phaseLabel() {
   switch (G.phase) {
     case 'preseason': return `${G.year} Preseason`;
     case 'regular': return `${G.year} · Week ${G.week}`;
-    case 'playoffs': return `${G.year} · ${ROUNDS[G.po.round - 1]}`;
+    case 'playoffs': return `${G.year} · ${roundName(G.po.round - 1)}`;
     case 'resign': return `${G.year} Offseason`;
     case 'draft': return `${G.year + 1} Draft`;
     case 'fa': return `${G.year + 1} Free Agency`;
@@ -1565,6 +1582,13 @@ function titleScreen() {
         <div class="choices c2">${styleCard(false, 'clipboard', 'Owner', 'Set the game plan. Your coaches call the plays.')}${styleCard(true, 'headset', 'Owner + Head Coach', 'Call every play yourself from the sideline.')}</div>
         <div class="xs muted" style="margin-top:6px">You can switch this any time in the game.</div>
       </div></div>
+      <div class="step"><div class="step-n">4</div><div class="step-body">
+        <label>Which league do you want to play in?</label>
+        <div class="choices c2">
+          <button class="choice style ${s.real !== false ? 'on' : ''}" onclick="act.setSetup('real',true)"><span class="style-ico">${icon('trophy', 24)}</span><span><b>Real teams</b><span class="blurb">All 32 pro teams with their real cities, names and colors.</span></span></button>
+          <button class="choice style ${s.real === false ? 'on' : ''}" onclick="act.setSetup('real',false)"><span class="style-ico">${icon('star', 24)}</span><span><b>Fictional league</b><span class="blurb">Parody teams like the Green Bay Cheeseheads. Safe to share online.</span></span></button>
+        </div>
+      </div></div>
       <button class="btn primary big full kick" onclick="act.newCareer()"><span>Kick off as <span id="kickName">${esc(nm || 'the new owner')}</span></span>${icon('arrowRight', 18)}</button>
       <div class="setup-foot"><button class="linkbtn" onclick="act.importSave()">${icon('upload', 13)} Import a save file</button></div>
     </div>
@@ -1587,7 +1611,7 @@ function pickScreen() {
     ${affordable ? '' : `<div class="card mb"><b class="bad">You can't afford any franchise.</b> <span class="muted">Your career is over.</span> <button class="btn primary sm" onclick="act.resetCareer()">Start a new career</button></div>`}
     <div class="toolbar">
       <span class="sm muted">Sort</span><div class="chips">${[['price', 'Price'], ['ovr', 'Rating'], ['market', 'Market']].map(([k, l]) => `<button class="chip ${UI.pickSort === k ? 'on' : ''}" onclick="UI.pickSort='${k}';render()">${l}</button>`).join('')}</div>
-      <span class="sm muted">Conference</span><div class="chips">${[['ALL', 'All'], ['AC', 'American'], ['NC', 'National']].map(([k, l]) => `<button class="chip ${UI.pickConf === k ? 'on' : ''}" onclick="UI.pickConf='${k}';render()">${l}</button>`).join('')}</div>
+      <span class="sm muted">Conference</span><div class="chips">${[['ALL', 'All'], ['AC', G.real ? 'AFC' : 'American'], ['NC', G.real ? 'NFC' : 'National']].map(([k, l]) => `<button class="chip ${UI.pickConf === k ? 'on' : ''}" onclick="UI.pickConf='${k}';render()">${l}</button>`).join('')}</div>
       <button class="chip ${UI.pickAff ? 'on' : ''}" onclick="UI.pickAff=!UI.pickAff;render()">${icon('wallet', 12)} Only what I can afford</button>
     </div>
     <div class="team-grid">${ts.map(t => teamCard(t, U[t.id])).join('')}</div>
@@ -1598,7 +1622,7 @@ function teamCard(t, { u, v }) {
   const top = t.roster.filter(p => p.pos !== 'K').sort((a, b) => b.ovr - a.ovr).slice(0, 3);
   return `<div class="tcard" style="--c1:${t.c1};--c2:${t.c2}">
     <div class="tcard-band"></div>
-    <div class="tcard-top">${badge(t, 50)}<div style="min-width:0"><div class="sm" style="opacity:.85">${t.city}</div><div class="tname">${t.name}</div><div class="xs muted">${CONF[t.conf]} · ${t.div}</div></div>
+    <div class="tcard-top">${badge(t, 50)}<div style="min-width:0"><div class="sm" style="opacity:.85">${t.city}</div><div class="tname">${t.name}</div><div class="xs muted">${confName(t.conf)} · ${t.div}</div></div>
       <div class="tovr">${ovrPill(u.ovr)}<span>OVR</span></div></div>
     <div class="tcard-stats">
       <div><label>Market</label><b class="gold" style="font-size:11px">${marketStars(t.market)}</b></div>
@@ -1659,7 +1683,7 @@ function viewHome() {
     <div><div class="muted">${t.city}</div><div class="tname">${t.name}</div>
       <div class="hero-chips">
         <span class="hchip">${icon('trophy', 13)} ${recStr(t)}</span>
-        <span class="hchip">${icon('shield', 13)} ${ord(divRank)} in ${t.conf} ${t.div}</span>
+        <span class="hchip">${icon('shield', 13)} ${ord(divRank)} in ${confShort(t.conf)} ${t.div}</span>
         ${st ? `<span class="hchip ${st[0] === 'W' ? 'good' : st[0] === 'L' ? 'bad' : ''}">${icon('trend', 13)} Streak ${st}</span>` : ''}
         <span class="hchip">${icon('heart', 13)} Fans ${t.mood}/100</span>
       </div></div>
@@ -1706,11 +1730,11 @@ function phaseCard() {
   }
   if (G.phase === 'regular' || G.phase === 'playoffs') {
     const gm = userGameNow();
-    const label = G.phase === 'regular' ? `Week ${G.week} of ${SEASON_WEEKS}` : ROUNDS[G.po.round - 1];
+    const label = G.phase === 'regular' ? `Week ${G.week} of ${SEASON_WEEKS}` : roundName(G.po.round - 1);
     if (!gm) {
       const alive = G.po && [...G.po.alive.AC, ...G.po.alive.NC].includes(G.user);
       return `${ch('trophy', label)}<p class="muted">${alive ? 'You earned a first-round bye as the #1 seed. Rest up!' : 'Your team is not playing this round.'}</p>
-        <div class="row wrap"><button class="btn primary big" onclick="act.simRound()">${icon('ffwd', 15)} Sim ${ROUNDS[G.po.round - 1]}</button>${!alive ? `<button class="btn" onclick="act.simPlayoffs()">${icon('skip', 15)} Sim rest of playoffs</button>` : ''}</div>`;
+        <div class="row wrap"><button class="btn primary big" onclick="act.simRound()">${icon('ffwd', 15)} Sim ${roundName(G.po.round - 1)}</button>${!alive ? `<button class="btn" onclick="act.simPlayoffs()">${icon('skip', 15)} Sim rest of playoffs</button>` : ''}</div>`;
     }
     const H = team(gm.h), A = team(gm.a), uh = units(H), ua = units(A);
     const homeGame = gm.h === G.user;
@@ -1829,7 +1853,7 @@ function viewSchedule() {
   }).join('');
   let po = '';
   if (G.po) {
-    po = `<div class="card mt">${ch('trophy', 'Playoffs')}${G.po.results.map(r => `<div class="sm row" style="padding:4px 0;gap:6px"><span class="muted" style="min-width:170px">${ROUNDS[r.round - 1]}</span>${badge(team(r.a), 16)} ${team(r.a).abbr} ${r.as} @ ${badge(team(r.h), 16)} ${team(r.h).abbr} ${r.hs}${r.ot ? ' (OT)' : ''}</div>`).join('') || '<span class="muted sm">No playoff games played yet.</span>'}</div>`;
+    po = `<div class="card mt">${ch('trophy', 'Playoffs')}${G.po.results.map(r => `<div class="sm row" style="padding:4px 0;gap:6px"><span class="muted" style="min-width:170px">${roundName(r.round - 1)}</span>${badge(team(r.a), 16)} ${team(r.a).abbr} ${r.as} @ ${badge(team(r.h), 16)} ${team(r.h).abbr} ${r.hs}${r.ot ? ' (OT)' : ''}</div>`).join('') || '<span class="muted sm">No playoff games played yet.</span>'}</div>`;
   }
   const r = userResults();
   return `${pageHead('calendar', `${G.year} Schedule`, r.length ? `${r.filter(x => x === 'W').length} wins, ${r.filter(x => x === 'L').length} losses so far` : '17 games: the top 7 in each conference make the playoffs')}
@@ -1840,7 +1864,7 @@ function viewSchedule() {
 function viewStandings() {
   const confs = ['AC', 'NC'].map(c => {
     const seeds = G.po ? G.po.seeds[c] : confSeeds(c);
-    return `<div class="card">${ch('shield', CONF[c])}${DIVS.map(d => `<h3 class="h" style="margin-top:12px">${c} ${d}</h3><div class="tbl-wrap"><table class="tbl"><tr><th>Team</th><th class="c">W</th><th class="c">L</th><th class="c">T</th><th class="c">PCT</th><th class="r">PF</th><th class="r">PA</th><th class="r">Diff</th></tr>
+    return `<div class="card">${ch('shield', confName(c))}${DIVS.map(d => `<h3 class="h" style="margin-top:12px">${confShort(c)} ${d}</h3><div class="tbl-wrap"><table class="tbl"><tr><th>Team</th><th class="c">W</th><th class="c">L</th><th class="c">T</th><th class="c">PCT</th><th class="r">PF</th><th class="r">PA</th><th class="r">Diff</th></tr>
       ${divTeams(c, d).map(t => { const s = seeds.indexOf(t.id); return `<tr class="${t.id === G.user ? 'me' : ''}"><td>${teamLabel(t, true)}${s >= 0 && (G.week > 1 || G.po) ? `<span class="tag st">#${s + 1}</span>` : ''}</td><td class="c">${t.w}</td><td class="c">${t.l}</td><td class="c">${t.t}</td><td class="c">${pct(t).toFixed(3).replace(/^0/, '')}</td><td class="r">${t.pf}</td><td class="r">${t.pa}</td><td class="r ${t.pf - t.pa >= 0 ? 'good' : 'bad'}">${t.pf - t.pa > 0 ? '+' : ''}${t.pf - t.pa}</td></tr>`; }).join('')}</table></div>`).join('')}</div>`;
   }).join('');
   return `${pageHead('trophy', 'Standings', 'Top 7 in each conference make the playoffs: 4 division winners plus 3 wild cards. Only the #1 seed gets a bye. Gold tags show the current seeds.')}<div class="grid2">${confs}</div>`;
@@ -1960,7 +1984,7 @@ function viewLeague() {
       <div class="card">${ch('star', 'Stat leaders')}<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
         ${leaders('football', 'Passing yards', 'py', v => v.toLocaleString())}${leaders('zap', 'Rushing yards', 'ry')}${leaders('target', 'Receiving yards', 'recy')}${leaders('star', 'Passing TDs', 'ptd')}${leaders('shield', 'Sacks', 'sk')}${leaders('x', 'Interceptions', 'dint')}
       </div></div>
-      <div class="card">${ch('trophy', 'Grand Bowl champions')}${G.champions.map(c => `<div class="row sm" style="padding:4px 0"><b style="min-width:44px">${c.year}</b>${badge(team(c.id), 20)}<span class="${c.id === G.user ? 'gold' : ''}">${c.name}</span></div>`).join('') || '<p class="muted sm">No champions crowned yet.</p>'}</div>
+      <div class="card">${ch('trophy', `${bowl()} champions`)}${G.champions.map(c => `<div class="row sm" style="padding:4px 0"><b style="min-width:44px">${c.year}</b>${badge(team(c.id), 20)}<span class="${c.id === G.user ? 'gold' : ''}">${c.name}</span></div>`).join('') || '<p class="muted sm">No champions crowned yet.</p>'}</div>
     </div>
   </div>`;
 }
@@ -2493,7 +2517,7 @@ function mentorInjury(p, w) {
 }
 function mentorPlayoffs(seed) {
   const first = !(G.mentorSeen && G.mentorSeen.firstPO);
-  mentor('po' + G.year, [`The playoffs! The #${seed} seed! ${first ? 'First trip to the dance. Savor it, kid.' : 'Getting to be a habit, huh?'}`, seed === 1 ? 'And the top seed means a week off while everybody else beats each other up.' : 'Four wins from the Grand Bowl. One game at a time.', 'Playoff home games sell tickets at a premium, so every round you survive pays.']);
+  mentor('po' + G.year, [`The playoffs! The #${seed} seed! ${first ? 'First trip to the dance. Savor it, kid.' : 'Getting to be a habit, huh?'}`, seed === 1 ? 'And the top seed means a week off while everybody else beats each other up.' : `Four wins from the ${bowl()}. One game at a time.`, 'Playoff home games sell tickets at a premium, so every round you survive pays.']);
   G.mentorSeen.firstPO = 1;
 }
 function mentorMissed() {
@@ -2544,7 +2568,7 @@ const act = {
   confirmYes() { const f = UI.onConfirm; UI.onConfirm = null; act.closeModal(); if (f) f(); },
   newCareer() {
     const go = () => {
-      newCareer((UI.setup.name || '').trim() || 'The Owner', UI.setup.diff, UI.setup.coach);
+      newCareer((UI.setup.name || '').trim() || 'The Owner', UI.setup.diff, UI.setup.coach, UI.setup.real !== false);
       G.user = null; UI.view = 'home'; render(); window.scrollTo(0, 0);
       mentor('intro', introLines()); flushTalk();
     };
@@ -2552,7 +2576,7 @@ const act = {
   },
   setSetup(k, v) {
     UI.setup[k] = v;
-    UI.setup.say = k === 'diff' ? DIFF_INFO[v].say : STYLE_SAY[v ? 'coach' : 'owner'];
+    UI.setup.say = k === 'diff' ? DIFF_INFO[v].say : k === 'real' ? (v ? "The real deal. Every owner in the league is going to know your name." : 'A league of our own, huh? Fine by me. Money spends the same.') : STYLE_SAY[v ? 'coach' : 'owner'];
     render(); act.buckTalk();
   },
   typeName(v) {
@@ -2681,7 +2705,7 @@ const act = {
         <li><b>Make money.</b> Revenue comes from tickets (home games), merch, sponsors and TV. Payroll and upkeep are your costs. Happy fans spend more.</li>
         <li><b>Improve the roster.</b> Train players, sign free agents and draft prospects. Stay under the ${fmtM(SALARY_CAP)} salary cap.</li>
         <li><b>Upgrade facilities.</b> A bigger stadium earns more. Training grows young players. Medical prevents injuries. Scouting improves draft intel.</li>
-        <li><b>Make the playoffs.</b> The top 7 teams in each conference get in. Win 4 rounds to take the Grand Bowl.</li>
+        <li><b>Make the playoffs.</b> The top 7 teams in each conference get in. Win 4 rounds to take the ${bowl()}.</li>
         <li><b>Grow your net worth.</b> Cash plus team value. You can sell your team any time and buy another.</li>
       </ol>
       <p class="sm muted">Owner mode: set a Game Plan and watch. Head Coach mode: call every play yourself. Switch any time.</p>
@@ -2701,14 +2725,14 @@ const act = {
   quickSim() {
     const gm = userGameNow(); if (!gm) return;
     const g = new Game(team(gm.h), team(gm.a), G.phase === 'playoffs'); g.simToEnd();
-    const b = boxData(g), ui = userIdx(g), my = g.score[ui], th = g.score[1 - ui], label = G.phase === 'playoffs' ? ROUNDS[G.po.round - 1] : `Week ${G.week}`;
+    const b = boxData(g), ui = userIdx(g), my = g.score[ui], th = g.score[1 - ui], label = G.phase === 'playoffs' ? roundName(G.po.round - 1) : `Week ${G.week}`;
     completeWeek(g);
     showModal(`<div class="final-banner ${my > th ? 'good' : my < th ? 'bad' : ''}">${my > th ? 'VICTORY' : my < th ? 'DEFEAT' : 'TIE GAME'}</div><div class="sm muted" style="text-align:center">${label} · Final${b.ot ? ' (OT)' : ''}</div>${boxHtml(b)}<div class="row mt" style="justify-content:flex-end"><button class="btn primary" onclick="act.closeModal();act.afterWeek()">Continue</button></div>`, true);
     render();
   },
-  afterWeek() { if (UI.seasonSummary) { const s = UI.seasonSummary; UI.seasonSummary = null; showModal(`<h2 class="h">${s.won ? `${s.year} Grand Bowl champions` : `${s.year} season complete`}</h2>
+  afterWeek() { if (UI.seasonSummary) { const s = UI.seasonSummary; UI.seasonSummary = null; showModal(`<h2 class="h">${s.won ? `${s.year} ${bowl()} champions` : `${s.year} season complete`}</h2>
     <div class="kpis"><div class="kpi"><label>Record</label><b>${s.rec}</b></div><div class="kpi"><label>Result</label><b style="font-size:14px">${s.result}</b></div><div class="kpi"><label>Season profit</label><b class="${s.profit >= 0 ? 'good' : 'bad'}">${fmtM(s.profit)}</b></div></div>
-    <p class="muted">${s.won ? 'Your city is celebrating, and your team is worth more than ever.' : `The ${s.champ} won the Grand Bowl.`} Players have aged and developed. Next up: contract decisions, then the draft.</p>
+    <p class="muted">${s.won ? 'Your city is celebrating, and your team is worth more than ever.' : `The ${s.champ} won the ${bowl()}.`} Players have aged and developed. Next up: contract decisions, then the draft.</p>
     <div class="row" style="justify-content:flex-end"><button class="btn primary" onclick="act.closeModal()">On to the offseason</button></div>`); } else flushTalk(); },
   simRound() { completeWeek(null); render(); act.afterWeek(); },
   simPlayoffs() { while (G.phase === 'playoffs') completeWeek(null); render(); act.afterWeek(); },
