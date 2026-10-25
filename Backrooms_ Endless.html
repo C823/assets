@@ -247,6 +247,7 @@ body.boss #bossui{display:block}body.boss #comp,body.boss #hint{display:none!imp
 <span>Graphics quality</span><select id="c_q"><option value="auto">Auto (recommended)</option><option value="low">Low (fastest)</option><option value="medium">Medium</option><option value="high">High</option></select>
 <span>Invert mouse Y</span><input type="checkbox" class="sw" id="c_inv">
 <span>Show FPS counter</span><input type="checkbox" class="sw" id="c_fps">
+<span>Progress<small style="display:block;font-size:12px;color:var(--mute)">Saved run, records and Encyclopedia</small></span><button id="rstp" class="btng" style="height:36px;font-size:15px">Reset progress</button>
 <button id="fs" class="btng">Toggle fullscreen</button></div></div></section>
 </div>
 <div id="newg" class="glass"><h3>NEW GAME</h3><p class="sub">Choose how deep into the Backrooms you want to go.</p>
@@ -855,6 +856,12 @@ $('diff').onclick=e=>{const b_=e.target.closest('[data-d]'),d=b_&&b_.dataset.d;i
 const stats=Object.assign({runs:0,deaths:0,easy:0,normal:0,hard:0},store.get('stats',{}));stats.seenL=stats.seenL||[];stats.seenE=stats.seenE||[];
 let noteT;function note(t){const n=$('note');n.textContent=t;n.classList.add('on');clearTimeout(noteT);noteT=setTimeout(()=>n.classList.remove('on'),3000)}
 function markSeen(t,id,name){const a=t==='L'?stats.seenL:stats.seenE;if(a.includes(id))return;a.push(id);store.set('stats',stats);note('New Encyclopedia entry: '+name)}
+// wipes the saved run, records and Encyclopedia (settings are kept); needs a second click to confirm
+$('rstp').onclick=()=>{const bt=$('rstp');if(!bt.dataset.arm){bt.dataset.arm=1;bt.textContent='Click again to confirm';bt.style.background='#c9473b';bt.style.color='#fff';clearTimeout(bt._t);bt._t=setTimeout(()=>{delete bt.dataset.arm;bt.textContent='Reset progress';bt.style.background=bt.style.color=''},3500);return}
+ clearTimeout(bt._t);delete bt.dataset.arm;bt.textContent='Progress reset';bt.style.background=bt.style.color='';setTimeout(()=>bt.textContent='Reset progress',2000);
+ for(const k of['save','stats','best','run'])try{localStorage.removeItem('br_'+k)}catch(e){}
+ best=0;Object.assign(stats,{runs:0,deaths:0,easy:0,normal:0,hard:0,wins:0,seenL:[],seenE:[]});Object.assign(RUN,{start:1,seed:'',perma:false,map:true,wand:true});
+ if(stt==='pause'||stt==='play')inRun=false;sfx({t:'sawtooth',f:200,f2:60,dur:.5,v:.12});if(stt==='menu')menuUI('set');note('Progress reset.')};
 let encTab='L';// little portraits of every entity, rendered once from the real models in a separate small renderer
 let entIco=null;
 function entIcons(){if(entIco)return entIco;entIco={};let r;try{r=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true})}catch(e){return entIco}
