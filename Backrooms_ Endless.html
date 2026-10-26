@@ -253,9 +253,6 @@ body.touch #holdb{display:block}body.hiding #mini,body.hiding #comp,body.hiding 
 .lpips{display:flex;gap:8px;justify-content:center;margin-bottom:10px}.lpips i{display:block;width:28px;height:4px;background:var(--ink)}
 .lpips i.lost{background:var(--red);animation:lpLost 1.2s .5s ease-in forwards}@keyframes lpLost{to{opacity:.12;transform:scaleX(.25)}}
 @media (max-width:700px){#dgrid{grid-template-columns:repeat(2,minmax(0,1fr))!important}#dgrid div:nth-child(3){padding-left:0;border-left:0}#ov.over .obtn{flex-direction:column}}
-#splash.wait .sp-logos img,#splash.wait .sp-div,#splash.wait .sp-t{animation:none;opacity:0}#splash.wait .spin{display:none}
-.sp-click{position:absolute;display:none;font:600 clamp(13px,1.8vh,16px) var(--fb);letter-spacing:.32em;color:rgba(255,255,255,.75);animation:spPulse 1.8s ease-in-out infinite}#splash.ask .sp-click{display:block}
-@keyframes spPulse{50%{opacity:.35}}
 @media (max-width:860px){#ov{flex-direction:column;align-items:flex-start}#setPause{width:100%}#msub{left:4.7vw;top:auto;bottom:2vh;width:90.6vw;max-height:50vh;z-index:2;background:#151410}#diff{flex-direction:column}}
 @media (max-width:640px){#inv{width:calc(100vw - 36px)}#hint{display:none}#comp{display:none}}
 @media (max-height:560px){.mb{height:32px}#card h2{font-size:44px}}
@@ -280,7 +277,7 @@ body.touch #holdb{display:block}body.hiding #mini,body.hiding #comp,body.hiding 
 <div id="tz"></div><div id="stick"><i></i></div>
 <div id="tbtns"><div data-k="pause">II</div><div data-k="fire" class="bk">FIRE</div><div data-k="reload" class="bk">RELOAD</div><div data-k="inv">ITEMS</div><div data-k="map">MAP</div><div data-k="light">LIGHT</div><div data-k="hide">HIDE</div><div data-k="crouch">CROUCH</div><div data-k="run">RUN</div><div data-k="jump">JUMP</div></div>
 <div id="fade" class="fx"></div>
-<div id="splash" class="wait"><div class="sp-logos"><img id="sp_c" alt="C823" src="https://raw.githubusercontent.com/C823/assets/main/C823%20logo.png" data-alt="assets/C823%20logo.png|C823%20logo.png" onerror="imgAlt(this)"><i class="sp-div"></i><img id="sp_p" alt="Powerhouse" src="https://raw.githubusercontent.com/C823/Powerhouse/main/icons/POWERHOUSE-icon-dark.png" data-alt="assets/POWERHOUSE-icon-dark.png|POWERHOUSE-icon-dark.png" onerror="imgAlt(this)"></div><div class="sp-t">A POWERHOUSE ORIGINAL</div><div class="sp-click">CLICK ANYWHERE TO START</div><i class="spin"></i></div>
+<div id="splash"><div class="sp-logos"><img id="sp_c" alt="C823" src="https://raw.githubusercontent.com/C823/assets/main/C823%20logo.png" data-alt="assets/C823%20logo.png|C823%20logo.png" onerror="imgAlt(this)"><i class="sp-div"></i><img id="sp_p" alt="Powerhouse" src="https://raw.githubusercontent.com/C823/Powerhouse/main/icons/POWERHOUSE-icon-dark.png" data-alt="assets/POWERHOUSE-icon-dark.png|POWERHOUSE-icon-dark.png" onerror="imgAlt(this)"></div><div class="sp-t">A POWERHOUSE ORIGINAL</div><i class="spin"></i></div>
 <div id="load" class="off"><div id="room"><div id="tun"><i class="lw"></i><i class="rw"></i><i class="fl"></i><i class="cl"></i><i class="ew"></i></div></div><i id="lprev"></i>
 <div id="lg"><img alt="Backrooms" src="https://raw.githubusercontent.com/C823/assets/main/backrooms_logo.png" data-alt="assets/backrooms_logo.png|backrooms_logo.png" onerror="if(imgAlt(this))return;this.style.display='none';document.getElementById('lgt').style.display='block'"><div id="lgt">BACKROOMS</div></div>
 <div id="tip"><small class="lbl">TIP</small><span id="tipt"></span></div>
@@ -1842,13 +1839,13 @@ function introSound(ac,vol){const t0=ac.currentTime+.05,R=Math.random,master=ac.
  voice(osc('sine',1318.5),[[2,.0001],[2.6,.03,1],[5,.0001]],null,1,.4);
  return master}
 // startup: studio splash and its sound while the menu's background level builds, then fade into the main menu (click to skip).
-// Browsers block audio until the first click or key press, so if sound can't start yet the splash waits for one.
-setTimeout(()=>{menuBG();reset();menuUI();const sp=$('splash'),imgs=[...sp.querySelectorAll('img')];let t0=0,ix=null,ixG=null,minT=2800,fin=false;
- const done=()=>{if(fin)return;fin=true;sp.classList.add('off');if(ixG)ixG.gain.setTargetAtTime(0,ix.currentTime,.35);setTimeout(()=>{try{ix&&ix.close()}catch(e){}},6000)};
+// Browsers can block audio until the first click or key press; the splash plays regardless and the sound joins on that first input.
+setTimeout(()=>{menuBG();reset();menuUI();const sp=$('splash'),imgs=[...sp.querySelectorAll('img')],t0=performance.now();let ix=null,ixG=null,minT=2800,fin=false;
+ const sound=()=>{if(ixG||fin||!ix||ix.state!=='running')return;try{ixG=introSound(ix,.9*(CFG.vol??1));minT=Math.max(minT,performance.now()-t0+4600)}catch(e){}};
+ const unlock=()=>{if(ix)ix.resume().then(sound,()=>{})};
+ const done=()=>{if(fin)return;fin=true;sp.classList.add('off');removeEventListener('pointerdown',unlock,true);removeEventListener('keydown',unlock,true);if(ixG)ixG.gain.setTargetAtTime(0,ix.currentTime,.35);setTimeout(()=>{try{ix&&ix.close()}catch(e){}},6000)};
  const wait=()=>{const t=performance.now()-t0;if((t>minT&&imgs.every(i=>i.complete))||t>minT+4200)done();else setTimeout(wait,150)};
- const play=()=>{sp.classList.remove('wait','ask');t0=performance.now();if(ix&&ix.state==='running'){try{ixG=introSound(ix,.9*(CFG.vol??1));minT=4600}catch(e){}}wait();sp.onclick=()=>{if(performance.now()-t0>600)done()}};
  try{ix=new(window.AudioContext||window.webkitAudioContext)()}catch(e){}
- if(!ix)return play();
- ix.resume().catch(()=>{});setTimeout(()=>{if(ix.state==='running')return play();sp.classList.add('ask');
-  const go=()=>{removeEventListener('keydown',go,true);sp.removeEventListener('pointerdown',go);ix.resume().then(play,play)};addEventListener('keydown',go,true);sp.addEventListener('pointerdown',go)},200)},80);loop();
+ if(ix){unlock();addEventListener('pointerdown',unlock,true);addEventListener('keydown',unlock,true)}
+ sp.onclick=()=>{if(performance.now()-t0>600)done()};wait()},80);loop();
 </script></body></html>
