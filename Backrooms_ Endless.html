@@ -412,6 +412,11 @@ body.np #newg,body.mpo #mp,body.slp #slotp{display:flex;flex-direction:column}#n
 #team{white-space:normal;top:128px}#team .tm{display:flex;align-items:center;gap:8px;margin:0 0 6px}#team .tm .pface{width:34px;height:34px}#team .tm span{color:var(--ink)}#team .tm small{display:block;font:400 17px/1 var(--fd);color:var(--mute)}
 #chatlog .pface,#mp_chatlog .pface{width:20px;height:20px;vertical-align:-4px;margin-right:6px;box-shadow:none}
 @media (max-width:860px){#newg,#mp,#slotp{left:2vw;right:2vw;top:2vh;bottom:2vh}#mp_lobby .mcols{grid-template-columns:1fr}}
+
+/* ===== redeem codes, suit portraits ===== */
+.rwrap{margin-top:22px;max-width:420px}.rcode{display:flex;gap:8px;align-items:center}.rcode input{flex:1}.rcode input{width:150px;height:40px;padding:0 10px;font:400 26px/1 var(--fd)!important;text-transform:uppercase;letter-spacing:.08em}.rcode .btng{height:40px;font-size:24px;padding:0 14px}
+#suit_sw{grid-template-columns:repeat(5,60px)!important;gap:10px!important}#suit_sw button{width:60px!important;height:60px!important;background-size:cover!important;background-position:center!important}
+body.fsub #suit_sw{grid-template-columns:repeat(auto-fill,72px)!important}body.fsub #suit_sw button{width:72px!important;height:72px!important}
 </style></head><body>
 <canvas id="grain" class="fx" width="160" height="90"></canvas><div id="scan" class="fx"></div><div id="vig" class="fx"></div><div id="dmg" class="fx"></div><div id="insane" class="fx"></div><div id="flash" class="fx"></div>
 <div id="mapw" class="glass"><div class="mh"><b>Map</b><span class="lbl" id="mtitle"></span></div><canvas id="mm" width="512" height="512"></canvas>
@@ -458,7 +463,7 @@ body.np #newg,body.mpo #mp,body.slp #slotp{display:flex;flex-direction:column}#n
 <p>Monsters see what is in front of them, and a flashlight beam is easy to spot. On Hard, darkness and monsters drain your sanity; almond water restores it. Your run saves to the slot you picked when you started it.</p></section>
 <section id="s_enc"><h3>ENCYCLOPEDIA</h3><div class="etabs"><button data-t="L" class="on">Levels</button><button data-t="E">Entities</button><span id="enc_ct"></span></div><div id="enc_list"></div></section>
 <section id="s_ach"><h3>ACHIEVEMENTS</h3><h4 class="ssub"><i>01</i>RECORDS</h4><div id="m_rec"></div><h4 class="ssub"><i>02</i>TROPHIES</h4><div class="achh"><span id="ach_ct"></span><div class="achb"><i id="ach_bar"></i></div></div><div id="ach_list"></div></section>
-<section id="s_suit"><h3>YOUR SUIT</h3><div class="suitw"><canvas id="suit_cv" width="300" height="390"></canvas><div class="suitr"><p class="suitp">Pick a colour for your hazmat suit. You see your sleeve in first person, and other players see the whole suit in multiplayer.</p><div id="suit_sw"></div><label class="suitc">Custom colour <input type="color" id="suit_in"></label><p id="suit_nm"></p></div></div></section>
+<section id="s_suit"><h3>YOUR SUIT</h3><div class="suitw"><canvas id="suit_cv" width="300" height="390"></canvas><div class="suitr"><p class="suitp">Pick a colour for your hazmat suit. You see your sleeve in first person, and other players see the whole suit in multiplayer.</p><div id="suit_sw"></div><label class="suitc">Custom colour <input type="color" id="suit_in"></label><p id="suit_nm"></p><div class="rwrap"><h4 class="ssub"><i>&#9654;</i>REDEEM A CODE</h4><p class="suitp" style="margin:0 0 8px">Some suits are only unlocked with a code. Capitals don't matter.</p><div class="rcode"><input id="c_code" type="text" maxlength="24" spellcheck="false" autocomplete="off" placeholder="CODE"><button id="c_redeem" class="btng">REDEEM</button></div><p id="c_codemsg" style="font:400 22px var(--fd);color:var(--grn);min-height:1.2em;margin:8px 0 0"></p></div></div></div></section>
 <section id="s_set"><h3>SETTINGS</h3><div id="setHome"><div id="set">
 <span>Look sensitivity</span><input type="range" id="c_sens" min=".2" max="3" step=".1">
 <span>Master volume</span><input type="range" id="c_vol" min="0" max="1" step=".05">
@@ -499,7 +504,7 @@ body.np #newg,body.mpo #mp,body.slp #slotp{display:flex;flex-direction:column}#n
 <div class="mcard"><h4><i>B</i>PLAYERS</h4><div id="mp_list"></div></div>
 <div id="mp_chat" class="mcard"><h4><i>C</i>CHAT</h4><div id="mp_chatlog"></div><div class="chrow"><input id="mp_chatin" type="text" maxlength="120" spellcheck="false" autocomplete="off" placeholder="Say hi to the room"><button class="btng" id="mp_chatgo">SEND</button></div></div></div><div id="mp_saves"></div><button class="btnp" id="mp_start">START NEW GAME</button></div>
 <div class="pfoot"><p id="mp_status"></p><div class="nrow"><button class="btng" id="mp_back">BACK</button></div></div></div>
-<div id="ver">v3.7 &middot; 2026-10-27</div></div>
+<div id="ver">v3.8 &middot; 2026-10-27</div></div>
 <div id="ov" style="display:none"><div class="ovl"><div class="lbl" id="olbl">GAME PAUSED</div><div id="dkick"></div><h1 id="t">PAUSED</h1><i id="dline"></i><p id="s"></p><div id="dgrid"></div><div id="ostats"></div>
 <div class="obtn"><button id="btn" class="btnp">RESUME</button><button id="m2" class="btng">MAIN MENU</button></div><p id="best"></p>
 <div id="keys"><span><b class="kbd">WASD</b>Move</span><span><b class="kbd">SHIFT</b>Sprint</span><span><b class="kbd">C</b>Crouch</span><span><b class="kbd">E</b>Hide</span><span><b class="kbd">F</b>Light</span><span><b class="kbd">M</b>Map</span><span><b class="kbd">I</b>Items</span><span><b class="kbd">1</b>Battery</span><span><b class="kbd">2</b>Almond water</span><span><b class="kbd">4</b>Chocolate</span><span><b class="kbd">5</b>Energy drink</span></div></div>
@@ -728,7 +733,7 @@ function mkKey(){const g=new THREE.Group(),km=new THREE.MeshPhongMaterial({color
 const EK={
  bacteria:{n:'Bacteria',sp:1,see:1,hear:1,jitter:1,body:{c:0x050505,e:null,o:{leg:1.6,lw:.06,th:1,tw:.2,arm:2,aw:.045,hw:.15,hh:.46,hunch:.32,claw:2.4,spines:1,face:0}},d:'Tall, wiry and twitchy. Moves in sudden bursts. Stay out of its sight.'},
  skin:{n:'Skin-Stealer',sp:1.08,see:1,hear:1,disguise:.45,body:{c:0x8c8a82,e:0x300000,o:{tw:.36,lw:.09,hunch:.2,glow:0,es:.8,ribs:1,claw:1.8,jaw:1,stitch:1}},d:'Can wear the shape of a Wanderer. A real Wanderer never walks toward you.'},
- hound:{n:'Hound',sp:1.15,see:.35,hear:2.2,quad:1,d:'Nearly blind, but hears everything. Crouch and it will walk right past.'},
+ hound:{n:'Hound',sp:1.15,see:.35,hear:2.2,quad:1,d:'Nearly blind, but hears everything. Crouch and it will walk right past. Shine a flashlight in its face and it backs off.'},
  smiler:{n:'Smiler',sp:1.25,see:1,hear:.4,smiler:1,light:1,d:'A grin in the dark. Hunts by your light. Turn your flashlight off and it loses you.'},
  scratcher:{n:'Scratcher',sp:1.12,see:1.05,hear:1.2,scratch:1,body:{c:0x2a2420,e:0xff6a20,o:{leg:1.35,lw:.08,th:.8,tw:.3,arm:1.55,aw:.06,hw:.36,hh:.42,hunch:.45,es:2.2,claw:3,ribs:1,jaw:1,spines:1,ears:0}},d:'Fast, long-limbed. You hear it scratching the walls before you see it.'},
  party:{n:'Partygoer',sp:1,see:1.1,hear:1.1,party:1,body:{c:0xc8b030,e:0x111111,o:{tw:.42,th:.85,hw:.32,hh:.38,hunch:.08,glow:0,es:1.6,smile:1,hat:0xd83a8a,bow:0x2a2aa0,ears:0}},d:'=) They just want you to join the party. Do not join the party.'},
@@ -744,7 +749,7 @@ for(const k in EK)EK[k].key=k;
 // hunters per theme (weights), plus extras: wd = wanderer chance, win = windows, sw = moth swarms, plague
 const TE=[{h:{bacteria:1},wd:.6},{h:{skin:1},wd:.5},{h:{hound:2,scratcher:1},wd:.25},{h:{hound:1,smiler:1},wd:.2},{h:{anim:1},win:3,wd:.25},
  {h:{fmoth:1},win:2,sw:2,wd:.2},{h:{party:1},wd:.15},{h:{skin:1},plague:1,wd:.3},{h:{scratcher:1},wd:0},{h:{smiler:2,bacteria:1},wd:.2},{h:{fmoth:1},sw:3,wd:.2},{h:{hound:1,skin:1},wd:.5,verity:1},{h:{},wd:0}];
-const LINES={verity:'If a yellow ball offers to help you... never let it see you leave.',bacteria:'The tall black ones twitch before they run. Don\'t let them see you.',skin:'Careful who you trust. Not every yellow suit is a friend.',hound:'Hounds are almost blind. Crouch and they\'ll walk right past you.',
+const LINES={verity:'If a yellow ball offers to help you... never let it see you leave.',bacteria:'The tall black ones twitch before they run. Don\'t let them see you.',skin:'Careful who you trust. Not every yellow suit is a friend.',hound:'Hounds hate light in their eyes. Hounds are almost blind. Crouch and they\'ll walk right past you.',
  smiler:'In the dark, keep your light off. Smilers chase the light.',scratcher:'If you hear scratching in the walls, go the other way.',party:'If anyone offers you cake... run.',
  anim:'Those children only move when you aren\'t looking. Keep your eyes on them.',fmoth:'The big moths come for your flashlight.'};
 const smileTex=tex((g,s)=>{g.clearRect(0,0,s,s);g.shadowColor='#fff';g.shadowBlur=s/14;g.fillStyle='#fff';g.beginPath();g.ellipse(s*.3,s*.3,s*.07,s*.1,0,0,7);g.fill();g.beginPath();g.ellipse(s*.7,s*.3,s*.07,s*.1,0,0,7);g.fill();
@@ -1198,7 +1203,7 @@ $('adm').onclick=e=>{const a=e.target.dataset.a;if(!a)return;
  else if(a==='san'){san=100;breakdown=0}
  else if(a==='u_ach'){for(const x of ACH)stats.ach[x[0]]=stats.ach[x[0]]||Date.now();store.set('stats',stats);note('All achievements unlocked.')}
  else if(a==='u_enc'){stats.seenL=TH.map((_,i)=>i);stats.seenE=Object.keys(EK);store.set('stats',stats);note('Every Encyclopedia entry unlocked.')}
- else if(a==='u_gold'){stats.goldKey=1;stats.wins=Math.max(1,stats.wins||0);stats.suits=Object.assign(stats.suits||{},{thanos:1,sahur:1,alig:1});saveStats();mkHand();note('Golden key, Endless mode, gold suits and the golden flashlight unlocked.')}
+ else if(a==='u_gold'){stats.goldKey=1;stats.wins=Math.max(1,stats.wins||0);stats.suits=Object.assign(stats.suits||{},{thanos:1,sahur:1});saveStats();mkHand();note('Golden key, Endless mode, gold suits and the golden flashlight unlocked.')}
  else if(a==='u_wpn'){bag.w={pistol:1,gauntlet:1,sahur:1};invUI();note('All weapons added. Press 3 to switch.')}
  else if(a==='u_lvl'){best=Math.max(best,TH.length);store.set('best',best);note('Every starting level unlocked.')}
  else if(a==='kill'){for(const m of mons)world.remove(m.g);for(const s2 of swarms)world.remove(s2.pts);for(const v of wins)world.remove(v.g);mons=[];swarms=[];wins=[]}
@@ -1348,8 +1353,7 @@ function batHit(){const fx=-Math.sin(yaw),fz=-Math.cos(yaw);let n=0;
  for(const m of mons){if(m.dead||!m.g.visible||(m.k.verity&&m.vp<3))continue;const dx=m.g.position.x-px,dz=m.g.position.z-pz,d=Math.hypot(dx,dz);if(d>2.9*(m.g.scale.x||1)||(dx*fx+dz*fz)/(d||1)<.45||!los(px,pz,m.g.position.x,m.g.position.z))continue;
   hitMon(m,40,dx,dz,2.6);if(m.dead)ach('tung');n++;if(n>=2)break}
  if(B&&B.g.visible&&B.hittable&&B.mode==='fight'){const g=B.g,dx=g.position.x-px,dz=g.position.z-pz,d=Math.hypot(dx,dz);if(d<3.6&&(dx*fx+dz*fz)/(d||1)>.4&&los(px,pz,g.position.x,g.position.z)){dmgBoss(14,{x:px+dx*.7,y:1.6,z:pz+dz*.7});n++}}
- if(!n&&!B)for(const L of lockers){const dx=L.x-px,dz=L.z-pz,d=Math.hypot(dx,dz);if(d<2.4&&(dx*fx+dz*fz)/(d||1)>.5){const p_=panOf(L.x,L.z);sfx({t:'square',f:180,f2:120,dur:.35,v:.3,ft:'bandpass',ff:900,q:3,p:p_,r:.6});sfx({n:1,ft:'highpass',ff:2500,dur:.12,v:.2,p:p_});L.want=1;setTimeout(()=>L.want=0,260);
-   if(!(stats.suits&&stats.suits.alig)){say('Booyakasha! Respect.',2600);unlockSuit('alig')}return}}
+ if(!n&&!B)for(const L of lockers){const dx=L.x-px,dz=L.z-pz,d=Math.hypot(dx,dz);if(d<2.4&&(dx*fx+dz*fz)/(d||1)>.5){const p_=panOf(L.x,L.z);sfx({t:'square',f:180,f2:120,dur:.35,v:.3,ft:'bandpass',ff:900,q:3,p:p_,r:.6});sfx({n:1,ft:'highpass',ff:2500,dur:.12,v:.2,p:p_});L.want=1;setTimeout(()=>L.want=0,260);return}}
  if(n){for(let i=0;i<3;i++){sfx({t:'sine',f:320-i*20,f2:190,dur:.14,v:.42,r:.35,d:i*.14});sfx({n:1,ft:'bandpass',ff:1100,q:2,dur:.05,v:.28,d:i*.14})}hitMark(0)}
  else{const hp=wallHit(cam.position,new THREE.Vector3(fx,0,fz));if(hp&&Math.hypot(hp.x-px,hp.z-pz)<1.9)sfx({t:'sine',f:260,f2:170,dur:.12,v:.3,r:.3})}}
 function snap(){if(snapT>0)return;if(snapLv===level){say('The stones are still recharging. One snap per level.',2200);return}snapLv=level;snapT=1e-4;wpnUI();ach('snap');
@@ -1734,6 +1738,11 @@ function steer(m,dm,spd,dt,fx,fz){const g=m.g,ex=g.position.x,ez=g.position.z,et
 function monStep(m,de,vol){const g=m.g,occ=!los(g.position.x,g.position.z,px,pz),p=panOf(g.position.x,g.position.z),v=Math.pow(1-de/28,2)*vol;
  sfx({n:1,ft:'lowpass',ff:occ?220:650,dur:.16,v:v*.8,p,r:.5,rate:.7});sfx({f:62,f2:38,dur:.14,v:v*.6,p,r:.3})}
 // one monster's AI step against a target player P (the local player, or a teammate when hosting)
+// a hound caught in a flashlight beam flinches and slinks away from the light for a few seconds
+function fleeMove(m,dmap,spd,dt){const g=m.g,tx=Math.floor(g.position.x/T),tz=Math.floor(g.position.z/T);if(!dmap)return 0;let bx=tx,bz=tz,bv=dmap[tz*S+tx];
+ for(const[a,b]of[[1,0],[-1,0],[0,1],[0,-1]]){const x=tx+a,z=tz+b;if(x<0||z<0||x>=S||z>=S||w[z][x]!==0)continue;const v=dmap[z*S+x];if(v>bv){bv=v;bx=x;bz=z}}
+ const cx=(bx+.5)*T-g.position.x,cz=(bz+.5)*T-g.position.z,d=Math.hypot(cx,cz);if(d<.05)return 0;const st=Math.min(d,spd*dt);g.position.x+=cx/d*st;g.position.z+=cz/d*st;
+ const ta=Math.atan2(cx,cz);let da=ta-g.rotation.y;da=Math.atan2(Math.sin(da),Math.cos(da));g.rotation.y+=da*Math.min(1,dt*8);return spd}
 function monTick(m,dt,now,P,chaseSp,wanderSp,searchSp,dark){const{px,pz,dmap,lit,noise,seeR,cfx,cfz,ptx,ptz,ad}=P,g=m.g,K_=m.k,gx=g.position.x,gz=g.position.z,de=Math.hypot(px-gx,pz-gz),hunt=!!m.hunt&&m.hunt===(P.remote?P.id:'me');let u=g.userData,sp=0,frozen=false;
   if(m.dead){deathAnim(m,dt);return false}if(m.stun>0){m.stun-=dt;stunTick(m,dt);animMon(m,0,dt,now);return false}
   if(!A.fr){const vis=de<30&&(!P.hid||hunt)&&los(gx,gz,px,pz);
@@ -1742,6 +1751,10 @@ function monTick(m,dt,now,P,chaseSp,wanderSp,searchSp,dark){const{px,pz,dmap,lit
    if(K_.angel)frozen=((gx-px)*cfx+(gz-pz)*cfz)/(de||1)>.55&&vis&&(lit||!dark||de<4);
    if(m.lure){if(vis&&de<14&&dmap)sp=steer(m,dmap,wanderSp*.9,dt,px,pz);else sp=Math.max(0,wanderMove(m,wanderSp*.6,dt));
     if(vis&&de<3.2){m.lure=false;const r_=u.real;u.fake.visible=false;r_.visible=true;g.userData=u=r_.userData;m.st='chase';spotted(m,ad);if(!P.remote)say('That is not a Wanderer!',1600)}}
+   else if(K_.quad&&(m.scared>0||(lit&&vis&&de<13&&((gx-px)*cfx+(gz-pz)*cfz)/(de||1)>.82))){
+    if(!(m.scared>0)){m.scared=2.6;m.st='wander';m.dm=null;m.hunt=null;const p_=panOf(gx,gz);sfx({t:'sawtooth',f:520,f2:260,dur:.45,v:.18,ft:'bandpass',ff:900,q:4,p:p_,r:.5});sfx({t:'sine',f:700,f2:420,dur:.6,v:.1,p:p_,r:.5,d:.3});if(!P.remote&&!m.lightSaid){m.lightSaid=1;say('It flinched away from the light.',1600)}}
+    m.scared-=dt;if(lit&&vis&&de<13&&((gx-px)*cfx+(gz-pz)*cfz)/(de||1)>.82)m.scared=Math.max(m.scared,1.2);sp=fleeMove(m,dmap,wanderSp*1.6,dt);m.lose=0;m.stare=0;
+    if(u.head)u.head.rotation.z=Math.sin(now/60)*.25}
    else{let sr=seeR*K_.see;if(K_.light)sr=lit?(dark?22:18)*K_.see:3.5;
     const facing=((px-gx)*Math.sin(g.rotation.y)+(pz-gz)*Math.cos(g.rotation.y))/(de||1)>.3,see=hunt||(vis&&de<sr&&(de<3.5||facing||m.st==='chase'||K_.light)),hear=!P.hid&&noise>0&&de<noise*K_.hear;
     if(see){if(m.st!=='chase'){m.st='chase';spotted(m,ad);m.stare=K_.quad||K_.moth?.3:.6;m.burst=1.4}m.lose=0;m.wait=0;m.watch=0}
@@ -1758,7 +1771,7 @@ function monTick(m,dt,now,P,chaseSp,wanderSp,searchSp,dark){const{px,pz,dmap,lit
     if(sp>0&&de<28&&!K_.smiler&&!K_.moth&&(m.ft-=sp*dt)<=0){m.ft=K_.quad?.7:m.st==='chase'?1.3:1.1;monStep(m,ad,(m.st==='chase'?.75:.45)*(K_.quad?.6:1))}
     entSound(m,ad,dt);stalkSound(m,ad,vis,dt)}}
   m.nsp=sp;animMon(m,sp,dt,now);
-  if(de<(hunt?1.75:(K_.moth?1.3:.9)*(cur.ms||1))&&(!P.hid||hunt)&&!P.prot&&!A.god&&!frozen&&!m.lure&&!K_.verity){if(P.remote){netSend(P.id,{t:'caught',i:mons.indexOf(m)});m.wait=3;m.st='wander';m.dm=null;return false}catchPlayer(m);return true}
+  if(de<(hunt?1.75:(K_.moth?1.3:.9)*(cur.ms||1))&&!(m.scared>0)&&(!P.hid||hunt)&&!P.prot&&!A.god&&!frozen&&!m.lure&&!K_.verity){if(P.remote){netSend(P.id,{t:'caught',i:mons.indexOf(m)});m.wait=3;m.st='wander';m.dm=null;return false}catchPlayer(m);return true}
  return false}
 function update(dt){
  runT+=dt;if(down)downTick(dt);if(!down)reviveTick(dt);prot=Math.max(0,prot-dt);if(hid)hideTick(dt);lockerTick(dt);const HB=!!hid||invOn||!!down;
@@ -2294,7 +2307,7 @@ function netTick(rdt){if(NET.started&&(NET.sendT-=rdt)<=0&&stt!=='menu'){NET.sen
 // ---- suit colour: picked in the main menu, shown on your first-person sleeve and on your avatar in multiplayer ----
 const SUITS=[['Hazard yellow',0xd8c020],['Safety orange',0xe8701e],['Signal red',0xc8302a],['Lab white',0xe4e2da],['Graphite',0x3a3d42],['Cobalt',0x2f63c8],['Teal',0x1f9a8f],['Moss',0x5f8a2e],['Violet',0x7a4ac0],['Pink',0xe06aa8]];
 // special suits unlock by escaping Level ?: a polished gold suit, and The Thing's own fused body
-const SPECIAL={gold:{n:'Escapee gold',c:0xd4a52a,bg:'linear-gradient(135deg,#f6dc7a,#b8861c 55%,#f0cf62)'},thanos:{n:'Thanos',c:0x7a5a9a,unl:'thanos',how:'take the Infinity Gauntlet from a safe',bg:'linear-gradient(180deg,#8a6aa8 0 38%,#2c4a7a 38% 80%,#d4a52a 80% 88%,#2c4a7a 88%)'},sahur:{n:'Tung Tung Tung Sahur',c:0xb07a46,unl:'sahur',how:'take the Sahur bat from a safe',bg:'radial-gradient(circle at 36% 38%,#fff 0 9%,#111 10% 13%,transparent 14%),radial-gradient(circle at 64% 38%,#fff 0 9%,#111 10% 13%,transparent 14%),repeating-linear-gradient(180deg,#b07a46 0 7px,#9a6838 7px 9px)'},alig:{n:'Ali G',c:0xf2c41c,unl:'alig',how:'a secret',bg:'linear-gradient(180deg,#1c2440 0 26%,#f2c41c 26% 38%,#c8a02a 38% 46%,#f2c41c 46%)'},racer:{n:'Racer',c:0x161618,adm:1,bg:'radial-gradient(ellipse 34% 20% at 50% 46%,#4fa3e8 0 70%,transparent 74%),linear-gradient(160deg,#2a2a2e,#0c0c0e)'},thing:{n:'The Thing',c:0x2b2420,bg:'radial-gradient(circle at 35% 40%,#ff3a2a 0 9%,transparent 10%),radial-gradient(circle at 65% 40%,#7aff4a 0 8%,transparent 9%),linear-gradient(160deg,#3a302a,#141110)'}};
+const SPECIAL={gold:{n:'Escapee gold',c:0xd4a52a,bg:'linear-gradient(135deg,#f6dc7a,#b8861c 55%,#f0cf62)'},thanos:{n:'Thanos',c:0x7a5a9a,unl:'thanos',how:'take the Infinity Gauntlet from a safe',bg:'linear-gradient(180deg,#8a6aa8 0 38%,#2c4a7a 38% 80%,#d4a52a 80% 88%,#2c4a7a 88%)'},sahur:{n:'Tung Tung Tung Sahur',c:0xb07a46,unl:'sahur',how:'take the Sahur bat from a safe',bg:'radial-gradient(circle at 36% 38%,#fff 0 9%,#111 10% 13%,transparent 14%),radial-gradient(circle at 64% 38%,#fff 0 9%,#111 10% 13%,transparent 14%),repeating-linear-gradient(180deg,#b07a46 0 7px,#9a6838 7px 9px)'},santa:{n:'Santa',c:0xc8202a,unl:'santa',how:'redeem a code in Settings',bg:'linear-gradient(180deg,#f4f1e8 0 18%,#c8202a 18% 60%,#111 60% 68%,#c8202a 68%)'},alig:{n:'Ali G',c:0xf2c41c,unl:'alig',how:'redeem a code in Settings',bg:'linear-gradient(180deg,#1c2440 0 26%,#f2c41c 26% 38%,#c8a02a 38% 46%,#f2c41c 46%)'},racer:{n:'Racer',c:0x161618,adm:1,bg:'radial-gradient(ellipse 34% 20% at 50% 46%,#4fa3e8 0 70%,transparent 74%),linear-gradient(160deg,#2a2a2e,#0c0c0e)'},thing:{n:'The Thing',c:0x2b2420,bg:'radial-gradient(circle at 35% 40%,#ff3a2a 0 9%,transparent 10%),radial-gradient(circle at 65% 40%,#7aff4a 0 8%,transparent 9%),linear-gradient(160deg,#3a302a,#141110)'}};
 const validSuit=v=>typeof v==='number'&&v>=0&&v<=0xffffff?v|0:SPECIAL[v]?v:undefined;
 const suitColOf=v=>SPECIAL[v]?SPECIAL[v].c:typeof v==='number'&&v>=0&&v<=0xffffff?v:0xe8701e;
 const suitCol=()=>suitColOf(CFG.suit),suitKind=()=>SPECIAL[CFG.suit]?CFG.suit:null,suitsOpen=()=>(stats.wins||0)>0,specialOpen=k=>SPECIAL[k].adm?adminOK():SPECIAL[k].unl?!!(stats.suits&&stats.suits[SPECIAL[k].unl]):suitsOpen();
@@ -2318,6 +2331,27 @@ function mkSuitBody(v,MAT){if(v==='gold'){const m=new THREE.MeshPhongMaterial({c
   for(let i=0;i<11;i++){const t=(i-5)/5;add(u.up,UB,mouth,.03,.024,.02,t*.13,.64-(1-t*t)*.05,.248+(1-t*t)*.004,0,0,t*.6)}
   for(const kn of[u.knL,u.knR])add(kn,SPH,wood,.075,.045,.14,0,-L2-.01,.06);
   const bt=mkWeapon('sahur');bt.scale.setScalar(.8);bt.rotation.x=Math.PI*.78;bt.position.set(0,-A2-.03,.02);u.elR.add(bt);return g}
+ // Santa: red suit with white fur trim, black belt and gold buckle, black boots, white gloves, red hat with a fur band and pompom, rosy cheeks and a big white beard
+ if(v==='santa'){const o={tw:.5,th:.86,lw:.15,aw:.1,hw:.27,hh:.33,hunch:.04,hc:0xf0c4a4,lc:0xc8202a,shoes:1,shoe:0x121212,hand:0xf2f2ee,arm:1.32,leg:1.08},g=mkEntity(MAT(0xc8202a),null,o),u=g.userData,hd=u.head,
+  L=c=>new THREE.MeshLambertMaterial({color:c}),red=L(0xc8202a),fur=L(0xf4f1e8),blk=L(0x141414),gold=new THREE.MeshPhongMaterial({color:0xe0b030,specular:0xfff0b0,shininess:80}),
+  add=(par,geo,mat,sx,sy,sz,x,y,z,rx=0,ry=0,rz=0)=>{const m=new THREE.Mesh(geo,mat);m.scale.set(sx,sy,sz);m.position.set(x,y,z);m.rotation.set(rx,ry,rz);par.add(m);return m},
+  th=o.th,tw=o.tw,hw=o.hw,hh=o.hh,fz=hw*.57+.02,A2=o.arm*.43,L1=o.leg*.5,L2=o.leg*.5,lw=o.lw;
+  // face: beard, moustache, nose, rosy cheeks, eyes and bushy brows
+  add(hd,SPH,fur,hw*.56,hh*.36,hw*.36,0,hh*.12,fz-.11);add(hd,SPH,fur,hw*.3,hh*.22,hw*.22,0,-hh*.12,fz-.08);
+  for(const sx of[-1,1]){add(hd,SPH,fur,.065,.03,.035,sx*.05,hh*.33,fz-.005,0,0,sx*-.35);add(hd,SPH,L(0xe88a86),.03,.025,.012,sx*.075,hh*.45,fz-.025);
+   add(hd,SPH,new THREE.MeshBasicMaterial({color:0x1a1a1a}),.016,.018,.01,sx*.048,hh*.56,fz-.012);add(hd,UB,fur,.05,.018,.02,sx*.05,hh*.66,fz-.02,0,0,sx*.15)}
+  add(hd,SPH,L(0xe0a080),.026,.024,.024,0,hh*.45,fz+.005);
+  // hat: fur band, drooping red cone, pompom
+  add(hd,CYL,fur,hw*.6,hh*.13,hw*.62,0,hh*.76,0);const hp=new THREE.Group();hp.position.set(0,hh*.82,0);hp.rotation.z=-.55;hd.add(hp);
+  add(hp,new THREE.ConeGeometry(1,1,18),red,hw*.5,hh*.85,hw*.52,0,hh*.42,0);add(hp,SPH,fur,.06,.06,.06,0,hh*.86,0);
+  // coat: round belly, fur down the front and around the hem, belt with a gold buckle
+  add(u.up,SPH,red,tw*.5,th*.32,tw*.42,0,th*.42,.04);add(u.up,UB,fur,.07,th*.72,.03,0,th*.5,tw*.44);
+  add(u.up,CYL,fur,tw*.52,th*.07,tw*.48,0,th*.07,.02);add(u.up,CYL,blk,tw*.5,th*.07,tw*.46,0,th*.3,.03);add(u.up,UB,gold,.1,.08,.02,0,th*.3,tw*.48);add(u.up,UB,blk,.06,.04,.025,0,th*.3,tw*.48);
+  add(u.up,CYL,fur,tw*.28,th*.06,tw*.28,0,th*.95,0);
+  // fur cuffs on the sleeves, fur tops on the boots
+  for(const el of[u.elL,u.elR])add(el,CYL,fur,o.aw*.75,.06,o.aw*.75,0,-A2*.9,0);
+  for(const kn of[u.knL,u.knR])add(kn,CYL,fur,lw*.62,.06,lw*.62,0,-L2*.62,0);
+  return g}
  // Ali G: bright yellow tracksuit with navy piping, designer skullcap, yellow-tinted wraparound shades, goatee, chunky gold chain, white trainers
  if(v==='alig'){const o={tw:.42,th:.82,lw:.13,aw:.085,hw:.26,hh:.32,hunch:.06,hc:0xd6a98a,lc:0xf2c41c,shoes:1,shoe:0xf0f0f0,hand:0xd6a98a,arm:1.35,leg:1.12},g=mkEntity(MAT(0xf2c41c),null,o),u=g.userData,hd=u.head,
   L=c=>new THREE.MeshLambertMaterial({color:c}),navy=L(0x1c2440),pipe=L(0x22305a),hair=L(0x2a1a10),blk=L(0x0c0c0e),gold=new THREE.MeshPhongMaterial({color:0xd8aa2a,specular:0xffe6a0,shininess:80}),
@@ -2368,16 +2402,23 @@ function suitModel(){if(suitM)suitS.remove(suitM);if(SPECIAL[CFG.suit]&&!special
 function suitUI(){const cvs=$('suit_cv');if(!suitR){try{suitR=new THREE.WebGLRenderer({canvas:cvs,antialias:true})}catch(e){return}suitR.setPixelRatio(Math.min(2,devicePixelRatio||1));suitR.setSize(200,260,false);suitR.setClearColor(0x1c1a16);
   suitS=new THREE.Scene();suitS.add(new THREE.AmbientLight(0xffffff,.5));const d1=new THREE.DirectionalLight(0xfff2dc,1);d1.position.set(2,3,4);suitS.add(d1);const d2=new THREE.DirectionalLight(0x9ab0ff,.45);d2.position.set(-3,2,-3);suitS.add(d2);
   suitC=new THREE.PerspectiveCamera(28,200/260,.05,50);suitC.position.set(0,1.25,6.3);suitC.lookAt(0,1.18,0)}
- suitModel();const cur_=CFG.suit;$('suit_sw').innerHTML=SUITS.map(([n,c])=>'<button title="'+n+'" data-c="'+c+'" style="background:#'+c.toString(16).padStart(6,'0')+'"'+(c===cur_?' class="on"':'')+'></button>').join('')+
-  Object.entries(SPECIAL).filter(([k])=>specialOpen(k)).map(([k,o])=>{const op=specialOpen(k);return'<button title="'+o.n+(op?'':' ('+(o.how||'escape Level ? to unlock')+')')+'" data-c="'+k+'" class="sp'+(k===cur_?' on':'')+(op?'':' lk')+'" style="background:'+o.bg+'">'+(op?'':'<i>&#128274;</i>')+'</button>'}).join('');
+ suitModel();const cur_=CFG.suit;$('suit_sw').innerHTML=SUITS.map(([n,c])=>'<button title="'+n+'" data-c="'+c+'" style="background:#'+c.toString(16).padStart(6,'0')+' url('+suitFace(c)+')"'+(c===cur_?' class="on"':'')+'></button>').join('')+
+  Object.entries(SPECIAL).filter(([k])=>specialOpen(k)).map(([k,o])=>{const op=specialOpen(k);return'<button title="'+o.n+(op?'':' ('+(o.how||'escape Level ? to unlock')+')')+'" data-c="'+k+'" class="sp'+(k===cur_?' on':'')+(op?'':' lk')+'" style="background:url('+suitFace(k)+'),'+o.bg+'">'+(op?'':'<i>&#128274;</i>')+'</button>'}).join('');
  $('suit_in').value='#'+suitCol().toString(16).padStart(6,'0');const nm=SPECIAL[cur_]?[SPECIAL[cur_].n]:SUITS.find(x=>x[1]===cur_);$('suit_nm').textContent=nm?nm[0]:'Custom';
  const spin=()=>{if(!$('s_suit').classList.contains('on')||!document.body.classList.contains('menu'))return;suitT+=.016;suitM.rotation.y=.5+suitT*.6;suitR.render(suitS,suitC);requestAnimationFrame(spin)};requestAnimationFrame(spin)}
+// ---- redeem codes (case and spaces don't matter) ----
+const CODES={indahood:'alig',alig:'alig',santa:'santa'};
+function redeem(){const raw=$('c_code').value,c=raw.toLowerCase().replace(/[^a-z0-9]/g,''),msg=$('c_codemsg');if(!c){msg.textContent='';return}
+ const k=CODES[c];if(!k){msg.style.color='var(--red)';msg.textContent='That code doesn\'t work.';sfx({t:'square',f:160,f2:110,dur:.25,v:.08});return}
+ $('c_code').value='';msg.style.color='var(--grn)';if(stats.suits&&stats.suits[k]){msg.textContent='You already have '+SPECIAL[k].n+'.';return}
+ unlockSuit(k);suitUI();msg.textContent='Unlocked the '+SPECIAL[k].n+' suit! Pick it above.';sfx({f:660,dur:.12,v:.1});sfx({f:990,dur:.25,v:.1,d:.1});if(k==='alig')say('Booyakasha! Respect.',2400)}
+$('c_redeem').onclick=redeem;$('c_code').onkeydown=e=>{e.stopPropagation();if(e.key==='Enter')redeem()};
 function setSuit(c){CFG.suit=c;store.set('cfg',CFG);suitUI();mkHand();if(NET.on){const me=NET.players.get(NET.me);if(me)me.suit=c;if(NET.host)netLobby();else netSend('h',{t:'suit',c:validSuit(c)})}}
 $('suit_sw').onclick=e=>{const b=e.target.closest('[data-c]');if(!b)return;if(b.classList.contains('lk')){const o=SPECIAL[b.dataset.c];note('To unlock: '+((o&&o.how)||'escape Level ? and keep its key')+'.');return}const v=b.dataset.c;setSuit(/^\d+$/.test(v)?+v:v)};$('suit_in').oninput=e=>setSuit(parseInt(e.target.value.slice(1),16));
 // first-person hand: gloved fist around the flashlight, suit sleeve and reflective band, drawn in the viewmodel pass
 let fpHand=null;
 function mkHand(){if(fpHand)gunScene.remove(fpHand);const g=new THREE.Group(),b=GB(),m=new THREE.Matrix4(),q=new THREE.Quaternion(),e=new THREE.Euler(),v=new THREE.Vector3(),sv=new THREE.Vector3(),
-  P=(geo,sx,sy,sz,x,y,z,c,rx=0,rz=0)=>{q.setFromEuler(e.set(rx,0,rz));m.compose(v.set(x,y,z),q,sv.set(sx,sy,sz));b.add(geo,m,new THREE.Color(c))},sk=suitKind(),glv=sk==='thing'?0x1a1412:sk==='gold'?0x8a6a1a:sk==='racer'?0xd9b48f:sk==='alig'?0xd6a98a:sk==='thanos'?0x7a5a9a:sk==='sahur'?0xa06c3c:0x2a2c2e,su=suitCol(),gold=(stats.wins||0)>0;
+  P=(geo,sx,sy,sz,x,y,z,c,rx=0,rz=0)=>{q.setFromEuler(e.set(rx,0,rz));m.compose(v.set(x,y,z),q,sv.set(sx,sy,sz));b.add(geo,m,new THREE.Color(c))},sk=suitKind(),glv=sk==='thing'?0x1a1412:sk==='gold'?0x8a6a1a:sk==='racer'?0xd9b48f:sk==='alig'?0xd6a98a:sk==='santa'?0xf2f2ee:sk==='thanos'?0x7a5a9a:sk==='sahur'?0xa06c3c:0x2a2c2e,su=suitCol(),gold=(stats.wins||0)>0;
  fl.color.setHex(gold?0xffe2a8:0xfff6e0);P(CYL,.021,.2,.021,0,0,-.06,gold?0xd4a52a:0x1c1c1e,Math.PI/2);P(CYL,.03,.05,.03,0,0,-.18,gold?0xb8891c:0x2a2a2c,Math.PI/2);if(gold)for(const z of[-.02,-.1])P(CYL,.0225,.008,.0225,0,0,z,0x8a6410,Math.PI/2);if(sk==='thing')for(let i=0;i<4;i++)P(TAP,.006,.035,.006,-.03,-.03+i*.0,-.088+i*.021,0x0c0a08,Math.PI*.8);P(CYL,.026,.006,.026,0,0,-.207,0xfff3c8,Math.PI/2);P(UB,.008,.012,.03,0,.024,-.07,0x8a8a8a);
  P(SPH,.04,.036,.058,.003,-.008,-.04,glv);for(let i=0;i<4;i++)P(SPH,.016,.017,.016,-.026,-.014+i*.0,-.075+i*.021,glv);P(CYL,.012,.05,.012,.02,.024,-.05,glv,Math.PI/2-.35);
  // forearm runs down and back toward the body from the wrist so the sleeve shows under the glove
