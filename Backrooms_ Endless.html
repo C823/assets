@@ -2400,9 +2400,9 @@ function mkSuitBody(v,MAT){if(v==='gold'){const m=new THREE.MeshPhongMaterial({c
   add=(par,geo,mat,sx,sy,sz,x,y,z,rx=0,ry=0,rz=0)=>{const m=new THREE.Mesh(geo,mat);m.scale.set(sx,sy,sz);m.position.set(x,y,z);m.rotation.set(rx,ry,rz);par.add(m);return m},th=o.th,tw=o.tw,hw=o.hw,hh=o.hh,A2=o.arm*.43;
   // pumpkin: orange skin with darker ribs, carved triangle eyes, nose and a jagged grin that glow from inside
   const pc=cv(256,128),ec=cv(256,128),pg=pc.getContext('2d'),eg=ec.getContext('2d'),W=256,Hh=128,cx=W*.25,cy=Hh*.5;
-  pg.fillStyle='#e8701e';pg.fillRect(0,0,W,Hh);for(let i=0;i<16;i++){const x=i/16*W;const gr=pg.createLinearGradient(x,0,x+W/16,0);gr.addColorStop(0,'rgba(120,40,0,.45)');gr.addColorStop(.5,'rgba(255,160,60,.15)');gr.addColorStop(1,'rgba(120,40,0,.45)');pg.fillStyle=gr;pg.fillRect(x,0,W/16,Hh)}
+  pg.fillStyle='#d8601a';pg.fillRect(0,0,W,Hh);for(let i=0;i<16;i++){const x=i/16*W;const gr=pg.createLinearGradient(x,0,x+W/16,0);gr.addColorStop(0,'rgba(120,40,0,.45)');gr.addColorStop(.5,'rgba(255,160,60,.15)');gr.addColorStop(1,'rgba(120,40,0,.45)');pg.fillStyle=gr;pg.fillRect(x,0,W/16,Hh)}
   eg.fillStyle='#000';eg.fillRect(0,0,W,Hh);
-  const cut=(f)=>{for(const[g_,col]of[[pg,'#2a1000'],[eg,'#ffb23a']]){g_.fillStyle=col;g_.beginPath();f(g_);g_.fill()}};
+  const cut=(f)=>{for(const[g_,col]of[[pg,'#ffe070'],[eg,'#ffd050']]){g_.fillStyle=col;g_.beginPath();f(g_);g_.fill();if(g_===pg){g_.strokeStyle='#3a1200';g_.lineWidth=3;g_.lineJoin='round';g_.stroke()}}};
   cut(g_=>{g_.moveTo(cx-24,cy-8);g_.lineTo(cx-8,cy-8);g_.lineTo(cx-16,cy-26);g_.closePath()});cut(g_=>{g_.moveTo(cx+8,cy-8);g_.lineTo(cx+24,cy-8);g_.lineTo(cx+16,cy-26);g_.closePath()});
   cut(g_=>{g_.moveTo(cx-5,cy+2);g_.lineTo(cx+5,cy+2);g_.lineTo(cx,cy-6);g_.closePath()});
   cut(g_=>{g_.moveTo(cx-30,cy+8);for(let i=0;i<=8;i++){const x=cx-30+i*7.5;g_.lineTo(x,cy+8+(i%2?6:0)+Math.sin(i/8*Math.PI)*8)}for(let i=8;i>=0;i--){const x=cx-30+i*7.5;g_.lineTo(x,cy+14+Math.sin(i/8*Math.PI)*12-(i%2?0:5))}g_.closePath()});
