@@ -401,6 +401,17 @@ body.mpg #chat{display:block}body.menu #chat{display:none}
 #mp_chat{margin-top:16px}#mp_chatlog{height:140px;overflow:auto;padding:8px 10px;margin-bottom:8px;background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 2px rgba(233,228,214,.2)}
 #mp_chatlog div{font:500 14px/1.45 var(--fb);color:var(--ink)}#mp_chatlog b{font:400 20px/1 var(--fd);margin-right:6px}#mp_chatlog .sys{color:var(--hi);font:400 19px/1.2 var(--fd)}
 .chrow{display:flex;gap:8px}.chrow input{flex:1;height:44px;padding:0 10px}.chrow .btng{height:44px}
+
+/* ===== play and multiplayer fill the screen; player portraits ===== */
+#newg,#mp,#slotp{left:4vw;right:4vw;top:9vh;bottom:12vh;width:auto!important;max-height:none;transform:none;padding:2.8vh 3.2vh}
+body.np #newg,body.mpo #mp,body.slp #slotp{display:flex;flex-direction:column}#newg>*,#mp>*,#slotp>*{flex-shrink:0}#newg .pfoot,#mp .pfoot,#slotp .pfoot{margin-top:auto}#newg .phead,#mp .phead,#slotp .phead{margin-top:0}
+#mp_lobby .mcols{grid-template-columns:1fr 1fr 1.25fr}#mp_lobby #mp_chat{margin-top:0}#mp_lobby #mp_chatlog{height:auto;min-height:150px;flex:1}
+#mp_home .mcols{min-height:34vh}.pcols{gap:0 4vw}
+.pface{width:44px;height:44px;flex:none;object-fit:cover;background:#1c1a16;box-shadow:inset 0 0 0 2px rgba(233,228,214,.35),0 0 0 2px var(--pc,#e9e4d6)}
+.mpp{gap:12px;padding:8px 0}.mpp.empty .pface{opacity:.25;box-shadow:inset 0 0 0 2px rgba(233,228,214,.3)}
+#team{white-space:normal;top:128px}#team .tm{display:flex;align-items:center;gap:8px;margin:0 0 6px}#team .tm .pface{width:34px;height:34px}#team .tm span{color:var(--ink)}#team .tm small{display:block;font:400 17px/1 var(--fd);color:var(--mute)}
+#chatlog .pface,#mp_chatlog .pface{width:20px;height:20px;vertical-align:-4px;margin-right:6px;box-shadow:none}
+@media (max-width:860px){#newg,#mp,#slotp{left:2vw;right:2vw;top:2vh;bottom:2vh}#mp_lobby .mcols{grid-template-columns:1fr}}
 </style></head><body>
 <canvas id="grain" class="fx" width="160" height="90"></canvas><div id="scan" class="fx"></div><div id="vig" class="fx"></div><div id="dmg" class="fx"></div><div id="insane" class="fx"></div><div id="flash" class="fx"></div>
 <div id="mapw" class="glass"><div class="mh"><b>Map</b><span class="lbl" id="mtitle"></span></div><canvas id="mm" width="512" height="512"></canvas>
@@ -483,12 +494,12 @@ body.mpg #chat{display:block}body.menu #chat{display:none}
 <div class="mcard"><h4><i>A</i>HOST A GAME</h4><p class="mpd">Opens a room and gives you a code to share. You choose the difficulty under PLAY.</p><button class="btnp" id="mp_host">HOST GAME</button></div>
 <div class="mcard"><h4><i>B</i>JOIN A GAME</h4><p class="mpd">Type the five-letter code the host gives you.</p><input id="mp_code" type="text" maxlength="5" placeholder="ABCDE" spellcheck="false" style="text-transform:uppercase"><button class="btng" id="mp_join">JOIN GAME</button></div>
 </div></div>
-<div id="mp_lobby" style="display:none"><div class="mcols">
+<div id="mp_lobby" style="display:none"><div class="mcols" id="mp_lcols">
 <div class="mcard"><h4><i>A</i>ROOM CODE</h4><div id="mp_codeshow"></div><p id="mp_diff" class="mpd"></p></div>
 <div class="mcard"><h4><i>B</i>PLAYERS</h4><div id="mp_list"></div></div>
-</div><div id="mp_chat" class="mcard"><h4><i>C</i>CHAT</h4><div id="mp_chatlog"></div><div class="chrow"><input id="mp_chatin" type="text" maxlength="120" spellcheck="false" autocomplete="off" placeholder="Say hi to the room"><button class="btng" id="mp_chatgo">SEND</button></div></div><div id="mp_saves"></div><button class="btnp" id="mp_start">START NEW GAME</button></div>
+<div id="mp_chat" class="mcard"><h4><i>C</i>CHAT</h4><div id="mp_chatlog"></div><div class="chrow"><input id="mp_chatin" type="text" maxlength="120" spellcheck="false" autocomplete="off" placeholder="Say hi to the room"><button class="btng" id="mp_chatgo">SEND</button></div></div></div><div id="mp_saves"></div><button class="btnp" id="mp_start">START NEW GAME</button></div>
 <div class="pfoot"><p id="mp_status"></p><div class="nrow"><button class="btng" id="mp_back">BACK</button></div></div></div>
-<div id="ver">v3.6 &middot; 2026-10-27</div></div>
+<div id="ver">v3.7 &middot; 2026-10-27</div></div>
 <div id="ov" style="display:none"><div class="ovl"><div class="lbl" id="olbl">GAME PAUSED</div><div id="dkick"></div><h1 id="t">PAUSED</h1><i id="dline"></i><p id="s"></p><div id="dgrid"></div><div id="ostats"></div>
 <div class="obtn"><button id="btn" class="btnp">RESUME</button><button id="m2" class="btng">MAIN MENU</button></div><p id="best"></p>
 <div id="keys"><span><b class="kbd">WASD</b>Move</span><span><b class="kbd">SHIFT</b>Sprint</span><span><b class="kbd">C</b>Crouch</span><span><b class="kbd">E</b>Hide</span><span><b class="kbd">F</b>Light</span><span><b class="kbd">M</b>Map</span><span><b class="kbd">I</b>Items</span><span><b class="kbd">1</b>Battery</span><span><b class="kbd">2</b>Almond water</span><span><b class="kbd">4</b>Chocolate</span><span><b class="kbd">5</b>Energy drink</span></div></div>
@@ -2113,7 +2124,7 @@ function cleanName(t){const c=cleanText(t,14);return!c||/^\**$/.test(c.replace(/
 let CHAT=[],chatOn=false,chatLast=0;
 function chatCol(id){const q=NET.players.get(id);return'#'+new THREE.Color(q&&validSuit(q.suit)!==undefined?suitColOf(q.suit):MP_COL[((q&&q.c)||0)%4]).getHexString()}
 function chatAdd(m){CHAT.push(Object.assign({at:performance.now()},m));if(CHAT.length>40)CHAT.shift();chatUI();if(!m.sys&&m.id!==NET.me&&AC)sfx({f:1500,f2:1900,dur:.05,v:.05})}
-function chatLine(m){return m.sys?'<div class="sys">'+esc(m.x)+'</div>':'<div><b style="color:'+esc(m.col||'#e9e4d6')+'">'+esc(m.n)+'</b>'+esc(m.x)+'</div>'}
+function chatLine(m){return m.sys?'<div class="sys">'+esc(m.x)+'</div>':'<div>'+(m.id&&NET.players.get(m.id)?faceImg(NET.players.get(m.id)):'')+'<b style="color:'+esc(m.col||'#e9e4d6')+'">'+esc(m.n)+'</b>'+esc(m.x)+'</div>'}
 function chatUI(){const now=performance.now(),last=CHAT.slice(-8);$('chatlog').innerHTML=last.map(m=>chatLine(m).replace('<div','<div'+(now-m.at>9000?' class="old"':''))).join('').replace(/<div class="old" class="sys">/g,'<div class="sys old">');
  const L=$('mp_chatlog');if(L){L.innerHTML=CHAT.map(chatLine).join('');L.scrollTop=L.scrollHeight}}
 setInterval(()=>{if(NET.on&&CHAT.length)chatUI()},1500);
@@ -2226,7 +2237,7 @@ function hostMsg(id,d){let p=NET.players.get(id);
  else if(d.t==='key'&&d.l===level)netKey(p.name);
  else if(d.t==='pick'&&d.l===level){netPick(d.k,d.i);netAll(d,id)}
  else if(d.t==='door'&&d.l===level&&hasKey)netNext()}
-function netLobby(){const list=[...NET.players.values()].map(q=>({id:q.id,name:q.name,c:q.c}));netAll({t:'lobby',list});if(document.body.classList.contains('mpo'))mpLobbyUI(list)}
+function netLobby(){const list=[...NET.players.values()].map(q=>({id:q.id,name:q.name,c:q.c,suit:q.suit}));netAll({t:'lobby',list});if(document.body.classList.contains('mpo'))mpLobbyUI(list)}
 function netKey(who){if(!hasKey){giveKey();sfx({f:880,dur:.5,v:.2,r:.5});sfx({f:1320,dur:.6,v:.15,r:.5,d:.1});say((who||'A teammate')+' found the key! Head for the exit.',3200)}netAll({t:'key',l:level})}
 function netOnKey(){if(!NET.on)return;if(NET.host)netAll({t:'key',l:level});else netSend('h',{t:'key',l:level})}
 function netOnPick(k,i){if(!NET.on)return;const m={t:'pick',k,i,l:level};if(NET.host)netAll(m);else netSend('h',m)}
@@ -2249,7 +2260,7 @@ function clientMsg(d){
  if(d.t==='welcome'){NET.me=d.id;document.body.classList.add('mpg');chatSys('Joined the room. Press T or ENTER in game to chat.');mpLobbyUI();mpStatus('Joined! Waiting for the host to start.')}
  else if(d.t==='full'){mpStatus('That room is full (4 players).');netLeave(true)}
  else if(d.t==='lobby'){const ids=new Set(d.list.map(q=>q.id));for(const[id,q]of NET.players)if(!ids.has(id)){if(q.A)scene.remove(q.A.g);NET.players.delete(id)}
-  for(const l of d.list){const q=NET.players.get(l.id)||{id:l.id};q.name=cleanName(l.name);q.c=l.c;NET.players.set(l.id,q)}if(document.body.classList.contains('mpo'))mpLobbyUI(d.list)}
+  for(const l of d.list){const q=NET.players.get(l.id)||{id:l.id};q.name=cleanName(l.name);if(validSuit(l.suit)!==undefined)q.suit=validSuit(l.suit);q.c=l.c;NET.players.set(l.id,q)}if(document.body.classList.contains('mpo'))mpLobbyUI(d.list)}
  else if(d.t==='start')mpStart(d.seed,d.diff,d.level);
  else if(d.t==='ps'){for(const q of d.a){if(q.id===NET.me)continue;const r=NET.players.get(q.id)||{id:q.id};Object.assign(r,q);r.name=cleanName(r.name);NET.players.set(q.id,r)}}
  else if(d.t==='m')NET.snap=d;
@@ -2400,13 +2411,25 @@ function netAvatars(dt){for(const q of NET.players.values()){if(q.id===NET.me)co
    const dn=q.dn||0;A_.lie=lerp(A_.lie||0,dn?1:0,Math.min(1,dt*6));if(A_.lie>.01){A_.hip.rotation.x=-1.5*A_.lie;A_.hip.position.y=lerp(A_.hip.position.y,.22,A_.lie);A_.tag.position.y=lerp(A_.tag.position.y,1.1,A_.lie);A_.beam.visible=A_.bl.visible=false}else A_.hip.rotation.x=0;
    if(!A_.bc){A_.bc=glow(0xff2a2a,1.8,.6,1);A_.bc.position.y=.4;g.add(A_.bc)}A_.bc.visible=!!dn;if(dn)A_.bc.material.opacity=.35+.3*Math.sin(performance.now()/180);
    if(A_.dnT!==dn){A_.dnT=dn;const cv_=A_.tag.userData.cv,x=cv_.getContext('2d');x.clearRect(0,0,256,64);x.fillStyle=dn?'rgba(150,10,10,.8)':'rgba(0,0,0,.55)';x.fillRect(8,8,240,48);x.fillStyle='#fff';x.font='600 '+(dn?28:34)+'px Barlow,Arial';x.textAlign='center';x.fillText(dn?(q.name||'Player')+' \u00b7 DOWN '+dn+'s':(q.name||'Player'),128,44);A_.tag.material.map.needsUpdate=true}}}
-function teamUI(){const L=[];for(const q of NET.players.values()){if(q.id===NET.me)continue;L.push((q.name||'Player')+(q.lvl!==level?'  (loading)':!q.alive?'  (spectating)':q.dn?'  (DOWN '+q.dn+'s)':'  '+(q.lives??'?')+(q.lives===1?' life':' lives')))}$('team').textContent=L.length?'Team\n'+L.join('\n'):''}
+// close-up portrait of a suit's face, rendered once per suit and cached as an image
+let faceR=null,faceS=null,faceC=null;const faceCache={};
+function suitFace(v){v=validSuit(v);if(v===undefined)v=0xe8701e;const key=String(v);if(faceCache[key])return faceCache[key];
+ if(!faceR){try{faceR=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true})}catch(e){return faceCache[key]=''}faceR.setPixelRatio(1);faceR.setSize(96,96);faceR.setClearColor(0x1c1a16,1);
+  faceS=new THREE.Scene();faceS.add(new THREE.AmbientLight(0xffffff,.55));const d1=new THREE.DirectionalLight(0xfff2dc,1.05);d1.position.set(1.5,2.2,4);faceS.add(d1);const d2=new THREE.DirectionalLight(0x9ab0ff,.4);d2.position.set(-3,1,-2);faceS.add(d2);faceC=new THREE.PerspectiveCamera(26,1,.02,50)}
+ const g=mkSuitBody(v,(c,b)=>b?new THREE.MeshBasicMaterial({color:c}):new THREE.MeshLambertMaterial({color:c}));g.rotation.y=.28;faceS.add(g);g.updateMatrixWorld(true);
+ const u=g.userData,all=new THREE.Box3().setFromObject(g),hb=u.head&&!u.head.userData.none?new THREE.Box3().setFromObject(u.head):null,sz=all.getSize(new THREE.Vector3());
+ let box=hb&&!hb.isEmpty()&&hb.getSize(new THREE.Vector3()).y>.1?hb:new THREE.Box3(new THREE.Vector3(all.min.x,all.max.y-sz.y*.3,all.min.z),all.max.clone());
+ const c=box.getCenter(new THREE.Vector3()),z=box.getSize(new THREE.Vector3()),r_=Math.max(z.x,z.y)*.72,d=r_/Math.tan(13*Math.PI/180);
+ faceC.position.set(c.x+d*.18,c.y+r_*.1,c.z+d);faceC.lookAt(c.x,c.y+r_*.02,c.z);faceR.render(faceS,faceC);faceS.remove(g);
+ g.traverse(q=>{if(q.geometry&&!q.geometry.userData.keep)q.geometry.dispose()});return faceCache[key]=faceR.domElement.toDataURL('image/jpeg',.88)}
+function faceImg(q){const v=q&&validSuit(q.suit)!==undefined?q.suit:MP_COL[((q&&q.c)||0)%4];return'<img class="pface" alt="" src="'+suitFace(v)+'" style="--pc:#'+new THREE.Color(MP_COL[((q&&q.c)||0)%4]).getHexString()+'">'}
+let teamH='';function teamUI(){const L=[];for(const q of NET.players.values()){if(q.id===NET.me)continue;L.push('<div class="tm">'+faceImg(q)+'<div><span>'+esc(q.name||'Player')+'</span><small>'+(q.lvl!==level?'loading':!q.alive?'spectating':q.dn?'DOWN '+q.dn+'s':(q.lives??'?')+(q.lives===1?' life':' lives'))+'</small></div></div>')}const h=L.length?L.join(''):'';if(h!==teamH){teamH=h;$('team').innerHTML=h}}
 // ---- menu ----
 function openMP(){menuUI();closePlay();document.body.classList.add('mpo');$('mp_name').value=CFG.name||'';if(NET.on)mpLobbyUI();else mpHomeUI()}
 function closeMP(){document.body.classList.remove('mpo')}
 function mpHomeUI(){$('mp_home').style.display='block';$('mp_lobby').style.display='none'}
 function mpLobbyUI(list){mpSavesUI();$('mp_home').style.display='none';$('mp_lobby').style.display='block';$('mp_codeshow').textContent=NET.code;const L=list||[...NET.players.values()];
- $('mp_list').innerHTML=L.map(q=>'<div class="mpp"><i style="background:#'+new THREE.Color(validSuit(q.suit)!==undefined?suitColOf(q.suit):MP_COL[(q.c||0)%4]).getHexString()+'"></i>'+esc(q.name||'Player')+(q.id==='h'?' <small>host</small>':'')+(q.id===NET.me?' <small>you</small>':'')+'</div>').join('')+'<div class="mpp empty"><i></i>Open seat</div>'.repeat(Math.max(0,4-L.length));
+ $('mp_list').innerHTML=L.map(q=>'<div class="mpp">'+faceImg(NET.players.get(q.id)||q)+esc(q.name||'Player')+(q.id==='h'?' <small>host</small>':'')+(q.id===NET.me?' <small>you</small>':'')+'</div>').join('')+'<div class="mpp empty"><i class="pface"></i>Open seat</div>'.repeat(Math.max(0,4-L.length));
  $('mp_start').style.display=NET.host?'':'none';$('mp_diff').textContent=NET.host?'Share this code with your friends. Difficulty: '+(DF[CFG.diff]||DF.normal).n+' (change it under PLAY). '+L.length+' / 4 players.':'Waiting for the host to start…'}
 $('mp_host').onclick=mpHost;$('mp_join').onclick=mpJoin;
 $('mp_start').onclick=()=>{if(!NET.host)return;pickSlot('mp',k=>{if(!NET.host)return;slot=k;const seed=Math.random()*4294967296>>>0;netAll({t:'start',seed,diff:CFG.diff,level:1});mpStart(seed,CFG.diff,1);mpSave()})};
