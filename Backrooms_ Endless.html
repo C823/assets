@@ -437,6 +437,12 @@ body.fsub #suit_sw{grid-template-columns:repeat(auto-fill,72px)!important}body.f
 #cs_skip{position:absolute;right:3vw;bottom:3.5vh;z-index:1;font:400 22px var(--fd);color:var(--mute)}
 #cs_blk{position:absolute;inset:0;background:#000;opacity:0}#cs_tint{position:absolute;inset:0;background:#0a4a6a;opacity:0;mix-blend-mode:multiply}
 body.cut #hud,body.cut #bars,body.cut #mini,body.cut #team,body.cut #chat,body.cut #act,body.cut #dot,body.cut #hint,body.cut #comp,body.cut #tbtns,body.cut #msg,body.cut #cstrip,body.cut #rec{visibility:hidden}
+
+/* ===== cloud sync ===== */
+.sy_code{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 12px;box-shadow:inset 0 0 0 2px rgba(143,214,163,.55)}
+.sy_code span{font:400 20px var(--fd);color:var(--mute)}.sy_code b{flex:1;font:400 42px/1 var(--fd);letter-spacing:.14em;color:var(--grn);text-shadow:var(--osd)}.sy_code .btng{height:38px;font-size:22px;padding:0 12px}
+.sy_p{font:13px/1.5 var(--fb);color:var(--mute);margin:6px 0 0}
+#osd_sync{position:absolute;left:3vw;bottom:calc(2vh + 30px);font:400 clamp(18px,2.8vh,26px) var(--fd);color:var(--grn)}
 </style></head><body>
 <canvas id="grain" class="fx" width="160" height="90"></canvas><div id="scan" class="fx"></div><div id="vig" class="fx"></div><div id="dmg" class="fx"></div><div id="insane" class="fx"></div><div id="flash" class="fx"></div>
 <div id="mapw" class="glass"><div class="mh"><b>Map</b><span class="lbl" id="mtitle"></span></div><canvas id="mm" width="512" height="512"></canvas>
@@ -473,7 +479,7 @@ body.cut #hud,body.cut #bars,body.cut #mini,body.cut #team,body.cut #chat,body.c
 <div class="r">Level <input type="number" id="a_lv" value="1" min="1"><button data-a="lv">Go</button></div></div>
 <div id="admpw" class="glass"><b>ADMIN PANEL</b><p>Enter the password to unlock the admin panel. You only need to do this once.</p><input id="pw_in" type="password" maxlength="24" autocomplete="off" spellcheck="false"><div class="r"><button class="btnp" id="pw_ok">UNLOCK</button><button class="btng" id="pw_x">CANCEL</button></div><p id="pw_msg"></p></div>
 <div id="menu">
-<div id="osd"><span id="osd_tr">&#9654; PLAY &nbsp;SP <b id="osd_t">0:00:00</b></span><span id="osd_br"></span></div>
+<div id="osd"><span id="osd_tr">&#9654; PLAY &nbsp;SP <b id="osd_t">0:00:00</b></span><span id="osd_br"></span><span id="osd_sync"></span></div>
 <div id="mlogo"><img alt="Backrooms" src="https://raw.githubusercontent.com/C823/assets/main/backrooms_logo.png" data-alt="assets/backrooms_logo.png|backrooms_logo.png" onload="this.nextSibling.style.display='none'" onerror="if(!imgAlt(this))this.remove()"><span>BACKROOMS<small>ENDLESS</small></span></div>
 <div id="mchip"><span class="lbl">DEEPEST</span><b id="mc_best">1</b><span class="lbl">RUNS</span><b id="mc_runs">0</b></div>
 <nav id="mpanel" class="glass"><button class="mb" data-m="play">PLAY</button><button class="mb" data-m="mp">MULTIPLAYER</button><i class="gap"></i><button class="mb" data-m="how">HOW TO PLAY</button><button class="mb" data-m="enc">ENCYCLOPEDIA</button><button class="mb" data-m="ach">ACHIEVEMENTS</button><button class="mb" data-m="suit">SUIT</button><button class="mb" data-m="fs">FULLSCREEN</button><i class="gap"></i><button class="mb" data-m="set">SETTINGS</button></nav>
@@ -490,6 +496,9 @@ body.cut #hud,body.cut #bars,body.cut #mini,body.cut #team,body.cut #chat,body.c
 <span>Graphics quality</span><select id="c_q"><option value="auto">Auto (recommended)</option><option value="low">Low (fastest)</option><option value="medium">Medium</option><option value="high">High</option></select>
 <span>Invert mouse Y</span><input type="checkbox" class="sw" id="c_inv">
 <span>Show FPS counter</span><input type="checkbox" class="sw" id="c_fps">
+<span>Cloud sync<small style="display:block;font-size:12px;color:var(--mute)">Keep saves, records and suits in sync between devices with a code.</small><small id="sy_st" style="display:block;font:400 20px var(--fd);color:var(--mute)"></small></span><input type="checkbox" class="sw" id="sy_on">
+<div id="sy_box" style="grid-column:1/3;display:none"><div class="sy_code"><span>YOUR SYNC CODE</span><b id="sy_code">----</b><button class="btng" id="sy_copy">COPY</button><button class="btng" id="sy_now">SYNC NOW</button></div><p class="sy_p">Type this code on your other device (Settings &rarr; Cloud sync &rarr; Link). Anyone with the code can load your saves, so keep it to yourself.</p></div>
+<span>Link a device<small style="display:block;font-size:12px;color:var(--mute)">Have a code from another device? Enter it here.</small></span><div class="rcode"><input id="sy_in" type="text" maxlength="9" spellcheck="false" autocomplete="off" placeholder="XXXX-XXXX"><button id="sy_link" class="btng">LINK</button></div>
 <span>Progress<small style="display:block;font-size:12px;color:var(--mute)">Saved run, records and Encyclopedia</small></span><button id="rstp" class="btng" style="height:36px;font-size:15px">Reset progress</button>
 <button id="fs" class="btng">Toggle fullscreen</button></div></div></section>
 </div>
@@ -524,7 +533,7 @@ body.cut #hud,body.cut #bars,body.cut #mini,body.cut #team,body.cut #chat,body.c
 <div class="mcard"><h4><i>B</i>PLAYERS</h4><div id="mp_list"></div></div>
 <div id="mp_chat" class="mcard"><h4><i>C</i>CHAT</h4><div id="mp_chatlog"></div><div class="chrow"><input id="mp_chatin" type="text" maxlength="120" spellcheck="false" autocomplete="off" placeholder="Say hi to the room"><button class="btng" id="mp_chatgo">SEND</button></div></div></div><div id="mp_saves"></div><button class="btnp" id="mp_start">START NEW GAME</button></div>
 <div class="pfoot"><p id="mp_status"></p><div class="nrow"><button class="btng" id="mp_back">BACK</button></div></div></div>
-<div id="ver">v3.11 &middot; 2026-10-27</div></div>
+<div id="ver">v3.12 &middot; 2026-10-27</div></div>
 <div id="ov" style="display:none"><div class="ovl"><div class="lbl" id="olbl">GAME PAUSED</div><div id="dkick"></div><h1 id="t">PAUSED</h1><i id="dline"></i><p id="s"></p><div id="dgrid"></div><div id="ostats"></div>
 <div class="obtn"><button id="btn" class="btnp">RESUME</button><button id="m2" class="btng">MAIN MENU</button></div><p id="best"></p>
 <div id="keys"><span><b class="kbd">WASD</b>Move</span><span><b class="kbd">SHIFT</b>Sprint</span><span><b class="kbd">C</b>Crouch</span><span><b class="kbd">E</b>Hide</span><span><b class="kbd">F</b>Light</span><span><b class="kbd">M</b>Map</span><span><b class="kbd">I</b>Items</span><span><b class="kbd">1</b>Battery</span><span><b class="kbd">2</b>Almond water</span><span><b class="kbd">4</b>Chocolate</span><span><b class="kbd">5</b>Energy drink</span></div></div>
@@ -537,7 +546,7 @@ if(!window.THREE){$('load').classList.add('off');$('t').textContent='COULD NOT L
 let S=31,H=3;const T=3,D=[[1,0],[-1,0],[0,1],[0,-1]];
 
 // ---- settings & storage ----
-const store={get(k,d){try{const v=localStorage.getItem('br_'+k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('br_'+k,JSON.stringify(v))}catch(e){}}};
+const store={get(k,d){try{const v=localStorage.getItem('br_'+k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('br_'+k,JSON.stringify(v))}catch(e){}if(window.__syncOK)syncDirty(k)}};
 const CFG=Object.assign({sens:1,vol:.8,q:'auto',inv:false,fps:false,diff:'normal'},store.get('cfg',{}));let best=store.get('best',0);
 const QP={low:{ph:false,max:1,sc:.6,tx:256},medium:{ph:true,max:1,sc:.85,tx:512},high:{ph:true,max:1.5,sc:1,tx:512},auto:{ph:true,max:1,sc:.85,tx:512}};
 let Q=QP.auto,rs=.85,autoLow=false;
@@ -1772,7 +1781,7 @@ function markSeen(t,id,name){const a=t==='L'?stats.seenL:stats.seenE;if(a.includ
 // wipes the saved run, records and Encyclopedia (settings are kept); needs a second click to confirm
 $('rstp').onclick=()=>{const bt=$('rstp');if(!bt.dataset.arm){bt.dataset.arm=1;bt.textContent='Click again to confirm';bt.style.background='#c9473b';bt.style.color='#fff';clearTimeout(bt._t);bt._t=setTimeout(()=>{delete bt.dataset.arm;bt.textContent='Reset progress';bt.style.background=bt.style.color=''},3500);return}
  clearTimeout(bt._t);delete bt.dataset.arm;bt.textContent='Progress reset';bt.style.background=bt.style.color='';setTimeout(()=>bt.textContent='Reset progress',2000);
- for(const k of['save','stats','best','run',...SLOTS.sp.map(k=>'save_'+k),...SLOTS.mp.map(k=>'save_'+k)])try{localStorage.removeItem('br_'+k)}catch(e){}slot=null;
+ for(const k of['save','stats','best','run','sdel',...SLOTS.sp.map(k=>'save_'+k),...SLOTS.mp.map(k=>'save_'+k)])try{localStorage.removeItem('br_'+k)}catch(e){}slot=null;
  best=0;Object.assign(stats,{runs:0,deaths:0,easy:0,normal:0,hard:0,wins:0,seenL:[],seenE:[],ach:{},heads:0});Object.assign(RUN,{start:1,seed:'',perma:false,map:true,wand:true});
  if(stt==='pause'||stt==='play')inRun=false;sfx({t:'sawtooth',f:200,f2:60,dur:.5,v:.12});if(stt==='menu'){menuBG();menuUI('set')}note('Progress reset.')};
 // ---- achievements: stored with the rest of the records, so Reset progress clears them too ----
@@ -1830,7 +1839,7 @@ function slotName_(sv,k){return sv&&sv.nm?sv.nm:'Slot '+k.slice(2)}
 function deathSave(){if(!slot)return false;if(perma){slotClear();return false}
  if(slot[0]==='m'){const sv=slotGet(slot);if(!sv)return false;Object.assign(sv,{lives:DIFF.lives,t:Date.now(),died:1});store.set('save_'+slot,sv);return true}
  store.set('save_'+slot,{v:1,t:Date.now(),nm:slotName,level,seed:levelSeed,runSeed,endless,endSeed,perma,noMap,noWand,diff:DIFF.key,lives:DIFF.lives,runT:Math.round(runT),bat:1,san:100,bag,hasKey:false,flashOn:true,died:1});return true}
-function slotClear(k){k=k||slot;if(k)try{localStorage.removeItem('br_save_'+k)}catch(e){}}
+function slotClear(k){k=k||slot;if(!k)return;try{localStorage.removeItem('br_save_'+k)}catch(e){}const del=store.get('sdel',{});del[k]=Date.now();store.set('sdel',del)}
 function lastSave(){let b=null;for(const k of SLOTS.sp){const sv=slotGet(k);if(sv&&(!b||(sv.t||0)>(b.t||0)))b=sv}return b}
 // a save from before slots existed goes into slot 1
 {const old=store.get('save',null);if(old&&!store.get('save_sp1',null))store.set('save_sp1',old);try{localStorage.removeItem('br_save')}catch(e){}}
@@ -2370,6 +2379,64 @@ $('chatin').onkeydown=e=>{e.stopPropagation();if(e.key==='Enter'){chatSend($('ch
 $('chatin').onkeyup=e=>e.stopPropagation();
 const mpChatGo=()=>{chatSend($('mp_chatin').value);$('mp_chatin').value='';$('mp_chatin').focus()};
 $('mp_chatgo').onclick=mpChatGo;$('mp_chatin').onkeydown=e=>{e.stopPropagation();if(e.key==='Enter')mpChatGo()};
+// ================= cloud sync between devices =================
+// turn it on and you get a code. Another device that enters the code shares the same encrypted copy of your saves, records and suits.
+// the copy is stored as a retained message on the public relays (the same ones co-op falls back on), under a topic made from a hash of the code,
+// and encrypted with AES-GCM using a key made from the code, so the relays only ever see scrambled bytes. Devices online together also get live updates.
+const SYNC=Object.assign({on:false,code:'',dev:'',last:0},store.get('sync',{}));if(!SYNC.dev){SYNC.dev=Math.random().toString(36).slice(2,10);store.set('sync',SYNC)}
+let syncCli=[],syncKey=null,syncTopic='',syncT=null,syncApplying=false,syncBusy=false,syncState='';
+const SYA='ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+function syncNorm(c){return String(c||'').toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,8)}
+function syncFmt(c){return c?c.slice(0,4)+'-'+c.slice(4):'----'}
+function syncNewCode(){const a=new Uint32Array(8);crypto.getRandomValues(a);return[...a].map(v=>SYA[v%SYA.length]).join('')}
+const b64=u=>{let s='';for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode(...u.subarray(i,i+8192));return btoa(s)},ub64=t=>Uint8Array.from(atob(t),c=>c.charCodeAt(0));
+async function syncKeys(code){const enc=new TextEncoder(),h=await crypto.subtle.digest('SHA-256',enc.encode('brsync-topic:'+code));syncTopic='brsync1/'+[...new Uint8Array(h)].slice(0,20).map(b=>b.toString(16).padStart(2,'0')).join('');
+ const base=await crypto.subtle.importKey('raw',enc.encode(code),'PBKDF2',false,['deriveKey']);
+ syncKey=await crypto.subtle.deriveKey({name:'PBKDF2',salt:enc.encode('backrooms-endless-sync'),iterations:120000,hash:'SHA-256'},base,{name:'AES-GCM',length:256},false,['encrypt','decrypt'])}
+async function syncSeal(obj){const iv=crypto.getRandomValues(new Uint8Array(12)),ct=await crypto.subtle.encrypt({name:'AES-GCM',iv},syncKey,new TextEncoder().encode(JSON.stringify(obj)));return{v:1,iv:b64(iv),ct:b64(new Uint8Array(ct))}}
+async function syncOpen(m){const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:ub64(m.iv)},syncKey,ub64(m.ct));return JSON.parse(new TextDecoder().decode(pt))}
+// everything that travels: the 8 save slots (and when any were deleted), records, achievements, suits, deepest level, and your suit and name
+function syncSnap(){const sv={};for(const k of[...SLOTS.sp,...SLOTS.mp])sv[k]=store.get('save_'+k,null);const c=store.get('cfg',{});
+ return{t:Date.now(),dev:SYNC.dev,saves:sv,sdel:store.get('sdel',{}),stats:store.get('stats',{}),best:store.get('best',0),prof:{suit:c.suit,name:c.name,t:c.profT||0}}}
+function syncMerge(r){if(!r||typeof r!=='object')return false;let ch=false;syncApplying=true;try{
+ const del=store.get('sdel',{});for(const[k,t]of Object.entries(r.sdel||{}))if(t>(del[k]||0)){del[k]=t;ch=true}
+ for(const k of[...SLOTS.sp,...SLOTS.mp]){const a=store.get('save_'+k,null),b=r.saves&&r.saves[k];
+  if(b&&b.v===1&&(b.t||0)>(a&&a.t||0)&&(b.t||0)>(del[k]||0)){store.set('save_'+k,b);ch=true}
+  else if(a&&(del[k]||0)>(a.t||0)){try{localStorage.removeItem('br_save_'+k)}catch(e){}ch=true}}
+ store.set('sdel',del);
+ const R_=r.stats||{},S_=stats;for(const[k,v]of Object.entries(R_)){if(typeof v==='number'){if(v>(S_[k]||0)){S_[k]=v;ch=true}}
+  else if(Array.isArray(v)){const u=[...new Set([...(S_[k]||[]),...v])];if(u.length!==(S_[k]||[]).length){S_[k]=u;ch=true}}
+  else if(v&&typeof v==='object'){S_[k]=S_[k]||{};for(const[a,b]of Object.entries(v))if(S_[k][a]==null){S_[k][a]=b;ch=true}}}
+ if(ch)store.set('stats',S_);
+ if((r.best||0)>best){best=r.best;store.set('best',best);ch=true}
+ if(r.prof&&(r.prof.t||0)>(CFG.profT||0)){if(r.prof.suit!=null&&validSuit(r.prof.suit)!==undefined)CFG.suit=r.prof.suit;if(r.prof.name)CFG.name=cleanName(r.prof.name);CFG.profT=r.prof.t;store.set('cfg',CFG);try{mkHand()}catch(e){}ch=true}
+ }finally{syncApplying=false}
+ if(ch&&stt==='menu'){try{menuUI(document.querySelector('#msub section.on')?document.querySelector('#msub section.on').id.slice(2):null)}catch(e){}}return ch}
+function syncUI(){const on=SYNC.on&&SYNC.code;$('sy_on').checked=!!on;$('sy_box').style.display=on?'block':'none';$('sy_code').textContent=syncFmt(SYNC.code);
+ $('sy_st').textContent=!on?'Off':syncState||(SYNC.last?'Synced '+new Date(SYNC.last).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'}):'Connecting…');
+ $('osd_sync').textContent=on?(syncCli.length?'\u2601 SYNCED':'\u2601 OFFLINE'):''}
+function syncStatus(t){syncState=t;syncUI()}
+// connect to every relay that answers, read the stored copy, and listen for the other device
+async function syncStart(){syncStop(true);if(!SYNC.on||!SYNC.code)return syncUI();syncStatus('Connecting…');await syncKeys(SYNC.code);
+ const onMsg=async(tp,m)=>{if(tp!==syncTopic||!m||!m.ct)return;try{const r=await syncOpen(m);if(r.dev===SYNC.dev&&r.t<=SYNC.last)return;const ch=syncMerge(r);SYNC.last=Math.max(SYNC.last,Date.now());store.set('sync',SYNC);syncStatus('');if(ch){note('Cloud sync: pulled changes from your other device.');syncDirty('merge')}}catch(e){syncStatus('Wrong code, or the copy is damaged.')}};
+ const got=await Promise.all(RELAYS.map(u=>mqtt(u,onMsg).then(c=>{c.sub(syncTopic);c.onclose=()=>{syncCli=syncCli.filter(x=>x!==c);syncUI()};return c}).catch(()=>null)));
+ syncCli=got.filter(Boolean);if(!syncCli.length){syncStatus('Can\'t reach the sync servers. Your saves are still kept on this device.');return}
+ syncStatus('');setTimeout(()=>syncPush(),2500)}
+function syncStop(keep){for(const c of syncCli)try{c.close()}catch(e){}syncCli=[];clearTimeout(syncT);if(!keep)syncUI()}
+// publish the current copy (retained, so the next device to connect gets it)
+async function syncPush(){if(!SYNC.on||!syncKey||!syncCli.length||syncBusy)return;syncBusy=true;try{const m=await syncSeal(syncSnap());
+ for(const c of syncCli)try{const pl=new TextEncoder().encode(JSON.stringify(m)),tp=new TextEncoder().encode(syncTopic),body=new Uint8Array(2+tp.length+pl.length);body.set([tp.length>>8,tp.length&255]);body.set(tp,2);body.set(pl,2+tp.length);c.raw(0x31,body)}catch(e){}
+ SYNC.last=Date.now();store.set('sync',SYNC);syncStatus('')}catch(e){syncStatus('Sync failed. It will try again.')}syncBusy=false}
+function syncDirty(k){if(syncApplying||!SYNC.on||!/^(save_|stats|best|sdel|cfg|merge)/.test(k))return;clearTimeout(syncT);syncT=setTimeout(syncPush,k==='merge'?500:4000)}
+$('sy_on').onchange=e=>{if(e.target.checked){if(!SYNC.code)SYNC.code=syncNewCode();SYNC.on=true;note('Cloud sync is on. Your code is '+syncFmt(SYNC.code)+'.')}else{SYNC.on=false;SYNC.code='';syncKey=null;note('Cloud sync is off on this device.')}store.set('sync',SYNC);syncStart();syncUI()};
+$('sy_copy').onclick=()=>{try{navigator.clipboard.writeText(syncFmt(SYNC.code));note('Code copied.')}catch(e){}};
+$('sy_now').onclick=()=>{if(!syncCli.length)syncStart();else{syncStatus('Syncing…');syncPush()}};
+$('sy_in').onkeydown=e=>{e.stopPropagation();if(e.key==='Enter')$('sy_link').click()};
+$('sy_in').oninput=e=>{const n=syncNorm(e.target.value);e.target.value=n.length>4?n.slice(0,4)+'-'+n.slice(4):n};
+$('sy_link').onclick=()=>{const c=syncNorm($('sy_in').value);if(c.length!==8){syncStatus('Codes are 8 characters, like ABCD-2345.');return}
+ SYNC.code=c;SYNC.on=true;SYNC.last=0;store.set('sync',SYNC);$('sy_in').value='';note('Linking to '+syncFmt(c)+'…');syncStart()};
+addEventListener('visibilitychange',()=>{if(document.hidden&&SYNC.on){clearTimeout(syncT);syncPush()}});
+window.__syncOK=1;setTimeout(()=>{syncUI();if(SYNC.on)syncStart()},1500);
 const NET={on:false,host:false,peer:null,conns:new Map(),players:new Map(),me:'h',name:'',code:'',started:false,spec:false,sendT:0,snap:null};
 const MP_COL=[0x3a7bd5,0x3fae5a,0xd8473b,0x9a5ad8];let netNoise=0;
 const esc=t=>String(t).replace(/[<>&]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
@@ -2387,7 +2454,7 @@ function mqtt(url,onMsg){return new Promise((ok,no)=>{let ws;try{ws=new WebSocke
   pkt=(h,body)=>{if(ws.readyState!==1)return;const hd=[h,...len(body.length)],a=new Uint8Array(hd.length+body.length);a.set(hd);a.set(body,hd.length);ws.send(a)};
  let buf=new Uint8Array(0),pid=1,ka=0,done=false,shut=false;const to=setTimeout(()=>{if(!done){done=true;try{ws.close()}catch(e){}no(new Error('timeout'))}},7000);
  const cli={url,sub(t){pid=pid%65535+1;pkt(0x82,[pid>>8,pid&255,...str(t),0])},pub(t,obj){const pl=enc.encode(JSON.stringify(obj)),tp=str(t),b=new Uint8Array(tp.length+pl.length);b.set(tp);b.set(pl,tp.length);pkt(0x30,b)},
-  close(){if(shut)return;shut=true;clearInterval(ka);try{pkt(0xE0,[]);ws.close()}catch(e){}}};
+  raw(h,body){pkt(h,body)},close(){if(shut)return;shut=true;clearInterval(ka);try{pkt(0xE0,[]);ws.close()}catch(e){}}};
  ws.onopen=()=>pkt(0x10,[...str('MQTT'),4,2,0,30,...str('brx'+Math.random().toString(36).slice(2,12))]);
  ws.onmessage=e=>{const a=new Uint8Array(e.data),n=new Uint8Array(buf.length+a.length);n.set(buf);n.set(a,buf.length);buf=n;
   for(;;){if(buf.length<2)break;let v=0,m=1,i=1,b=128;while(b&128){if(i>=buf.length){i=-1;break}b=buf[i++];v+=(b&127)*m;m*=128}if(i<0||buf.length<i+v)break;
@@ -2422,7 +2489,7 @@ async function relayJoin(code){const id='r'+Math.random().toString(36).slice(2,1
  throw new Error('no relay')}
 const mpStatus=t=>{$('mp_status').textContent=t};
 function netErr(e){const t=e&&e.type;return t==='peer-unavailable'?'No room with that code. Check it and try again.':t==='network'||t==='server-error'||t==='socket-error'||t==='socket-closed'?"Couldn't reach the multiplayer server. Your network may be blocking it.":t==='browser-incompatible'?'This browser does not support multiplayer.':'Connection problem ('+(t||e)+').'}
-function mpName(){CFG.name=cleanName($('mp_name').value);$('mp_name').value=CFG.name;NET.name=CFG.name;store.set('cfg',CFG)}
+function mpName(){const nn=cleanName($('mp_name').value);if(nn!==CFG.name)CFG.profT=Date.now();CFG.name=nn;$('mp_name').value=CFG.name;NET.name=CFG.name;store.set('cfg',CFG)}
 async function mpHost(){if(NET.on||NET.opening)return;mpName();mpStatus('Opening a room…');NET.opening=1;let lib=true;try{await loadPeer()}catch(e){lib=false}
  const ready=(code,peer)=>{NET.opening=0;if(NET.on)return;Object.assign(NET,{on:true,host:true,peer,code,me:'h',started:false,spec:false});document.body.classList.add('mpg');chatSys('Room open. Press T or ENTER in game to chat.');NET.players.clear();NET.players.set('h',{id:'h',name:NET.name,c:0,suit:validSuit(CFG.suit)??suitCol(),alive:true,lives:3,lvl:0});mpLobbyUI();mpStatus('Room open. Give your friends the code.')};
  const relayOnly=code=>relayHost(code).then(n=>{if(n)ready(code,null);else{NET.opening=0;mpStatus("Couldn't reach the multiplayer servers. Your network may be blocking them.")}});
@@ -2654,7 +2721,7 @@ function redeem(){const raw=$('c_code').value,c=raw.toLowerCase().replace(/[^a-z
  $('c_code').value='';msg.style.color='var(--grn)';if(stats.suits&&stats.suits[k]){msg.textContent='You already have '+SPECIAL[k].n+'.';return}
  unlockSuit(k);suitUI();msg.textContent='Unlocked the '+SPECIAL[k].n+' suit! Pick it above.';sfx({f:660,dur:.12,v:.1});sfx({f:990,dur:.25,v:.1,d:.1});if(k==='alig')say('Booyakasha! Respect.',2400)}
 $('c_redeem').onclick=redeem;$('c_code').onkeydown=e=>{e.stopPropagation();if(e.key==='Enter')redeem()};
-function setSuit(c){CFG.suit=c;store.set('cfg',CFG);suitUI();mkHand();if(NET.on){const me=NET.players.get(NET.me);if(me)me.suit=c;if(NET.host)netLobby();else netSend('h',{t:'suit',c:validSuit(c)})}}
+function setSuit(c){CFG.suit=c;CFG.profT=Date.now();store.set('cfg',CFG);suitUI();mkHand();if(NET.on){const me=NET.players.get(NET.me);if(me)me.suit=c;if(NET.host)netLobby();else netSend('h',{t:'suit',c:validSuit(c)})}}
 $('suit_sw').onclick=e=>{const b=e.target.closest('[data-c]');if(!b)return;if(b.classList.contains('lk')){const o=SPECIAL[b.dataset.c];note('To unlock: '+((o&&o.how)||'escape Level ? and keep its key')+'.');return}const v=b.dataset.c;setSuit(/^\d+$/.test(v)?+v:v)};$('suit_in').oninput=e=>setSuit(parseInt(e.target.value.slice(1),16));
 // first-person hand: gloved fist around the flashlight, suit sleeve and reflective band, drawn in the viewmodel pass
 let fpHand=null;
