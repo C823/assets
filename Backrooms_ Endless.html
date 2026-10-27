@@ -421,7 +421,7 @@ body.downed #hint,body.downed #act,body.downed #dot,body.downed #ammo{display:no
 <h4>JOIN A GAME</h4><div class="opt"><span>Room code</span><input id="mp_code" type="text" maxlength="5" placeholder="ABCDE" spellcheck="false" style="text-transform:uppercase"></div><div class="nrow" style="justify-content:flex-start;margin-top:1vh"><button class="btng" id="mp_join">JOIN GAME</button></div></div>
 <div id="mp_lobby" style="display:none"><h4>ROOM CODE</h4><div id="mp_codeshow"></div><h4>PLAYERS</h4><div id="mp_list"></div><p id="mp_diff" class="mpd"></p><button class="btnp" id="mp_start">START GAME</button></div>
 <p id="mp_status"></p><div class="nrow"><button class="btng" id="mp_back">BACK</button></div></div>
-<div id="ver">v5.0</div></div>
+<div id="ver">v3.1 &middot; 2026-10-27</div></div>
 <div id="ov" style="display:none"><div class="ovl"><div class="lbl" id="olbl">GAME PAUSED</div><div id="dkick"></div><h1 id="t">PAUSED</h1><i id="dline"></i><p id="s"></p><div id="dgrid"></div><div id="ostats"></div>
 <div class="obtn"><button id="btn" class="btnp">RESUME</button><button id="m2" class="btng">MAIN MENU</button></div><p id="best"></p>
 <div id="keys"><span><b class="kbd">WASD</b>Move</span><span><b class="kbd">SHIFT</b>Sprint</span><span><b class="kbd">C</b>Crouch</span><span><b class="kbd">E</b>Hide</span><span><b class="kbd">F</b>Light</span><span><b class="kbd">M</b>Map</span><span><b class="kbd">I</b>Items</span><span><b class="kbd">1</b>Battery</span><span><b class="kbd">2</b>Almond water</span></div></div>
@@ -1119,7 +1119,7 @@ $('adm').onclick=e=>{const a=e.target.dataset.a;if(!a)return;
  else if(a==='san'){san=100;breakdown=0}
  else if(a==='u_ach'){for(const x of ACH)stats.ach[x[0]]=stats.ach[x[0]]||Date.now();store.set('stats',stats);note('All achievements unlocked.')}
  else if(a==='u_enc'){stats.seenL=TH.map((_,i)=>i);stats.seenE=Object.keys(EK);store.set('stats',stats);note('Every Encyclopedia entry unlocked.')}
- else if(a==='u_gold'){stats.goldKey=1;stats.wins=Math.max(1,stats.wins||0);stats.suits=Object.assign(stats.suits||{},{thanos:1,sahur:1});saveStats();mkHand();note('Golden key, Endless mode, gold suits and the golden flashlight unlocked.')}
+ else if(a==='u_gold'){stats.goldKey=1;stats.wins=Math.max(1,stats.wins||0);stats.suits=Object.assign(stats.suits||{},{thanos:1,sahur:1,alig:1});saveStats();mkHand();note('Golden key, Endless mode, gold suits and the golden flashlight unlocked.')}
  else if(a==='u_wpn'){bag.w={pistol:1,gauntlet:1,sahur:1};invUI();note('All weapons added. Press 3 to switch.')}
  else if(a==='u_lvl'){best=Math.max(best,TH.length);store.set('best',best);note('Every starting level unlocked.')}
  else if(a==='kill'){for(const m of mons)world.remove(m.g);for(const s2 of swarms)world.remove(s2.pts);for(const v of wins)world.remove(v.g);mons=[];swarms=[];wins=[]}
@@ -1218,6 +1218,8 @@ function batHit(){const fx=-Math.sin(yaw),fz=-Math.cos(yaw);let n=0;
  for(const m of mons){if(m.dead||!m.g.visible||(m.k.verity&&m.vp<3))continue;const dx=m.g.position.x-px,dz=m.g.position.z-pz,d=Math.hypot(dx,dz);if(d>2.9*(m.g.scale.x||1)||(dx*fx+dz*fz)/(d||1)<.45||!los(px,pz,m.g.position.x,m.g.position.z))continue;
   hitMon(m,40,dx,dz,2.6);if(m.dead)ach('tung');n++;if(n>=2)break}
  if(B&&B.g.visible&&B.hittable&&B.mode==='fight'){const g=B.g,dx=g.position.x-px,dz=g.position.z-pz,d=Math.hypot(dx,dz);if(d<3.6&&(dx*fx+dz*fz)/(d||1)>.4&&los(px,pz,g.position.x,g.position.z)){dmgBoss(14,{x:px+dx*.7,y:1.6,z:pz+dz*.7});n++}}
+ if(!n&&!B)for(const L of lockers){const dx=L.x-px,dz=L.z-pz,d=Math.hypot(dx,dz);if(d<2.4&&(dx*fx+dz*fz)/(d||1)>.5){const p_=panOf(L.x,L.z);sfx({t:'square',f:180,f2:120,dur:.35,v:.3,ft:'bandpass',ff:900,q:3,p:p_,r:.6});sfx({n:1,ft:'highpass',ff:2500,dur:.12,v:.2,p:p_});L.want=1;setTimeout(()=>L.want=0,260);
+   if(!(stats.suits&&stats.suits.alig)){say('Booyakasha! Respect.',2600);unlockSuit('alig')}return}}
  if(n){for(let i=0;i<3;i++){sfx({t:'sine',f:320-i*20,f2:190,dur:.14,v:.42,r:.35,d:i*.14});sfx({n:1,ft:'bandpass',ff:1100,q:2,dur:.05,v:.28,d:i*.14})}hitMark(0)}
  else{const hp=wallHit(cam.position,new THREE.Vector3(fx,0,fz));if(hp&&Math.hypot(hp.x-px,hp.z-pz)<1.9)sfx({t:'sine',f:260,f2:170,dur:.12,v:.3,r:.3})}}
 function snap(){if(snapT>0)return;if(snapLv===level){say('The stones are still recharging. One snap per level.',2200);return}snapLv=level;snapT=1e-4;wpnUI();ach('snap');
@@ -1931,7 +1933,8 @@ function loadPeer(){return new Promise((ok,no)=>{if(window.Peer)return ok();cons
 // direct links use these STUN servers (PeerJS's bundled TURN relays no longer exist)
 const ICE=[{urls:['stun:stun.l.google.com:19302','stun:stun1.l.google.com:19302']},{urls:'stun:stun.cloudflare.com:3478'}];
 // ---- backup relay: when two networks can't link directly (strict NAT, school firewalls), messages go through a public MQTT broker over secure WebSockets ----
-const RELAYS=['wss://broker.emqx.io:8084/mqtt','wss://broker.hivemq.com:8884/mqtt'];
+// tried in this order; HiveMQ throttles repeat connections from one network, so it goes last
+const RELAYS=['wss://broker.emqx.io:8084/mqtt','wss://broker-cn.emqx.io:8084/mqtt','wss://broker.hivemq.com:8884/mqtt'];
 // minimal MQTT 3.1.1 client: connect, subscribe, QoS 0 publish, keep-alive
 function mqtt(url,onMsg){return new Promise((ok,no)=>{let ws;try{ws=new WebSocket(url,'mqtt')}catch(e){return no(e)}ws.binaryType='arraybuffer';
  const enc=new TextEncoder(),dec=new TextDecoder(),str=x=>{const b=enc.encode(x);return[b.length>>8,b.length&255,...b]},
@@ -1953,13 +1956,17 @@ function relayConn(cli,peerId,me,out){const ev={},c={peer:peerId,open:false,rela
   send(m){cli.pub(out,{f:me,d:m})},
   close(){if(c.gone)return;c.gone=1;try{cli.pub(out,{f:me,k:'bye'})}catch(e){}c.down();if(c.cli)setTimeout(()=>c.cli.close(),150)},
   down(){if(c.dead)return;c.dead=1;c.open=false;clearInterval(c.hb);c.emit('close')}};
- c.hb=setInterval(()=>{if(!c.open)return;if(performance.now()-c.last>10000)c.down();else cli.pub(out,{f:me,k:'ka'})},2500);cli.onclose=()=>c.down();return c}
+ c.hb=setInterval(()=>{if(!c.open)return;if(performance.now()-c.last>10000)c.down();else cli.pub(out,{f:me,k:'ka'})},2500);const pc=cli.onclose;cli.onclose=()=>{c.down();if(pc)pc()};return c}
 // host: listen on every relay that answers; a joiner says hi on whichever one it reached
 function relayHost(code){const base='brxe/'+code+'/';NET.rconns=new Map();NET.relays=[];
- return Promise.all(RELAYS.map(u=>mqtt(u,(t,m,cli)=>{if(!m||!m.f||m.f==='h')return;let c=NET.rconns.get(m.f);
+ const onMsg=(t,m,cli)=>{if(!m||!m.f||m.f==='h')return;let c=NET.rconns.get(m.f);
    if(m.k==='hi'){if(!c||c.dead){c=relayConn(cli,m.f,'h',base+'c/'+m.f);NET.rconns.set(m.f,c);hostConn(c);c.open=true;c.emit('open')}cli.pub(base+'c/'+m.f,{f:'h',k:'ok'});return}
-   if(!c||c.dead)return;c.last=performance.now();if(m.k==='bye')c.down();else if(m.d!==undefined)c.emit('data',m.d)})
-  .then(cli=>{cli.sub(base+'h');NET.relays.push(cli);return 1}).catch(()=>0))).then(r=>r.reduce((a,b)=>a+b,0))}
+   if(!c||c.dead)return;c.last=performance.now();if(m.k==='bye')c.down();else if(m.d!==undefined)c.emit('data',m.d)};
+ // a relay that doesn't answer (some public brokers throttle reconnects) is retried in the background while the room stays open
+ const live=()=>NET.opening||(NET.on&&NET.host&&NET.code===code),
+  connect=u=>mqtt(u,onMsg).then(cli=>{if(!live()){cli.close();return 0}cli.sub(base+'h');NET.relays.push(cli);cli.onclose=()=>{NET.relays=NET.relays.filter(x=>x!==cli);if(live())setTimeout(()=>{if(live())connect(u)},5000)};return 1})
+   .catch(()=>{setTimeout(()=>{if(live())connect(u)},10000);return 0});
+ return Promise.all(RELAYS.map(connect)).then(r=>r.reduce((a,b)=>a+b,0))}
 // joiner: try each relay in turn until the host answers
 async function relayJoin(code){const id='r'+Math.random().toString(36).slice(2,10),base='brxe/'+code+'/';
  for(const u of RELAYS){let c=null,cli=null;
@@ -2068,7 +2075,7 @@ function netTick(rdt){if(NET.started&&(NET.sendT-=rdt)<=0&&stt!=='menu'){NET.sen
 // ---- suit colour: picked in the main menu, shown on your first-person sleeve and on your avatar in multiplayer ----
 const SUITS=[['Hazard yellow',0xd8c020],['Safety orange',0xe8701e],['Signal red',0xc8302a],['Lab white',0xe4e2da],['Graphite',0x3a3d42],['Cobalt',0x2f63c8],['Teal',0x1f9a8f],['Moss',0x5f8a2e],['Violet',0x7a4ac0],['Pink',0xe06aa8]];
 // special suits unlock by escaping Level ?: a polished gold suit, and The Thing's own fused body
-const SPECIAL={gold:{n:'Escapee gold',c:0xd4a52a,bg:'linear-gradient(135deg,#f6dc7a,#b8861c 55%,#f0cf62)'},thanos:{n:'Thanos',c:0x7a5a9a,unl:'thanos',how:'take the Infinity Gauntlet from a safe',bg:'linear-gradient(180deg,#8a6aa8 0 38%,#2c4a7a 38% 80%,#d4a52a 80% 88%,#2c4a7a 88%)'},sahur:{n:'Tung Tung Tung Sahur',c:0xb07a46,unl:'sahur',how:'take the Sahur bat from a safe',bg:'radial-gradient(circle at 36% 38%,#fff 0 9%,#111 10% 13%,transparent 14%),radial-gradient(circle at 64% 38%,#fff 0 9%,#111 10% 13%,transparent 14%),repeating-linear-gradient(180deg,#b07a46 0 7px,#9a6838 7px 9px)'},racer:{n:'Racer',c:0x161618,adm:1,bg:'radial-gradient(ellipse 34% 20% at 50% 46%,#4fa3e8 0 70%,transparent 74%),linear-gradient(160deg,#2a2a2e,#0c0c0e)'},thing:{n:'The Thing',c:0x2b2420,bg:'radial-gradient(circle at 35% 40%,#ff3a2a 0 9%,transparent 10%),radial-gradient(circle at 65% 40%,#7aff4a 0 8%,transparent 9%),linear-gradient(160deg,#3a302a,#141110)'}};
+const SPECIAL={gold:{n:'Escapee gold',c:0xd4a52a,bg:'linear-gradient(135deg,#f6dc7a,#b8861c 55%,#f0cf62)'},thanos:{n:'Thanos',c:0x7a5a9a,unl:'thanos',how:'take the Infinity Gauntlet from a safe',bg:'linear-gradient(180deg,#8a6aa8 0 38%,#2c4a7a 38% 80%,#d4a52a 80% 88%,#2c4a7a 88%)'},sahur:{n:'Tung Tung Tung Sahur',c:0xb07a46,unl:'sahur',how:'take the Sahur bat from a safe',bg:'radial-gradient(circle at 36% 38%,#fff 0 9%,#111 10% 13%,transparent 14%),radial-gradient(circle at 64% 38%,#fff 0 9%,#111 10% 13%,transparent 14%),repeating-linear-gradient(180deg,#b07a46 0 7px,#9a6838 7px 9px)'},alig:{n:'Ali G',c:0xf2c41c,unl:'alig',how:'a secret',bg:'linear-gradient(180deg,#1c2440 0 26%,#f2c41c 26% 38%,#c8a02a 38% 46%,#f2c41c 46%)'},racer:{n:'Racer',c:0x161618,adm:1,bg:'radial-gradient(ellipse 34% 20% at 50% 46%,#4fa3e8 0 70%,transparent 74%),linear-gradient(160deg,#2a2a2e,#0c0c0e)'},thing:{n:'The Thing',c:0x2b2420,bg:'radial-gradient(circle at 35% 40%,#ff3a2a 0 9%,transparent 10%),radial-gradient(circle at 65% 40%,#7aff4a 0 8%,transparent 9%),linear-gradient(160deg,#3a302a,#141110)'}};
 const validSuit=v=>typeof v==='number'&&v>=0&&v<=0xffffff?v|0:SPECIAL[v]?v:undefined;
 const suitColOf=v=>SPECIAL[v]?SPECIAL[v].c:typeof v==='number'&&v>=0&&v<=0xffffff?v:0xe8701e;
 const suitCol=()=>suitColOf(CFG.suit),suitKind=()=>SPECIAL[CFG.suit]?CFG.suit:null,suitsOpen=()=>(stats.wins||0)>0,specialOpen=k=>SPECIAL[k].adm?adminOK():SPECIAL[k].unl?!!(stats.suits&&stats.suits[SPECIAL[k].unl]):suitsOpen();
@@ -2092,6 +2099,25 @@ function mkSuitBody(v,MAT){if(v==='gold'){const m=new THREE.MeshPhongMaterial({c
   for(let i=0;i<11;i++){const t=(i-5)/5;add(u.up,UB,mouth,.03,.024,.02,t*.13,.64-(1-t*t)*.05,.248+(1-t*t)*.004,0,0,t*.6)}
   for(const kn of[u.knL,u.knR])add(kn,SPH,wood,.075,.045,.14,0,-L2-.01,.06);
   const bt=mkWeapon('sahur');bt.scale.setScalar(.8);bt.rotation.x=Math.PI*.78;bt.position.set(0,-A2-.03,.02);u.elR.add(bt);return g}
+ // Ali G: bright yellow tracksuit with navy piping, designer skullcap, yellow-tinted wraparound shades, goatee, chunky gold chain, white trainers
+ if(v==='alig'){const o={tw:.42,th:.82,lw:.13,aw:.085,hw:.26,hh:.32,hunch:.06,hc:0xd6a98a,lc:0xf2c41c,shoes:1,shoe:0xf0f0f0,hand:0xd6a98a,arm:1.35,leg:1.12},g=mkEntity(MAT(0xf2c41c),null,o),u=g.userData,hd=u.head,
+  L=c=>new THREE.MeshLambertMaterial({color:c}),navy=L(0x1c2440),pipe=L(0x22305a),hair=L(0x2a1a10),blk=L(0x0c0c0e),gold=new THREE.MeshPhongMaterial({color:0xd8aa2a,specular:0xffe6a0,shininess:80}),
+  shade=new THREE.MeshPhongMaterial({color:0xffd23a,specular:0xffffff,shininess:90,transparent:true,opacity:.78}),
+  add=(par,geo,mat,sx,sy,sz,x,y,z,rx=0,ry=0,rz=0)=>{const m=new THREE.Mesh(geo,mat);m.scale.set(sx,sy,sz);m.position.set(x,y,z);m.rotation.set(rx,ry,rz);par.add(m);return m},
+  arc=(t0,tl)=>new THREE.CylinderGeometry(1,1,1,28,1,true,t0,tl),th=o.th,tw=o.tw,hw=o.hw,hh=o.hh,fz=hw*.57+.02,A1=o.arm*.47,A2=o.arm*.43,L1=o.leg*.5,L2=o.leg*.5,lw=o.lw,aw=o.aw;
+  // skullcap with a little red-white-blue logo, wraparound yellow shades, goatee and moustache
+  add(hd,SPH,navy,hw*.56,hh*.34,hw*.6,0,hh*.74,.0);add(hd,CYL,navy,hw*.55,hh*.08,hw*.59,0,hh*.6,.0);add(hd,UB,L(0xd02a2a),.03,.02,.006,-.012,hh*.66,hw*.6);add(hd,UB,L(0xf2f2f2),.012,.02,.006,.012,hh*.66,hw*.6);add(hd,UB,L(0x2a4aa8),.012,.02,.006,.024,hh*.66,hw*.6);
+  add(hd,arc(-1,2),blk,.15,.062,.166,0,hh*.55,.02);add(hd,arc(-.9,1.8),shade,.154,.052,.171,0,hh*.55,.02);
+  add(hd,SPH,hair,.034,.05,.028,0,hh*.08,fz-.04);add(hd,UB,hair,.06,.01,.012,0,hh*.37,fz-.02);
+  // jacket: collar, zip, gold chain with a medallion
+  add(u.up,CYL,L(0xd8ac14),tw*.24,th*.07,tw*.24,0,th*.95,0);add(u.up,UB,pipe,.01,th*.55,.01,0,th*.58,tw*.305);
+  for(let i=0;i<20;i++){const a=i/20*Math.PI*2,c=Math.cos(a);add(u.up,SPS,gold,.022,.022,.022,Math.sin(a)*tw*.3,th*.93-(c>0?c*.14:0),c*tw*.22+(c>0?c*.05:0))}add(u.up,CYL,gold,.045,.012,.045,0,th*.76,tw*.33,Math.PI/2);
+  // navy piping down the outside of the arms and legs
+  for(const[seg,sx,len]of[[u.shL,-1,A1],[u.shR,1,A1]])add(seg,UB,pipe,.014,len,.02,sx*aw*.58,-len/2,0);
+  for(const[seg,sx]of[[u.elL,-1],[u.elR,1]])add(seg,UB,pipe,.014,A2*.85,.02,sx*aw*.45,-A2*.45,0);
+  for(const[seg,sx]of[[u.legL,-1],[u.legR,1]])add(seg,UB,pipe,.016,L1,.02,sx*lw*.66,-L1/2,0);
+  for(const[seg,sx]of[[u.knL,-1],[u.knR,1]])add(seg,UB,pipe,.016,L2*.8,.02,sx*lw*.5,-L2*.45,0);
+  return g}
  // Racer (secret, admin code): black riding kit with grey seams, white soles, a glossy motocross helmet with a long peak and beak chin guard, wrap-around blue mirrored goggles
  if(v==='racer'){const o={tw:.44,th:.82,lw:.14,aw:.085,hw:.28,hh:.32,hunch:.12,face:0,ears:0,lc:0x18181b,shoes:1,shoe:0x202024,hand:0xd9b48f,arm:1.35,leg:1.12},g=mkEntity(MAT(0x1d1d21),null,o),u=g.userData,hd=u.head,
   L=c=>new THREE.MeshLambertMaterial({color:c}),grey=L(0x3c3c42),wh=L(0xe4e4e4),shell=new THREE.MeshPhongMaterial({color:0x1b1b1e,specular:0x777777,shininess:55}),blk=L(0x0c0c0e),
@@ -2124,7 +2150,7 @@ function suitUI(){const cvs=$('suit_cv');if(!suitR){try{suitR=new THREE.WebGLRen
   suitS=new THREE.Scene();suitS.add(new THREE.AmbientLight(0xffffff,.5));const d1=new THREE.DirectionalLight(0xfff2dc,1);d1.position.set(2,3,4);suitS.add(d1);const d2=new THREE.DirectionalLight(0x9ab0ff,.45);d2.position.set(-3,2,-3);suitS.add(d2);
   suitC=new THREE.PerspectiveCamera(28,200/260,.05,50);suitC.position.set(0,1.25,6.3);suitC.lookAt(0,1.18,0)}
  suitModel();const cur_=CFG.suit;$('suit_sw').innerHTML=SUITS.map(([n,c])=>'<button title="'+n+'" data-c="'+c+'" style="background:#'+c.toString(16).padStart(6,'0')+'"'+(c===cur_?' class="on"':'')+'></button>').join('')+
-  Object.entries(SPECIAL).filter(([k,o])=>!o.adm||specialOpen(k)).map(([k,o])=>{const op=specialOpen(k);return'<button title="'+o.n+(op?'':' ('+(o.how||'escape Level ? to unlock')+')')+'" data-c="'+k+'" class="sp'+(k===cur_?' on':'')+(op?'':' lk')+'" style="background:'+o.bg+'">'+(op?'':'<i>&#128274;</i>')+'</button>'}).join('');
+  Object.entries(SPECIAL).filter(([k])=>specialOpen(k)).map(([k,o])=>{const op=specialOpen(k);return'<button title="'+o.n+(op?'':' ('+(o.how||'escape Level ? to unlock')+')')+'" data-c="'+k+'" class="sp'+(k===cur_?' on':'')+(op?'':' lk')+'" style="background:'+o.bg+'">'+(op?'':'<i>&#128274;</i>')+'</button>'}).join('');
  $('suit_in').value='#'+suitCol().toString(16).padStart(6,'0');const nm=SPECIAL[cur_]?[SPECIAL[cur_].n]:SUITS.find(x=>x[1]===cur_);$('suit_nm').textContent=nm?nm[0]:'Custom';
  const spin=()=>{if(!$('s_suit').classList.contains('on')||!document.body.classList.contains('menu'))return;suitT+=.016;suitM.rotation.y=.5+suitT*.6;suitR.render(suitS,suitC);requestAnimationFrame(spin)};requestAnimationFrame(spin)}
 function setSuit(c){CFG.suit=c;store.set('cfg',CFG);suitUI();mkHand();if(NET.on){const me=NET.players.get(NET.me);if(me)me.suit=c;if(NET.host)netLobby();else netSend('h',{t:'suit',c:validSuit(c)})}}
@@ -2132,7 +2158,7 @@ $('suit_sw').onclick=e=>{const b=e.target.closest('[data-c]');if(!b)return;if(b.
 // first-person hand: gloved fist around the flashlight, suit sleeve and reflective band, drawn in the viewmodel pass
 let fpHand=null;
 function mkHand(){if(fpHand)gunScene.remove(fpHand);const g=new THREE.Group(),b=GB(),m=new THREE.Matrix4(),q=new THREE.Quaternion(),e=new THREE.Euler(),v=new THREE.Vector3(),sv=new THREE.Vector3(),
-  P=(geo,sx,sy,sz,x,y,z,c,rx=0,rz=0)=>{q.setFromEuler(e.set(rx,0,rz));m.compose(v.set(x,y,z),q,sv.set(sx,sy,sz));b.add(geo,m,new THREE.Color(c))},sk=suitKind(),glv=sk==='thing'?0x1a1412:sk==='gold'?0x8a6a1a:sk==='racer'?0xd9b48f:sk==='thanos'?0x7a5a9a:sk==='sahur'?0xa06c3c:0x2a2c2e,su=suitCol(),gold=(stats.wins||0)>0;
+  P=(geo,sx,sy,sz,x,y,z,c,rx=0,rz=0)=>{q.setFromEuler(e.set(rx,0,rz));m.compose(v.set(x,y,z),q,sv.set(sx,sy,sz));b.add(geo,m,new THREE.Color(c))},sk=suitKind(),glv=sk==='thing'?0x1a1412:sk==='gold'?0x8a6a1a:sk==='racer'?0xd9b48f:sk==='alig'?0xd6a98a:sk==='thanos'?0x7a5a9a:sk==='sahur'?0xa06c3c:0x2a2c2e,su=suitCol(),gold=(stats.wins||0)>0;
  fl.color.setHex(gold?0xffe2a8:0xfff6e0);P(CYL,.021,.2,.021,0,0,-.06,gold?0xd4a52a:0x1c1c1e,Math.PI/2);P(CYL,.03,.05,.03,0,0,-.18,gold?0xb8891c:0x2a2a2c,Math.PI/2);if(gold)for(const z of[-.02,-.1])P(CYL,.0225,.008,.0225,0,0,z,0x8a6410,Math.PI/2);if(sk==='thing')for(let i=0;i<4;i++)P(TAP,.006,.035,.006,-.03,-.03+i*.0,-.088+i*.021,0x0c0a08,Math.PI*.8);P(CYL,.026,.006,.026,0,0,-.207,0xfff3c8,Math.PI/2);P(UB,.008,.012,.03,0,.024,-.07,0x8a8a8a);
  P(SPH,.04,.036,.058,.003,-.008,-.04,glv);for(let i=0;i<4;i++)P(SPH,.016,.017,.016,-.026,-.014+i*.0,-.075+i*.021,glv);P(CYL,.012,.05,.012,.02,.024,-.05,glv,Math.PI/2-.35);
  // forearm runs down and back toward the body from the wrist so the sleeve shows under the glove
