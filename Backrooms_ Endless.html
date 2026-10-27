@@ -1305,7 +1305,7 @@ function itemsTick(dt,now){
   if(dd>1.2||(CAP[d.type]&&(bag[d.type]||0)>=CAP[d.type]))continue;world.remove(g);dropL.splice(i,1);
   if(CAP[d.type])bag[d.type]=(bag[d.type]||0)+1;else{giveWeapon(d.type);continue}sfx({n:1,ft:'highpass',ff:2500,dur:.04,v:.2});invUI()}
  if(key&&key.userData.arm===false&&Math.hypot(key.position.x-px,key.position.z-pz)>2.2)key.userData.arm=true;
- for(const rm of roomsL){rm.ang=lerp(rm.ang,rm.open?-1.65:0,Math.min(1,dt*4));if(rm.piv)rm.piv.rotation.y=rm.ang}
+ for(const rm of roomsL){rm.ang=lerp(rm.ang,rm.open?1.65:0,Math.min(1,dt*4));if(rm.piv)rm.piv.rotation.y=rm.ang}
  for(const it of roomItems){if(it.taken)continue;const g=it.g;g.rotation.y+=dt;g.position.y=.3+Math.sin(now/400+g.position.x)*.05;if(Math.hypot(g.position.x-px,g.position.z-pz)>1.2)continue;
   if((bag[it.type]||0)>=CAP[it.type]){if(lockT<=0){lockT=1.5;say('You cannot carry any more of those.',1200)}continue}
   it.taken=true;g.visible=false;bag[it.type]=(bag[it.type]||0)+1;sfx({n:1,ft:'highpass',ff:2500,dur:.04,v:.2});sfx({f:1100,f2:1500,dur:.2,v:.1,r:.3});
@@ -1536,7 +1536,7 @@ function continueGame(){const sv=loadSave();if(!sv)return;closePlay();startLoad(
 function contLoad(sv){endless=!!sv.endless;endSeed=sv.endSeed|0;thiC={};runSeed=sv.runSeed??null;perma=!!sv.perma;noMap=!!sv.noMap;noWand=!!sv.noWand;DIFF=DF[sv.diff]||DF.normal;level=sv.level;build(sv.seed);reset();
  lives=sv.lives;runT=sv.runT||0;bat=sv.bat;san=sv.san;bag=Object.assign({bat:0,aw:0},sv.bag);flashOn=sv.flashOn!==false;breakdown=0;wobG=0;$('insane').style.opacity=0;
  bag.w=bag.w||{};bag.choc=bag.choc||0;bag.nrg=bag.nrg||0;if(sv.hasKey)giveKey();
- [...(sv.rooms||'')].forEach((c,i)=>{if(c==='1'&&roomsL[i]){setRoomDoor(i,true,true);roomsL[i].ang=-1.65}});[...(sv.ritems||'')].forEach((c,i)=>{if(c==='1'&&roomItems[i]){roomItems[i].taken=true;roomItems[i].g.visible=false}});
+ [...(sv.rooms||'')].forEach((c,i)=>{if(c==='1'&&roomsL[i]){setRoomDoor(i,true,true);roomsL[i].ang=1.65}});[...(sv.ritems||'')].forEach((c,i)=>{if(c==='1'&&roomItems[i]){roomItems[i].taken=true;roomItems[i].g.visible=false}});
  if(sv.safe&&safeO){[safeO.open,safeO.item,safeO.taken]=sv.safe;safeO.ang=safeO.open?-1.9:0;if(safeO.open&&safeO.item&&!safeO.taken){safeO.show=mkPickup(safeO.item);safeO.show.position.set(0,safeO.item==='sahur'?.86:.8,-.05);safeO.g.add(safeO.show)}}
  for(const[t,x,z]of sv.drops||[]){const g=mkPickup(t);g.position.set(x,.3,z);world.add(g);dropL.push({g,type:t,arm:true})}if(sv.kd&&!sv.hasKey){key.position.set(sv.kd[0],1.05,sv.kd[1]);keyL.position.copy(key.position);key.userData.arm=true}
  snapLv=sv.snap?level:-1;equip(sv.eq);if(cur.boss)bossArm();
