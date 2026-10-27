@@ -142,7 +142,16 @@ body.np #newg{display:block}body.np #mpanel,body.np #msub,body.np #mlogo{display
 #newg .sub{display:none}
 #newg h4{margin:2.4vh 0 .8vh;font:600 13px var(--fb);letter-spacing:.06em;color:var(--mute);text-transform:uppercase}
 #m_cwrap{display:flex;align-items:center;gap:16px;padding:10px 12px;background:rgba(255,255,255,.06)}
-#m_cwrap .lbl{display:none}#m_cinfo{margin:0;font:14px/1.5 var(--fb);color:var(--ink)}
+#m_cwrap .lbl{margin:0 0 6px}.crow{display:flex;align-items:center;gap:14px;padding:6px 0;border-top:1px solid var(--line)}.crow:first-of-type{border-top:0}.crow p{flex:1;margin:0;font:14px/1.5 var(--fb);color:var(--ink)}.crow p b{font:400 24px/1 var(--fd);margin-right:8px;text-shadow:var(--osd)}.crow .btnp{height:38px;font-size:24px;padding:0 16px}
+#slotp{position:absolute;left:4.7vw;top:8vh;width:min(72vh,92vw);max-height:86vh;overflow:auto;padding:3vh 3.4vh;display:none}
+body.slp #slotp{display:block}body.slp #newg,body.slp #mp,body.slp #mpanel,body.slp #msub,body.slp #mlogo{display:none!important}
+#slotd{font:14px/1.5 var(--fb);color:var(--mute);margin:0 0 1.6vh}
+.slot{display:flex;width:100%;align-items:center;gap:14px;text-align:left;padding:10px 12px;margin:0 0 8px;background:transparent;border:0;box-shadow:inset 0 0 0 2px rgba(233,228,214,.3);color:var(--mute);cursor:pointer;font:14px/1.45 var(--fb)}
+.slot:hover,.slot:focus-visible{box-shadow:inset 0 0 0 2px var(--ink);outline:none;color:var(--ink)}
+.slot b{font:400 30px/1 var(--fd);min-width:3.4em;color:var(--ink);text-shadow:var(--osd)}.slot span{flex:1}.slot.full span{color:var(--ink)}
+.slot em{font:400 22px/1 var(--fd);font-style:normal;color:var(--grn);white-space:nowrap}.slot.full em{color:var(--hi)}.slot.arm{box-shadow:inset 0 0 0 2px var(--red)}.slot.arm em{color:var(--red)}
+.slot.none{margin-top:14px;box-shadow:inset 0 0 0 2px rgba(233,228,214,.18)}.slot.none em{color:var(--mute)}
+#mp_saves .crow p{font-size:13px}
 #diff{display:flex;gap:6px}
 #diff button{flex:1;padding:10px 12px;text-align:left;background:rgba(255,255,255,.06);border:0;cursor:pointer}
 #diff button b{display:block;font:700 20px var(--fd)}#diff button small{font:13px var(--fb);color:var(--mute)}
@@ -152,7 +161,7 @@ body.np #newg{display:block}body.np #mpanel,body.np #msub,body.np #mlogo{display
 #dtxt{font:14px/1.5 var(--fb);color:var(--mute);min-height:3em;margin:1vh 0 0}
 .opt{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:9px 0;border-top:1px solid var(--line);font:500 15px var(--fb)}
 .opt span small{display:block;font:13px var(--fb);color:var(--mute)}
-#m_warn{font:13px var(--fb);color:#e0a48a;margin:1.4vh 0 0}
+#m_warn{font:13px var(--fb);color:var(--mute);margin:1.4vh 0 0}
 .nrow{display:flex;gap:8px;margin-top:2vh;justify-content:flex-end}
 /* pause & game over */
 #ov{position:fixed;inset:0;z-index:10;display:flex;align-items:center;gap:4vw;padding:6vh 7vw;background:rgba(0,0,0,.78);overflow:auto;animation:fin .2s}
@@ -252,7 +261,7 @@ body.touch #holdb{display:block}body.hiding #mini,body.hiding #comp,body.hiding 
 @media (max-height:560px){.mb{height:32px}#card h2{font-size:44px}}
 /* ===== camcorder on-screen display: the whole UI is drawn like a VCR / camcorder overlay ===== */
 .glass,#msub,#newg,#mp,#setPause,#admpw,#inv,#mapw,#adm{background:rgba(6,6,6,.93);border:2px solid rgba(233,228,214,.85);box-shadow:none}
-#msub h3,#newg h3,#mp h3,#admpw b,#setPause .lbl:first-child{display:inline-block;background:var(--ink);color:#0a0a0a;font:400 clamp(26px,4vh,36px)/1 var(--fd);padding:2px 10px 0;margin:0 0 1.8vh;text-shadow:none;text-transform:uppercase;letter-spacing:0}
+#msub h3,#newg h3,#mp h3,#slotp h3,#admpw b,#setPause .lbl:first-child{display:inline-block;background:var(--ink);color:#0a0a0a;font:400 clamp(26px,4vh,36px)/1 var(--fd);padding:2px 10px 0;margin:0 0 1.8vh;text-shadow:none;text-transform:uppercase;letter-spacing:0}
 #m_x{font:400 28px/1 var(--fd);color:var(--ink);width:36px;height:36px}#m_x:hover{background:var(--ink);color:#0a0a0a}
 .lbl,#newg h4,#mp h4{font:400 22px var(--fd);letter-spacing:0;text-transform:uppercase;color:var(--mute)}
 #menu{background:linear-gradient(90deg,rgba(0,0,0,.72),rgba(0,0,0,.25) 45%,rgba(0,0,0,.08) 70%)}
@@ -403,7 +412,7 @@ body.downed #hint,body.downed #act,body.downed #dot,body.downed #ammo{display:no
 <button id="fs" class="btng">Toggle fullscreen</button></div></div></section>
 </div>
 <div id="newg" class="glass"><h3>NEW GAME</h3><p class="sub">Choose how deep into the Backrooms you want to go.</p>
-<div id="m_cwrap"><div style="flex:1"><div class="lbl" style="color:var(--grn)">SAVED RUN FOUND</div><p id="m_cinfo"></p></div><button class="btnp" id="m_cont">CONTINUE</button></div>
+<div id="m_cwrap"><div class="lbl" style="color:var(--grn)">SAVED RUNS</div><div id="m_clist"></div></div>
 <h4>MODE</h4><div id="mode"><button data-md="story"><b>STORY</b><small>12 levels, then Level ?</small></button><button data-md="endless"><b>ENDLESS</b><small id="mode_e"></small></button></div>
 <h4>DIFFICULTY</h4><div id="diff"><button data-d="easy"><b>EASY</b><small>5 lives &middot; forgiving</small></button><button data-d="normal"><b>NORMAL</b><small>3 lives &middot; intended</small></button><button data-d="hard"><b>HARD</b><small>2 lives &middot; sanity</small></button></div><p id="dtxt"></p>
 <h4>RUN OPTIONS</h4>
@@ -412,16 +421,17 @@ body.downed #hint,body.downed #act,body.downed #dot,body.downed #ammo{display:no
 <div class="opt"><span>One life<small>Permadeath, no bonus lives</small></span><input type="checkbox" class="sw" id="o_perma"></div>
 <div class="opt"><span>Allow map<small>Press M to see where you have walked</small></span><input type="checkbox" class="sw" id="o_map"></div>
 <div class="opt"><span>Friendly Wanderers<small>Survivors who share supplies</small></span><input type="checkbox" class="sw" id="o_wand"></div>
-<p id="m_warn">Starting a new game replaces your saved run.</p>
+<p id="m_warn">After START you choose a save slot, or play without saving.</p>
 <div class="nrow"><button class="btng" id="m_back">BACK</button><button class="btnp" id="m_new">START</button></div></div>
 <div id="mfoot"><span><b class="kbd">&#8593;&#8595;</b>Navigate</span><span><b class="kbd">ENTER</b>Select</span><span><b class="kbd">ESC</b>Back</span></div>
+<div id="slotp" class="glass"><h3>SAVE SLOT</h3><p id="slotd"></p><div id="slotl"></div><div class="nrow"><button class="btng" id="slot_back">BACK</button></div></div>
 <div id="mp" class="glass"><h3>MULTIPLAYER</h3><p class="mpd">Co-op for up to 4 players. Everyone explores the same levels together, shares the key, and has to reach the exit door.</p>
 <div class="opt"><span>Your name</span><input id="mp_name" type="text" maxlength="14" spellcheck="false" placeholder="Player"></div>
 <div id="mp_home"><h4>HOST A GAME</h4><p class="mpd">Opens a room and gives you a code to share. You choose the difficulty under PLAY.</p><button class="btnp" id="mp_host">HOST GAME</button>
 <h4>JOIN A GAME</h4><div class="opt"><span>Room code</span><input id="mp_code" type="text" maxlength="5" placeholder="ABCDE" spellcheck="false" style="text-transform:uppercase"></div><div class="nrow" style="justify-content:flex-start;margin-top:1vh"><button class="btng" id="mp_join">JOIN GAME</button></div></div>
-<div id="mp_lobby" style="display:none"><h4>ROOM CODE</h4><div id="mp_codeshow"></div><h4>PLAYERS</h4><div id="mp_list"></div><p id="mp_diff" class="mpd"></p><button class="btnp" id="mp_start">START GAME</button></div>
+<div id="mp_lobby" style="display:none"><h4>ROOM CODE</h4><div id="mp_codeshow"></div><h4>PLAYERS</h4><div id="mp_list"></div><p id="mp_diff" class="mpd"></p><div id="mp_saves"></div><button class="btnp" id="mp_start">START NEW GAME</button></div>
 <p id="mp_status"></p><div class="nrow"><button class="btng" id="mp_back">BACK</button></div></div>
-<div id="ver">v3.2 &middot; 2026-10-27</div></div>
+<div id="ver">v3.3 &middot; 2026-10-27</div></div>
 <div id="ov" style="display:none"><div class="ovl"><div class="lbl" id="olbl">GAME PAUSED</div><div id="dkick"></div><h1 id="t">PAUSED</h1><i id="dline"></i><p id="s"></p><div id="dgrid"></div><div id="ostats"></div>
 <div class="obtn"><button id="btn" class="btnp">RESUME</button><button id="m2" class="btng">MAIN MENU</button></div><p id="best"></p>
 <div id="keys"><span><b class="kbd">WASD</b>Move</span><span><b class="kbd">SHIFT</b>Sprint</span><span><b class="kbd">C</b>Crouch</span><span><b class="kbd">E</b>Hide</span><span><b class="kbd">F</b>Light</span><span><b class="kbd">M</b>Map</span><span><b class="kbd">I</b>Items</span><span><b class="kbd">1</b>Battery</span><span><b class="kbd">2</b>Almond water</span><span><b class="kbd">4</b>Chocolate</span><span><b class="kbd">5</b>Energy drink</span></div></div>
@@ -1069,7 +1079,7 @@ function show(t,s,b,setg){const o=$('ov'),ov=stt==='over';o.className=ov?'over':
  $('ostats').textContent=['Level '+level+' – '+cur.n,fmt(runT),ov?'Deepest: level '+Math.max(best,level):lives+(lives===1?' life':' lives'),DIFF.n+(perma?' (one life)':'')].concat(runSeed!=null&&RUN.seed?['Seed: '+RUN.seed]:[]).join('  ·  ');
  $('best').textContent=best>1?'DEEPEST LEVEL REACHED: '+best:'';$('m2').textContent=ov?'MAIN MENU':NET.on?'LEAVE GAME':'SAVE AND QUIT';$('btn').style.display=ov&&NET.on?'none':'';if(setg)$('setPause').appendChild($('set'));$('setPause').style.display=setg?'block':'none';o.style.display='flex';$('btn').focus()}
 function pause(m){if(stt!=='play')return;stt='pause';for(const k in K)K[k]=0;mapOn=false;$('mapw').style.display='none';if(AC)MG.gain.setTargetAtTime(CFG.vol*.3,AC.currentTime,.1);show('PAUSED',m||'Take a breath. They are still out there.','RESUME',1);saveGame()}
-function over(why){stt='over';const pb=endless?(stats.endBest||0):best;bumpBest();const nbst=endless?(stats.endBest||0):best,rec=nbst>pb&&pb>0;inRun=false;store.set('save',null);stats.deaths++;saveStats();achDeath();document.exitPointerLock&&document.exitPointerLock();
+function over(why){stt='over';const pb=endless?(stats.endBest||0):best;bumpBest();const nbst=endless?(stats.endBest||0):best,rec=nbst>pb&&pb>0;inRun=false;if(!NET.on||NET.host)slotClear();stats.deaths++;saveStats();achDeath();document.exitPointerLock&&document.exitPointerLock();
  sfx({t:'sawtooth',f:70,dur:2,v:.4});sfx({t:'square',f:52,dur:2.4,v:.25,r:.5});show('IT FOUND YOU','The hum never stops. Neither do they.','TRY AGAIN');
  const o=$('ov');o.style.setProperty('--shot',deathShot?'url('+deathShot+')':'none');$('dkick').textContent=(why||'Your run is over').replace(/\.$/,'')+'  \u00b7  Level '+level;
  const t=(k,b,sp,c)=>'<div><small>'+k+'</small><b>'+b+'</b>'+(sp?'<span'+(c?' class="'+c+'"':'')+'>'+sp+'</span>':'')+'</div>';
@@ -1099,7 +1109,7 @@ function nextLevel(){if(stt!=='play')return;if(NET.spec){NET.spec=false;lives=Ma
  sfx({f:523,dur:.7,v:.18,r:.5});sfx({f:659,dur:.7,v:.18,r:.5,d:.15});sfx({f:784,dur:1,v:.18,r:.5,d:.3});sfx({n:1,ft:'bandpass',ff:200,ff2:4000,q:1,dur:1.2,v:.15,a:.6});
  const fs=$('flash');fs.style.transition='opacity .5s';fs.style.opacity=1;setTimeout(()=>{fs.style.transition='opacity 1.2s';fs.style.opacity=0},500);
  san=Math.min(100,san+25);breakdown=0;const bonus=(level-1)%(endless?5:3)===0&&lives<5&&!perma;if(bonus)lives++;
- loadScreen(()=>{build();reset();saveGame(1);if(bonus)setTimeout(()=>say('+1 LIFE. You feel a little braver.',3000),2600)},true)}
+ loadScreen(()=>{build();reset();saveGame(1);mpSave();if(bonus)setTimeout(()=>say('+1 LIFE. You feel a little braver.',3000),2600)},true)}
 const A={open:false,god:false,nc:false,st:false,fr:false,fb:false,sp:1};
 for(const[id,k]of[['a_god','god'],['a_nc','nc'],['a_st','st'],['a_fr','fr'],['a_fb','fb']])$(id).onchange=e=>{A[k]=e.target.checked;flickT=0};
 $('a_sp').oninput=e=>A.sp=+e.target.value||1;
@@ -1458,7 +1468,7 @@ function remixTE(t){const r=mulberry((levelSeed^0x77)>>>0),K=['bacteria','skin',
 function hashStr(t){let h=2166136261;for(const ch of t)h=Math.imul(h^ch.charCodeAt(0),16777619);return h>>>0}
 function openPlay(){menuUI();document.body.classList.add('np');const sel=$('o_start'),top=Math.max(1,best);sel.innerHTML='';
  for(let l=1;l<=top;l++){const o=document.createElement('option');o.value=l;o.textContent='Level '+l+' \u00b7 '+TH[(l-1)%TH.length].n;sel.appendChild(o)}
- sel.value=Math.min(RUN.start,top);$('o_seed').value=RUN.seed;$('o_perma').checked=RUN.perma;$('o_map').checked=RUN.map;$('o_wand').checked=RUN.wand;diffUI();($('m_cwrap').style.display!=='none'?$('m_cont'):$('m_new')).focus()}
+ sel.value=Math.min(RUN.start,top);$('o_seed').value=RUN.seed;$('o_perma').checked=RUN.perma;$('o_map').checked=RUN.map;$('o_wand').checked=RUN.wand;diffUI();($('m_clist').querySelector('button')||$('m_new')).focus()}
 function closePlay(){document.body.classList.remove('np')}
 function readRun(){RUN.start=+$('o_start').value||1;RUN.seed=$('o_seed').value.trim();RUN.perma=$('o_perma').checked;RUN.map=$('o_map').checked;RUN.wand=$('o_wand').checked;store.set('run',RUN);
  runSeed=RUN.seed?hashStr(RUN.seed):null;perma=RUN.perma;noMap=!RUN.map;noWand=!RUN.wand;endless=RUN.mode==='endless'&&(stats.wins||0)>0;endSeed=Math.random()*1e9|0;thiC={}}
@@ -1474,7 +1484,7 @@ function markSeen(t,id,name){const a=t==='L'?stats.seenL:stats.seenE;if(a.includ
 // wipes the saved run, records and Encyclopedia (settings are kept); needs a second click to confirm
 $('rstp').onclick=()=>{const bt=$('rstp');if(!bt.dataset.arm){bt.dataset.arm=1;bt.textContent='Click again to confirm';bt.style.background='#c9473b';bt.style.color='#fff';clearTimeout(bt._t);bt._t=setTimeout(()=>{delete bt.dataset.arm;bt.textContent='Reset progress';bt.style.background=bt.style.color=''},3500);return}
  clearTimeout(bt._t);delete bt.dataset.arm;bt.textContent='Progress reset';bt.style.background=bt.style.color='';setTimeout(()=>bt.textContent='Reset progress',2000);
- for(const k of['save','stats','best','run'])try{localStorage.removeItem('br_'+k)}catch(e){}
+ for(const k of['save','stats','best','run',...SLOTS.sp.map(k=>'save_'+k),...SLOTS.mp.map(k=>'save_'+k)])try{localStorage.removeItem('br_'+k)}catch(e){}slot=null;
  best=0;Object.assign(stats,{runs:0,deaths:0,easy:0,normal:0,hard:0,wins:0,seenL:[],seenE:[],ach:{},heads:0});Object.assign(RUN,{start:1,seed:'',perma:false,map:true,wand:true});
  if(stt==='pause'||stt==='play')inRun=false;sfx({t:'sawtooth',f:200,f2:60,dur:.5,v:.12});if(stt==='menu'){menuBG();menuUI('set')}note('Progress reset.')};
 // ---- achievements: stored with the rest of the records, so Reset progress clears them too ----
@@ -1524,15 +1534,42 @@ document.querySelector('.etabs').onclick=e=>{const b=e.target.closest('[data-t]'
 function saveStats(){store.set('stats',stats)}
 function bumpBest(){if(endless){if(level>(stats.endBest||0)){stats.endBest=level;saveStats()}return}if(level>best){best=level;store.set('best',best)}if(level>(stats[DIFF.key]||0)){stats[DIFF.key]=level;saveStats()}}
 let inRun=false,saveT=5,mT=0;
-function saveGame(force){if(!inRun||!world||(!force&&stt!=='play'&&stt!=='pause'))return;
- store.set('save',{v:1,level,seed:levelSeed,runSeed,endless,endSeed,perma,noMap,noWand,diff:DIFF.key,lives,runT:Math.round(runT),bat,san,bag,hasKey,flashOn,px,pz,yaw,
+// ---- save slots: 4 single-player (sp1-4) and 4 co-op (mp1-4). slot is null when the run isn't being saved ----
+let slot=null;const SLOTS={sp:['sp1','sp2','sp3','sp4'],mp:['mp1','mp2','mp3','mp4']};
+function slotGet(k){const sv=k&&store.get('save_'+k,null);return sv&&sv.v===1&&sv.level>0?sv:null}
+function slotClear(k){k=k||slot;if(k)try{localStorage.removeItem('br_save_'+k)}catch(e){}}
+function lastSave(){let b=null;for(const k of SLOTS.sp){const sv=slotGet(k);if(sv&&(!b||(sv.t||0)>(b.t||0)))b=sv}return b}
+// a save from before slots existed goes into slot 1
+{const old=store.get('save',null);if(old&&!store.get('save_sp1',null))store.set('save_sp1',old);try{localStorage.removeItem('br_save')}catch(e){}}
+function saveWhen(t){if(!t)return'';const d=new Date(t);return['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'][d.getMonth()]+'.'+d.getDate()+' '+(d.getHours()%12||12)+':'+String(d.getMinutes()).padStart(2,'0')+(d.getHours()<12?' AM':' PM')}
+function saveInfo(sv){const e_=endless,s_=endSeed,c_=thiC;endless=!!sv.endless;endSeed=sv.endSeed|0;thiC={};
+ const t=(sv.mp?'Co-op \u00b7 ':sv.endless?'Endless \u00b7 ':'')+'Level '+sv.level+' \u00b7 '+TH[thi(sv.level)].n+' \u00b7 '+(DF[sv.diff]||DF.normal).n+' \u00b7 '+sv.lives+(sv.lives===1?' life':' lives')+' \u00b7 '+fmt(sv.runT||0)+(sv.mp&&sv.names?' \u00b7 '+sv.names.join(', '):'');
+ endless=e_;endSeed=s_;thiC=c_;return t}
+// the slot picker: kind 'sp' or 'mp'; done(k) gets the chosen slot, or null for no save
+let slotCB=null;
+function pickSlot(kind,done){slotCB=done;document.body.classList.add('slp');
+ $('slotd').textContent=kind==='mp'?'Pick a co-op slot for this run. The game saves at the start of every level.':'Pick a slot for this run. The game saves as you play and when you leave.';
+ $('slotl').innerHTML=SLOTS[kind].map((k,i)=>{const sv=slotGet(k);return'<button class="slot'+(sv?' full':'')+'" data-k="'+k+'"><b>SLOT '+(i+1)+'</b><span>'+(sv?saveInfo(sv)+'<br><small style="color:var(--mute)">'+saveWhen(sv.t)+'</small>':'Empty')+'</span><em>'+(sv?'OVERWRITE':'SAVE HERE')+'</em></button>'}).join('')
+  +'<button class="slot none" data-k=""><b>NONE</b><span>Play without saving. Nothing is kept if you quit.</span><em>NO SAVE</em></button>';
+ sfx({f:660,dur:.06,v:.06});$('slotl').querySelector('.slot:not(.full)')?.focus()||$('slotl').querySelector('.slot').focus()}
+function closeSlots(){document.body.classList.remove('slp');slotCB=null}
+$('slotl').onclick=e=>{const b=e.target.closest('.slot');if(!b)return;
+ // a filled slot needs a second click to overwrite
+ if(b.classList.contains('full')&&!b.classList.contains('arm')){$('slotl').querySelectorAll('.arm').forEach(x=>{x.classList.remove('arm');x.querySelector('em').textContent='OVERWRITE'});b.classList.add('arm');b.querySelector('em').textContent='CLICK AGAIN';sfx({t:'square',f:220,dur:.08,v:.05});return}
+ const k=b.dataset.k||null,cb=slotCB;closeSlots();if(k)slotClear(k);if(cb)cb(k)};
+$('slot_back').onclick=closeSlots;
+function saveGame(force){if(!inRun||!world||(!force&&stt!=='play'&&stt!=='pause'))return;if(!slot||slot[0]!=='s')return;
+ store.set('save_'+slot,{v:1,t:Date.now(),level,seed:levelSeed,runSeed,endless,endSeed,perma,noMap,noWand,diff:DIFF.key,lives,runT:Math.round(runT),bat,san,bag,hasKey,flashOn,px,pz,yaw,
   bats:bats.map(b=>b.visible?1:0).join(''),waters:waters.map(b=>b.visible?1:0).join(''),rooms:roomsL.map(r_=>r_.open?1:0).join(''),ritems:roomItems.map(i=>i.taken?1:0).join(''),eq:wEq,snap:snapLv===level?1:0,safe:safeO?[safeO.open,safeO.item,safeO.taken]:null,drops:dropL.map(d=>[d.type,+d.g.position.x.toFixed(2),+d.g.position.z.toFixed(2)]),kd:!hasKey&&key&&key.userData.arm!==undefined?[+key.position.x.toFixed(2),+key.position.z.toFixed(2)]:null,seen:Array.from(seen).join('')})}
-function loadSave(){const sv=store.get('save',null);return sv&&sv.v===1&&sv.level>0?sv:null}
+function loadSave(){return slotGet(slot)}
+// co-op: the host keeps the run's seed, level and its own supplies; clients rejoin from the level start
+function mpSave(){if(!NET.on||!NET.host||!slot||slot[0]!=='m')return;
+ store.set('save_'+slot,{v:1,mp:1,t:Date.now(),level,seed:runSeed,diff:DIFF.key,lives,runT:Math.round(runT),bat,san,bag,names:[...NET.players.values()].map(q=>q.name)})}
 function newGame(d){ach('start');CFG.diff=d;store.set('cfg',CFG);if(stt==='menu')readRun();closePlay();startLoad();level=RUN.start||1;loadScreen(()=>{restart(RUN.start);inRun=true;stats.runs++;saveStats();saveGame(1)},false,enterRun)}
 // leaving the menu: grab audio + pointer lock while we still have the click, then play once the loading screen is done
 function startLoad(){if(!AC)audio();AC.resume();lockReq()}
 function enterRun(){go();if(!document.pointerLockElement&&!drag&&!touchMode)pause('Click RESUME to continue.')}
-function continueGame(){const sv=loadSave();if(!sv)return;closePlay();startLoad();level=sv.level;endless=!!sv.endless;endSeed=sv.endSeed|0;thiC={};loadScreen(()=>contLoad(sv),false,enterRun)}
+function continueGame(k){const sv=slotGet(k);if(!sv)return;slot=k;closePlay();startLoad();level=sv.level;endless=!!sv.endless;endSeed=sv.endSeed|0;thiC={};loadScreen(()=>contLoad(sv),false,enterRun)}
 function contLoad(sv){endless=!!sv.endless;endSeed=sv.endSeed|0;thiC={};runSeed=sv.runSeed??null;perma=!!sv.perma;noMap=!!sv.noMap;noWand=!!sv.noWand;DIFF=DF[sv.diff]||DF.normal;level=sv.level;build(sv.seed);reset();
  lives=sv.lives;runT=sv.runT||0;bat=sv.bat;san=sv.san;bag=Object.assign({bat:0,aw:0},sv.bag);flashOn=sv.flashOn!==false;breakdown=0;wobG=0;$('insane').style.opacity=0;
  bag.w=bag.w||{};bag.choc=bag.choc||0;bag.nrg=bag.nrg||0;if(sv.hasKey)giveKey();
@@ -1546,9 +1583,9 @@ function contLoad(sv){endless=!!sv.endless;endSeed=sv.endSeed|0;thiC={};runSeed=
  inRun=true;hud();invUI()}
 function toMenu(){closePlay();if(NET.on)netLeave(true);if(stt!=='over')saveGame();menuBG();stt='menu';document.exitPointerLock&&document.exitPointerLock();$('ov').style.display='none';mapOn=false;$('mapw').style.display='none';if(AC)MG.gain.setTargetAtTime(CFG.vol*.5,AC.currentTime,.2);menuUI()}
 function menuUI(sec){const EC={bacteria:'#8a8a8a',skin:'#d8d0c0',hound:'#e8dcd0',smiler:'#ffffff',scratcher:'#ff7a2a',party:'#e8c830',anim:'#ff7020',fmoth:'#7aff4a',wanderer:'#ffd84a',windows:'#ff2a2a',mmoth:'#a08060',plague:'#3aff6a'};
- $('m_ents').innerHTML='<p>Everything you run into is recorded in the <b>Encyclopedia</b>.</p><div class="lbl" style="margin-top:2vh">Controls</div>';document.body.classList.add('menu');const sv=loadSave();
- $('m_cwrap').style.display=sv?'block':'none';$('m_warn').style.display=sv?'block':'none';
- if(sv){const e_=endless,s_=endSeed,c_=thiC;endless=!!sv.endless;endSeed=sv.endSeed|0;thiC={};$('m_cinfo').textContent=(sv.endless?'Endless \u00b7 ':'')+'Level '+sv.level+' \u00b7 '+TH[thi(sv.level)].n+' \u00b7 '+(DF[sv.diff]||DF.normal).n+' \u00b7 '+sv.lives+(sv.lives===1?' life':' lives')+' \u00b7 '+fmt(sv.runT||0);endless=e_;endSeed=s_;thiC=c_}
+ $('m_ents').innerHTML='<p>Everything you run into is recorded in the <b>Encyclopedia</b>.</p><div class="lbl" style="margin-top:2vh">Controls</div>';document.body.classList.add('menu');const svs=SLOTS.sp.map(k=>[k,slotGet(k)]).filter(q=>q[1]);
+ $('m_cwrap').style.display=svs.length?'block':'none';
+ $('m_clist').innerHTML=svs.map(([k,sv])=>'<div class="crow"><p><b>SLOT '+k.slice(2)+'</b>'+saveInfo(sv)+'</p><button class="btnp" data-cs="'+k+'">CONTINUE</button></div>').join('');
  $('m_rec').innerHTML='<div class="stats">'+[['Deepest level',Math.max(best,1)],['Runs started',stats.runs],['Deaths',stats.deaths],['Escapes',stats.wins||0],['Endless record',stats.endBest?'Level '+stats.endBest:'&ndash;'],['Best on Easy',stats.easy||'&ndash;'],['Best on Normal',stats.normal||'&ndash;'],['Best on Hard',stats.hard||'&ndash;']].map(([a,v])=>'<div class="st"><b>'+v+'</b><span>'+a+'</span></div>').join('')+'</div>';$('mc_best').textContent=Math.max(best,1);$('mc_runs').textContent=stats.runs;
  openSub(sec||null)}
 // camcorder readouts on the main menu: tape counter and date stamp
@@ -1558,7 +1595,7 @@ function openSub(id){if(id==='enc')encUI();if(id==='ach')achUI();if(id==='suit')
 $('mpanel').onclick=e=>{const b=e.target.closest('[data-m]');if(!b)return;if(!AC)audio();AC.resume();MG.gain.setTargetAtTime(CFG.vol*.5,AC.currentTime,.2);sfx({n:1,ft:'bandpass',ff:1200,dur:.05,v:.08});const m=b.dataset.m;
  if(m==='fs'){const d=document;if(d.fullscreenElement)d.exitFullscreen();else if(d.documentElement.requestFullscreen)d.documentElement.requestFullscreen().catch(()=>{});return}
  if(m==='play'){openPlay();return}if(m==='mp'){openMP();return}openSub($('s_'+m).classList.contains('on')?null:m)};
-$('m_cont').onclick=continueGame;$('m_new').onclick=()=>newGame(CFG.diff);
+$('m_clist').onclick=e=>{const b=e.target.closest('[data-cs]');if(b)continueGame(b.dataset.cs)};$('m_new').onclick=()=>pickSlot('sp',k=>{slot=k;newGame(CFG.diff)});
 addEventListener('visibilitychange',()=>{if(document.hidden)saveGame()});addEventListener('pagehide',()=>saveGame());
 // slow drifting camera behind the main menu
 function menuCam(dt){mT+=dt;const x=(menuSpot[0]+.5)*T,z=(menuSpot[1]+.5)*T;cam.position.set(x+Math.sin(mT*.07)*.8,1.6,z+Math.cos(mT*.05)*.8);cam.rotation.set(-.03,.6+mT*.035,0);fl.intensity=0;if(cam.fov!==75){cam.fov=fov=75;cam.updateProjectionMatrix()}}
@@ -1577,7 +1614,7 @@ R.domElement.addEventListener('mousedown',()=>{if(stt==='play'&&!document.pointe
 addEventListener('mousedown',e=>{mdown=true;if(e.button===0&&stt==='play'&&(B||wEq)&&!A.open&&!invOn&&(document.pointerLockElement||drag))attack()});addEventListener('mouseup',()=>mdown=false);
 function look(dx,dy,k){dx=clamp(dx,-250,250);dy=clamp(dy,-250,250);const s=.0022*CFG.sens*k;yaw-=dx*s;pitch=clamp(pitch-dy*s*(CFG.inv?-1:1),-1.45,1.45);turnX+=dx*k;turnY+=dy*k}
 addEventListener('mousemove',e=>{if(stt==='play'&&!A.open&&!invOn&&(document.pointerLockElement||(drag&&mdown)))look(e.movementX,e.movementY,1)});
-addEventListener('keydown',e=>{if(stt==='menu'&&e.code==='Escape'){closePlay();closeMP();openSub(null);return}
+addEventListener('keydown',e=>{if(stt==='menu'&&e.code==='Escape'){if(document.body.classList.contains('slp')){closeSlots();return}closePlay();closeMP();openSub(null);return}
  if((stt==='menu'||stt==='pause'||stt==='over')&&(e.code==='ArrowDown'||e.code==='ArrowUp')&&e.target.tagName!=='SELECT'){const root=stt!=='menu'?$('ov'):document.body.classList.contains('np')?$('newg'):$('mpanel'),L=[...root.querySelectorAll('button:not(:disabled)')].filter(b=>b.offsetParent),i=L.indexOf(document.activeElement),nx=L[(i+(e.code==='ArrowDown'?1:-1)+L.length)%L.length];if(nx){nx.focus();e.preventDefault();sfx({f:2400,dur:.025,v:.02})}return}if(e.key==='/'&&stt==='play'&&e.target.tagName!=='INPUT'){e.preventDefault();admToggle();return}if(A.open||e.target.tagName==='INPUT')return;K[e.code]=1;if(stt!=='play')return;if(e.code==='Space')e.preventDefault();
  if(invOn){invKey(e);return}if(e.code==='KeyE')interact();if(e.code==='Digit3')cycleWeapon();if(e.code==='KeyQ'&&wEq)dropItem(wEq);if(e.code==='KeyF')toggleLight();if(e.code==='KeyM')toggleMap();if(e.code==='KeyC')toggleCrouch();if(e.code==='KeyI'||e.code==='Tab'){e.preventDefault();toggleInv()}if(e.code==='Digit1')useBat();if(e.code==='KeyR'){if(B||wEq==='pistol')reload();else useBat()}if(e.code==='Digit2')useAW();if(e.code==='Digit4')useChoc();if(e.code==='Digit5')useNrg();
  if(e.code==='KeyP'||(e.code==='Escape'&&(drag||touchMode))){if(document.pointerLockElement)document.exitPointerLock();else pause()}});
@@ -1748,7 +1785,7 @@ $('m_x').onclick=()=>{sfx({n:1,ft:'bandpass',ff:900,dur:.05,v:.08});openSub(null
 // ================= Level ?: every level at once, and The Thing =================
 let B=null,bossMenu=false,php=100,hurtF=0,bShake=0,bRoll=0,lastHurt=0,projs=[],hazs=[],bossS1=null;
 // main menu background: Level ? once the game has been beaten, otherwise the level your saved run is on (Level 0 with no save); monsters hidden
-function menuBG(){endless=false;thiC={};const L_=level,rs_=runSeed,sv=loadSave(),won=(stats.wins||0)>0;level=won?TH.length:sv?sv.level:1;runSeed=null;bossMenu=true;build(won?4242:sv?sv.seed:4242);bossMenu=false;
+function menuBG(){endless=false;thiC={};const L_=level,rs_=runSeed,sv=lastSave(),won=(stats.wins||0)>0;level=won?TH.length:sv?sv.level:1;runSeed=null;bossMenu=true;build(won?4242:sv?sv.seed:4242);bossMenu=false;
  for(const m of mons)m.g.visible=false;for(const n of npcs)n.g.visible=false;for(const s_ of swarms)s_.pts.visible=false;level=L_;runSeed=rs_}
 // stage 1 map: a tall megastructure where each region is a different level
 function buildBoss(){S=45;const ST=S*T,c=S>>1;
@@ -1981,7 +2018,7 @@ function bossVictory(){const dd=bfs(Math.floor(px/T),Math.floor(pz/T));let far=n
   card('TAKE THE KEY','A door has opened in the distance.');say('Take the key.',3500);hud();bossUI()},1600)}
 function bossRespawn(){const b=B;php=100;GUN.mag=GUN.cap;GUN.rl=0;ammoUI();px=b.spawn.x;pz=b.spawn.z;b.atk=null;b.dark=0;b.roll=0;b.wind=0;b.cd=3;b.throwT=3;
  for(const pr of projs.slice())breakProj(pr);for(const h of hazs)h.t=0;if(b.mode==='fight'){b.hp=b.maxs[b.heart];b.g.position.set(b.home.x,0,b.home.z)}flickT=0;bossUI()}
-function bossWin(){stt='loading';ach('win');if(!stats.goldKey){stats.goldKey=1;saveStats()}ach('golden');setTimeout(()=>{try{mkHand()}catch(e){}},50);if(DIFF.key==='hard')ach('winhard');if(perma)ach('perma');bumpBest();stats.wins=(stats.wins||0)+1;saveStats();inRun=false;store.set('save',null);
+function bossWin(){stt='loading';ach('win');if(!stats.goldKey){stats.goldKey=1;saveStats()}ach('golden');setTimeout(()=>{try{mkHand()}catch(e){}},50);if(DIFF.key==='hard')ach('winhard');if(perma)ach('perma');bumpBest();stats.wins=(stats.wins||0)+1;saveStats();inRun=false;slotClear();
  sfx({f:523,dur:1.2,v:.15,r:.6});sfx({f:659,dur:1.2,v:.15,r:.6,d:.2});sfx({f:784,dur:1.6,v:.15,r:.6,d:.4});const f=$('flash');f.style.transition='opacity 1.2s';f.style.opacity=1;
  setTimeout(()=>{card('YOU ESCAPED','You kept the key. It turned to gold in your hand.','The end');setTimeout(()=>{f.style.transition='opacity 1.5s';f.style.opacity=0;B=null;document.body.classList.remove('boss');toMenu()},3000)},1300)}
 
@@ -2124,9 +2161,9 @@ function netMonsters(dt,now){let dmin=99;const S_=NET.snap;if(!S_||S_.l!==level)
   if(sp>0&&de<28&&!m.k.smiler&&!m.k.moth&&(m.ft-=sp*dt)<=0){m.ft=m.k.quad?.7:st==='chase'?1.3:1.1;monStep(m,de,(st==='chase'?.75:.45)*(m.k.quad?.6:1))}
   if(!m.k.verity||m.vp===3)animMon(m,sp,dt,now)});return dmin}
 function netSpectate(why){NET.spec=true;die(why);stt='play';R.domElement.style.filter='grayscale(1) brightness(.8)';card('SPECTATING','You were taken. You will rejoin on the next level.','','dead')}
-function mpStart(seed,diff,lvl){NET.started=true;endless=false;thiC={};ach('coop');closeMP();closePlay();openSub(null);CFG.diff=diff;runSeed=seed;perma=false;noMap=false;noWand=false;restart(lvl||1);inRun=false;NET.spec=false;NET.snap=null;R.domElement.style.filter='';
+function mpStart(seed,diff,lvl){NET.started=true;if(!NET.host)slot=null;closeSlots();endless=false;thiC={};ach('coop');closeMP();closePlay();openSub(null);CFG.diff=diff;runSeed=seed;perma=false;noMap=false;noWand=false;restart(lvl||1);inRun=false;NET.spec=false;NET.snap=null;R.domElement.style.filter='';
  if(NET.host)go();else{if(!AC)audio();AC.resume();document.body.classList.remove('menu');$('ov').style.display='none';stt='play';pause('The game has started! Click RESUME to jump in.')}}
-function mpWin(){if(stt==='menu')return;ach('coopwin');stt='loading';sfx({f:523,dur:1.2,v:.15,r:.6});sfx({f:659,dur:1.2,v:.15,r:.6,d:.2});sfx({f:784,dur:1.6,v:.15,r:.6,d:.4});
+function mpWin(){if(stt==='menu')return;if(NET.host)slotClear();ach('coopwin');stt='loading';sfx({f:523,dur:1.2,v:.15,r:.6});sfx({f:659,dur:1.2,v:.15,r:.6,d:.2});sfx({f:784,dur:1.6,v:.15,r:.6,d:.4});
  card('YOU ESCAPED TOGETHER','Level ? is single-player only, for now.','The end of the co-op run');setTimeout(()=>{netLeave(true);toMenu()},4000)}
 // ---- sending ----
 function myState(){return{x:+px.toFixed(2),z:+pz.toFixed(2),y:+jY.toFixed(2),yaw:+yaw.toFixed(2),lit:flashOn&&bat>0,cr:crouch,noise:netNoise,hd:hid?(hid.exp?2:1):0,dn:down?Math.max(1,Math.ceil(down.t)):0,pr:prot>0?1:0,alive:!NET.spec&&stt!=='over',lives,lvl:level}}
@@ -2261,11 +2298,15 @@ function teamUI(){const L=[];for(const q of NET.players.values()){if(q.id===NET.
 function openMP(){menuUI();closePlay();document.body.classList.add('mpo');$('mp_name').value=CFG.name||'';if(NET.on)mpLobbyUI();else mpHomeUI()}
 function closeMP(){document.body.classList.remove('mpo')}
 function mpHomeUI(){$('mp_home').style.display='block';$('mp_lobby').style.display='none'}
-function mpLobbyUI(list){$('mp_home').style.display='none';$('mp_lobby').style.display='block';$('mp_codeshow').textContent=NET.code;const L=list||[...NET.players.values()];
+function mpLobbyUI(list){mpSavesUI();$('mp_home').style.display='none';$('mp_lobby').style.display='block';$('mp_codeshow').textContent=NET.code;const L=list||[...NET.players.values()];
  $('mp_list').innerHTML=L.map(q=>'<div class="mpp"><i style="background:#'+new THREE.Color(validSuit(q.suit)!==undefined?suitColOf(q.suit):MP_COL[(q.c||0)%4]).getHexString()+'"></i>'+esc(q.name||'Player')+(q.id==='h'?' <small>host</small>':'')+(q.id===NET.me?' <small>you</small>':'')+'</div>').join('');
  $('mp_start').style.display=NET.host?'':'none';$('mp_diff').textContent=NET.host?'Difficulty: '+(DF[CFG.diff]||DF.normal).n+' (change it under PLAY).  '+L.length+' / 4 players.':'Waiting for the host to start…'}
 $('mp_host').onclick=mpHost;$('mp_join').onclick=mpJoin;
-$('mp_start').onclick=()=>{if(!NET.host)return;const seed=Math.random()*4294967296>>>0;netAll({t:'start',seed,diff:CFG.diff,level:1});mpStart(seed,CFG.diff,1)};
+$('mp_start').onclick=()=>{if(!NET.host)return;pickSlot('mp',k=>{if(!NET.host)return;slot=k;const seed=Math.random()*4294967296>>>0;netAll({t:'start',seed,diff:CFG.diff,level:1});mpStart(seed,CFG.diff,1);mpSave()})};
+$('mp_saves').onclick=e=>{const b=e.target.closest('[data-cs]');if(!b||!NET.host)return;const sv=slotGet(b.dataset.cs);if(!sv)return;slot=b.dataset.cs;
+ netAll({t:'start',seed:sv.seed,diff:sv.diff,level:sv.level});mpStart(sv.seed,sv.diff,sv.level);lives=sv.lives;runT=sv.runT||0;bat=sv.bat??bat;san=sv.san??san;bag=Object.assign({bat:0,aw:0,choc:0,nrg:0},sv.bag);bag.w=bag.w||{};hud();invUI();mpSave()};
+function mpSavesUI(){const el=$('mp_saves');if(!NET.host){el.innerHTML='';return}const svs=SLOTS.mp.map(k=>[k,slotGet(k)]).filter(q=>q[1]);
+ el.innerHTML=svs.length?'<h4>SAVED CO-OP RUNS</h4>'+svs.map(([k,sv])=>'<div class="crow"><p><b>SLOT '+k.slice(2)+'</b>'+saveInfo(sv)+'</p><button class="btng" data-cs="'+k+'">CONTINUE</button></div>').join(''):''}
 $('mp_back').onclick=()=>{sfx({n:1,ft:'bandpass',ff:900,dur:.05,v:.08});if(NET.on&&!NET.started)netLeave(true);mpStatus('');closeMP()};
 
 const mm=$('mm'),mc=mm.getContext('2d');let mapF=0;
