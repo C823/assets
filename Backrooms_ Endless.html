@@ -548,7 +548,7 @@ body.touch #hbn{bottom:auto;top:70px}
 <div class="mcard"><h4><i>B</i>PLAYERS</h4><div id="mp_list"></div></div>
 <div id="mp_chat" class="mcard"><h4><i>C</i>CHAT</h4><div id="mp_chatlog"></div><div class="chrow"><input id="mp_chatin" type="text" maxlength="120" spellcheck="false" autocomplete="off" placeholder="Say hi to the room"><button class="btng" id="mp_chatgo">SEND</button></div></div></div><div id="mp_saves"></div><button class="btnp" id="mp_start">START NEW GAME</button></div>
 <div class="pfoot"><p id="mp_status"></p><div class="nrow"><button class="btng" id="mp_back">BACK</button></div></div></div>
-<div id="ver">v3.16 &middot; 2026-10-28</div></div>
+<div id="ver">v3.17 &middot; 2026-10-28</div></div>
 <div id="ov" style="display:none"><div class="ovl"><div class="lbl" id="olbl">GAME PAUSED</div><div id="dkick"></div><h1 id="t">PAUSED</h1><i id="dline"></i><p id="s"></p><div id="dgrid"></div><div id="ostats"></div>
 <div class="obtn"><button id="btn" class="btnp">RESUME</button><button id="m2" class="btng">MAIN MENU</button></div><p id="best"></p>
 <div id="keys"><span><b class="kbd">WASD</b>Move</span><span><b class="kbd">SHIFT</b>Sprint</span><span><b class="kbd">C</b>Crouch</span><span><b class="kbd">E</b>Hide</span><span><b class="kbd">M</b>Map</span><span><b class="kbd">I</b>Items</span><span><b class="kbd">1-4</b>/<b class="kbd">WHEEL</b>Hotbar</span><span><b class="kbd">R-CLICK</b>Use item</span></div></div>
@@ -2933,6 +2933,8 @@ function suitUI(){const cvs=$('suit_cv');if(!suitR){try{suitR=new THREE.WebGLRen
 // ---- redeem codes (case and spaces don't matter) ----
 const XMAS=['santa','reindeer','elf','snowman'],SPOOKY=['halloween','ghost','skeleton','witch'];
 const CODES={indahood:'alig',alig:'alig',santa:'santa',xmas:XMAS,christmas:XMAS,iamironman:'ironman',ironman:'ironman',nostrings:'ultron',ultron:'ultron',halloween:SPOOKY};
+// 'all' unlocks every suit that some code unlocks (not the ones earned in play, like the safe suits or the escape suits)
+CODES.all=[...new Set(Object.values(CODES).flat())];
 function redeem(){const raw=$('c_code').value,c=raw.toLowerCase().replace(/[^a-z0-9]/g,''),msg=$('c_codemsg');if(!c){msg.textContent='';return}
  const ks=[].concat(CODES[c]||[]);if(!ks.length){msg.style.color='var(--red)';msg.textContent='That code doesn\'t work.';sfx({t:'square',f:160,f2:110,dur:.25,v:.08});return}
  $('c_code').value='';msg.style.color='var(--grn)';const nw=ks.filter(k=>!(stats.suits&&stats.suits[k]));if(!nw.length){msg.textContent='You already have '+(ks.length>1?'all of those.':SPECIAL[ks[0]].n+'.');return}
