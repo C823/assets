@@ -548,7 +548,7 @@ body.touch #hbn{bottom:auto;top:70px}
 <div class="mcard"><h4><i>B</i>PLAYERS</h4><div id="mp_list"></div></div>
 <div id="mp_chat" class="mcard"><h4><i>C</i>CHAT</h4><div id="mp_chatlog"></div><div class="chrow"><input id="mp_chatin" type="text" maxlength="120" spellcheck="false" autocomplete="off" placeholder="Say hi to the room"><button class="btng" id="mp_chatgo">SEND</button></div></div></div><div id="mp_saves"></div><button class="btnp" id="mp_start">START NEW GAME</button></div>
 <div class="pfoot"><p id="mp_status"></p><div class="nrow"><button class="btng" id="mp_back">BACK</button></div></div></div>
-<div id="ver">v3.13 &middot; 2026-10-27</div></div>
+<div id="ver">v3.13 &middot; 2026-10-28</div></div>
 <div id="ov" style="display:none"><div class="ovl"><div class="lbl" id="olbl">GAME PAUSED</div><div id="dkick"></div><h1 id="t">PAUSED</h1><i id="dline"></i><p id="s"></p><div id="dgrid"></div><div id="ostats"></div>
 <div class="obtn"><button id="btn" class="btnp">RESUME</button><button id="m2" class="btng">MAIN MENU</button></div><p id="best"></p>
 <div id="keys"><span><b class="kbd">WASD</b>Move</span><span><b class="kbd">SHIFT</b>Sprint</span><span><b class="kbd">C</b>Crouch</span><span><b class="kbd">E</b>Hide</span><span><b class="kbd">M</b>Map</span><span><b class="kbd">I</b>Items</span><span><b class="kbd">1-4</b>/<b class="kbd">WHEEL</b>Hotbar</span><span><b class="kbd">R-CLICK</b>Use item</span></div></div>
@@ -1615,7 +1615,7 @@ function fireBolt(){if(wEq!=='xbow'||stt!=='play'||xbCd>0)return;if(!(bag.xb>0))
  for(let t=.3;t<40;t+=.15){const r_=w[Math.floor((o.z+d.z*t)/T)];if(!r_||r_[Math.floor((o.x+d.x*t)/T)]===1||o.y+d.y*t<0||o.y+d.y*t>H){tw=t;break}}
  if(B&&B.g.visible&&B.hittable){const c={x:B.g.position.x,y:2.6,z:B.g.position.z},t=raySph(o,d,c,1.5);if(t!=null&&t<tw)best={t,boss:1}}
  else for(const m of mons){if(m.dead||!m.g.visible||(m.k.verity&&m.vp<3))continue;const g=m.g,s_=g.scale.y||1,hy=(g.userData.hy||1.6)*s_,c={x:g.position.x,y:hy,z:g.position.z};
-  for(const[yy,rr]of[[hy,.3],[hy*.62,.4],[hy*.34,.4]]){c.y=yy;const t=raySph(o,d,c,rr*s_);if(t!=null&&t<tw&&(!best||t<best.t))best={t,m}}}
+  for(const[yy,rr]of[[hy,.38],[hy*.62,.5],[hy*.34,.5]]){c.y=yy;const t=raySph(o,d,c,rr*s_);if(t!=null&&t<tw&&(!best||t<best.t))best={t,m}}}
  const end=o.clone().addScaledVector(d,best?best.t:tw);mkBoltFx(o.clone().addScaledVector(d,.4).add(new THREE.Vector3(0,-.12,0)),end);
  if(best&&best.m){hitMon(best.m,best.m.k.verity?220:180,d.x,d.z,8);sfx({n:1,ft:'lowpass',ff:700,dur:.15,v:.4,d:.08})}else if(best&&best.boss){dmgBoss(28,{x:end.x,y:end.y,z:end.z})}else sfx({n:1,ft:'bandpass',ff:1800,q:3,dur:.08,v:.2,d:.1});
  if(bag.xb<=0)setTimeout(()=>{if(bag.xb>0)return;bag.w.xbow=0;if(wEq==='xbow')equip(null);say('Out of bolts. You toss the crossbow.',1800);hbSelect(hbSel);invUI()},700)}
