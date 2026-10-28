@@ -548,7 +548,7 @@ body.touch #hbn{bottom:auto;top:70px}
 <div class="mcard"><h4><i>B</i>PLAYERS</h4><div id="mp_list"></div></div>
 <div id="mp_chat" class="mcard"><h4><i>C</i>CHAT</h4><div id="mp_chatlog"></div><div class="chrow"><input id="mp_chatin" type="text" maxlength="120" spellcheck="false" autocomplete="off" placeholder="Say hi to the room"><button class="btng" id="mp_chatgo">SEND</button></div></div></div><div id="mp_saves"></div><button class="btnp" id="mp_start">START NEW GAME</button></div>
 <div class="pfoot"><p id="mp_status"></p><div class="nrow"><button class="btng" id="mp_back">BACK</button></div></div></div>
-<div id="ver">v3.17 &middot; 2026-10-28</div></div>
+<div id="ver">v3.18 &middot; 2026-10-28</div></div>
 <div id="ov" style="display:none"><div class="ovl"><div class="lbl" id="olbl">GAME PAUSED</div><div id="dkick"></div><h1 id="t">PAUSED</h1><i id="dline"></i><p id="s"></p><div id="dgrid"></div><div id="ostats"></div>
 <div class="obtn"><button id="btn" class="btnp">RESUME</button><button id="m2" class="btng">MAIN MENU</button></div><p id="best"></p>
 <div id="keys"><span><b class="kbd">WASD</b>Move</span><span><b class="kbd">SHIFT</b>Sprint</span><span><b class="kbd">C</b>Crouch</span><span><b class="kbd">E</b>Hide</span><span><b class="kbd">M</b>Map</span><span><b class="kbd">I</b>Items</span><span><b class="kbd">1-4</b>/<b class="kbd">WHEEL</b>Hotbar</span><span><b class="kbd">R-CLICK</b>Use item</span></div></div>
@@ -777,6 +777,7 @@ function mkKey(){const g=new THREE.Group(),km=new THREE.MeshPhongMaterial({color
 const EK={
  bacteria:{n:'Bacteria',sp:1,see:1,hear:1,jitter:1,body:{c:0x050505,e:null,o:{leg:1.6,lw:.06,th:1,tw:.2,arm:2,aw:.045,hw:.15,hh:.46,hunch:.32,claw:2.4,spines:1,face:0}},d:'Tall, wiry and twitchy. Moves in sudden bursts. Stay out of its sight.'},
  skin:{n:'Skin-Stealer',sp:1.08,see:1,hear:1,disguise:.45,body:{c:0x8c8a82,e:0x300000,o:{tw:.36,lw:.09,hunch:.2,glow:0,es:.8,ribs:1,claw:1.8,jaw:1,stitch:1}},d:'Can wear the shape of a Wanderer. A real Wanderer never walks toward you.'},
+ wheelie:{n:'The Wheelie',sp:1,see:1,hear:1,wheelie:1,d:'A pumpkin-headed skeleton on an electric dirt bike, front wheel in the air. It loops the garage, and when it gets close to you, it explodes. Keep your distance, or shoot it from far away.'},
  hound:{n:'Hound',sp:1.15,see:.35,hear:2.2,quad:1,d:'Nearly blind, but hears everything. Crouch and it will walk right past. Shine a flashlight in its face and it backs off.'},
  smiler:{n:'Smiler',sp:1.25,see:1,hear:.4,smiler:1,light:1,d:'A grin in the dark. Hunts by your light. Turn your flashlight off and it loses you.'},
  scratcher:{n:'Scratcher',sp:1.12,see:1.05,hear:1.2,scratch:1,body:{c:0x2a2420,e:0xff6a20,o:{leg:1.35,lw:.08,th:.8,tw:.3,arm:1.55,aw:.06,hw:.36,hh:.42,hunch:.45,es:2.2,claw:3,ribs:1,jaw:1,spines:1,ears:0}},d:'Fast, long-limbed. You hear it scratching the walls before you see it.'},
@@ -846,8 +847,62 @@ function mkWindow(MAT){const g=new THREE.Group(),P=(par,sx,sy,sz,x,y,z,m)=>{cons
 function mkSwarm(x,z){const n=14,pos=new Float32Array(n*3),geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
  const pts=new THREE.Points(geo,new THREE.PointsMaterial({map:mothTex,size:.34,transparent:true,alphaTest:.3}));pts.frustumCulled=false;world.add(pts);const o=new THREE.Object3D();o.position.set(x,0,z);
  return{pts,pos,n,o,hx:x,hz:z,st:'idle',t:0,ph:Array.from({length:n},()=>[rnd()*7,rnd()*7,.6+rnd()*.9,.4+rnd()*.8]),hdm:null,buzz:0}}
+// ================= the Wheelie (Habitable Zone) =================
+// a pumpkin-headed skeleton pulling a permanent wheelie on an electric dirt bike. It laps a loop of the garage,
+// throws in a donut at each corner, and when it spots someone it charges and blows up next to them. It comes back later.
+function mkWheelie(){const g=new THREE.Group(),bk=new THREE.Group();bk.position.set(0,.34,-.65);g.add(bk);
+ const L=c=>new THREE.MeshLambertMaterial({color:c}),P=c=>new THREE.MeshPhongMaterial({color:c,specular:0x666666,shininess:60}),blk=P(0x16171a),gry=P(0x5a5e66),gold=P(0xd8a830),
+  add=(par,geo,mat,sx,sy,sz,x,y,z,rx=0,ry=0,rz=0)=>{const m=new THREE.Mesh(geo,mat);m.scale.set(sx,sy,sz);m.position.set(x,y,z);m.rotation.set(rx,ry,rz);par.add(m);return m};
+ const wh=[];for(const z of[0,1.3]){const w_=new THREE.Group();w_.position.set(0,0,z);bk.add(w_);const t=new THREE.Mesh(new THREE.TorusGeometry(.27,.075,8,18),L(0x111111));t.rotation.y=Math.PI/2;w_.add(t);
+  add(w_,CYL,gry,.2,.05,.2,0,0,0,0,0,Math.PI/2);for(let i=0;i<4;i++)add(w_,UB,gry,.02,.5,.02,0,0,0,i*Math.PI/4,0,0);wh.push(w_)}
+ add(bk,UB,blk,.06,.06,.5,0,.1,.24,-.2);add(bk,UB,gry,.24,.34,.5,0,.48,.66);add(bk,UB,blk,.26,.12,.62,0,.66,.66);add(bk,UB,blk,.2,.08,.62,0,.78,.36);
+ add(bk,UB,L(0x2a2c30),.22,.04,.45,0,.62,-.05,.35);add(bk,UB,L(0xe0661c),.02,.18,.32,.13,.5,.68);add(bk,UB,L(0xe0661c),.02,.18,.32,-.13,.5,.68);
+ for(const sx of[-1,1])add(bk,CYL,gold,.025,.78,.025,sx*.09,.36,1.18,-.42);add(bk,UB,blk,.62,.03,.03,0,.98,1.0);for(const sx of[-1,1])add(bk,UB,L(0x222222),.1,.045,.045,sx*.32,.98,1.0);
+ add(bk,UB,blk,.2,.2,.06,0,.82,1.27,-.3);const hl=add(bk,UB,new THREE.MeshBasicMaterial({color:0xfff4d0}),.12,.06,.02,0,.84,1.31,-.3);
+ const beam=glow(0xfff0c8,.9,.5);beam.position.set(0,.84,1.45);bk.add(beam);
+ // the rider: a skeleton in black with a carved pumpkin head, hunched over the bars
+ const rider=mkSuitBody('skeleton',(c,b)=>b?new THREE.MeshBasicMaterial({color:c}):new THREE.MeshLambertMaterial({color:c})),ru=rider.userData;rider.position.set(0,-.3,.32);bk.add(rider);
+ const pk=mkSuitBody('halloween',(c,b)=>b?new THREE.MeshBasicMaterial({color:c}):new THREE.MeshLambertMaterial({color:c}));let pm=null;pk.traverse(o=>{if(o.isMesh&&o.material&&o.material.emissiveMap)pm=o});
+ if(pm){const m=pm.clone();ru.head.add(m);add(ru.head,CYL,L(0x3a5a1e),.03,.1,.03,.01,m.position.y+.22,0,0,0,.2);const li=new THREE.PointLight(0xff8a2a,.9,3);li.position.set(0,m.position.y,.3);ru.head.add(li)}
+ ru.up.rotation.x=.45;ru.legL.rotation.x=ru.legR.rotation.x=-1.25;ru.knL.rotation.x=ru.knR.rotation.x=1.5;ru.legL.rotation.z=-.15;ru.legR.rotation.z=.15;
+ ru.shL.rotation.x=ru.shR.rotation.x=-1.1;ru.elL.rotation.x=ru.elR.rotation.x=-.35;ru.shL.rotation.z=-.15;ru.shR.rotation.z=.15;
+ g.userData={wheelie:1,bk,wh,rider,ru,hl,beam,hy:1.4};return g}
+// bike animation: the front wheel stays up, bobbing, wheels spin with speed (also used on co-op clients)
+function wheelieAnim(m,sp,dt,now){const u=m.g.userData;if(!u.bk)return;u.bk.rotation.x=-(.42+Math.sin(now/260)*.07+Math.min(.12,sp*.012));for(const w_ of u.wh)w_.rotation.x+=dt*sp*3.2;
+ if(u.ru){u.ru.head.rotation.y=Math.sin(now/700)*.3;u.ru.up.rotation.z=Math.sin(now/400)*.05}}
+function wheelieTour(m){const r=mulberry((levelSeed^0x77e1)>>>0),c=openT.filter(q=>q[2]>4);if(c.length<5)return;const pick=pzSpread(r,c,5);
+ // order the stops by angle around their middle so the route makes a loop instead of zig-zagging
+ const cx=pick.reduce((a,q)=>a+q[0],0)/5,cz=pick.reduce((a,q)=>a+q[1],0)/5;pick.sort((a,b)=>Math.atan2(a[1]-cz,a[0]-cx)-Math.atan2(b[1]-cz,b[0]-cx));
+ m.tour=pick.map(q=>({x:(q[0]+.5)*T,z:(q[1]+.5)*T,dm:bfs(q[0],q[1])}));m.ti=0}
+function updWheelie(m,dt,de,now,P,chaseSp){const g=m.g,u=g.userData;
+ if(m.wr>0){m.wr-=dt;if(m.wr<=0){// back, somewhere far from you
+   const far=openT.filter(q=>Math.hypot((q[0]+.5)*T-P.px,(q[1]+.5)*T-P.pz)>20);const q=far.length?far[rnd()*far.length|0]:openT[openT.length-1];g.position.set((q[0]+.5)*T,0,(q[1]+.5)*T);g.visible=true;m.st='wander';
+   if(NET.on&&NET.host)netAll({t:'wback',i:mons.indexOf(m)})}return false}
+ if(!m.tour)wheelieTour(m);
+ const sees=!P.hid&&!P.prot&&!A.god&&de<17&&los(g.position.x,g.position.z,P.px,P.pz);let sp=0;
+ if(sees&&P.dmap){if(m.st!=='chase'){m.st='chase';const p_=panOf(g.position.x,g.position.z);sfx({t:'sawtooth',f:300,f2:900,dur:.8,v:.12,ft:'bandpass',ff:1400,q:2,p:p_,r:.5});if(!P.remote)say('An engine whines somewhere close. Something is coming fast.',1800)}
+  chasing=true;sp=steer(m,P.dmap,chaseSp*1.75,dt,P.px,P.pz);if(!sp){const dx=P.px-g.position.x,dz=P.pz-g.position.z,dl=Math.hypot(dx,dz)||1;g.rotation.y=Math.atan2(dx,dz)}}
+ else if(m.spin>0){m.spin-=dt;g.rotation.y+=dt*7;sp=4}
+ else if(m.tour){m.st='wander';const t=m.tour[m.ti];sp=steer(m,t.dm,chaseSp*1.35,dt,t.x,t.z);if(Math.hypot(g.position.x-t.x,g.position.z-t.z)<1.6){m.ti=(m.ti+1)%m.tour.length;if(rnd()<.6)m.spin=.9}}
+ if((m.et=(m.et||0)-dt)<=0&&de<28){m.et=.32;const p_=panOf(g.position.x,g.position.z),v=Math.pow(Math.max(0,1-de/28),1.6);sfx({t:'sawtooth',f:180+sp*60,f2:200+sp*70,dur:.34,v:.08*v,ft:'bandpass',ff:900+sp*120,q:4,p:p_,r:.3})}
+ animMon(m,sp,dt,now);
+ if(de<2.6&&!P.hid&&!P.prot&&!A.god)wheelieBoom(m);
+ return false}
+// blow up at the bike's position: everyone within reach is hit, the bike comes back in a while
+function wheelieBoom(m){if(m.wr>0)return;const g=m.g,x=g.position.x,z=g.position.z;g.visible=false;m.wr=22;m.st='wander';if(NET.on&&NET.host)netAll({t:'boom',i:mons.indexOf(m),x:+x.toFixed(2),z:+z.toFixed(2)});boomFx(x,z)}
+function boomFx(x,z){const p_=panOf(x,z),d=Math.hypot(x-px,z-pz),v=clamp(1-d/40,.15,1);
+ sfx({n:1,ft:'lowpass',ff:1800,ff2:200,dur:1.6,v:.9*v,a:.003,p:p_,r:1});sfx({f:90,f2:28,dur:1.2,v:.7*v,p:p_});sfx({n:1,ft:'highpass',ff:3000,dur:.4,v:.3*v,d:.05,p:p_});
+ const ball=new THREE.Mesh(new THREE.SphereGeometry(1,20,14),new THREE.MeshBasicMaterial({color:0xffa030,transparent:true,opacity:.9,depthWrite:false}));ball.position.set(x,1,z);world.add(ball);
+ const lit=new THREE.PointLight(0xff8a30,6,18);lit.position.set(x,1.5,z);world.add(lit);const sp_=[];for(let i=0;i<16;i++){const s_=glow(i%2?0xff7020:0xffd060,.5+Math.random()*.5,.9);s_.position.set(x,1,z);s_.userData.v=new THREE.Vector3(Math.random()-.5,Math.random()*.9,Math.random()-.5).multiplyScalar(9);world.add(s_);sp_.push(s_)}
+ const t0=performance.now(),step=()=>{const k=(performance.now()-t0)/700;if(k>=1){world.remove(ball);world.remove(lit);for(const s_ of sp_)world.remove(s_);return}ball.scale.setScalar(.5+k*3.2);ball.material.opacity=.9*(1-k);ball.material.color.setHex(k<.3?0xfff0b0:k<.6?0xff8a30:0x553322);lit.intensity=6*(1-k);
+  for(const s_ of sp_){s_.position.addScaledVector(s_.userData.v,.016);s_.userData.v.y-=.25;s_.material.opacity=1-k}requestAnimationFrame(step)};step();
+ if(d<16)bShake=Math.max(bShake||0,.1*(1-d/16));if(d<9){const f=$('flash');f.style.transition='opacity .05s';f.style.opacity=.75*(1-d/9);setTimeout(()=>{f.style.transition='opacity .9s';f.style.opacity=0},90)}
+ if(d<3.4&&stt==='play'&&!hid&&!(prot>0)&&!A.god&&!down&&!NET.spec)setTimeout(()=>boomHit('Blown up by The Wheelie.'),250)}
+// the same outcome as being caught, without the grab
+function boomHit(why){if(stt!=='play')return;invClose();deathShot=null;ach&&markSeen('E','wheelie','The Wheelie');
+ if(NET.on&&NET.started&&!NET.spec&&mateUp()){goDown(why,null);return}lives--;if(lives<=0){if(NET.on&&NET.started)netSpectate(why);else over(why)}else{die(why);stt='play';stats.deaths++;saveStats();achDeath();saveGame()}}
 function addMon(kind,x,z,i,MAT){const k=EK[kind];let g,lure=false;
- if(k.verity)g=mkVerity(MAT);else if(k.quad)g=mkHound(MAT(0xd8cfc4));else if(k.smiler)g=mkSmiler();else if(k.moth)g=mkFMoth(MAT(0x2a2016),MAT(0xb8a070));else g=mkBody(k.body,MAT);
+ if(k.wheelie)g=mkWheelie();else if(k.verity)g=mkVerity(MAT);else if(k.quad)g=mkHound(MAT(0xd8cfc4));else if(k.smiler)g=mkSmiler();else if(k.moth)g=mkFMoth(MAT(0x2a2016),MAT(0xb8a070));else g=mkBody(k.body,MAT);
  if(k.disguise&&rnd()<k.disguise){const fake=mkBody(EK.wanderer.body,MAT),real=g;g=new THREE.Group();g.add(fake,real);real.visible=false;g.userData=Object.assign({},fake.userData,{real,fake});lure=true}
  g.scale.setScalar(cur.ms||1);g.position.set(x,0,z);g.rotation.y=rnd()*7;world.add(g);
  mons.push({g,k,st:'wander',dm:null,tg:null,wait:cur.aw?1:5+i*2,lose:0,sx:x,sz:z,ph:0,ft:0,mt:rnd()*8,lure,fz:false,vp:k.verity?-1:0,ang:0,tt:8,tw:0})}
@@ -856,6 +911,7 @@ function spawnEntities(mx,kc,ex){const te=endless&&level>1?remixTE(TE[thi()]):TE
  mons=[];npcs=[];wins=[];swarms=[];plague=null;
  const mc=openT.filter(p=>p[2]>=18).sort(()=>rnd()-.5);let slot=0;if(te.verity){const c=openT.filter(p=>p[2]>=6&&p[2]<=13),p=c.length?c[rnd()*c.length|0]:mc[slot++];if(p)addMon('verity',(p[0]+.5)*T,(p[1]+.5)*T,0,MAT)}
  for(let i=0,nm=clamp(1+Math.ceil(level/2)+DIFF.mc-(te.verity?1:0),1,7+Math.min(5,endEx()/4|0));i<nm&&slot<mc.length;i++){const kind=pick();for(let j=0;j<(kind==='anim'&&i%2===0?2:1)&&slot<mc.length;j++){const p=mc[slot++];addMon(kind,(p[0]+.5)*T,(p[1]+.5)*T,i,MAT)}}
+ if(thi()===1&&!cur.boss){const c=openT.filter(p=>p[2]>=14);if(c.length){const p=c[rnd()*c.length|0];addMon('wheelie',(p[0]+.5)*T,(p[1]+.5)*T,0,MAT)}}
  if(rnd()<te.wd&&!noWand){const c=openT.filter(p=>p[2]>6&&p[2]<mx*.6);if(c.length){const p=c[rnd()*c.length|0],g=mkBody(EK.wanderer.body,MAT);g.position.set((p[0]+.5)*T,0,(p[1]+.5)*T);world.add(g);npcs.push({g,k:EK.wanderer,dm:null,tg:null,wait:0,ph:0,talked:0})}}
  if(te.win){let n=te.win+(level>11?1:0);for(const p of openT.filter(p=>p[2]>5).sort(()=>rnd()-.5)){if(n<=0)break;for(const[a,b]of D){if(!w[p[1]+b]||w[p[1]+b][p[0]+a]!==1)continue;
    const g=mkWindow(MAT);g.position.set((p[0]+.5+a*.5)*T,0,(p[1]+.5+b*.5)*T);g.rotation.y=Math.atan2(-a,-b);world.add(g);wins.push({g,x:g.position.x-a*.3,z:g.position.z-b*.3,near:0,look:0,snd:0});n--;break}}}
@@ -866,7 +922,7 @@ function spawnEntities(mx,kc,ex){const te=endless&&level>1?remixTE(TE[thi()]):TE
   if(pg.P.length){const t=waterTex.clone();t.userData={};t.needsUpdate=true;world.add(new THREE.Mesh(pg.geo(),new THREE.MeshBasicMaterial({color:0x2aff5a,map:t,transparent:true,opacity:.5,depthWrite:false,blending:THREE.AdditiveBlending})))}}}
 function wanderMove(m,spd,dt){if(!m.dm){const o=openT[rnd()*openT.length|0];m.tg=o;m.dm=bfs(o[0],o[1])}const g=m.g,s=steer(m,m.dm,spd,dt,(m.tg[0]+.5)*T,(m.tg[1]+.5)*T);if(!m.dm)return 0;
  if(m.dm[Math.floor(g.position.z/T)*S+Math.floor(g.position.x/T)]<=0&&Math.hypot(g.position.x-(m.tg[0]+.5)*T,g.position.z-(m.tg[1]+.5)*T)<.6){m.dm=null;return -1}return s}
-function animMon(m,sp,dt,now){const g=m.g,u=g.userData,K_=m.k||{};m.ph+=dt*sp*2.4;
+function animMon(m,sp,dt,now){const g=m.g,u=g.userData,K_=m.k||{};if(u.wheelie){wheelieAnim(m,sp,dt,now);return}m.ph+=dt*sp*2.4;
  if(u.legL){const sw=Math.sin(m.ph)*Math.min(1,sp/2.5);u.legL.rotation.x=sw*.7;u.legR.rotation.x=-sw*.7;u.shL.rotation.x=-sw*.55;u.shR.rotation.x=sw*.55;
   if(u.knL){const a=Math.min(1,sp/2.5);u.knL.rotation.x=Math.max(0,Math.sin(m.ph-1.3))*1.1*a;u.knR.rotation.x=Math.max(0,Math.sin(m.ph-1.3+Math.PI))*1.1*a;u.elL.rotation.x=-.3-Math.max(0,-Math.sin(m.ph))*.4*a;u.elR.rotation.x=-.3-Math.max(0,Math.sin(m.ph))*.4*a}
   u.up.rotation.x=lerp(u.up.rotation.x,m.st==='chase'?.5:.22,dt*4);if((m.st==='chase'||K_.jitter)&&rnd()<dt*(K_.jitter?8:5))u.head.rotation.z=(rnd()-.5)*(K_.jitter?1.4:.9);u.head.rotation.z*=.92;if(!m.wait)u.head.rotation.y*=.9;g.position.y=Math.abs(Math.sin(m.ph))*.04}
@@ -1640,12 +1696,14 @@ function snapKill(){if(B){if(B.g.visible&&B.hittable&&B.mode==='fight'){const g=
  const live=mons.filter(m=>!m.dead&&!(m.k.verity&&m.vp<3)).sort(()=>Math.random()-.5),n=Math.ceil(live.length/2);if(!n){say('Nothing here to snap away. Perfectly balanced.',2200);return}
  live.slice(0,n).forEach((m,i)=>setTimeout(()=>killMon(m,2),300+i*350));say(n===1?'One of them turns to dust.':n+' of them turn to dust.',2600)}
 // ---- monster damage ----
-function hitMon(m,dmg,dx,dz,kb){if(!m||m.dead||(m.k.verity&&m.vp<3))return;if(NET.on&&!NET.host){netSend('h',{t:'hit',i:mons.indexOf(m),d:dmg,x:+dx.toFixed(2),z:+dz.toFixed(2),k:kb});return}
+// co-op clients pass the hit to the host, which does the exploding
+function g_wnet(m,dmg,dx,dz,kb){if(NET.on&&!NET.host){netSend('h',{t:'hit',i:mons.indexOf(m),d:dmg,x:+dx.toFixed(2),z:+dz.toFixed(2),k:kb});return true}return false}
+function hitMon(m,dmg,dx,dz,kb){if(!m||m.dead||(m.k.verity&&m.vp<3))return;if(m.k.wheelie){if(!g_wnet(m,dmg,dx,dz,kb))wheelieBoom(m);return}if(NET.on&&!NET.host){netSend('h',{t:'hit',i:mons.indexOf(m),d:dmg,x:+dx.toFixed(2),z:+dz.toFixed(2),k:kb});return}
  if(m.lure){m.lure=false;const u=m.g.userData,r_=u.real;u.fake.visible=false;r_.visible=true;m.g.userData=r_.userData}
  m.hp=(m.hp??(m.k.verity?400:100))-dmg;m.stun=Math.max(m.stun||0,.7);const l=Math.hypot(dx,dz)||1;m.kb=[dx/l*kb,dz/l*kb];
  const g=m.g,p=panOf(g.position.x,g.position.z);sfx({n:1,ft:'lowpass',ff:700,dur:.15,v:.3,p,r:.3});sfx({t:'sawtooth',f:180,f2:90,dur:.3,v:.12,ft:'lowpass',ff:900,p,r:.5});burst(g.position.x,1.2*(g.scale.y||1),g.position.z,8,0x5a0a0a,1.6);
  if(m.hp<=0)killMon(m,1);else if(m.st!=='chase'){m.st='chase';m.stare=0}}
-function killMon(m,how){if(m.dead)return;m.dead=how;m.dtm=0;const g=m.g,p=panOf(g.position.x,g.position.z);
+function killMon(m,how){if(m.dead)return;if(m.k.wheelie){wheelieBoom(m);return}m.dead=how;m.dtm=0;const g=m.g,p=panOf(g.position.x,g.position.z);
  if(how===2){sfx({n:1,ft:'bandpass',ff:900,ff2:300,q:1,dur:1.6,v:.22,a:.2,p,r:.6})}else{sfx({t:'sawtooth',f:160,f2:40,dur:1.2,v:.18,ft:'lowpass',ff:800,p,r:.6});sfx({n:1,ft:'lowpass',ff:300,dur:.4,v:.3,p,r:.4,d:.5})}stats.kills=(stats.kills||0)+1;saveStats()}
 function deathAnim(m,dt){const g=m.g;if(!g.visible)return;m.dtm=(m.dtm||0)+dt;const t=m.dtm,s0=g.userData.s0||(g.userData.s0=g.scale.x);
  if(m.dead===2){const k=Math.max(0,1-t/1.4);g.scale.setScalar(s0*Math.max(.01,k));g.position.y=-(1-k)*.2;if(rnd()<dt*25)burst(g.position.x+(rnd()-.5)*.6,.3+rnd()*1.6*k,g.position.z+(rnd()-.5)*.6,3,0x6a5a48,.9);if(k<=0)g.visible=false}
@@ -1913,7 +1971,7 @@ function entIcons(){if(entIco)return entIco;entIco={};let r;try{r=new THREE.WebG
   cm.position.set(c.x,c.y+z.y*up,c.z+d);cm.lookAt(c);r.render(sc,cm);entIco[k]=r.domElement.toDataURL();sc.remove(o);o.traverse(q=>{if(q.geometry&&!q.geometry.userData.keep&&!q.isSprite)q.geometry.dispose()})};
  const flat=(k,fn)=>{const c=cv(112),g=c.getContext('2d');g.fillStyle='#34302a';g.fillRect(0,0,112,112);fn(g);entIco[k]=c.toDataURL()};
  try{for(const k of['bacteria','skin','scratcher','party','anim','wanderer'])shot(k,mkBody(EK[k].body,MAT));
-  shot('hound',mkHound(MAT(0xd8cfc4)),1.1,.15);shot('smiler',mkSmiler(),0);shot('fmoth',mkFMoth(MAT(0x2a2016),MAT(0xb8a070)),.9,2.2);shot('windows',mkWindow(MAT),0);
+  shot('hound',mkHound(MAT(0xd8cfc4)),1.1,.15);shot('wheelie',mkWheelie(),1.2,.05);shot('smiler',mkSmiler(),0);shot('fmoth',mkFMoth(MAT(0x2a2016),MAT(0xb8a070)),.9,2.2);shot('windows',mkWindow(MAT),0);
   {const v=mkVerity(MAT),u=v.userData,o=u.orb;v.remove(o);o.position.set(0,0,0);o.visible=true;shot('verity',o,0)}
   shot('thing',mkThingModel(MAT(0x4a443c),MAT(0xff2020,1)).g,.35)}catch(e){console.warn(e)}
  flat('mmoth',g=>{for(let i=0;i<7;i++){g.save();g.translate(20+((i*37)%72),18+((i*53)%76));g.rotate(i);g.drawImage(mothTex.image,-14,-14,28,28);g.restore()}});
@@ -2074,7 +2132,7 @@ function monTick(m,dt,now,P,chaseSp,wanderSp,searchSp,dark){const{px,pz,dmap,lit
   if(m.dead){deathAnim(m,dt);return false}if(m.stun>0){m.stun-=dt;stunTick(m,dt);animMon(m,0,dt,now);return false}
   if(!A.fr){const vis=de<30&&(!P.hid||hunt)&&los(gx,gz,px,pz);
    if(!P.remote&&vis&&de<16&&!(K_.verity&&m.vp<0)&&((gx-px)*cfx+(gz-pz)*cfz)/(de||1)>.5)markSeen('E',m.lure?'wanderer':K_.key,m.lure?'Wanderer':K_.n);
-   if(K_.verity)return updVerity(m,dt,ad,now,chaseSp);
+   if(K_.verity)return updVerity(m,dt,ad,now,chaseSp);if(K_.wheelie)return updWheelie(m,dt,de,now,P,chaseSp);
    if(K_.angel)frozen=((gx-px)*cfx+(gz-pz)*cfz)/(de||1)>.55&&vis&&(lit||!dark||de<4);
    if(m.lure){if(vis&&de<14&&dmap)sp=steer(m,dmap,wanderSp*.9,dt,px,pz);else sp=Math.max(0,wanderMove(m,wanderSp*.6,dt));
     if(vis&&de<3.2){m.lure=false;const r_=u.real;u.fake.visible=false;r_.visible=true;g.userData=u=r_.userData;m.st='chase';spotted(m,ad);if(!P.remote)say('That is not a Wanderer!',1600)}}
@@ -2656,6 +2714,8 @@ function clientMsg(d){
  if(d.t==='rdoor'){setRoomDoor(d.i|0,!!d.o);return}
  if(d.t==='vtv'){vzSet(d.m);return}
  if(d.t==='pz'){pzApply(d.i|0,true);return}
+ if(d.t==='boom'){const m=mons[d.i|0];if(m)m.g.visible=false;boomFx(+d.x||0,+d.z||0);return}
+ if(d.t==='wback'){const m=mons[d.i|0];if(m)m.g.visible=true;return}
  if(d.t==='revp'){revProg(+d.p||0,d.by);return}
  if(d.t==='revive'){applyRevive(d.by);return}
  if(d.t==='welcome'){NET.me=d.id;document.body.classList.add('mpg');chatSys('Joined the room. Press T or ENTER in game to chat.');mpLobbyUI();mpStatus('Joined! Waiting for the host to start.')}
@@ -2695,7 +2755,7 @@ function netTick(rdt){if(NET.started&&(NET.sendT-=rdt)<=0&&stt!=='menu'){NET.sen
 // ---- suit colour: picked in the main menu, shown on your first-person sleeve and on your avatar in multiplayer ----
 const SUITS=[['Hazard yellow',0xd8c020],['Safety orange',0xe8701e],['Signal red',0xc8302a],['Lab white',0xe4e2da],['Graphite',0x3a3d42],['Cobalt',0x2f63c8],['Teal',0x1f9a8f],['Moss',0x5f8a2e],['Violet',0x7a4ac0],['Pink',0xe06aa8]];
 // special suits unlock by escaping Level ?: a polished gold suit, and The Thing's own fused body
-const SPECIAL={gold:{n:'Escapee gold',c:0xd4a52a,bg:'linear-gradient(135deg,#f6dc7a,#b8861c 55%,#f0cf62)'},thanos:{n:'Thanos',c:0x7a5a9a,unl:'thanos',how:'take the Infinity Gauntlet from a safe',bg:'linear-gradient(180deg,#8a6aa8 0 38%,#2c4a7a 38% 80%,#d4a52a 80% 88%,#2c4a7a 88%)'},sahur:{n:'Tung Tung Tung Sahur',c:0xb07a46,unl:'sahur',how:'take the Sahur bat from a safe',bg:'radial-gradient(circle at 36% 38%,#fff 0 9%,#111 10% 13%,transparent 14%),radial-gradient(circle at 64% 38%,#fff 0 9%,#111 10% 13%,transparent 14%),repeating-linear-gradient(180deg,#b07a46 0 7px,#9a6838 7px 9px)'},halloween:{n:'Halloween',c:0x1c1820,unl:'halloween',how:'redeem a code',bg:'radial-gradient(circle at 50% 42%,#ff9a2a 0 30%,transparent 31%),linear-gradient(180deg,#2a1838,#120c16)'},ironman:{n:'Iron Man',c:0xa8161a,unl:'ironman',how:'redeem a code',bg:'radial-gradient(ellipse 30% 9% at 36% 40%,#e8f6ff 0 60%,transparent 70%),radial-gradient(ellipse 30% 9% at 64% 40%,#e8f6ff 0 60%,transparent 70%),radial-gradient(ellipse 42% 46% at 50% 52%,#d6a63a 0 70%,transparent 72%),#a8161a'},ultron:{n:'Ultron',c:0x8c919a,unl:'ultron',how:'redeem a code',bg:'radial-gradient(ellipse 26% 7% at 36% 40%,#ff2a1a 0 60%,transparent 70%),radial-gradient(ellipse 26% 7% at 64% 40%,#ff2a1a 0 60%,transparent 70%),linear-gradient(180deg,#d8dce2,#7a7e86)'},reindeer:{n:'Reindeer',c:0x7a4a2a,unl:'reindeer',how:'redeem a code',bg:'radial-gradient(circle at 50% 62%,#ff2a2a 0 12%,transparent 13%),linear-gradient(180deg,#5a3a20 0 22%,#7a4a2a 22%)'},elf:{n:'Elf',c:0x2a8a3a,unl:'elf',how:'redeem a code',bg:'linear-gradient(180deg,#2a8a3a 0 30%,#f0c8a8 30% 52%,#2a8a3a 52% 80%,repeating-linear-gradient(90deg,#d02a2a 0 6px,#f4f4f0 6px 12px) 80%)'},snowman:{n:'Snowman',c:0xf0f0f0,unl:'snowman',how:'redeem a code',bg:'linear-gradient(180deg,#141414 0 22%,#f4f4f4 22% 48%,#c8302a 48% 56%,#f4f4f4 56%)'},ghost:{n:'Ghost',c:0xf4f4f0,unl:'ghost',how:'redeem a code',bg:'radial-gradient(ellipse 9% 13% at 38% 42%,#111 0 90%,transparent 100%),radial-gradient(ellipse 9% 13% at 62% 42%,#111 0 90%,transparent 100%),radial-gradient(ellipse 8% 10% at 50% 66%,#111 0 90%,transparent 100%),#f4f4f0'},skeleton:{n:'Skeleton',c:0x141414,unl:'skeleton',how:'redeem a code',bg:'repeating-linear-gradient(180deg,#e8e2d0 0 4px,#141414 4px 10px)'},witch:{n:'Witch',c:0x1c1420,unl:'witch',how:'redeem a code',bg:'linear-gradient(180deg,#111 0 30%,#7a3aa8 30% 36%,#7ab04a 36% 58%,#1c1420 58%)'},santa:{n:'Santa',c:0xc8202a,unl:'santa',how:'redeem a code',bg:'linear-gradient(180deg,#f4f1e8 0 18%,#c8202a 18% 60%,#111 60% 68%,#c8202a 68%)'},alig:{n:'Ali G',c:0xf2c41c,unl:'alig',how:'redeem a code',bg:'linear-gradient(180deg,#1c2440 0 26%,#f2c41c 26% 38%,#c8a02a 38% 46%,#f2c41c 46%)'},racer:{n:'Racer',c:0x161618,adm:1,bg:'radial-gradient(ellipse 34% 20% at 50% 46%,#4fa3e8 0 70%,transparent 74%),linear-gradient(160deg,#2a2a2e,#0c0c0e)'},thing:{n:'The Thing',c:0x2b2420,bg:'radial-gradient(circle at 35% 40%,#ff3a2a 0 9%,transparent 10%),radial-gradient(circle at 65% 40%,#7aff4a 0 8%,transparent 9%),linear-gradient(160deg,#3a302a,#141110)'}};
+const SPECIAL={gold:{n:'Escapee gold',c:0xd4a52a,bg:'linear-gradient(135deg,#f6dc7a,#b8861c 55%,#f0cf62)'},thanos:{n:'Thanos',c:0x7a5a9a,unl:'thanos',how:'take the Infinity Gauntlet from a safe',bg:'linear-gradient(180deg,#8a6aa8 0 38%,#2c4a7a 38% 80%,#d4a52a 80% 88%,#2c4a7a 88%)'},sahur:{n:'Tung Tung Tung Sahur',c:0xb07a46,unl:'sahur',how:'take the Sahur bat from a safe',bg:'radial-gradient(circle at 36% 38%,#fff 0 9%,#111 10% 13%,transparent 14%),radial-gradient(circle at 64% 38%,#fff 0 9%,#111 10% 13%,transparent 14%),repeating-linear-gradient(180deg,#b07a46 0 7px,#9a6838 7px 9px)'},halloween:{n:'Halloween',c:0x1c1820,unl:'halloween',how:'redeem a code',bg:'radial-gradient(circle at 50% 42%,#ff9a2a 0 30%,transparent 31%),linear-gradient(180deg,#2a1838,#120c16)'},ironman:{n:'Iron Man',c:0xa8161a,unl:'ironman',how:'redeem a code',bg:'radial-gradient(ellipse 30% 9% at 36% 40%,#e8f6ff 0 60%,transparent 70%),radial-gradient(ellipse 30% 9% at 64% 40%,#e8f6ff 0 60%,transparent 70%),radial-gradient(ellipse 42% 46% at 50% 52%,#d6a63a 0 70%,transparent 72%),#a8161a'},ultron:{n:'Ultron',c:0x8c919a,unl:'ultron',how:'redeem a code',bg:'radial-gradient(ellipse 26% 7% at 36% 40%,#ff2a1a 0 60%,transparent 70%),radial-gradient(ellipse 26% 7% at 64% 40%,#ff2a1a 0 60%,transparent 70%),linear-gradient(180deg,#d8dce2,#7a7e86)'},reindeer:{n:'Reindeer',c:0x7a4a2a,unl:'reindeer',how:'redeem a code',bg:'radial-gradient(circle at 50% 62%,#ff2a2a 0 12%,transparent 13%),linear-gradient(180deg,#5a3a20 0 22%,#7a4a2a 22%)'},elf:{n:'Elf',c:0x2a8a3a,unl:'elf',how:'redeem a code',bg:'linear-gradient(180deg,#2a8a3a 0 30%,#f0c8a8 30% 52%,#2a8a3a 52% 80%,#d02a2a 80%)'},snowman:{n:'Snowman',c:0xf0f0f0,unl:'snowman',how:'redeem a code',bg:'linear-gradient(180deg,#141414 0 22%,#f4f4f4 22% 48%,#c8302a 48% 56%,#f4f4f4 56%)'},ghost:{n:'Ghost',c:0xf4f4f0,unl:'ghost',how:'redeem a code',bg:'radial-gradient(ellipse 9% 13% at 38% 42%,#111 0 90%,transparent 100%),radial-gradient(ellipse 9% 13% at 62% 42%,#111 0 90%,transparent 100%),radial-gradient(ellipse 8% 10% at 50% 66%,#111 0 90%,transparent 100%),#f4f4f0'},skeleton:{n:'Skeleton',c:0x141414,unl:'skeleton',how:'redeem a code',bg:'repeating-linear-gradient(180deg,#e8e2d0 0 4px,#141414 4px 10px)'},witch:{n:'Witch',c:0x1c1420,unl:'witch',how:'redeem a code',bg:'linear-gradient(180deg,#111 0 30%,#7a3aa8 30% 36%,#7ab04a 36% 58%,#1c1420 58%)'},santa:{n:'Santa',c:0xc8202a,unl:'santa',how:'redeem a code',bg:'linear-gradient(180deg,#f4f1e8 0 18%,#c8202a 18% 60%,#111 60% 68%,#c8202a 68%)'},alig:{n:'Ali G',c:0xf2c41c,unl:'alig',how:'redeem a code',bg:'linear-gradient(180deg,#1c2440 0 26%,#f2c41c 26% 38%,#c8a02a 38% 46%,#f2c41c 46%)'},racer:{n:'Racer',c:0x161618,adm:1,bg:'radial-gradient(ellipse 34% 20% at 50% 46%,#4fa3e8 0 70%,transparent 74%),linear-gradient(160deg,#2a2a2e,#0c0c0e)'},thing:{n:'The Thing',c:0x2b2420,bg:'radial-gradient(circle at 35% 40%,#ff3a2a 0 9%,transparent 10%),radial-gradient(circle at 65% 40%,#7aff4a 0 8%,transparent 9%),linear-gradient(160deg,#3a302a,#141110)'}};
 const validSuit=v=>typeof v==='number'&&v>=0&&v<=0xffffff?v|0:SPECIAL[v]?v:undefined;
 const suitColOf=v=>SPECIAL[v]?SPECIAL[v].c:typeof v==='number'&&v>=0&&v<=0xffffff?v:0xe8701e;
 const suitCol=()=>suitColOf(CFG.suit),suitKind=()=>SPECIAL[CFG.suit]?CFG.suit:null,suitsOpen=()=>(stats.wins||0)>0,specialOpen=k=>SPECIAL[k].adm?adminOK():SPECIAL[k].unl?!!(stats.suits&&stats.suits[SPECIAL[k].unl]):suitsOpen();
