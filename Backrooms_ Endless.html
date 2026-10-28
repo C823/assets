@@ -406,7 +406,7 @@ body.mpg #chat{display:block}body.menu #chat{display:none}
 #newg,#mp,#slotp{left:4vw;right:4vw;top:9vh;bottom:12vh;width:auto!important;max-height:none;transform:none;padding:2.8vh 3.2vh}
 body.np #newg,body.mpo #mp,body.slp #slotp{display:flex;flex-direction:column}#newg>*,#mp>*,#slotp>*{flex-shrink:0}#newg .pfoot,#mp .pfoot,#slotp .pfoot{margin-top:auto}#newg .phead,#mp .phead,#slotp .phead{margin-top:0}
 #mp_lobby .mcols{grid-template-columns:1fr 1fr 1.25fr}#mp_lobby #mp_chat{margin-top:0}#mp_lobby #mp_chatlog{height:auto;min-height:150px;flex:1}
-#mp_home .mcols{min-height:34vh}.pcols{gap:0 4vw}
+#mp_home .mcols{min-height:0}.pcols{gap:0 4vw}
 .pface{width:44px;height:44px;flex:none;object-fit:cover;background:#1c1a16;box-shadow:inset 0 0 0 2px rgba(233,228,214,.35),0 0 0 2px var(--pc,#e9e4d6)}
 .mpp{gap:12px;padding:8px 0}.mpp.empty .pface{opacity:.25;box-shadow:inset 0 0 0 2px rgba(233,228,214,.3)}
 #team{white-space:normal;top:128px}#team .tm{display:flex;align-items:center;gap:8px;margin:0 0 6px}#team .tm .pface{width:34px;height:34px}#team .tm span{color:var(--ink)}#team .tm small{display:block;font:400 17px/1 var(--fd);color:var(--mute)}
@@ -458,6 +458,15 @@ body.touch #hbn{bottom:auto;top:70px}
 .ivs .hbm{position:absolute;left:6px;bottom:4px;font:400 15px var(--fd);font-style:normal;color:var(--hi)}
 #inv .dgo{box-shadow:inset 0 0 0 2px var(--hi)!important;background:rgba(216,196,106,.14)!important}body.dragging,body.dragging *{cursor:grabbing!important}
 #dgh{position:fixed;z-index:60;width:58px;height:58px;margin:-29px 0 0 -29px;pointer-events:none;opacity:.9;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.7);box-shadow:inset 0 0 0 2px var(--ink)}#dgh svg,#dgh img{width:40px;height:40px;color:var(--ink)}
+
+/* ===== public lobby list ===== */
+#mp_pubw{margin-top:1.6vh}#mp_pubw h4{margin:0 0 1vh!important}#mp_pubn{margin-left:12px;font:400 20px var(--fd);color:var(--mute)}
+#mp_publist{max-height:30vh;overflow:auto}
+.plb{display:flex;align-items:center;gap:12px;padding:8px 0;border-top:1px solid var(--line)}.plb:first-child{border-top:0}
+.plb .pf{display:flex;gap:3px}.plb .pf .pface{width:34px;height:34px}.plb p{flex:1;margin:0;font:13px/1.45 var(--fb);color:var(--mute)}.plb p b{display:block;font:400 26px/1 var(--fd);color:var(--ink)}
+.plb .btnp{height:40px;font-size:24px;padding:0 16px}.plb .btnp:disabled{opacity:.4;cursor:not-allowed}.plb em{font-style:normal;color:var(--grn)}.plb em.ig{color:var(--hi)}
+.plb-empty{font:400 22px var(--fd);color:var(--mute);padding:6px 0}
+.mpub{display:flex;align-items:center;gap:12px;margin:0 0 14px;cursor:pointer;font:500 15px var(--fb)}.mpub small{display:block;font:13px var(--fb);color:var(--mute)}
 </style></head><body>
 <canvas id="grain" class="fx" width="160" height="90"></canvas><div id="scan" class="fx"></div><div id="vig" class="fx"></div><div id="dmg" class="fx"></div><div id="insane" class="fx"></div><div id="flash" class="fx"></div>
 <div id="mapw" class="glass"><div class="mh"><b>Map</b><span class="lbl" id="mtitle"></span></div><canvas id="mm" width="512" height="512"></canvas>
@@ -539,16 +548,16 @@ body.touch #hbn{bottom:auto;top:70px}
 <div id="mp" class="glass"><div class="phead"><h3>MULTIPLAYER</h3><span class="pch"><b>&#9679;</b> CH 02 &middot; CO-OP &middot; UP TO 4</span></div>
 <p class="mpd">Everyone explores the same levels together, shares the key, and has to reach the exit door.</p>
 <div class="opt"><span>Your name<small>Shown to the other players</small></span><input id="mp_name" type="text" maxlength="14" spellcheck="false" placeholder="Player"></div>
-<div id="mp_home"><div class="mcols">
-<div class="mcard"><h4><i>A</i>HOST A GAME</h4><p class="mpd">Opens a room and gives you a code to share. You choose the difficulty under PLAY.</p><button class="btnp" id="mp_host">HOST GAME</button></div>
+<div id="mp_home"><div class="mcard" id="mp_pubw"><h4><i>&#9679;</i>PUBLIC LOBBIES<span id="mp_pubn"></span></h4><div id="mp_publist"></div></div><div class="mcols">
+<div class="mcard"><h4><i>A</i>HOST A GAME</h4><p class="mpd">Opens a room and gives you a code to share. You choose the difficulty under PLAY.</p><label class="mpub"><input type="checkbox" class="sw" id="mp_pub"><span>Public lobby<small>Listed for everyone on the Multiplayer screen</small></span></label><button class="btnp" id="mp_host">HOST GAME</button></div>
 <div class="mcard"><h4><i>B</i>JOIN A GAME</h4><p class="mpd">Type the five-letter code the host gives you.</p><input id="mp_code" type="text" maxlength="5" placeholder="ABCDE" spellcheck="false" style="text-transform:uppercase"><button class="btng" id="mp_join">JOIN GAME</button></div>
 </div></div>
 <div id="mp_lobby" style="display:none"><div class="mcols" id="mp_lcols">
-<div class="mcard"><h4><i>A</i>ROOM CODE</h4><div id="mp_codeshow"></div><p id="mp_diff" class="mpd"></p></div>
+<div class="mcard"><h4><i>A</i>ROOM CODE</h4><div id="mp_codeshow"></div><p id="mp_diff" class="mpd"></p><label class="mpub" id="mp_pubh"><input type="checkbox" class="sw" id="mp_pub2"><span>Public lobby<small>Anyone can find and join from their lobby list</small></span></label></div>
 <div class="mcard"><h4><i>B</i>PLAYERS</h4><div id="mp_list"></div></div>
 <div id="mp_chat" class="mcard"><h4><i>C</i>CHAT</h4><div id="mp_chatlog"></div><div class="chrow"><input id="mp_chatin" type="text" maxlength="120" spellcheck="false" autocomplete="off" placeholder="Say hi to the room"><button class="btng" id="mp_chatgo">SEND</button></div></div></div><div id="mp_saves"></div><button class="btnp" id="mp_start">START NEW GAME</button></div>
 <div class="pfoot"><p id="mp_status"></p><div class="nrow"><button class="btng" id="mp_back">BACK</button></div></div></div>
-<div id="ver">v3.18 &middot; 2026-10-28</div></div>
+<div id="ver">v3.20 &middot; 2026-10-28</div></div>
 <div id="ov" style="display:none"><div class="ovl"><div class="lbl" id="olbl">GAME PAUSED</div><div id="dkick"></div><h1 id="t">PAUSED</h1><i id="dline"></i><p id="s"></p><div id="dgrid"></div><div id="ostats"></div>
 <div class="obtn"><button id="btn" class="btnp">RESUME</button><button id="m2" class="btng">MAIN MENU</button></div><p id="best"></p>
 <div id="keys"><span><b class="kbd">WASD</b>Move</span><span><b class="kbd">SHIFT</b>Sprint</span><span><b class="kbd">C</b>Crouch</span><span><b class="kbd">E</b>Hide</span><span><b class="kbd">M</b>Map</span><span><b class="kbd">I</b>Items</span><span><b class="kbd">1-4</b>/<b class="kbd">WHEEL</b>Hotbar</span><span><b class="kbd">R-CLICK</b>Use item</span></div></div>
@@ -556,7 +565,9 @@ body.touch #hbn{bottom:auto;top:70px}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 'use strict';
-let rnd=Math.random;const $=id=>document.getElementById(id),clamp=(v,a,b)=>v<a?a:v>b?b:v,lerp=(a,b,t)=>a+(b-a)*t;
+let rnd=Math.random;
+// Fisher-Yates with a given random source; the same seed gives the same order in every browser
+const shuf=(arr,f)=>{f=f||rnd;for(let i=arr.length-1;i>0;i--){const j=f()*(i+1)|0,t=arr[i];arr[i]=arr[j];arr[j]=t}return arr};const $=id=>document.getElementById(id),clamp=(v,a,b)=>v<a?a:v>b?b:v,lerp=(a,b,t)=>a+(b-a)*t;
 if(!window.THREE){$('load').classList.add('off');$('t').textContent='COULD NOT LOAD';$('s').textContent='The 3D engine (three.js from cdnjs.cloudflare.com) did not load. Check your internet connection, or ask your network admin to allow cdnjs.cloudflare.com.';$('btn').style.display='none';$('m2').style.display='none';$('ov').style.display='flex';throw new Error('three.js missing')}
 let S=31,H=3;const T=3,D=[[1,0],[-1,0],[0,1],[0,-1]];
 
@@ -901,21 +912,22 @@ function boomFx(x,z){const p_=panOf(x,z),d=Math.hypot(x-px,z-pz),v=clamp(1-d/40,
 // the same outcome as being caught, without the grab
 function boomHit(why){if(stt!=='play')return;invClose();deathShot=null;ach&&markSeen('E','wheelie','The Wheelie');
  if(NET.on&&NET.started&&!NET.spec&&mateUp()){goDown(why,null);return}lives--;if(lives<=0){if(NET.on&&NET.started)netSpectate(why);else over(why)}else{die(why);stt='play';stats.deaths++;saveStats();achDeath();saveGame()}}
-function addMon(kind,x,z,i,MAT){const k=EK[kind];let g,lure=false;
+function addMon(kind,x,z,i,MAT){const rOut=rnd;rnd=mulberry((levelSeed^Math.imul(Math.round(x*7+1),73856093)^Math.imul(Math.round(z*7+1),19349663))>>>0);try{addMon_(kind,x,z,i,MAT)}finally{rnd=rOut}}
+function addMon_(kind,x,z,i,MAT){const k=EK[kind];let g,lure=false;
  if(k.wheelie)g=mkWheelie();else if(k.verity)g=mkVerity(MAT);else if(k.quad)g=mkHound(MAT(0xd8cfc4));else if(k.smiler)g=mkSmiler();else if(k.moth)g=mkFMoth(MAT(0x2a2016),MAT(0xb8a070));else g=mkBody(k.body,MAT);
  if(k.disguise&&rnd()<k.disguise){const fake=mkBody(EK.wanderer.body,MAT),real=g;g=new THREE.Group();g.add(fake,real);real.visible=false;g.userData=Object.assign({},fake.userData,{real,fake});lure=true}
  g.scale.setScalar(cur.ms||1);g.position.set(x,0,z);g.rotation.y=rnd()*7;world.add(g);
  mons.push({g,k,st:'wander',dm:null,tg:null,wait:cur.aw?1:5+i*2,lose:0,sx:x,sz:z,ph:0,ft:0,mt:rnd()*8,lure,fz:false,vp:k.verity?-1:0,ang:0,tt:8,tw:0})}
-function spawnEntities(mx,kc,ex){const te=endless&&level>1?remixTE(TE[thi()]):TE[thi()],mats={},MAT=(c,basic)=>{const k=c+(basic?'b':'');return mats[k]||(mats[k]=basic?new THREE.MeshBasicMaterial({color:c,fog:false}):new THREE.MeshLambertMaterial({color:c}))};
+function spawnEntities(mx,kc,ex){rnd=mulberry((levelSeed^0x0e17e5)>>>0);const te=endless&&level>1?remixTE(TE[thi()]):TE[thi()],mats={},MAT=(c,basic)=>{const k=c+(basic?'b':'');return mats[k]||(mats[k]=basic?new THREE.MeshBasicMaterial({color:c,fog:false}):new THREE.MeshLambertMaterial({color:c}))};
  const pick=()=>{let t=0;for(const k in te.h)t+=te.h[k];let r=rnd()*t;for(const k in te.h)if((r-=te.h[k])<0)return k;return Object.keys(te.h)[0]};
  mons=[];npcs=[];wins=[];swarms=[];plague=null;
- const mc=openT.filter(p=>p[2]>=18).sort(()=>rnd()-.5);let slot=0;if(te.verity){const c=openT.filter(p=>p[2]>=6&&p[2]<=13),p=c.length?c[rnd()*c.length|0]:mc[slot++];if(p)addMon('verity',(p[0]+.5)*T,(p[1]+.5)*T,0,MAT)}
+ const mc=shuf(openT.filter(p=>p[2]>=18));let slot=0;if(te.verity){const c=openT.filter(p=>p[2]>=6&&p[2]<=13),p=c.length?c[rnd()*c.length|0]:mc[slot++];if(p)addMon('verity',(p[0]+.5)*T,(p[1]+.5)*T,0,MAT)}
  for(let i=0,nm=clamp(1+Math.ceil(level/2)+DIFF.mc-(te.verity?1:0),1,7+Math.min(5,endEx()/4|0));i<nm&&slot<mc.length;i++){const kind=pick();for(let j=0;j<(kind==='anim'&&i%2===0?2:1)&&slot<mc.length;j++){const p=mc[slot++];addMon(kind,(p[0]+.5)*T,(p[1]+.5)*T,i,MAT)}}
  if(thi()===1&&!cur.boss){const c=openT.filter(p=>p[2]>=14);if(c.length){const p=c[rnd()*c.length|0];addMon('wheelie',(p[0]+.5)*T,(p[1]+.5)*T,0,MAT)}}
- if(rnd()<te.wd&&!noWand){const c=openT.filter(p=>p[2]>6&&p[2]<mx*.6);if(c.length){const p=c[rnd()*c.length|0],g=mkBody(EK.wanderer.body,MAT);g.position.set((p[0]+.5)*T,0,(p[1]+.5)*T);world.add(g);npcs.push({g,k:EK.wanderer,dm:null,tg:null,wait:0,ph:0,talked:0})}}
- if(te.win){let n=te.win+(level>11?1:0);for(const p of openT.filter(p=>p[2]>5).sort(()=>rnd()-.5)){if(n<=0)break;for(const[a,b]of D){if(!w[p[1]+b]||w[p[1]+b][p[0]+a]!==1)continue;
+ if(rnd()<te.wd&&!noWand){const c=openT.filter(p=>p[2]>6&&p[2]<mx*.6);if(c.length){const p=c[rnd()*c.length|0],g=(()=>{const rOut=rnd;rnd=mulberry((levelSeed^0x3a3d)>>>0);try{return mkBody(EK.wanderer.body,MAT)}finally{rnd=rOut}})();g.position.set((p[0]+.5)*T,0,(p[1]+.5)*T);world.add(g);npcs.push({g,k:EK.wanderer,dm:null,tg:null,wait:0,ph:0,talked:0})}}
+ if(te.win){let n=te.win+(level>11?1:0);for(const p of shuf(openT.filter(p=>p[2]>5))){if(n<=0)break;for(const[a,b]of D){if(!w[p[1]+b]||w[p[1]+b][p[0]+a]!==1)continue;
    const g=mkWindow(MAT);g.position.set((p[0]+.5+a*.5)*T,0,(p[1]+.5+b*.5)*T);g.rotation.y=Math.atan2(-a,-b);world.add(g);wins.push({g,x:g.position.x-a*.3,z:g.position.z-b*.3,near:0,look:0,snd:0});n--;break}}}
- if(te.sw)for(const p of openT.filter(p=>p[2]>8).sort(()=>rnd()-.5).slice(0,te.sw+(level/8|0)))swarms.push(mkSwarm((p[0]+.5)*T,(p[1]+.5)*T));
+ if(te.sw)for(const p of shuf(openT.filter(p=>p[2]>8)).slice(0,te.sw+(level/8|0)))swarms.push(mkSwarm((p[0]+.5)*T,(p[1]+.5)*T));
  if(te.plague&&cur.water){plague=new Uint8Array(S*S);const pg=GB();for(let c=0,nc=5+(level/2|0);c<nc;c++){const p=openT[rnd()*openT.length|0];if(p[2]<5)continue;
    for(let j=-1;j<=1;j++)for(let i=-1;i<=1;i++){const x=p[0]+i,y=p[1]+j;if(!w[y]||w[y][x]!==0||plague[y*S+x]||rnd()>.8||Math.abs(x-kc[0])+Math.abs(y-kc[1])<1||Math.abs(x-ex[0])+Math.abs(y-ex[1])<2)continue;
     plague[y*S+x]=1;const x0=x*T,z0=y*T,uv=[[0,0],[1,0],[1,1],[0,1]];pg.quad([[x0,.33,z0],[x0+T,.33,z0],[x0+T,.33,z0+T],[x0,.33,z0+T]],[0,1,0],uv,uv)}}
@@ -1113,10 +1125,10 @@ function pipeRun(g,fx,fz,a,b){const m=new THREE.Matrix4(),q=new THREE.Quaternion
 function buildLevel(){
  disposeWorld();world=new THREE.Group();scene.add(world);
  applyTheme();unHide();invClose();kpClose();VZ=null;PZ=null;slabT=null;if(down)endDown();prot=0;roomsL=[];roomItems=[];lockers=[];dropL=[];safeO=null;narrow=null;B=null;clearBossFx();exitL.distance=12;document.body.classList.toggle('boss',!!cur.boss&&!bossMenu);if(cur.boss){buildBoss();if(!bossMenu)bossArm();return}
- S=Math.min(29+2*level,61);const ST=S*T;
+ rnd=mulberry((levelSeed^0x51a7e1)>>>0);S=Math.min(29+2*level,61);const ST=S*T;
  w=Array.from({length:S},()=>Array(S).fill(1));
  const st=[[1,1]];w[1][1]=0;
- while(st.length){const[x,y]=st[st.length-1],o=[[2,0],[-2,0],[0,2],[0,-2]].sort(()=>rnd()-.5).filter(([a,b])=>{const nx=x+a,ny=y+b;return nx>0&&ny>0&&nx<S-1&&ny<S-1&&w[ny][nx]});if(!o.length){st.pop();continue}const[a,b]=o[0];w[y+b/2][x+a/2]=0;w[y+b][x+a]=0;st.push([x+a,y+b])}
+ while(st.length){const[x,y]=st[st.length-1],o=shuf([[2,0],[-2,0],[0,2],[0,-2]]).filter(([a,b])=>{const nx=x+a,ny=y+b;return nx>0&&ny>0&&nx<S-1&&ny<S-1&&w[ny][nx]});if(!o.length){st.pop();continue}const[a,b]=o[0];w[y+b/2][x+a/2]=0;w[y+b][x+a]=0;st.push([x+a,y+b])}
  for(let y=1;y<S-1;y++)for(let x=1;x<S-1;x++)if(w[y][x]&&((!w[y][x-1]&&!w[y][x+1])||(!w[y-1][x]&&!w[y+1][x]))&&rnd()<(cur.lp??.14))w[y][x]=0;
  for(let r=0,nr=Math.min(3+level,14);r<nr;r++){const rx=2+rnd()*(S-9)|0,ry=2+rnd()*(S-9)|0;for(let j=0;j<5;j++)for(let i=0;i<5;i++)w[ry+j][rx+i]=(i==2&&j==2&&r%2)?1:0}
  let lp=[];if(LAY[cur.lay])lp=LAY[cur.lay]();
@@ -1139,6 +1151,7 @@ function buildLevel(){
  if(cur.lay==='suburb')suburbProps(pg,eg,houses,lampPts,lampSt);
  if(pg.P.length){const m=new THREE.Mesh(pg.geo(),surf(null,{vertexColors:true},0x222222));world.add(m)}
  if(eg.P.length&&!cur.out)world.add(new THREE.Mesh(eg.geo(),new THREE.MeshBasicMaterial({vertexColors:true})));
+ rnd=mulberry((levelSeed^0x3e5a11)>>>0);
  // ceiling lights: 0 dead, 1 working, 2 flickering
  const pts=cur.out?lampPts:[],pst=cur.out?lampSt:[];if(cur.pb>0&&!cur.out)for(let y=1;y<S-1;y+=2)for(let x=1;x<S-1;x+=2)if(w[y][x]!==1&&rnd()<.7){pts.push([x,y]);pst.push(rnd()<.06?0:rnd()<.08?2:1)}
  lightPts=pts.map((q,i)=>[q[0]+.5,q[1]+.5,pst[i]]);
@@ -1165,12 +1178,12 @@ function buildLevel(){
   if(usePhong()){const hm=new THREE.InstancedMesh(new THREE.PlaneGeometry(4.4,3.2),new THREE.MeshBasicMaterial({map:glowTex,color:cur.pc,transparent:true,opacity:.2,blending:THREE.AdditiveBlending,depthWrite:false}),pts.length);let k=0;o3.scale.set(1,1,1);o3.rotation.set(Math.PI/2,0,0);
    pts.forEach(([x,y],i)=>{if(!pst[i])return;o3.position.set((x+.5)*T,H-.06,(y+.5)*T);o3.updateMatrix();hm.setMatrixAt(k++,o3.matrix)});hm.count=k;world.add(hm)}}
  waterM=null;if(cur.water){const wt=waterTex.clone();wt.userData={};wt.needsUpdate=true;wt.repeat.set(S/2,S/2);waterM=new THREE.Mesh(new THREE.PlaneGeometry(ST,ST),new THREE.MeshPhongMaterial({color:0x5fc4d0,map:wt,transparent:true,opacity:.5,shininess:90,specular:0x99bbbb,depthWrite:false}));waterM.rotation.x=-Math.PI/2;waterM.position.set(ST/2,.3,ST/2);world.add(waterM)}
- for(const r_ of roomsL){w[r_.dy][r_.dx]=1;w[r_.wy][r_.wx]=1}const d0=bfs(1,1);openT=[];let mx=0;for(let y=0;y<S;y++)for(let x=0;x<S;x++)if(d0[y*S+x]>=0){openT.push([x,y,d0[y*S+x]]);mx=Math.max(mx,d0[y*S+x])}
+ for(const r_ of roomsL){w[r_.dy][r_.dx]=1;w[r_.wy][r_.wx]=1}rnd=mulberry((levelSeed^0x7c0de5)>>>0);const d0=bfs(1,1);openT=[];let mx=0;for(let y=0;y<S;y++)for(let x=0;x<S;x++)if(d0[y*S+x]>=0){openT.push([x,y,d0[y*S+x]]);mx=Math.max(mx,d0[y*S+x])}
  const ex=openT.find(p=>p[2]===mx);door=mkDoor(ex[0],ex[1],d0);exitL.position.set(door.fx,2.2,door.fz);
- const kc=openT.filter(p=>p[2]>mx*.35&&p[2]<mx*.75&&Math.abs(p[0]-ex[0])+Math.abs(p[1]-ex[1])>10).sort(()=>rnd()-.5)[0]||openT[openT.length>>1];
+ const kc=shuf(openT.filter(p=>p[2]>mx*.35&&p[2]<mx*.75&&Math.abs(p[0]-ex[0])+Math.abs(p[1]-ex[1])>10))[0]||openT[openT.length>>1];
  key=mkKey();key.position.set((kc[0]+.5)*T,1.05,(kc[1]+.5)*T);world.add(key);keyL.position.copy(key.position);
- bats=[];const nb=clamp(1+(level/2|0)+(cur.pb>0?0:2)+DIFF.bats,1,8-Math.min(5,endEx()/4|0));openT.filter(p=>p[2]>6&&p!==kc).sort(()=>rnd()-.5).slice(0,nb).forEach(p=>{const b=mkBat();b.position.set((p[0]+.5)*T,.3,(p[1]+.5)*T);world.add(b);bats.push(b)});
- waters=[];const na=DIFF.san?Math.min(2+(level/3|0),5):1;openT.filter(p=>p[2]>5&&p!==kc).sort(()=>rnd()-.5).slice(0,na).forEach(p=>{const b=mkWater();b.position.set((p[0]+.5)*T,.3,(p[1]+.5)*T);world.add(b);waters.push(b)});
+ bats=[];const nb=clamp(1+(level/2|0)+(cur.pb>0?0:2)+DIFF.bats,1,8-Math.min(5,endEx()/4|0));shuf(openT.filter(p=>p[2]>6&&p!==kc)).slice(0,nb).forEach(p=>{const b=mkBat();b.position.set((p[0]+.5)*T,.3,(p[1]+.5)*T);world.add(b);bats.push(b)});
+ waters=[];const na=DIFF.san?Math.min(2+(level/3|0),5):1;shuf(openT.filter(p=>p[2]>5&&p!==kc)).slice(0,na).forEach(p=>{const b=mkWater();b.position.set((p[0]+.5)*T,.3,(p[1]+.5)*T);world.add(b);waters.push(b)});
  spawnEntities(mx,kc,ex);
  phantoms=[];if(DIFF.san){const pm=new THREE.MeshLambertMaterial({color:0x050505,transparent:true,opacity:.85}),pe=new THREE.MeshBasicMaterial({color:0xff2020,fog:false});for(let i=0;i<4;i++){const g=mkEntity(pm,pe);g.visible=false;world.add(g);phantoms.push({g,life:0,look:0})}}
  let bs=-1;for(const[x,y]of openT){let c=0;for(let j=-2;j<=2;j++)for(let i=-2;i<=2;i++)if(w[y+j]&&w[y+j][x+i]===0)c++;if(c>bs){bs=c;menuSpot=[x,y]}}
@@ -1321,7 +1334,7 @@ function mkLocker(col){const g=new THREE.Group(),m=new THREE.MeshLambertMaterial
  for(let i=0;i<6;i++)P(piv,.5,.025,.04,.455,1.83-(i<3?0:1.2)-(i%3)*.07,.004,dk);P(piv,.04,.16,.05,.84,1.1,.03,dk);
  g.userData={piv};return g}
 function placeLockers(){lockers=[];if(cur.boss||cur.out)return;const r0=rnd;rnd=mulberry(levelSeed^0x2545F491);
- try{const n=3+(S/8|0),col=cur.ws==='wood'?0x4a2a18:cur.ws==='tile'?0x7aa0aa:0x56606a,cand=openT.filter(q=>q[2]>3).sort(()=>rnd()-.5);
+ try{const n=3+(S/8|0),col=cur.ws==='wood'?0x4a2a18:cur.ws==='tile'?0x7aa0aa:0x56606a,cand=shuf(openT.filter(q=>q[2]>3));
   for(const[x,y]of cand){if(lockers.length>=n)break;if(narrow&&narrow[y*S+x])continue;const tx=(x+.5)*T,tz=(y+.5)*T;
    if(Math.hypot(tx-door.fx,tz-door.fz)<5||Math.hypot(tx-key.position.x,tz-key.position.z)<4||lockers.some(L=>Math.abs(L.tx-x)+Math.abs(L.ty-y)<6))continue;
    const ds=D.filter(([a,b])=>w[y+b][x+a]===1);if(!ds.length)continue;const[a,b]=ds[rnd()*ds.length|0],cx=tx+a*(T/2-.32),cz=tz+b*(T/2-.32),g=mkLocker(col);
@@ -1413,7 +1426,7 @@ function buildRooms(){roomItems=[];const r=mulberry((levelSeed^0x51ab3)>>>0),wc=
   const n=2+(r()*3|0);for(let i=0;i<n;i++){const q=r(),t=q<.3?'choc':q<.55?'nrg':q<.8?'bat':'aw',x=(rm.x0+1+r()*rm.iw)*T,z=(rm.y0+1+r()*rm.ih)*T,cx=clamp(x,(rm.x0+1)*T+.5,(rm.x0+1+rm.iw)*T-.5),cz=clamp(z,(rm.y0+1)*T+.5,(rm.y0+1+rm.ih)*T-.5);
    const it=mkPickup(t);it.position.set(cx,.3,cz);world.add(it);roomItems.push({g:it,type:t,taken:false})}});
  // a couple of snacks loose in the halls
- const loose=openT.filter(q=>q[2]>6).sort(()=>r()-.5).slice(0,cur.boss?0:1+(r()*2|0));for(const q of loose){const t=r()<.5?'choc':'nrg',it=mkPickup(t);it.position.set((q[0]+.5)*T,.3,(q[1]+.5)*T);world.add(it);roomItems.push({g:it,type:t,taken:false})}}
+ const loose=shuf(openT.filter(q=>q[2]>6),r).slice(0,cur.boss?0:1+(r()*2|0));for(const q of loose){const t=r()<.5?'choc':'nrg',it=mkPickup(t);it.position.set((q[0]+.5)*T,.3,(q[1]+.5)*T);world.add(it);roomItems.push({g:it,type:t,taken:false})}}
 function nearRoomDoor(){if(hid||B||down)return null;const fx=-Math.sin(yaw),fz=-Math.cos(yaw);let best=null,bd=2.8;
  for(const rm of roomsL){const cx=(rm.dx+.5+rm.da*.45)*T,cz=(rm.dy+.5+rm.db*.45)*T,d=Math.hypot(cx-px,cz-pz);if(d>=bd)continue;if(d>.9&&((cx-px)*fx+(cz-pz)*fz)/d<.35)continue;bd=d;best=rm}return best}
 function setRoomDoor(i,o,quiet){const rm=roomsL[i];if(!rm)return;rm.open=o;w[rm.dy][rm.dx]=o?0:1;lastPT='';for(const m of mons)m.dm=null;for(const q of NET.players.values())q.tile='';
@@ -1529,7 +1542,7 @@ function setupPZ(){if(PZ){for(const it of PZ.it)world.remove(it.o.g);if(PZ.st)wo
   const o=pzModel(d.st);o.g.position.set((q[0]+.5)*T,0,(q[1]+.5)*T);o.g.rotation.y=Math.atan2(door.fx-o.g.position.x,door.fz-o.g.position.z)+Math.PI;world.add(o.g);PZ.st={o,g:o.g,x:o.g.position.x,z:o.g.position.z,tx:q[0],tz:q[1]}}
  if(d.t==='car'){// a tile with a clear straight lane ahead to drive down
   const D4=[[1,0],[-1,0],[0,1],[0,-1]],ok=(x,y)=>w[y]&&w[y][x]===0;let best=null;
-  for(const q of openT.filter(q=>q[2]>=10).sort(()=>r()-.5)){for(const[a,b]of D4){let L=0;while(L<9&&ok(q[0]+a*(L+1),q[1]+b*(L+1)))L++;if(L>=6&&ok(q[0]-a,q[1]-b)){best=[q[0],q[1],a,b,L];break}}if(best)break}
+  for(const q of shuf(openT.filter(q=>q[2]>=10),r)){for(const[a,b]of D4){let L=0;while(L<9&&ok(q[0]+a*(L+1),q[1]+b*(L+1)))L++;if(L>=6&&ok(q[0]-a,q[1]-b)){best=[q[0],q[1],a,b,L];break}}if(best)break}
   if(!best){const q=openT[openT.length>>1];best=[q[0],q[1],0,1,3]}
   const c=mkGetaway();c.g.position.set((best[0]+.5)*T,0,(best[1]+.5)*T);c.g.rotation.y=Math.atan2(best[2],best[3]);world.add(c.g);PZ.car=Object.assign(c,{x:c.g.position.x,z:c.g.position.z,tx:best[0],tz:best[1],a:best[2],b:best[3],L:best[4]});w[best[1]][best[0]]=2}
  key.visible=false;key.userData.off=1;key.position.set(-1e4,1,-1e4);keyL.intensity=0}
@@ -1634,7 +1647,7 @@ function wIcons(){if(wIco)return wIco;wIco={};let r;try{r=new THREE.WebGLRendere
  r.dispose();return wIco}
 // ---- the safe ----
 function placeSafe(){safeO=null;if(cur.boss)return;const r0=rnd;rnd=mulberry(levelSeed^0x51F3A9);
- try{let mx=0;for(const q of openT)mx=Math.max(mx,q[2]);const cand=openT.filter(q=>q[2]>mx*.35).sort(()=>rnd()-.5);
+ try{let mx=0;for(const q of openT)mx=Math.max(mx,q[2]);const cand=shuf(openT.filter(q=>q[2]>mx*.35));
   for(const[x,y]of cand){if(narrow&&narrow[y*S+x])continue;const tx=(x+.5)*T,tz=(y+.5)*T;if(Math.hypot(tx-door.fx,tz-door.fz)<6||Math.hypot(tx-key.position.x,tz-key.position.z)<5||lockers.some(L=>Math.abs(L.tx-x)+Math.abs(L.ty-y)<3))continue;
    const ds=D.filter(([a,b])=>w[y+b][x+a]===1);if(!ds.length)continue;const[a,b]=ds[rnd()*ds.length|0],cx=tx+a*(T/2-.45),cz=tz+b*(T/2-.45),g=mkSafe();g.position.set(cx,0,cz);g.rotation.y=Math.atan2(-a,-b);world.add(g);
    safeO={g,x:cx,z:cz,tx:x,ty:y,a,b,open:0,item:null,taken:0,show:null,ang:0};break}}finally{rnd=r0}}
@@ -2278,7 +2291,7 @@ function buildBoss(){S=45;const ST=S*T,c=S>>1;
  for(let i=0;i<S*.9;i++){const x=1+rnd()*(S-2)|0,y=1+rnd()*(S-2)|0,l=2+rnd()*4|0,h_=rnd()<.5;for(let j=0;j<l;j++){const xx=h_?x+j:x,yy=h_?y:y+j;if(xx<S-1&&yy<S-1)w[yy][xx]=1}}
  const clr=(x0,y0,x1,y1)=>{for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++)if(w[y]&&x>0&&y>0&&x<S-1&&y<S-1)w[y][x]=0};clr(1,1,5,5);clr(c-4,c-4,c+4,c+4);
  {const dd=bfs(1,1);for(let y=0;y<S;y++)for(let x=0;x<S;x++)if(!w[y][x]&&dd[y*S+x]<0)w[y][x]=1}
- const Z=3,zs=S/Z,zt=[0,1,2,3,4,5,6,7,8,10].sort(()=>rnd()-.5).slice(0,9),zone=(x,y)=>Math.min(Z-1,Math.floor(x/zs))+Math.min(Z-1,Math.floor(y/zs))*Z,PR={1:'car',3:'cab',4:'desk',5:'couch',6:'balloon',10:'rock'};
+ const Z=3,zs=S/Z,zt=shuf([0,1,2,3,4,5,6,7,8,10]).slice(0,9),zone=(x,y)=>Math.min(Z-1,Math.floor(x/zs))+Math.min(Z-1,Math.floor(y/zs))*Z,PR={1:'car',3:'cab',4:'desk',5:'couch',6:'balloon',10:'rock'};
  const s1=new THREE.Group();world.add(s1);bossS1=s1;
  const pg=GB(),eg=GB(),M4=new THREE.Matrix4();
  for(let y=2;y<S-2;y++)for(let x=2;x<S-2;x++){const pr=PR[zt[zone(x,y)]];if(!pr||w[y][x]||(x<6&&y<6)||(Math.abs(x-c)<6&&Math.abs(y-c)<6)||rnd()>.07)continue;let o=0;for(let j=-1;j<=1;j++)for(let i=-1;i<=1;i++)if(!w[y+j][x+i])o++;if(o<9)continue;
@@ -2302,7 +2315,7 @@ function buildBoss(){S=45;const ST=S*T,c=S>>1;
  const d0=bfs(1,1);openT=[];for(let y=0;y<S;y++)for(let x=0;x<S;x++)if(d0[y*S+x]>=0)openT.push([x,y,d0[y*S+x]]);
  door={g:new THREE.Group(),piv:new THREE.Group(),sign:{material:{color:new THREE.Color()}},fx:-1e6,fz:-1e6,nx:0,nz:1,open:0,snd:0};
  key=mkKey();key.position.set(-1e6,1.05,-1e6);key.visible=false;world.add(key);
- bats=[];waters=[];const far=openT.filter(p=>p[2]>8).sort(()=>rnd()-.5);far.slice(0,3).forEach(p=>{const b=mkBat();b.position.set((p[0]+.5)*T,.3,(p[1]+.5)*T);world.add(b);bats.push(b)});far.slice(3,7).forEach(p=>{const b=mkWater();b.position.set((p[0]+.5)*T,.3,(p[1]+.5)*T);world.add(b);waters.push(b)});
+ bats=[];waters=[];const far=shuf(openT.filter(p=>p[2]>8));far.slice(0,3).forEach(p=>{const b=mkBat();b.position.set((p[0]+.5)*T,.3,(p[1]+.5)*T);world.add(b);bats.push(b)});far.slice(3,7).forEach(p=>{const b=mkWater();b.position.set((p[0]+.5)*T,.3,(p[1]+.5)*T);world.add(b);waters.push(b)});
  menuSpot=[c,c];seen=new Uint8Array(S*S);trail=[];dmap=null;lastPT='';hasKey=false;lockDoor();keyL.intensity=0;exitL.position.set(-1e6,2,-1e6);mapCols();
  if(bossMenu)return;
  const L0={w:mkT(TH[0],'w',256),f:mkT(TH[0],'f',256),c:mkT(TH[0],'c',256)};L0.f.repeat.set(S,S);L0.c.repeat.set(S*1.5,S*1.5);
@@ -2596,6 +2609,31 @@ $('sy_link').onclick=()=>{const c=syncNorm($('sy_in').value);if(c.length!==8){sy
  SYNC.code=c;SYNC.on=true;SYNC.last=0;store.set('sync',SYNC);$('sy_in').value='';note('Linking to '+syncFmt(c)+'…');syncStart()};
 addEventListener('visibilitychange',()=>{if(document.hidden&&SYNC.on){clearTimeout(syncT);syncPush()}});
 window.__syncOK=1;setTimeout(()=>{syncUI();if(SYNC.on)syncStart()},1500);
+// ================= public lobbies =================
+// a public host posts a small listing (room code, host name, players, difficulty) on the relays every few seconds,
+// as a retained message so newcomers see it at once. The Multiplayer screen listens for every listing and keeps the fresh ones.
+const LOBT='brlobby1/';let discCli=[],discL=new Map(),discHB=null,discUI=null;
+if(CFG.mpPublic===undefined)CFG.mpPublic=true;
+function discConnect(){if(discCli.length)return Promise.resolve(discCli);
+ return Promise.all(RELAYS.slice(0,2).map(u=>mqtt(u,(tp,m)=>discMsg(tp,m)).then(c=>{c.onclose=()=>{discCli=discCli.filter(x=>x!==c)};return c}).catch(()=>null))).then(a=>{discCli=a.filter(Boolean);return discCli})}
+function discRaw(topic,obj,retain){const enc=new TextEncoder(),tp=enc.encode(topic),pl=obj?enc.encode(JSON.stringify(obj)):new Uint8Array(0),b=new Uint8Array(2+tp.length+pl.length);b.set([tp.length>>8,tp.length&255]);b.set(tp,2);b.set(pl,2+tp.length);for(const c of discCli)try{c.raw(retain?0x31:0x30,b)}catch(e){}}
+function discMsg(tp,m){if(!tp.startsWith(LOBT)||!m||typeof m!=='object')return;const code=tp.slice(LOBT.length);if(!/^[A-Z0-9]{5}$/.test(code))return;
+ if(m.closed){discL.delete(code)}else discL.set(code,{code,name:cleanName(m.name),n:Math.max(1,Math.min(4,m.n|0)),diff:DF[m.diff]?m.diff:'normal',lv:m.lv|0,ig:!!m.ig,ps:(Array.isArray(m.ps)?m.ps:[]).slice(0,4).map(q=>({s:validSuit(q&&q.s),c:(q&&q.c)|0})),t:+m.t||0,seen:Date.now()});
+ if(document.body.classList.contains('mpo'))pubUI()}
+// ---- the host side ----
+function discAd(){if(!NET.on||!NET.host||!CFG.mpPublic)return;const ps=[...NET.players.values()];
+ discRaw(LOBT+NET.code,{name:NET.name,n:ps.length,diff:CFG.diff,lv:NET.started?level:0,ig:NET.started,ps:ps.map(q=>({s:validSuit(q.suit),c:q.c|0})),t:Date.now()},true)}
+function discHostStart(){clearInterval(discHB);if(!CFG.mpPublic)return;discConnect().then(()=>{discAd();discHB=setInterval(discAd,8000)})}
+function discHostStop(code){clearInterval(discHB);discHB=null;if(!code)return;discRaw(LOBT+code,null,true);discRaw(LOBT+code,{closed:1},false)}
+// ---- the list ----
+function pubUI(){const el=$('mp_publist');if(!el)return;const now=Date.now(),L=[...discL.values()].filter(q=>now-q.seen<30000&&Math.abs(now-q.t)<120000&&(!NET.on||q.code!==NET.code)).sort((a,b)=>(a.n>=4)-(b.n>=4)||b.t-a.t);
+ $('mp_pubn').textContent=discCli.length?(L.length?L.length+' open':''):'connecting…';
+ el.innerHTML=L.length?L.map(q=>'<div class="plb"><div class="pf">'+q.ps.map(x=>faceImg({suit:x.s,c:x.c})).join('')+'</div><p><b>'+esc(q.name)+'\'s room</b>'+q.n+' / 4 players &middot; '+(DF[q.diff]||DF.normal).n+' &middot; '+(q.ig?'<em class="ig">In game, level '+q.lv+'</em>':'<em>In the lobby</em>')+' &middot; '+q.code+'</p><button class="btnp" data-pj="'+q.code+'"'+(q.n>=4?' disabled':'')+'>'+(q.n>=4?'FULL':'JOIN')+'</button></div>').join('')
+  :'<div class="plb-empty">'+(discCli.length?'No public lobbies right now. Host one and it shows up here.':'Looking for lobbies…')+'</div>'}
+function pubBrowse(){discConnect().then(cs=>{for(const c of cs)c.sub(LOBT+'+');pubUI()});pubUI();clearInterval(discUI);discUI=setInterval(()=>{if(!document.body.classList.contains('mpo')){clearInterval(discUI);discUI=null;return}pubUI()},4000)}
+$('mp_publist').onclick=e=>{const b=e.target.closest('[data-pj]');if(!b||b.disabled)return;$('mp_code').value=b.dataset.pj;mpJoin()};
+const pubSet=v=>{CFG.mpPublic=!!v;store.set('cfg',CFG);$('mp_pub').checked=$('mp_pub2').checked=CFG.mpPublic;if(NET.on&&NET.host){if(CFG.mpPublic){discHostStart();mpStatus('Your room is now listed publicly.')}else{discHostStop(NET.code);mpStatus('Your room is now private. Share the code to invite people.')}}};
+$('mp_pub').onchange=e=>pubSet(e.target.checked);$('mp_pub2').onchange=e=>pubSet(e.target.checked);
 const NET={on:false,host:false,peer:null,conns:new Map(),players:new Map(),me:'h',name:'',code:'',started:false,spec:false,sendT:0,snap:null};
 const MP_COL=[0x3a7bd5,0x3fae5a,0xd8473b,0x9a5ad8];let netNoise=0;
 const esc=t=>String(t).replace(/[<>&]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
@@ -2631,8 +2669,9 @@ function relayConn(cli,peerId,me,out){const ev={},c={peer:peerId,open:false,rela
 // host: listen on every relay that answers; a joiner says hi on whichever one it reached
 function relayHost(code){const base='brxe/'+code+'/';NET.rconns=new Map();NET.relays=[];
  const onMsg=(t,m,cli)=>{if(!m||!m.f||m.f==='h')return;let c=NET.rconns.get(m.f);
-   if(m.k==='hi'){if(!c||c.dead){c=relayConn(cli,m.f,'h',base+'c/'+m.f);NET.rconns.set(m.f,c);hostConn(c);c.open=true;c.emit('open')}cli.pub(base+'c/'+m.f,{f:'h',k:'ok'});return}
-   if(!c||c.dead)return;c.last=performance.now();if(m.k==='bye')c.down();else if(m.d!==undefined)c.emit('data',m.d)};
+   // some public relays share messages with each other, so a joiner's messages can arrive on more than one connection: only the relay it joined through counts
+   if(m.k==='hi'){if(!c||c.dead){c=relayConn(cli,m.f,'h',base+'c/'+m.f);c.src=cli;NET.rconns.set(m.f,c);hostConn(c);c.open=true;c.emit('open')}if(c.src===cli)cli.pub(base+'c/'+m.f,{f:'h',k:'ok'});return}
+   if(!c||c.dead||c.src!==cli)return;c.last=performance.now();if(m.k==='bye')c.down();else if(m.d!==undefined)c.emit('data',m.d)};
  // a relay that doesn't answer (some public brokers throttle reconnects) is retried in the background while the room stays open
  const live=()=>NET.opening||(NET.on&&NET.host&&NET.code===code),
   connect=u=>mqtt(u,onMsg).then(cli=>{if(!live()){cli.close();return 0}cli.sub(base+'h');NET.relays.push(cli);cli.onclose=()=>{NET.relays=NET.relays.filter(x=>x!==cli);if(live())setTimeout(()=>{if(live())connect(u)},5000)};return 1})
@@ -2650,13 +2689,14 @@ const mpStatus=t=>{$('mp_status').textContent=t};
 function netErr(e){const t=e&&e.type;return t==='peer-unavailable'?'No room with that code. Check it and try again.':t==='network'||t==='server-error'||t==='socket-error'||t==='socket-closed'?"Couldn't reach the multiplayer server. Your network may be blocking it.":t==='browser-incompatible'?'This browser does not support multiplayer.':'Connection problem ('+(t||e)+').'}
 function mpName(){const nn=cleanName($('mp_name').value);if(nn!==CFG.name)CFG.profT=Date.now();CFG.name=nn;$('mp_name').value=CFG.name;NET.name=CFG.name;store.set('cfg',CFG)}
 async function mpHost(){if(NET.on||NET.opening)return;mpName();mpStatus('Opening a room…');NET.opening=1;let lib=true;try{await loadPeer()}catch(e){lib=false}
- const ready=(code,peer)=>{NET.opening=0;if(NET.on)return;Object.assign(NET,{on:true,host:true,peer,code,me:'h',started:false,spec:false});document.body.classList.add('mpg');chatSys('Room open. Press T or ENTER in game to chat.');NET.players.clear();NET.players.set('h',{id:'h',name:NET.name,c:0,suit:validSuit(CFG.suit)??suitCol(),alive:true,lives:3,lvl:0});mpLobbyUI();mpStatus('Room open. Give your friends the code.')};
- const relayOnly=code=>relayHost(code).then(n=>{if(n)ready(code,null);else{NET.opening=0;mpStatus("Couldn't reach the multiplayer servers. Your network may be blocking them.")}});
- const open=n=>{let code='';for(let i=0;i<5;i++)code+='ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[Math.random()*32|0];if(!lib)return relayOnly(code);
+ const ready=(code,peer)=>{NET.opening=0;if(NET.on)return;Object.assign(NET,{on:true,host:true,peer,code,me:'h',started:false,spec:false});document.body.classList.add('mpg');chatSys('Room open. Press T or ENTER in game to chat.');NET.players.clear();NET.players.set('h',{id:'h',name:NET.name,c:0,suit:validSuit(CFG.suit)??suitCol(),alive:true,lives:3,lvl:0});mpLobbyUI();mpStatus(CFG.mpPublic?'Room open and listed publicly. Friends can also join with the code.':'Room open. Give your friends the code.');discHostStart()};
+ const viaPeer=(code,n,backup)=>{if(!lib){if(!backup){NET.opening=0;mpStatus("Couldn't reach the multiplayer servers. Your network may be blocking them.")}return}
   const peer=new Peer('brxe-'+code,{config:{iceServers:ICE}});let up=false;
-  peer.on('open',()=>{up=true;relayHost(code);ready(code,peer)});
-  peer.on('connection',hostConn);peer.on('error',e=>{if(!up){try{peer.destroy()}catch(_){}if(e.type==='unavailable-id'&&n<4)open(n+1);else relayOnly(code)}});
-  peer.on('disconnected',()=>{try{peer.reconnect()}catch(e){}})};open(0)}
+  peer.on('open',()=>{up=true;if(backup){if(NET.on&&NET.host&&NET.code===code)NET.peer=peer;else try{peer.destroy()}catch(e){}}else{relayHost(code);ready(code,peer)}});
+  peer.on('connection',hostConn);peer.on('error',e=>{if(up)return;try{peer.destroy()}catch(_){}if(backup)return;if(e.type==='unavailable-id'&&n<4)open(n+1);else{NET.opening=0;mpStatus("Couldn't reach the multiplayer servers. Your network may be blocking them.")}});
+  peer.on('disconnected',()=>{try{peer.reconnect()}catch(e){}})};
+ const open=n=>{let code='';for(let i=0;i<5;i++)code+='ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[Math.random()*32|0];
+  relayHost(code).then(k=>{if(k){ready(code,null);viaPeer(code,n,true)}else viaPeer(code,n,false)})};open(0)}
 function hostConn(c){c.on('open',()=>{if(NET.players.size>=4){c.send({t:'full'});setTimeout(()=>c.close(),400);return}NET.conns.set(c.peer,c)});c.on('data',d=>hostMsg(c.peer,d));
  c.on('close',()=>{NET.conns.delete(c.peer);const p=NET.players.get(c.peer);if(p){if(p.A)scene.remove(p.A.g);NET.players.delete(c.peer);note(p.name+' left the game.');chatSys(p.name+' left.');netLobby()}})}
 async function mpJoin(){if(NET.on||NET.opening)return;mpName();const code=$('mp_code').value.trim().toUpperCase();if(!/^[A-Z0-9]{5}$/.test(code)){mpStatus('Enter the 5-letter room code.');return}mpStatus('Joining…');NET.opening=1;
@@ -2666,16 +2706,15 @@ async function mpJoin(){if(NET.on||NET.opening)return;mpName();const code=$('mp_
  const onOpen=(c,id)=>{if(settled){try{c.close()}catch(e){}return}settled=true;NET.opening=0;if(c.relay&&peer){try{peer.destroy()}catch(e){}peer=null}
   Object.assign(NET,{on:true,host:false,me:id,code,peer,started:false,spec:false});NET.conns.set('h',c);c.on('data',clientMsg);
   c.on('close',()=>{if(!NET.on)return;netLeave(true);if(stt!=='menu')toMenu();openMP();mpStatus(c.relay?'Lost the connection to the host.':'The host closed the room.')});
-  c.send({t:'hello',name:NET.name,suit:validSuit(CFG.suit)??suitCol()});if(c.relay)note('Connected through the backup relay.')};
- // direct link first; if it errors or has not opened after 7 seconds, fall back to the relay
- const viaRelay=()=>{if(settled||relaying)return;relaying=true;mpStatus('Direct connection blocked. Trying the backup relay…');
-  relayJoin(code).then(c=>onOpen(c,c.me)).catch(()=>fail("Couldn't reach that room. Check the code, and make sure the host still has the lobby open."))};
- if(!lib)return viaRelay();
- peer=new Peer({config:{iceServers:ICE}});peer.on('error',()=>viaRelay());
- peer.on('open',id=>{const c=peer.connect('brxe-'+code,{reliable:true});setTimeout(()=>{if(!settled)viaRelay()},7000);c.on('open',()=>onOpen(c,id))})}
+  c.send({t:'hello',name:NET.name,suit:validSuit(CFG.suit)??suitCol()});if(!c.relay)note('Connected directly (the relay was unreachable).')};
+ // the relay first; if no relay answers, try a direct link
+ const viaPeer=()=>{if(settled)return;if(!lib)return fail("Couldn't reach that room. Check the code, and make sure the host still has the lobby open.");mpStatus('The relay is not answering. Trying a direct connection…');
+  peer=new Peer({config:{iceServers:ICE}});peer.on('error',()=>fail("Couldn't reach that room. Check the code, and make sure the host still has the lobby open."));
+  peer.on('open',id=>{const c=peer.connect('brxe-'+code,{reliable:true});setTimeout(()=>fail("Couldn't reach that room. Check the code, and make sure the host still has the lobby open."),8000);c.on('open',()=>onOpen(c,id))})};
+ relaying=true;relayJoin(code).then(c=>onOpen(c,c.me)).catch(()=>viaPeer())}
 function netSend(id,m){const c=NET.conns.get(id);if(c&&c.open)c.send(m)}
 function netAll(m,except){for(const[id,c]of NET.conns)if(id!==except&&c.open)c.send(m)}
-function netLeave(quiet){CHAT=[];chatClose();document.body.classList.remove('mpg');for(const c of NET.conns.values())try{c.close()}catch(e){}NET.conns.clear();if(NET.peer)try{NET.peer.destroy()}catch(e){}for(const r of NET.relays||[])try{r.close()}catch(e){}NET.relays=[];if(NET.rconns)for(const c of NET.rconns.values())try{c.close()}catch(e){}NET.rconns=new Map();NET.opening=0;
+function netLeave(quiet){if(NET.host&&NET.code)discHostStop(NET.code);CHAT=[];chatClose();document.body.classList.remove('mpg');for(const c of NET.conns.values())try{c.close()}catch(e){}NET.conns.clear();if(NET.peer)try{NET.peer.destroy()}catch(e){}for(const r of NET.relays||[])try{r.close()}catch(e){}NET.relays=[];if(NET.rconns)for(const c of NET.rconns.values())try{c.close()}catch(e){}NET.rconns=new Map();NET.opening=0;
  for(const p of NET.players.values())if(p.A)scene.remove(p.A.g);NET.players.clear();Object.assign(NET,{on:false,host:false,peer:null,started:false,spec:false,code:'',snap:null});R.domElement.style.filter='';$('team').textContent='';if(!quiet)mpHomeUI()}
 // ---- host side ----
 function hostMsg(id,d){let p=NET.players.get(id);
@@ -2694,7 +2733,7 @@ function hostMsg(id,d){let p=NET.players.get(id);
  else if(d.t==='key'&&d.l===level)netKey(p.name);
  else if(d.t==='pick'&&d.l===level){netPick(d.k,d.i);netAll(d,id)}
  else if(d.t==='door'&&d.l===level&&hasKey)netNext()}
-function netLobby(){const list=[...NET.players.values()].map(q=>({id:q.id,name:q.name,c:q.c,suit:q.suit}));netAll({t:'lobby',list});if(document.body.classList.contains('mpo'))mpLobbyUI(list)}
+function netLobby(){setTimeout(discAd,50);const list=[...NET.players.values()].map(q=>({id:q.id,name:q.name,c:q.c,suit:q.suit}));netAll({t:'lobby',list});if(document.body.classList.contains('mpo'))mpLobbyUI(list)}
 function netKey(who){if(!hasKey){giveKey();sfx({f:880,dur:.5,v:.2,r:.5});sfx({f:1320,dur:.6,v:.15,r:.5,d:.1});say((who||'A teammate')+' found the key! Head for the exit.',3200)}netAll({t:'key',l:level})}
 function netOnKey(){if(!NET.on)return;if(NET.host)netAll({t:'key',l:level});else netSend('h',{t:'key',l:level})}
 function netOnPick(k,i){if(!NET.on)return;const m={t:'pick',k,i,l:level};if(NET.host)netAll(m);else netSend('h',m)}
@@ -2740,7 +2779,7 @@ function netMonsters(dt,now){let dmin=99;const S_=NET.snap;if(!S_||S_.l!==level)
   if(sp>0&&de<28&&!m.k.smiler&&!m.k.moth&&(m.ft-=sp*dt)<=0){m.ft=m.k.quad?.7:st==='chase'?1.3:1.1;monStep(m,de,(st==='chase'?.75:.45)*(m.k.quad?.6:1))}
   if(!m.k.verity||m.vp===3)animMon(m,sp,dt,now)});return dmin}
 function netSpectate(why){NET.spec=true;die(why);stt='play';R.domElement.style.filter='grayscale(1) brightness(.8)';card('SPECTATING','You were taken. You will rejoin on the next level.','','dead')}
-function mpStart(seed,diff,lvl){NET.started=true;if(!NET.host)slot=null;closeSlots();endless=false;thiC={};ach('coop');closeMP();closePlay();openSub(null);CFG.diff=diff;runSeed=seed;perma=false;noMap=false;noWand=false;restart(lvl||1);inRun=false;NET.spec=false;NET.snap=null;R.domElement.style.filter='';
+function mpStart(seed,diff,lvl){NET.started=true;setTimeout(discAd,300);if(!NET.host)slot=null;closeSlots();endless=false;thiC={};ach('coop');closeMP();closePlay();openSub(null);CFG.diff=diff;runSeed=seed;perma=false;noMap=false;noWand=false;restart(lvl||1);inRun=false;NET.spec=false;NET.snap=null;R.domElement.style.filter='';
  if(NET.host)go();else{if(!AC)audio();AC.resume();document.body.classList.remove('menu');$('ov').style.display='none';stt='play';pause('The game has started! Click RESUME to jump in.')}}
 function mpWin(){if(stt==='menu')return;if(NET.host)slotClear();ach('coopwin');stt='loading';sfx({f:523,dur:1.2,v:.15,r:.6});sfx({f:659,dur:1.2,v:.15,r:.6,d:.2});sfx({f:784,dur:1.6,v:.15,r:.6,d:.4});
  card('YOU ESCAPED TOGETHER','Level ? is single-player only, for now.','The end of the co-op run');setTimeout(()=>{netLeave(true);toMenu()},4000)}
@@ -3055,10 +3094,10 @@ function suitFace(v){v=validSuit(v);if(v===undefined)v=0xe8701e;const key=String
 function faceImg(q){const v=q&&validSuit(q.suit)!==undefined?q.suit:MP_COL[((q&&q.c)||0)%4];return'<img class="pface" alt="" src="'+suitFace(v)+'" style="--pc:#'+new THREE.Color(MP_COL[((q&&q.c)||0)%4]).getHexString()+'">'}
 let teamH='';function teamUI(){const L=[];for(const q of NET.players.values()){if(q.id===NET.me)continue;L.push('<div class="tm">'+faceImg(q)+'<div><span>'+esc(q.name||'Player')+'</span><small>'+(q.lvl!==level?'loading':!q.alive?'spectating':q.dn?'DOWN '+q.dn+'s':(q.lives??'?')+(q.lives===1?' life':' lives'))+'</small></div></div>')}const h=L.length?L.join(''):'';if(h!==teamH){teamH=h;$('team').innerHTML=h}}
 // ---- menu ----
-function openMP(){menuUI();closePlay();document.body.classList.add('mpo');$('mp_name').value=CFG.name||'';if(NET.on)mpLobbyUI();else mpHomeUI()}
+function openMP(){menuUI();closePlay();document.body.classList.add('mpo');$('mp_name').value=CFG.name||'';$('mp_pub').checked=$('mp_pub2').checked=CFG.mpPublic;pubBrowse();if(NET.on)mpLobbyUI();else mpHomeUI()}
 function closeMP(){document.body.classList.remove('mpo')}
 function mpHomeUI(){$('mp_home').style.display='block';$('mp_lobby').style.display='none'}
-function mpLobbyUI(list){mpSavesUI();$('mp_home').style.display='none';$('mp_lobby').style.display='block';$('mp_codeshow').textContent=NET.code;const L=list||[...NET.players.values()];
+function mpLobbyUI(list){mpSavesUI();$('mp_pubh').style.display=NET.host?'':'none';$('mp_home').style.display='none';$('mp_lobby').style.display='block';$('mp_codeshow').textContent=NET.code;const L=list||[...NET.players.values()];
  $('mp_list').innerHTML=L.map(q=>'<div class="mpp">'+faceImg(NET.players.get(q.id)||q)+esc(q.name||'Player')+(q.id==='h'?' <small>host</small>':'')+(q.id===NET.me?' <small>you</small>':'')+'</div>').join('')+'<div class="mpp empty"><i class="pface"></i>Open seat</div>'.repeat(Math.max(0,4-L.length));
  $('mp_start').style.display=NET.host?'':'none';$('mp_diff').textContent=NET.host?'Share this code with your friends. Difficulty: '+(DF[CFG.diff]||DF.normal).n+' (change it under PLAY). '+L.length+' / 4 players.':'Waiting for the host to start…'}
 $('mp_host').onclick=mpHost;$('mp_join').onclick=mpJoin;
