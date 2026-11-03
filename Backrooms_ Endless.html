@@ -273,6 +273,8 @@ body.touch #holdb{display:block}body.hiding #mini,body.hiding #comp,body.hiding 
 #mpanel .gap{height:2vh}
 #osd{position:absolute;inset:0;pointer-events:none;font:400 clamp(22px,3.6vh,34px) var(--fd);text-shadow:var(--osd)}
 #osd_tr{position:absolute;right:3vw;top:4vh}#osd_br{position:absolute;right:3vw;bottom:4.5vh;text-align:right;line-height:1.05}#osd b{font-weight:400}
+#osd_acct{position:absolute;right:3vw;top:calc(4vh + clamp(30px,4.6vh,44px));pointer-events:auto;background:none;border:0;padding:0;cursor:pointer;font:400 clamp(16px,2.5vh,24px) var(--fd);color:rgba(233,228,214,.8);text-shadow:var(--osd);letter-spacing:.04em}
+#osd_acct b{color:var(--ink,#fff)}#osd_acct:hover b{text-decoration:underline}
 #ver{font:400 22px var(--fd);left:3vw;right:auto;bottom:2vh;color:rgba(233,228,214,.55)}
 .btnp,.btng{height:46px;padding:0 22px;font:400 30px/1 var(--fd);letter-spacing:.02em}
 .btnp{background:var(--ink);color:#0a0a0a}.btnp:hover,.btnp:focus-visible{background:#fff}
@@ -503,7 +505,7 @@ body.touch #hbn{bottom:auto;top:70px}
 <div class="r">Level <input type="number" id="a_lv" value="1" min="1"><button data-a="lv">Go</button></div></div>
 <div id="admpw" class="glass"><b>ADMIN PANEL</b><p>Enter the password to unlock the admin panel. You only need to do this once.</p><input id="pw_in" type="password" maxlength="24" autocomplete="off" spellcheck="false"><div class="r"><button class="btnp" id="pw_ok">UNLOCK</button><button class="btng" id="pw_x">CANCEL</button></div><p id="pw_msg"></p></div>
 <div id="menu">
-<div id="osd"><span id="osd_tr">&#9654; PLAY &nbsp;SP <b id="osd_t">0:00:00</b></span><span id="osd_br"></span><span id="osd_sync"></span></div>
+<div id="osd"><span id="osd_tr">&#9654; PLAY &nbsp;SP <b id="osd_t">0:00:00</b></span><span id="osd_br"></span><span id="osd_sync"></span><button id="osd_acct" style="display:none" title="Your site account"></button></div>
 <div id="mlogo"><img alt="Backrooms" src="https://raw.githubusercontent.com/C823/assets/main/backrooms_logo.png" data-alt="assets/backrooms_logo.png|backrooms_logo.png" onload="this.nextSibling.style.display='none'" onerror="if(!imgAlt(this))this.remove()"><span>BACKROOMS<small>ENDLESS</small></span></div>
 <div id="mchip"><span class="lbl">DEEPEST</span><b id="mc_best">1</b><span class="lbl">RUNS</span><b id="mc_runs">0</b></div>
 <nav id="mpanel" class="glass"><button class="mb" data-m="play">PLAY</button><button class="mb" data-m="mp">MULTIPLAYER</button><i class="gap"></i><button class="mb" data-m="how">HOW TO PLAY</button><button class="mb" data-m="enc">ENCYCLOPEDIA</button><button class="mb" data-m="ach">ACHIEVEMENTS</button><button class="mb" data-m="suit">SUIT</button><button class="mb" data-m="fs">FULLSCREEN</button><i class="gap"></i><button class="mb" data-m="set">SETTINGS</button></nav>
@@ -520,9 +522,9 @@ body.touch #hbn{bottom:auto;top:70px}
 <span>Graphics quality</span><select id="c_q"><option value="auto">Auto (recommended)</option><option value="low">Low (fastest)</option><option value="medium">Medium</option><option value="high">High</option></select>
 <span>Invert mouse Y</span><input type="checkbox" class="sw" id="c_inv">
 <span>Show FPS counter</span><input type="checkbox" class="sw" id="c_fps">
-<span>Cloud sync<small style="display:block;font-size:12px;color:var(--mute)">Keep saves, records and suits in sync between devices with a code.</small><small id="sy_st" style="display:block;font:400 20px var(--fd);color:var(--mute)"></small></span><input type="checkbox" class="sw" id="sy_on">
-<div id="sy_box" style="grid-column:1/3;display:none"><div class="sy_code"><span>YOUR SYNC CODE</span><b id="sy_code">----</b><button class="btng" id="sy_copy">COPY</button><button class="btng" id="sy_now">SYNC NOW</button></div><p class="sy_p">Type this code on your other device (Settings &rarr; Cloud sync &rarr; Link). Anyone with the code can load your saves, so keep it to yourself.</p></div>
-<span>Link a device<small style="display:block;font-size:12px;color:var(--mute)">Have a code from another device? Enter it here.</small></span><div class="rcode"><input id="sy_in" type="text" maxlength="9" spellcheck="false" autocomplete="off" placeholder="XXXX-XXXX"><button id="sy_link" class="btng">LINK</button></div>
+<span>Cloud sync<small id="sy_lbl" style="display:block;font-size:12px;color:var(--mute)">Keep saves, records and suits in sync between devices with a code.</small><small id="sy_st" style="display:block;font:400 20px var(--fd);color:var(--mute)"></small></span><input type="checkbox" class="sw" id="sy_on">
+<div id="sy_box" style="grid-column:1/3;display:none"><div class="sy_code"><span id="sy_cl">YOUR SYNC CODE</span><b id="sy_code">----</b><button class="btng" id="sy_copy">COPY</button><button class="btng" id="sy_now">SYNC NOW</button></div><p class="sy_p" id="sy_p">Type this code on your other device (Settings &rarr; Cloud sync &rarr; Link). Anyone with the code can load your saves, so keep it to yourself.</p></div>
+<span id="sy_lk1">Link a device<small style="display:block;font-size:12px;color:var(--mute)">Have a code from another device? Enter it here.</small></span><div class="rcode" id="sy_lk2"><input id="sy_in" type="text" maxlength="9" spellcheck="false" autocomplete="off" placeholder="XXXX-XXXX"><button id="sy_link" class="btng">LINK</button></div>
 <span>Progress<small style="display:block;font-size:12px;color:var(--mute)">Saved run, records and Encyclopedia</small></span><button id="rstp" class="btng" style="height:36px;font-size:15px">Reset progress</button>
 <button id="fs" class="btng">Toggle fullscreen</button></div></div></section>
 </div>
@@ -557,7 +559,7 @@ body.touch #hbn{bottom:auto;top:70px}
 <div class="mcard"><h4><i>B</i>PLAYERS</h4><div id="mp_list"></div></div>
 <div id="mp_chat" class="mcard"><h4><i>C</i>CHAT</h4><div id="mp_chatlog"></div><div class="chrow"><input id="mp_chatin" type="text" maxlength="120" spellcheck="false" autocomplete="off" placeholder="Say hi to the room"><button class="btng" id="mp_chatgo">SEND</button></div></div></div><div id="mp_saves"></div><button class="btnp" id="mp_start">START NEW GAME</button></div>
 <div class="pfoot"><p id="mp_status"></p><div class="nrow"><button class="btng" id="mp_back">BACK</button></div></div></div>
-<div id="ver">v3.26 &middot; 2026-11-02</div></div>
+<div id="ver">v3.28 &middot; 2026-11-03</div></div>
 <div id="ov" style="display:none"><div class="ovl"><div class="lbl" id="olbl">GAME PAUSED</div><div id="dkick"></div><h1 id="t">PAUSED</h1><i id="dline"></i><p id="s"></p><div id="dgrid"></div><div id="ostats"></div>
 <div class="obtn"><button id="btn" class="btnp">RESUME</button><button id="m2" class="btng">MAIN MENU</button></div><p id="best"></p>
 <div id="keys"><span><b class="kbd">WASD</b>Move</span><span><b class="kbd">SHIFT</b>Sprint</span><span><b class="kbd">C</b>Crouch</span><span><b class="kbd">E</b>Hide</span><span><b class="kbd">M</b>Map</span><span><b class="kbd">I</b>Items</span><span><b class="kbd">1-4</b>/<b class="kbd">WHEEL</b>Hotbar</span><span><b class="kbd">R-CLICK</b>Use item</span></div></div>
@@ -2588,12 +2590,19 @@ function syncMerge(r){if(!r||typeof r!=='object')return false;let ch=false;syncA
  if(r.prof&&(r.prof.t||0)>(CFG.profT||0)){if(r.prof.suit!=null&&validSuit(r.prof.suit)!==undefined)CFG.suit=r.prof.suit;if(r.prof.name)CFG.name=cleanName(r.prof.name);CFG.profT=r.prof.t;store.set('cfg',CFG);try{mkHand()}catch(e){}ch=true}
  }finally{syncApplying=false}
  if(ch&&stt==='menu'){try{menuUI(document.querySelector('#msub section.on')?document.querySelector('#msub section.on').id.slice(2):null)}catch(e){}}return ch}
-function syncUI(){const on=SYNC.on&&SYNC.code;$('sy_on').checked=!!on;$('sy_box').style.display=on?'block':'none';$('sy_code').textContent=syncFmt(SYNC.code);
+function syncUI(){const ac=acctAvail(),show=(id,v)=>{const e=$(id);if(e)e.style.display=v?'':'none'};show('sy_lk1',!ac);show('sy_lk2',!ac);$('sy_copy').style.display=ac?'none':'';
+ if(ac){const on=acctOn(),u=acctUser();$('sy_on').checked=on;$('sy_box').style.display=on?'block':'none';$('sy_lbl').textContent='Keep saves, records and suits in sync on every device signed in to your account.';
+  $('sy_cl').textContent='ACCOUNT';$('sy_code').textContent=u;$('sy_p').textContent='Sign in to '+u+' on another device (Account \u2192 Sign in, with a sign-in code from this one) and your saves follow you there.';
+  $('sy_st').textContent=!on?'Off':AS.err||(SYNC.last?'Synced '+new Date(SYNC.last).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'}):'Connecting\u2026');
+  $('osd_sync').textContent=on?(AS.err?'\u2601 OFFLINE':'\u2601 SYNCED'):'';return}
+ $('sy_lbl').textContent='Keep saves, records and suits in sync between devices with a code.';$('sy_cl').textContent='YOUR SYNC CODE';
+ $('sy_p').innerHTML='Type this code on your other device (Settings &rarr; Cloud sync &rarr; Link). Anyone with the code can load your saves, so keep it to yourself.';
+ const on=SYNC.on&&SYNC.code;$('sy_on').checked=!!on;$('sy_box').style.display=on?'block':'none';$('sy_code').textContent=syncFmt(SYNC.code);
  $('sy_st').textContent=!on?'Off':syncState||(SYNC.last?'Synced '+new Date(SYNC.last).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'}):'Connecting…');
  $('osd_sync').textContent=on?(syncCli.length?'\u2601 SYNCED':'\u2601 OFFLINE'):''}
 function syncStatus(t){syncState=t;syncUI()}
 // connect to every relay that answers, read the stored copy, and listen for the other device
-async function syncStart(){syncStop(true);if(!SYNC.on||!SYNC.code)return syncUI();syncStatus('Connecting…');await syncKeys(SYNC.code);
+async function syncStart(){syncStop(true);if(!SYNC.on||!SYNC.code||acctOn())return syncUI();syncStatus('Connecting…');await syncKeys(SYNC.code);
  const onMsg=async(tp,m)=>{if(tp!==syncTopic||!m||!m.ct)return;try{const r=await syncOpen(m);if(r.dev===SYNC.dev&&r.t<=SYNC.last)return;const ch=syncMerge(r);SYNC.last=Math.max(SYNC.last,Date.now());store.set('sync',SYNC);syncStatus('');if(ch){note('Cloud sync: pulled changes from your other device.');syncDirty('merge')}}catch(e){syncStatus('Wrong code, or the copy is damaged.')}};
  const got=await Promise.all(RELAYS.map(u=>mqtt(u,onMsg).then(c=>{c.sub(syncTopic);c.onclose=()=>{syncCli=syncCli.filter(x=>x!==c);syncUI()};return c}).catch(()=>null)));
  syncCli=got.filter(Boolean);if(!syncCli.length){syncStatus('Can\'t reach the sync servers. Your saves are still kept on this device.');return}
@@ -2603,16 +2612,40 @@ function syncStop(keep){for(const c of syncCli)try{c.close()}catch(e){}syncCli=[
 async function syncPush(){if(!SYNC.on||!syncKey||!syncCli.length||syncBusy)return;syncBusy=true;try{const m=await syncSeal(syncSnap());
  for(const c of syncCli)try{const pl=new TextEncoder().encode(JSON.stringify(m)),tp=new TextEncoder().encode(syncTopic),body=new Uint8Array(2+tp.length+pl.length);body.set([tp.length>>8,tp.length&255]);body.set(tp,2);body.set(pl,2+tp.length);c.raw(0x31,body)}catch(e){}
  SYNC.last=Date.now();store.set('sync',SYNC);syncStatus('')}catch(e){syncStatus('Sync failed. It will try again.')}syncBusy=false}
-function syncDirty(k){if(syncApplying||!SYNC.on||!/^(save_|stats|best|sdel|cfg|merge)/.test(k))return;clearTimeout(syncT);syncT=setTimeout(syncPush,k==='merge'?500:4000)}
-$('sy_on').onchange=e=>{if(e.target.checked){if(!SYNC.code)SYNC.code=syncNewCode();SYNC.on=true;note('Cloud sync is on. Your code is '+syncFmt(SYNC.code)+'.')}else{SYNC.on=false;SYNC.code='';syncKey=null;note('Cloud sync is off on this device.')}store.set('sync',SYNC);syncStart();syncUI()};
+function syncDirty(k){if(syncApplying||!/^(save_|stats|best|sdel|cfg|merge)/.test(k))return;if(acctOn()){clearTimeout(syncT);syncT=setTimeout(asPush,4000);return}if(!SYNC.on)return;clearTimeout(syncT);syncT=setTimeout(syncPush,k==='merge'?500:4000)}
+$('sy_on').onchange=e=>{if(acctAvail()){SYNC.acct=e.target.checked;store.set('sync',SYNC);note(SYNC.acct?'Cloud sync is on for your account.':'Cloud sync is off on this device.');syncWho='';syncRoute();return}if(e.target.checked){if(!SYNC.code)SYNC.code=syncNewCode();SYNC.on=true;note('Cloud sync is on. Your code is '+syncFmt(SYNC.code)+'.')}else{SYNC.on=false;SYNC.code='';syncKey=null;note('Cloud sync is off on this device.')}store.set('sync',SYNC);syncStart();syncUI()};
 $('sy_copy').onclick=()=>{try{navigator.clipboard.writeText(syncFmt(SYNC.code));note('Code copied.')}catch(e){}};
-$('sy_now').onclick=()=>{if(!syncCli.length)syncStart();else{syncStatus('Syncing…');syncPush()}};
+$('sy_now').onclick=()=>{if(acctOn()){AS.err='';syncStatus('Syncing\u2026');asPull(true);return}if(!syncCli.length)syncStart();else{syncStatus('Syncing…');syncPush()}};
 $('sy_in').onkeydown=e=>{e.stopPropagation();if(e.key==='Enter')$('sy_link').click()};
 $('sy_in').oninput=e=>{const n=syncNorm(e.target.value);e.target.value=n.length>4?n.slice(0,4)+'-'+n.slice(4):n};
 $('sy_link').onclick=()=>{const c=syncNorm($('sy_in').value);if(c.length!==8){syncStatus('Codes are 8 characters, like ABCD-2345.');return}
  SYNC.code=c;SYNC.on=true;SYNC.last=0;store.set('sync',SYNC);$('sy_in').value='';note('Linking to '+syncFmt(c)+'…');syncStart()};
-addEventListener('visibilitychange',()=>{if(document.hidden&&SYNC.on){clearTimeout(syncT);syncPush()}});
-window.__syncOK=1;setTimeout(()=>{syncUI();if(SYNC.on)syncStart()},1500);
+addEventListener('visibilitychange',()=>{if(document.hidden&&SYNC.on&&!acctOn()){clearTimeout(syncT);syncPush()}});
+// ---- account sync (preferred): on home.c823.workers.dev, signed in, the saves follow the site account ----
+// the worker keeps one copy per account (/api/save). Every write says which revision it was merged from; if another
+// device wrote first the server answers 409, so this device pulls, merges (same rules as code sync) and writes again.
+// Code sync above is the fallback: off the site, not signed in, or when the server has no save storage.
+const AS={rev:0,busy:false,again:false,fail:false,poll:null,pulled:0,err:''};
+const acctUser=()=>{try{return/^https?:/.test(location.protocol)&&window.c823Account&&window.c823Account.username||''}catch(e){return''}};
+const acctAvail=()=>!!acctUser()&&!AS.fail,acctOn=()=>acctAvail()&&SYNC.acct!==false;
+const asStrip=o=>{const c=Object.assign({},o||{});delete c.t;delete c.dev;return JSON.stringify(c)};
+async function asPull(push){if(!acctOn())return;try{const r=await fetch('/api/save?game=backrooms&pid='+encodeURIComponent(window.c823Account.pid),{cache:'no-store'});
+  if(r.status===501||r.status===403||r.status===404){AS.fail=true;syncRoute();return}if(!r.ok)throw 0;const j=await r.json();AS.rev=j.rev|0;AS.pulled=Date.now();AS.err='';
+  const ch=j.data?syncMerge(j.data):false;SYNC.last=Date.now();store.set('sync',SYNC);if(ch)note('Cloud sync: pulled your saves from your account.');
+  if(push&&(!j.data||asStrip(syncSnap())!==asStrip(j.data)))await asPush()}catch(e){AS.err='Can\'t reach the sync server. Your saves are still kept on this device.'}syncUI()}
+async function asPush(keep){if(!acctOn())return;if(AS.busy){AS.again=true;return}AS.busy=true;try{for(let i=0;i<3;i++){const body=JSON.stringify({pid:window.c823Account.pid,game:'backrooms',rev:AS.rev,data:syncSnap()});
+  const r=await fetch('/api/save',{method:'PUT',headers:{'content-type':'application/json'},body,keepalive:!!keep&&body.length<60000});
+  if(r.status===409){await asPull(false);continue}if(r.status===501||r.status===403){AS.fail=true;break}if(!r.ok)throw 0;
+  AS.rev=(await r.json()).rev|0;SYNC.last=Date.now();store.set('sync',SYNC);AS.err='';break}}catch(e){AS.err='Sync failed. It will try again.'}
+ AS.busy=false;syncUI();if(AS.fail)syncRoute();else if(AS.again){AS.again=false;clearTimeout(syncT);syncT=setTimeout(asPush,1500)}}
+function asStop(){clearInterval(AS.poll);AS.poll=null}
+// pick the sync to run: the account if there is one, otherwise the code (if it's switched on)
+let syncWho='';function syncRoute(){const u=acctOn()?acctUser():'';if(u){syncStop(true);if(syncWho!==u){syncWho=u;AS.rev=0;asPull(true)}
+  if(!AS.poll)AS.poll=setInterval(()=>{if(!document.hidden)asPull(false)},60000)}else{const was=syncWho;asStop();syncWho='';if((was||!syncCli.length)&&SYNC.on&&SYNC.code)syncStart()}syncUI()}
+addEventListener('c823:account',()=>{if(window.__syncOK)syncRoute()});
+addEventListener('visibilitychange',()=>{if(!acctOn())return;if(document.hidden){clearTimeout(syncT);asPush(true)}else if(Date.now()-AS.pulled>30000)asPull(false)});
+
+window.__syncOK=1;setTimeout(syncRoute,1500);
 // ================= public lobbies =================
 // a public host posts a small listing (room code, host name, players, difficulty) on the relays every few seconds,
 // as a retained message so newcomers see it at once. The Multiplayer screen listens for every listing and keeps the fresh ones.
@@ -3220,4 +3253,12 @@ function introSound(ac,vol){const t0=ac.currentTime+.05,R=Math.random,master=ac.
  return master}
 // startup: build the menu's background level and go straight to the main menu
 setTimeout(()=>{menuBG();reset();menuUI();const sp=$('splash');if(sp)sp.remove()},80);loop();
-</script></body></html>
+</script><script>
+// site account (home.c823.workers.dev adds account.js to this page): show who is signed in on the main menu
+(function(){const el=document.getElementById('osd_acct');if(!el)return;
+ const name=()=>{try{return(window.c823Account&&window.c823Account.username)||localStorage.getItem('c823User')||''}catch(e){return''}};
+ const show=()=>{const u=name();el.style.display=u?'':'none';if(u){el.textContent='SIGNED IN AS ';const b=document.createElement('b');b.textContent=u;el.appendChild(b)}};
+ el.addEventListener('click',()=>{if(window.c823Account)window.c823Account.open()});
+ addEventListener('c823:account',show);show();let n=0;const t=setInterval(()=>{show();if(window.c823Account||++n>20)clearInterval(t)},500)})();
+</script>
+</body></html>
