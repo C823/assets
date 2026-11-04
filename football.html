@@ -696,6 +696,27 @@ p.plan-note{justify-content:flex-start;gap:6px}
 @media (max-width:1180px){.tb-stats .tbk.hide-m{display:none}}
 @media (max-width:980px){.home-top{grid-template-columns:1fr}.gstrip{grid-template-columns:repeat(6,minmax(0,1fr))}}
 @media (max-width:560px){.next-btn span{max-width:120px}.edges{grid-template-columns:1fr}.gstrip{grid-template-columns:repeat(4,minmax(0,1fr))}.todo-i{flex-wrap:wrap}}
+.tr-sel{width:auto;min-width:280px;padding:7px 10px;font-size:14px}
+.tr-summary{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0 10px}
+.tr-summary b{font-size:13.5px;line-height:1.4}
+.tr-meter{display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap}
+.tr-meter-bar{position:relative;flex:1;min-width:160px;max-width:340px;height:10px;background:var(--panel3);border-radius:2px}
+.tr-meter-bar i{display:block;height:100%;border-radius:2px}
+.tr-line{position:absolute;left:80%;top:-4px;bottom:-4px;width:2px;background:var(--text)}
+.tr-list{max-height:440px;overflow:auto;border:1px solid var(--line);border-radius:4px}
+.tr-row{display:flex;align-items:center;gap:8px;padding:6px 8px;border-bottom:1px solid #20242a;cursor:pointer;font-size:13px}
+.tr-row:hover{background:var(--panel2)}
+.tr-row.on{background:rgba(79,179,107,.13)}
+.tr-row input{accent-color:var(--good);flex:none}
+.tr-name{display:flex;flex-direction:column;min-width:0}
+.tr-name b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tr-name .tag{margin:0;align-self:flex-start}
+.tr-val{min-width:30px;text-align:right;font-family:var(--disp);font-size:15px;color:var(--muted)}
+.tr-pf{margin-bottom:8px}
+.tr-pf .chip{padding:3px 7px;font-size:11px}
+.offer{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid #20242a}
+.offer:last-child{border-bottom:none}
+@media (max-width:560px){.tr-summary{grid-template-columns:1fr}.tr-sel{min-width:0;width:100%}.offer{flex-wrap:wrap}}
 /* Buck's dialog */
 .talk{border-radius:6px;border:1px solid #3a4049;border-top:3px solid var(--text);background:#16191d}
 .talk .portrait{border:2px solid #3a4049;box-shadow:none}
@@ -1230,6 +1251,7 @@ function completeWeek(userG) {
   const ug = games.find(g => g.h === G.user || g.a === G.user);
   if (ug || !po) weekFinances(ug, po);
   mentorAfterWeek(ug ? UI.lastRes : null); UI.lastRes = null;
+  if (!po) maybeAiOffer();
   if (po) advancePlayoffs();
   else { G.week++; if (G.week > SEASON_WEEKS) startPlayoffs(); }
   save();
@@ -1400,6 +1422,7 @@ function makeDraft() {
   const runnerUp = G.po.results.filter(r => r.round === 4).map(r => r.h === G.po.champion ? r.a : r.h)[0];
   for (const id of [runnerUp, G.po.champion]) { order.splice(order.indexOf(id), 1); order.push(id); }
   const full = []; for (let r = 0; r < 7; r++) full.push(...order);
+  const dy = G.year + 1, owners = full.map((orig, i) => pickOwner(`${dy}-${Math.floor(i / 32) + 1}-${orig}`, orig));
   const posW = POS.map(p => ROSTER_GEN[p]), prospects = [];
   for (let i = 0; i < 260; i++) {
     const ovr = rnd() < 0.09 ? gauss(68, 5) : gauss(52, 7);
@@ -1408,7 +1431,7 @@ function makeDraft() {
     p.n1 = rnd() * 2 - 1; p.n2 = rnd() * 2 - 1; p.college = pick(COLLEGES); p.years = 4;
     prospects.push(p);
   }
-  return { order: full, pick: 0, prospects, picks: [], done: false };
+  return { order: owners, from: full, year: dy, pick: 0, prospects, picks: [], done: false };
 }
 function scoutView(p) {
   const err = SCOUT_ERR[userTeam().scouting];
@@ -1424,7 +1447,8 @@ function draftPlayer(tid, p) {
   t.roster.push(p);
   D.picks.push({ no, round: Math.ceil(no / 32), team: tid, name: fullName(p), pos: p.pos, ovr: p.ovr, college: p.college });
   D.pick++;
-  if (tid === G.user) news(`Drafted ${p.pos} ${fullName(p)} (${p.college}) with pick #${no}.`, 'good');
+  const via = D.from && D.from[no - 1] !== tid ? ` (acquired from ${team(D.from[no - 1]).abbr})` : '';
+  if (tid === G.user) news(`Drafted ${p.pos} ${fullName(p)} (${p.college}) with pick #${no}${via}.`, 'good');
   if (D.pick >= D.order.length) finishDraft();
 }
 function aiPick(tid) {
@@ -1448,6 +1472,7 @@ function simDraftTo(stopAtUser) {
 }
 function finishDraft() {
   const D = G.draft; D.done = true;
+  if (G.picks) for (const k of Object.keys(G.picks)) if (+k.split('-')[0] <= D.year) delete G.picks[k];
   for (const p of D.prospects) { delete p.n1; delete p.n2; p.years = 0; p.salary = 0.75; G.fa.push(p); }
   D.prospects = [];
   news('The draft is complete. Undrafted rookies have joined the free agent pool.', 'info');
@@ -1607,7 +1632,7 @@ const SETTING_DEFAULTS = { textSpeed: 'normal', buck: true, liveSpeed: 1, fieldA
 const setting = k => (G && G.settings && k in G.settings) ? G.settings[k] : SETTING_DEFAULTS[k];
 const ch = (ic, title, right = '') => `<div class="ch"><h2 class="h">${title}</h2>${right ? `<div class="ch-right">${right}</div>` : ''}</div>`;
 const pageHead = (ic, title, sub = '', right = '') => `<div class="page-head"><div><h1 class="h">${title}</h1>${sub ? `<div class="muted sm">${sub}</div>` : ''}</div>${right}</div>`;
-const NAV = [['home', 'Home', 'home', 'Team'], ['roster', 'Roster', 'users', 'Team'], ['strategy', 'Game Plan', 'clipboard', 'Team'], ['schedule', 'Schedule', 'calendar', 'Season'], ['standings', 'Standings', 'trophy', 'Season'], ['league', 'League', 'globe', 'Season'], ['finances', 'Finances', 'dollar', 'Business'], ['facilities', 'Facilities', 'building', 'Business'], ['fa', 'Free Agents', 'userPlus', 'Personnel'], ['draft', 'Draft', 'grad', 'Personnel']];
+const NAV = [['home', 'Home', 'home', 'Team'], ['roster', 'Roster', 'users', 'Team'], ['strategy', 'Game Plan', 'clipboard', 'Team'], ['schedule', 'Schedule', 'calendar', 'Season'], ['standings', 'Standings', 'trophy', 'Season'], ['league', 'League', 'globe', 'Season'], ['finances', 'Finances', 'dollar', 'Business'], ['facilities', 'Facilities', 'building', 'Business'], ['fa', 'Free Agents', 'userPlus', 'Personnel'], ['trades', 'Trades', 'repeat', 'Personnel'], ['draft', 'Draft', 'grad', 'Personnel']];
 function userResults() {
   const out = [];
   for (const wk of G.schedule) {
@@ -1622,11 +1647,11 @@ function streakStr() { const r = userResults(); if (!r.length) return ''; let n 
 /* ================= RENDER ================= */
 function render() {
   const app = $('#app');
-  UI._gr = null;
+  UI._gr = null; UI._slots = null;
   applyTheme();
   if (!G) { app.innerHTML = titleScreen(); return; }
   if (G.user == null) { app.innerHTML = pickScreen(); return; }
-  const views = { home: viewHome, roster: viewRoster, strategy: viewStrategy, schedule: viewSchedule, standings: viewStandings, finances: viewFinances, facilities: viewFacilities, fa: viewFA, draft: viewDraft, league: viewLeague };
+  const views = { home: viewHome, roster: viewRoster, strategy: viewStrategy, schedule: viewSchedule, standings: viewStandings, finances: viewFinances, facilities: viewFacilities, fa: viewFA, draft: viewDraft, league: viewLeague, trades: viewTrades };
   app.innerHTML = shell((views[UI.view] || viewHome)());
 }
 const OWNER_NAMES = ['Big Al Russo', 'Mags Delgado', 'Duke Harlan', 'Rosie Kwan', 'Tex Malone', 'Vic Santangelo', 'Bev Okafor', 'Sully Brennan', 'Dot Whitaker', 'Lou Petrakis', 'Frankie Moss', 'June Castellano'];
@@ -1732,6 +1757,7 @@ function shell(content) {
     roster: G.phase === 'preseason' && rosterProblems(t).length ? '<span class="nb bad">!</span>' : inj ? `<span class="nb bad" title="Injured players">${inj}</span>` : '',
     draft: G.phase === 'draft' ? '<span class="nb live">LIVE</span>' : '',
     fa: G.phase === 'fa' ? '<span class="nb dot"></span>' : '',
+    trades: (G.offers || []).length ? `<span class="nb live" title="Trade offers waiting">${G.offers.length}</span>` : '',
   };
   let grp = '';
   const navHtml = NAV.map(([k, l, ic, g], i) => {
@@ -1822,6 +1848,7 @@ function todoList() {
   if (G.cash < 0) add('must', `You're ${fmtM(-G.cash)} in debt and paying interest every week. Cut costs or raise revenue.`, 'Finances', "act.nav('finances')");
   if (G.phase === 'preseason' && probs.length) add('must', `Your roster isn't legal yet: ${probs[0]}`, 'Fix roster', "act.nav('roster')");
   if (G.phase === 'draft' && G.draft && !G.draft.done) add('must', G.draft.order[G.draft.pick] === G.user ? "You're on the clock in the draft." : 'The draft is underway.', 'Draft room', "act.nav('draft')");
+  for (const o of (G.offers || [])) { const ot = team(o.team); add('should', `The ${ot.name} want ${assetsOf(o.give).map(assetName).join(', ')} and are offering ${assetsOf(o.get).map(assetName).join(' + ')}.`, 'Review offer', "act.nav('trades')"); }
   if (inSeason) for (const pos of POS) {
     const healthy = depth(t)[pos].slice(0, STARTERS[pos]);
     const hurt = t.roster.filter(p => p.pos === pos && p.inj > 0).sort((a, b) => b.ovr - a.ovr)[0];
@@ -1918,6 +1945,193 @@ function offTendency(g) {
   const pct = k => n[k] / N, kick = pct('punt') + pct('fg');
   const counter = kick > 0.5 ? 'balanced' : pct('run') >= 0.45 ? 'run' : pct('deep') >= 0.28 ? 'pass' : pct('short') >= 0.5 ? 'blitz' : 'balanced';
   return { run: pct('run'), short: pct('short'), deep: pct('deep'), kick, counter };
+}
+
+/* ---- Trades ---- */
+const TRADE_DEADLINE = 9;               // last week trades are allowed in the regular season
+const TRADE_MARGIN = { easy: 1.0, normal: 1.08, hard: 1.18 };   // how much AI teams want to win a deal
+const tradesOpen = () => G.phase === 'preseason' || G.phase === 'resign' || G.phase === 'fa' || (G.phase === 'regular' && G.week <= TRADE_DEADLINE);
+const tradeWindowText = () => G.phase === 'regular' ? (G.week <= TRADE_DEADLINE ? `Trade deadline: after Week ${TRADE_DEADLINE} (${TRADE_DEADLINE - G.week + 1} week${TRADE_DEADLINE - G.week ? 's' : ''} left)` : 'The trade deadline has passed. Trades reopen after the season.')
+  : G.phase === 'playoffs' ? 'Trades are closed during the playoffs.' : G.phase === 'draft' ? 'Trades are closed during the draft.' : 'Trades are open.';
+// draft picks: "year-round-originalTeam" keys; G.picks only stores picks that changed hands
+const nextDraftYear = () => (G.phase === 'fa' || (G.phase === 'draft' && G.draft && G.draft.done)) ? G.year + 2 : G.year + 1;
+const pickOwner = (key, orig) => G.picks && G.picks[key] != null ? G.picks[key] : orig;
+const ROUND_NAME = ['', '1st', '2nd', '3rd', '4th', '5th', '6th', '7th'];
+function teamPicks(tid) {
+  const out = [], ny = nextDraftYear();
+  for (const y of [ny, ny + 1]) for (let r = 1; r <= 7; r++) for (const t of G.teams) {
+    const key = `${y}-${r}-${t.id}`;
+    if (pickOwner(key, t.id) === tid) out.push({ key, y, r, orig: t.id });
+  }
+  return out;
+}
+const parsePick = key => { const [y, r, o] = key.split('-').map(Number); return { y, r, orig: o }; };
+// where a team is likely to pick, 1 = first (worst team): record once the season is going, roster strength before that
+function projSlot(orig) {
+  if (!UI._slots) {
+    const w = t => Math.min(1, gp(t) / 8), score = t => (gp(t) ? pct(t) : 0.5) * w(t) + (units(t).ovr - 60) / 30 * (1 - w(t));
+    UI._slots = {}; G.teams.slice().sort((a, b) => score(a) - score(b)).forEach((t, i) => UI._slots[t.id] = i + 1);
+  }
+  return UI._slots[orig];
+}
+function pickValue(key) {
+  const { y, r, orig } = parsePick(key), near = y === nextDraftYear();
+  const overall = (r - 1) * 32 + (near ? projSlot(orig) : 16);
+  return (30 * Math.exp(-(overall - 1) / 27) + 0.5) * (near ? 1 : 0.8);
+}
+const pickLabel = key => { const { y, r, orig } = parsePick(key); return `${y} ${ROUND_NAME[r]}-round pick${orig !== G.user ? ` (${team(orig).abbr})` : ''}`; };
+// what a player is worth in a trade: rating, age against potential, and position
+function playerValue(p, forTeam) {
+  let v = Math.exp((p.ovr - 50) / 12);
+  v *= p.age <= 24 ? 1 + Math.max(0, p.pot - p.ovr) * 0.035 : p.age <= 28 ? 1 + Math.max(0, p.pot - p.ovr) * 0.015 : p.age <= 30 ? 0.85 : p.age <= 32 ? 0.6 : 0.35;
+  v *= { QB: 1.6, K: 0.35, RB: 0.8 }[p.pos] || 1;
+  if (forTeam) v *= p.ovr > weakestStarter(forTeam, p.pos) ? 1.15 : 0.8;
+  return v;
+}
+const isStarter = (t, p) => depth(t)[p.pos].slice(0, STARTERS[p.pos]).includes(p);
+function findPlayer(id) { for (const t of G.teams) { const p = t.roster.find(x => x.id === id); if (p) return p; } return null; }
+const assetsOf = keys => keys.map(k => k[0] === 'p' ? { key: k, p: findPlayer(+k.slice(2)) } : { key: k, pick: k.slice(2) }).filter(x => x.p || x.pick);
+const assetName = x => x.p ? `${x.p.pos} ${fullName(x.p)}` : pickLabel(x.pick);
+const assetValue = (x, forTeam) => x.p ? playerValue(x.p, forTeam) : pickValue(x.pick);
+// the AI's view: what it receives (valued for its needs) against what it gives up (its starters cost extra)
+function tradeEval(give, get, partner) {
+  const a = team(partner), need = TRADE_MARGIN[G.diff] || 1.08;
+  const recv = sum(give.map(x => assetValue(x, a)));
+  const cost = sum(get.map(x => x.p ? playerValue(x.p) * (isStarter(a, x.p) ? 1.1 : 0.85) : pickValue(x.pick)));
+  const ratio = cost ? recv / cost : recv ? 9 : 0;
+  return { recv, cost, ratio, need, ok: give.length + get.length > 0 && ratio >= need };
+}
+function tradeIssues(give, get, partner) {
+  const u = userTeam(), a = team(partner), errs = [];
+  const gp_ = give.filter(x => x.p).map(x => x.p), tp = get.filter(x => x.p).map(x => x.p);
+  const uN = u.roster.length - gp_.length + tp.length, aN = a.roster.length - tp.length + gp_.length;
+  if (uN > MAX_ROSTER) errs.push(`Your roster would have ${uN} players (max ${MAX_ROSTER}).`);
+  if (aN > MAX_ROSTER) errs.push(`The ${a.name} would have ${aN} players (max ${MAX_ROSTER}).`);
+  const uPay = payroll(u) - sum(gp_.map(p => p.salary)) + sum(tp.map(p => p.salary));
+  const aPay = payroll(a) - sum(tp.map(p => p.salary)) + sum(gp_.map(p => p.salary));
+  if (uPay > SALARY_CAP && uPay > payroll(u)) errs.push(`You'd be ${fmtM(uPay - SALARY_CAP)} over the salary cap.`);
+  if (aPay > SALARY_CAP && aPay > payroll(a)) errs.push(`The ${a.name} can't fit the extra salary under their cap.`);
+  for (const pos of POS) {
+    const un = u.roster.filter(p => p.pos === pos).length - gp_.filter(p => p.pos === pos).length + tp.filter(p => p.pos === pos).length;
+    const an = a.roster.filter(p => p.pos === pos).length - tp.filter(p => p.pos === pos).length + gp_.filter(p => p.pos === pos).length;
+    if (un < STARTERS[pos]) errs.push(`You'd be left without enough ${POS_NAME[pos].toLowerCase()}s to field a lineup.`);
+    if (an < STARTERS[pos]) errs.push(`The ${a.name} won't give up their last ${POS_NAME[pos].toLowerCase()}.`);
+  }
+  return errs;
+}
+function executeTrade(partner, give, get) {
+  const u = userTeam(), a = team(partner);
+  G.picks = G.picks || {};
+  for (const x of give) { if (x.p) { u.roster = u.roster.filter(p => p !== x.p); a.roster.push(x.p); } else G.picks[x.pick] = partner; }
+  for (const x of get) { if (x.p) { a.roster = a.roster.filter(p => p !== x.p); u.roster.push(x.p); } else G.picks[x.pick] = G.user; }
+  // fans notice big names coming and going
+  for (const x of give) if (x.p && x.p.ovr >= 85) u.mood = clamp(u.mood - 4, 0, 100);
+  for (const x of get) if (x.p && x.p.ovr >= 85) u.mood = clamp(u.mood + 3, 0, 100);
+  news(`Trade with the ${a.city} ${a.name}: sent ${give.map(assetName).join(', ') || 'nothing'}; received ${get.map(assetName).join(', ') || 'nothing'}.`, 'gold');
+  G.offers = (G.offers || []).filter(o => o.team !== partner);
+  UI.odds = null; UI._slots = null;
+  mentor('firstTrade', ['Your first trade! Now you are a real general manager.', 'Remember: players you trade for keep their contracts. Watch the salary cap, and never give away a young star for an old one.']);
+}
+// cheapest set of the user's assets that would get the AI to yes; null if it can't be done
+function counterOffer(give, get, partner) {
+  const u = userTeam(), a = team(partner), have = new Set(give.map(x => x.key));
+  const pool = assetsOf([...u.roster.map(p => 'p:' + p.id), ...teamPicks(G.user).map(k => 'k:' + k.key)]).filter(x => !have.has(x.key))
+    .map(x => ({ x, v: assetValue(x, a) })).sort((p, q) => p.v - q.v);
+  const withExtra = extra => [...give, ...extra.map(c => c.x)];
+  const works = extra => !tradeIssues(withExtra(extra), get, partner).length && tradeEval(withExtra(extra), get, partner).ok;
+  const plans = [];
+  // one asset that covers the gap on its own
+  const single = pool.find(c => works([c]));
+  if (single) plans.push([single]);
+  // or a bundle of the biggest pieces that still fit under the gap, topped off with the smallest piece that finishes it
+  const bundle = [];
+  for (let i = pool.length - 1; i >= 0 && bundle.length < 3; i--) {
+    const ev = tradeEval(withExtra(bundle), get, partner), gap = ev.cost * ev.need - ev.recv;
+    if (gap <= 0) break;
+    const c = pool[i];
+    if (c.v <= gap && !tradeIssues(withExtra([...bundle, c]), get, partner).length) bundle.push(c);
+  }
+  if (bundle.length && !works(bundle)) { const fin = pool.find(c => !bundle.includes(c) && works([...bundle, c])); if (fin) bundle.push(fin); }
+  if (bundle.length && works(bundle)) plans.push(bundle);
+  if (!plans.length) return null;
+  plans.sort((p, q) => sum(p.map(c => c.v)) - sum(q.map(c => c.v)));
+  return plans[0].map(c => c.x);
+}
+// now and then an AI team calls about one of the user's players
+function maybeAiOffer() {
+  G.offers = (G.offers || []).filter(o => o.week >= G.week - 1 && tradesOpen());
+  if (!tradesOpen() || G.phase !== 'regular' || G.offers.length || rnd() > 0.2) return;
+  const u = userTeam();
+  for (const a of shuffle(G.teams.filter(t => t.id !== G.user))) {
+    const targets = u.roster.filter(p => p.ovr >= 70 && p.pos !== 'K' && p.ovr > weakestStarter(a, p.pos) + 3).sort((x, y) => playerValue(y, a) - playerValue(x, a)).slice(0, 2);
+    for (const tgt of targets) {
+      const want = playerValue(tgt, a) * (0.95 + rnd() * 0.15);
+      const pool = assetsOf([...teamPicks(a.id).map(k => 'k:' + k.key), ...a.roster.filter(p => !isStarter(a, p) && p.ovr >= 58).map(p => 'p:' + p.id)])
+        .map(x => ({ x, v: x.p ? playerValue(x.p) : pickValue(x.pick) })).sort((p, q) => q.v - p.v);
+      const offer = []; let tot = 0;
+      for (const c of pool) { if (tot >= want * 0.95) break; if (tot + c.v <= want * 1.12) { offer.push(c.x); tot += c.v; } }
+      const give = assetsOf(['p:' + tgt.id]);
+      if (tot < want * 0.9 || offer.length > 4 || tradeIssues(give, offer, a.id).length) continue;
+      G.offers.push({ id: Date.now(), team: a.id, give: ['p:' + tgt.id], get: offer.map(x => x.key), week: G.week });
+      news(`The ${a.city} ${a.name} called about ${tgt.pos} ${fullName(tgt)}. They're offering ${offer.map(assetName).join(' + ')}. See Trades.`, 'gold');
+      return;
+    }
+  }
+}
+function tradeAssetRows(t, side, sel) {
+  const st = new Set(startersOf(t).map(p => p.id)), f = (UI.tr.pf || {})[side] || 'ALL';
+  let list = t.roster.slice();
+  if (f !== 'ALL') list = list.filter(p => p.pos === f);
+  list.sort((a, b) => playerValue(b) - playerValue(a));
+  return list.map(p => {
+    const k = 'p:' + p.id, on = sel.includes(k);
+    return `<label class="tr-row ${on ? 'on' : ''}"><input type="checkbox" ${on ? 'checked' : ''} onchange="act.trToggle('${side}','${k}')"><span class="pos">${p.pos}</span>${face(p, 24, t)}<span class="grow tr-name"><b>${fullName(p)}</b>${st.has(p.id) ? '<span class="tag st">Starter</span>' : ''}<span class="xs dim">Age ${p.age} · ${fmtM(p.salary)} · ${Math.max(0, p.years)}y</span></span>${ovrPill(p.ovr)}<span class="tr-val" title="Trade value">${Math.round(playerValue(p))}</span></label>`;
+  }).join('') || '<p class="muted sm" style="padding:8px">No players at this position.</p>';
+}
+function tradePickChips(tid, side, sel) {
+  const pk = teamPicks(tid);
+  return pk.map(x => { const k = 'k:' + x.key, on = sel.includes(k); return `<button class="chip ${on ? 'on' : ''}" onclick="act.trToggle('${side}','${k}')" title="${x.y === nextDraftYear() ? `Projected around pick #${(x.r - 1) * 32 + projSlot(x.orig)}` : 'Future pick'}">${x.y} R${x.r}${x.orig !== tid ? ` <small>${team(x.orig).abbr}</small>` : ''}<span class="cnt">${Math.round(pickValue(x.key))}</span></button>`; }).join('') || '<span class="muted sm">No picks.</span>';
+}
+function viewTrades() {
+  const u = userTeam(), open = tradesOpen();
+  UI.tr = UI.tr || { partner: null, give: [], get: [], pf: { give: 'ALL', get: 'ALL' } };
+  const T = UI.tr, others = G.teams.filter(t => t.id !== G.user).sort((a, b) => (a.city + a.name).localeCompare(b.city + b.name));
+  if (T.partner == null || T.partner === G.user) T.partner = others[0].id;
+  const owns = tid => { const t = team(tid), pk = new Set(teamPicks(tid).map(x => 'k:' + x.key)); return k => k[0] === 'p' ? t.roster.some(p => 'p:' + p.id === k) : pk.has(k); };
+  T.give = T.give.filter(owns(G.user)); T.get = T.get.filter(owns(T.partner));
+  const a = team(T.partner);
+  const give = assetsOf(T.give), get = assetsOf(T.get);
+  const ev = tradeEval(give, get, a.id), issues = tradeIssues(give, get, a.id);
+  const meter = clamp(ev.ratio / ev.need, 0, 1.25);
+  const mood = !give.length && !get.length ? ['muted', 'Pick what you want to send and receive.'] : ev.ok ? ['good', `The ${a.name} would accept this.`] : meter >= 0.85 ? ['gold', "Close. They'd want a little more."] : meter >= 0.6 ? ['bad', 'Not enough for them yet.'] : ['bad', "They're not interested at this price."];
+  const offers = (G.offers || []).filter(o => team(o.team));
+  const posFilter = side => `<div class="chips tr-pf">${['ALL', ...POS].map(p => `<button class="chip ${((T.pf || {})[side] || 'ALL') === p ? 'on' : ''}" onclick="act.trPos('${side}','${p}')">${p === 'ALL' ? 'All' : p}</button>`).join('')}</div>`;
+  return `${pageHead('repeat', 'Trades', `${tradeWindowText().replace(/([^.])$/, '$1.')} Trade players and draft picks. Contracts move with the player.`)}
+  ${offers.length ? `<div class="card mb">${ch('phone', 'Offers for you')}${offers.map(o => { const t = team(o.team), g1 = assetsOf(o.give), g2 = assetsOf(o.get);
+    return `<div class="offer">${badge(t, 34)}<div class="grow"><b>${t.city} ${t.name}</b><div class="sm">They get <b>${g1.map(assetName).join(', ')}</b> · You get <b>${g2.map(assetName).join(', ')}</b></div></div><button class="btn green sm" onclick="act.trAcceptOffer(${o.id})">${icon('check', 13)} Accept</button><button class="btn sm" onclick="act.trLoadOffer(${o.id})">Open</button><button class="btn sm" title="Decline" onclick="act.trDecline(${o.id})">${icon('x', 13)}</button></div>`; }).join('')}</div>` : ''}
+  <div class="card mb tr-bar">
+    <div class="row wrap" style="gap:12px">
+      <label class="sm muted" for="trPartner">Trade with</label>
+      <select id="trPartner" class="inp tr-sel" onchange="act.trPartner(+this.value)">${others.map(t => `<option value="${t.id}" ${t.id === a.id ? 'selected' : ''}>${t.city} ${t.name} (${recStr(t)}, OVR ${units(t).ovr})</option>`).join('')}</select>
+      ${badge(a, 30)}<span class="xs muted">Cap space ${fmtM(SALARY_CAP - payroll(a))} · Roster ${a.roster.length}/${MAX_ROSTER}</span>
+    </div>
+    <div class="tr-summary">
+      <div><div class="xs muted">You send</div><b>${give.length ? give.map(x => esc(assetName(x))).join(', ') : '—'}</b></div>
+      <div><div class="xs muted">You receive</div><b>${get.length ? get.map(x => esc(assetName(x))).join(', ') : '—'}</b></div>
+    </div>
+    <div class="tr-meter"><div class="tr-meter-bar"><i style="width:${meter / 1.25 * 100}%;background:${ev.ok ? 'var(--good)' : meter >= 0.85 ? 'var(--gold)' : 'var(--bad)'}"></i><span class="tr-line" title="They need at least this much"></span></div><span class="${mood[0]} sm"><b>${mood[1]}</b></span></div>
+    ${issues.length ? `<div class="bad sm">${issues.map(e => `<div>${icon('alert', 12)} ${esc(e)}</div>`).join('')}</div>` : ''}
+    <div class="row wrap" style="gap:8px;margin-top:10px">
+      <button class="btn primary" ${open && (give.length || get.length) && !issues.length ? '' : 'disabled'} onclick="act.trPropose()">${icon('repeat', 14)} Propose trade</button>
+      <button class="btn" ${open && get.length && !ev.ok ? '' : 'disabled'} onclick="act.trCounter()" title="Ask them which of your assets would get it done">${icon('help', 14)} What would it take?</button>
+      <button class="btn" ${give.length || get.length ? '' : 'disabled'} onclick="act.trClear()">Clear</button>
+      <span class="xs dim">Trade value (the small numbers) blends rating, age, potential and position. Quarterbacks and young players with high potential are worth the most.</span>
+    </div>
+  </div>
+  <div class="grid2 tr-cols">
+    <div class="card">${ch('users', 'Your team sends', `<span class="xs muted">${fmtM(SALARY_CAP - payroll(u))} cap space</span>`)}${posFilter('give')}<div class="tr-list">${tradeAssetRows(u, 'give', T.give)}</div><h3 class="h mt">Your draft picks</h3><div class="chips">${tradePickChips(G.user, 'give', T.give)}</div></div>
+    <div class="card">${ch('users', `${esc(a.name)} send`, badge(a, 24))}${posFilter('get')}<div class="tr-list">${tradeAssetRows(a, 'get', T.get)}</div><h3 class="h mt">Their draft picks</h3><div class="chips">${tradePickChips(a.id, 'get', T.get)}</div></div>
+  </div>`;
 }
 
 /* ---- Home ---- */
@@ -2964,6 +3178,7 @@ const act = {
       <div class="statgrid mb"><div><label>Salary</label><b>${fmtM(p.salary)}</b></div><div><label>Years left</label><b>${Math.max(0, p.years)}</b></div><div><label>Games</label><b>${p.stats.gp}</b></div>${statCells(p)}</div>
       <div class="row wrap" style="justify-content:flex-end">
         <button class="btn" ${p.trained ? 'disabled' : ''} onclick="act.train(${p.id});act.player(${p.id})">${icon('dumbbell', 14)} ${p.trained ? 'Trained this season' : 'Train · ' + fmtM(trainCost(p))}</button>
+        <button class="btn" onclick="act.tradeWith(null, ${p.id})">${icon('repeat', 14)} Shop him</button>
         <button class="btn danger" onclick="act.release(${p.id})">${icon('scissors', 14)} Cut</button>
         <button class="btn primary" onclick="act.closeModal()">Close</button>
       </div>`);
@@ -2975,7 +3190,7 @@ const act = {
       <ol style="padding-left:18px;line-height:1.7;margin:0">
         <li><b>Play each week.</b> Watch, coach or quick-sim your game from Home. Win to make fans happy.</li>
         <li><b>Make money.</b> Revenue comes from tickets (home games), merch, sponsors and TV. Payroll and upkeep are your costs. Happy fans spend more.</li>
-        <li><b>Improve the roster.</b> Train players, sign free agents and draft prospects. Stay under the ${fmtM(SALARY_CAP)} salary cap.</li>
+        <li><b>Improve the roster.</b> Train players, sign free agents, draft prospects and trade with other teams (until the Week ${TRADE_DEADLINE} deadline). Stay under the ${fmtM(SALARY_CAP)} salary cap.</li>
         <li><b>Upgrade facilities.</b> A bigger stadium earns more. Training grows young players. Medical prevents injuries. Scouting improves draft intel.</li>
         <li><b>Make the playoffs.</b> The top 7 teams in each conference get in. Win 4 rounds to take the ${bowl()}.</li>
         <li><b>Grow your net worth.</b> Cash plus team value. You can sell your team any time and buy another.</li>
@@ -3132,8 +3347,50 @@ const act = {
     const list = t.roster.slice().sort((a, b) => POS.indexOf(a.pos) - POS.indexOf(b.pos) || b.ovr - a.ovr);
     showModal(`<div class="row mb">${badge(t, 48)}<div><div class="tname">${t.city} ${t.name}</div><div class="sm muted">${recStr(t)} · OVR ${u.ovr} · OFF ${u.off} · DEF ${u.def} · Value ${fmtM(teamValue(t))}</div></div></div>
       <div class="tbl-wrap" style="max-height:60vh;overflow:auto"><table class="tbl"><tr><th>Pos</th><th>Player</th><th class="c">Age</th><th class="c">OVR</th><th class="r">Salary</th></tr>${list.map(p => `<tr><td><span class="pos">${p.pos}</span></td><td>${face(p, 24, t)}${fullName(p)}${p.inj ? '<span class="tag inj">Inj</span>' : ''}</td><td class="c">${p.age}</td><td class="c">${ovrPill(p.ovr)}</td><td class="r">${fmtM(p.salary)}</td></tr>`).join('')}</table></div>
-      <div class="row mt" style="justify-content:flex-end"><button class="btn" onclick="act.closeModal()">Close</button></div>`, true);
+      <div class="row mt" style="justify-content:flex-end">${id !== G.user ? `<button class="btn" onclick="act.tradeWith(${id})">${icon('repeat', 14)} Trade with them</button>` : ''}<button class="btn" onclick="act.closeModal()">Close</button></div>`, true);
   },
+  tradeWith(tid, pid) {
+    UI.tr = UI.tr || { partner: null, give: [], get: [], pf: { give: 'ALL', get: 'ALL' } };
+    if (tid != null) { UI.tr.partner = tid; UI.tr.get = []; }
+    if (pid != null && !UI.tr.give.includes('p:' + pid)) UI.tr.give.push('p:' + pid);
+    act.closeModal(); act.nav('trades');
+  },
+  trPartner(id) { UI.tr.partner = id; UI.tr.get = []; UI.tr.pf.get = 'ALL'; render(); },
+  trToggle(side, key) { const L = UI.tr[side], i = L.indexOf(key); if (i >= 0) L.splice(i, 1); else L.push(key); render(); },
+  trPos(side, pos) { UI.tr.pf[side] = pos; render(); },
+  trClear() { UI.tr.give = []; UI.tr.get = []; render(); },
+  trPropose() {
+    const T = UI.tr, a = team(T.partner), give = assetsOf(T.give), get = assetsOf(T.get);
+    if (!tradesOpen()) { toast(tradeWindowText(), 'bad'); return; }
+    const issues = tradeIssues(give, get, a.id); if (issues.length) { toast(issues[0], 'bad'); return; }
+    const ev = tradeEval(give, get, a.id);
+    if (!ev.ok) { toast(ev.ratio / ev.need >= 0.85 ? `The ${a.name} say it's close, but they want a little more.` : `The ${a.name} turned it down.`, 'bad'); return; }
+    const list = xs => xs.map(x => esc(assetName(x))).join(', ') || 'nothing';
+    confirmModal('Make this trade?', `<div class="mb">The ${a.city} ${a.name} have agreed.</div><div>You send: <b>${list(give)}</b></div><div>You receive: <b>${list(get)}</b></div><p class="sm muted">Trades can't be undone.</p>`, 'Make the trade', () => {
+      executeTrade(a.id, give, get); UI.tr.give = []; UI.tr.get = []; save(); render(); toast('Trade complete', 'good');
+    });
+  },
+  trCounter() {
+    const T = UI.tr, a = team(T.partner), add = counterOffer(assetsOf(T.give), assetsOf(T.get), a.id);
+    if (!add) { toast(`The ${a.name} won't make this deal for anything you have.`, 'bad'); return; }
+    T.give.push(...add.map(x => x.key)); render();
+    toast(`The ${a.name} would do it if you add ${add.map(assetName).join(' + ')}`, 'good');
+  },
+  trAcceptOffer(id) {
+    const o = (G.offers || []).find(x => x.id === id); if (!o) return;
+    const give = assetsOf(o.give), get = assetsOf(o.get), t = team(o.team);
+    if (!tradesOpen() || give.length !== o.give.length || get.length !== o.get.length || tradeIssues(give, get, o.team).length) {
+      G.offers = G.offers.filter(x => x !== o); save(); render(); toast('That offer is no longer valid', 'bad'); return;
+    }
+    confirmModal(`Accept the ${t.name}' offer?`, `<div>You send: <b>${give.map(x => esc(assetName(x))).join(', ')}</b></div><div>You receive: <b>${get.map(x => esc(assetName(x))).join(', ')}</b></div><p class="sm muted">Trades can't be undone.</p>`, 'Accept trade', () => {
+      executeTrade(o.team, give, get); save(); render(); toast('Trade complete', 'good');
+    });
+  },
+  trLoadOffer(id) {
+    const o = (G.offers || []).find(x => x.id === id); if (!o) return;
+    UI.tr = { partner: o.team, give: o.give.slice(), get: o.get.slice(), pf: { give: 'ALL', get: 'ALL' } }; render();
+  },
+  trDecline(id) { G.offers = (G.offers || []).filter(x => x.id !== id); news('You turned down a trade offer.', 'info'); save(); render(); },
 };
 window.act = act;
 document.addEventListener('keydown', e => {
