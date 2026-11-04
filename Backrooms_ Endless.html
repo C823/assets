@@ -273,8 +273,18 @@ body.touch #holdb{display:block}body.hiding #mini,body.hiding #comp,body.hiding 
 #mpanel .gap{height:2vh}
 #osd{position:absolute;inset:0;pointer-events:none;font:400 clamp(22px,3.6vh,34px) var(--fd);text-shadow:var(--osd)}
 #osd_tr{position:absolute;right:3vw;top:4vh}#osd_br{position:absolute;right:3vw;bottom:4.5vh;text-align:right;line-height:1.05}#osd b{font-weight:400}
+#sydlg{position:fixed;inset:0;z-index:45;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.66);animation:fin .2s}
+#sydlg .sybox{width:min(600px,92vw);max-height:88vh;overflow:auto;padding:22px 24px 24px}
+#sydlg h3{font:400 clamp(28px,4.4vh,40px)/1.05 var(--fd);margin:6px 0 10px;color:var(--ink);text-shadow:var(--osd)}
+#sydlg p{font:14px/1.5 var(--fb);color:var(--mute);margin:0 0 10px}
+.syslot{margin:12px 0}.syslot>span{font:400 20px var(--fd);color:var(--mute)}
+.sycmp{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+.sycmp div{padding:8px 10px;box-shadow:inset 0 0 0 2px rgba(233,228,214,.22)}.sycmp div.cl{box-shadow:inset 0 0 0 2px rgba(143,214,163,.55)}
+.sycmp i{display:block;font:normal 400 16px var(--fd);color:var(--mute)}.sycmp b{display:block;font:400 30px/1.1 var(--fd);color:var(--ink)}.sycmp small{font:12px var(--fb);color:var(--mute)}
+.sybtn{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.sybtn button{flex:1;min-width:180px}
+.sfrow{gap:8px}.sfrow .btng{flex:1}
 #osd_acct{position:absolute;right:3vw;top:calc(4vh + clamp(30px,4.6vh,44px));pointer-events:auto;background:none;border:0;padding:0;cursor:pointer;font:400 clamp(16px,2.5vh,24px) var(--fd);color:rgba(233,228,214,.8);text-shadow:var(--osd);letter-spacing:.04em}
-#osd_acct b{color:var(--ink,#fff)}#osd_acct:hover b{text-decoration:underline}
+body.fsub #osd_acct{pointer-events:none}#osd_acct b{color:var(--ink,#fff)}#osd_acct:hover b{text-decoration:underline}
 #ver{font:400 22px var(--fd);left:3vw;right:auto;bottom:2vh;color:rgba(233,228,214,.55)}
 .btnp,.btng{height:46px;padding:0 22px;font:400 30px/1 var(--fd);letter-spacing:.02em}
 .btnp{background:var(--ink);color:#0a0a0a}.btnp:hover,.btnp:focus-visible{background:#fff}
@@ -525,6 +535,7 @@ body.touch #hbn{bottom:auto;top:70px}
 <span>Cloud sync<small id="sy_lbl" style="display:block;font-size:12px;color:var(--mute)">Keep saves, records and suits in sync between devices with a code.</small><small id="sy_st" style="display:block;font:400 20px var(--fd);color:var(--mute)"></small></span><input type="checkbox" class="sw" id="sy_on">
 <div id="sy_box" style="grid-column:1/3;display:none"><div class="sy_code"><span id="sy_cl">YOUR SYNC CODE</span><b id="sy_code">----</b><button class="btng" id="sy_copy">COPY</button><button class="btng" id="sy_now">SYNC NOW</button></div><p class="sy_p" id="sy_p">Type this code on your other device (Settings &rarr; Cloud sync &rarr; Link). Anyone with the code can load your saves, so keep it to yourself.</p></div>
 <span id="sy_lk1">Link a device<small style="display:block;font-size:12px;color:var(--mute)">Have a code from another device? Enter it here.</small></span><div class="rcode" id="sy_lk2"><input id="sy_in" type="text" maxlength="9" spellcheck="false" autocomplete="off" placeholder="XXXX-XXXX"><button id="sy_link" class="btng">LINK</button></div>
+<span>Save file<small style="display:block;font-size:12px;color:var(--mute)">Download your saves, records and suits as a file, or load them back from one</small></span><div class="rcode sfrow"><button class="btng" id="sf_exp">EXPORT</button><button class="btng" id="sf_imp">IMPORT</button><input type="file" id="sf_in" accept=".json,application/json" style="display:none"></div>
 <span>Progress<small style="display:block;font-size:12px;color:var(--mute)">Saved run, records and Encyclopedia</small></span><button id="rstp" class="btng" style="height:36px;font-size:15px">Reset progress</button>
 <button id="fs" class="btng">Toggle fullscreen</button></div></div></section>
 </div>
@@ -559,7 +570,8 @@ body.touch #hbn{bottom:auto;top:70px}
 <div class="mcard"><h4><i>B</i>PLAYERS</h4><div id="mp_list"></div></div>
 <div id="mp_chat" class="mcard"><h4><i>C</i>CHAT</h4><div id="mp_chatlog"></div><div class="chrow"><input id="mp_chatin" type="text" maxlength="120" spellcheck="false" autocomplete="off" placeholder="Say hi to the room"><button class="btng" id="mp_chatgo">SEND</button></div></div></div><div id="mp_saves"></div><button class="btnp" id="mp_start">START NEW GAME</button></div>
 <div class="pfoot"><p id="mp_status"></p><div class="nrow"><button class="btng" id="mp_back">BACK</button></div></div></div>
-<div id="ver">v3.28 &middot; 2026-11-03</div></div>
+<div id="ver">v3.30 &middot; 2026-11-04</div></div>
+<div id="sydlg"><div class="sybox glass"><div class="lbl" id="sy_dk"></div><h3 id="sy_dt"></h3><div id="sy_db"></div><div class="sybtn" id="sy_dbtn"></div></div></div>
 <div id="ov" style="display:none"><div class="ovl"><div class="lbl" id="olbl">GAME PAUSED</div><div id="dkick"></div><h1 id="t">PAUSED</h1><i id="dline"></i><p id="s"></p><div id="dgrid"></div><div id="ostats"></div>
 <div class="obtn"><button id="btn" class="btnp">RESUME</button><button id="m2" class="btng">MAIN MENU</button></div><p id="best"></p>
 <div id="keys"><span><b class="kbd">WASD</b>Move</span><span><b class="kbd">SHIFT</b>Sprint</span><span><b class="kbd">C</b>Crouch</span><span><b class="kbd">E</b>Hide</span><span><b class="kbd">M</b>Map</span><span><b class="kbd">I</b>Items</span><span><b class="kbd">1-4</b>/<b class="kbd">WHEEL</b>Hotbar</span><span><b class="kbd">R-CLICK</b>Use item</span></div></div>
@@ -1952,9 +1964,11 @@ function markSeen(t,id,name){const a=t==='L'?stats.seenL:stats.seenE;if(a.includ
 // wipes the saved run, records and Encyclopedia (settings are kept); needs a second click to confirm
 $('rstp').onclick=()=>{const bt=$('rstp');if(!bt.dataset.arm){bt.dataset.arm=1;bt.textContent='Click again to confirm';bt.style.background='#c9473b';bt.style.color='#fff';clearTimeout(bt._t);bt._t=setTimeout(()=>{delete bt.dataset.arm;bt.textContent='Reset progress';bt.style.background=bt.style.color=''},3500);return}
  clearTimeout(bt._t);delete bt.dataset.arm;bt.textContent='Progress reset';bt.style.background=bt.style.color='';setTimeout(()=>bt.textContent='Reset progress',2000);
- for(const k of['save','stats','best','run','sdel',...SLOTS.sp.map(k=>'save_'+k),...SLOTS.mp.map(k=>'save_'+k)])try{localStorage.removeItem('br_'+k)}catch(e){}slot=null;
- best=0;Object.assign(stats,{runs:0,deaths:0,easy:0,normal:0,hard:0,wins:0,seenL:[],seenE:[],ach:{},heads:0});Object.assign(RUN,{start:1,seed:'',perma:false,map:true,wand:true});
- if(stt==='pause'||stt==='play')inRun=false;sfx({t:'sawtooth',f:200,f2:60,dur:.5,v:.12});if(stt==='menu'){menuBG();menuUI('set')}note('Progress reset.')};
+ progWipe();store.set('rst',Date.now());
+ if(stt==='pause'||stt==='play')inRun=false;sfx({t:'sawtooth',f:200,f2:60,dur:.5,v:.12});if(stt==='menu'){menuBG();menuUI('set')}note(acctOn()||SYNC.on?'Progress reset, here and in your cloud save.':'Progress reset.')};
+// clears saves, records and achievements (sync settings stay). A reset is stamped (rst) and synced, so every device clears too
+function progWipe(){for(const k of['save','stats','best','run','sdel','sybase',...SLOTS.sp.map(k=>'save_'+k),...SLOTS.mp.map(k=>'save_'+k)])try{localStorage.removeItem('br_'+k)}catch(e){}slot=null;
+ best=0;for(const k of Object.keys(stats))delete stats[k];Object.assign(stats,{runs:0,deaths:0,easy:0,normal:0,hard:0,wins:0,seenL:[],seenE:[],ach:{},heads:0});Object.assign(RUN,{start:1,seed:'',perma:false,map:true,wand:true})}
 // ---- achievements: stored with the rest of the records, so Reset progress clears them too ----
 stats.ach=stats.ach||{};let lvStart=0;
 const ACH=[['start','Noclipped','Start your first run.',0],['key','Unlocked','Pick up a key.',0],['deeper','Deeper','Reach Level 2.',0],['aw','Hydrated','Drink almond water.',0],
@@ -2575,12 +2589,27 @@ async function syncSeal(obj){const iv=crypto.getRandomValues(new Uint8Array(12))
 async function syncOpen(m){const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:ub64(m.iv)},syncKey,ub64(m.ct));return JSON.parse(new TextDecoder().decode(pt))}
 // everything that travels: the 8 save slots (and when any were deleted), records, achievements, suits, deepest level, and your suit and name
 function syncSnap(){const sv={};for(const k of[...SLOTS.sp,...SLOTS.mp])sv[k]=store.get('save_'+k,null);const c=store.get('cfg',{});
- return{t:Date.now(),dev:SYNC.dev,saves:sv,sdel:store.get('sdel',{}),stats:store.get('stats',{}),best:store.get('best',0),prof:{suit:c.suit,name:c.name,t:c.profT||0}}}
-function syncMerge(r){if(!r||typeof r!=='object')return false;let ch=false;syncApplying=true;try{
+ return{t:Date.now(),dev:SYNC.dev,rst:store.get('rst',0),saves:sv,sdel:store.get('sdel',{}),stats:store.get('stats',{}),best:store.get('best',0),prof:{suit:c.suit,name:c.name,t:c.profT||0}}}
+// pending choice between cloud and local saves; while it's open nothing is pushed, so the cloud copy isn't overwritten by accident
+const SC={list:null,want:0};
+// sybase holds, per slot, the save time both sides last agreed on. A slot only one side changed since then just follows that side;
+// a slot both sides changed (say level 3 here and level 5 in the cloud) is asked about instead of picked by date
+function syncBaseFrom(sv){const B=store.get('sybase',{});for(const k of[...SLOTS.sp,...SLOTS.mp]){const v=sv&&sv[k];if(v&&v.v===1)B[k]=v.t||0}store.set('sybase',B)}
+function syncMerge(r){if(!r||typeof r!=='object')return false;let ch=false,conf=[];const lr=store.get('rst',0),rr=+r.rst||0;
+ // a copy from before this device's reset is ignored (our next push replaces it); a newer reset clears this device first
+ if(rr<lr){setTimeout(()=>syncDirty('merge'),0);return false}
+ syncApplying=true;try{
+ if(rr>lr){progWipe();store.set('rst',rr);store.set('stats',stats);ch=true;setTimeout(()=>note('Progress was reset on another device.'),0)}
  const del=store.get('sdel',{});for(const[k,t]of Object.entries(r.sdel||{}))if(t>(del[k]||0)){del[k]=t;ch=true}
- for(const k of[...SLOTS.sp,...SLOTS.mp]){const a=store.get('save_'+k,null),b=r.saves&&r.saves[k];
-  if(b&&b.v===1&&(b.t||0)>(a&&a.t||0)&&(b.t||0)>(del[k]||0)){store.set('save_'+k,b);ch=true}
-  else if(a&&(del[k]||0)>(a.t||0)){try{localStorage.removeItem('br_save_'+k)}catch(e){}ch=true}}
+ const B=store.get('sybase',{});
+ for(const k of[...SLOTS.sp,...SLOTS.mp]){let a=store.get('save_'+k,null);const b=r.saves&&r.saves[k],bv=b&&b.v===1,bt=bv?b.t||0:0;let at=a&&a.t||0;
+  if(a&&(del[k]||0)>at){try{localStorage.removeItem('br_save_'+k)}catch(e){}a=null;at=0;ch=true}
+  if(!bv||bt<=(del[k]||0))continue;
+  if(at===bt){B[k]=bt;continue}
+  if(!a||at===(B[k]||0)){store.set('save_'+k,b);B[k]=bt;ch=true;continue}
+  if(bt===(B[k]||0))continue;
+  conf.push({k,a,b})}
+ store.set('sybase',B);
  store.set('sdel',del);
  const R_=r.stats||{},S_=stats;for(const[k,v]of Object.entries(R_)){if(typeof v==='number'){if(v>(S_[k]||0)){S_[k]=v;ch=true}}
   else if(Array.isArray(v)){const u=[...new Set([...(S_[k]||[]),...v])];if(u.length!==(S_[k]||[]).length){S_[k]=u;ch=true}}
@@ -2589,7 +2618,45 @@ function syncMerge(r){if(!r||typeof r!=='object')return false;let ch=false;syncA
  if((r.best||0)>best){best=r.best;store.set('best',best);ch=true}
  if(r.prof&&(r.prof.t||0)>(CFG.profT||0)){if(r.prof.suit!=null&&validSuit(r.prof.suit)!==undefined)CFG.suit=r.prof.suit;if(r.prof.name)CFG.name=cleanName(r.prof.name);CFG.profT=r.prof.t;store.set('cfg',CFG);try{mkHand()}catch(e){}ch=true}
  }finally{syncApplying=false}
- if(ch&&stt==='menu'){try{menuUI(document.querySelector('#msub section.on')?document.querySelector('#msub section.on').id.slice(2):null)}catch(e){}}return ch}
+ SC.list=conf.length?conf:null;if(SC.list)syncAsk();
+ if(ch)syncRefresh();return ch}
+function syncRefresh(){if(stt==='menu'){try{menuUI(document.querySelector('#msub section.on')?document.querySelector('#msub section.on').id.slice(2):null)}catch(e){}}}
+// ---- the sync dialog: cloud-or-local choice, and loading a save file ----
+const svLine=v=>v?(v.mp?'Co-op · ':'')+(v.endless?'Endless · ':'')+(v.diff?v.diff[0].toUpperCase()+v.diff.slice(1)+' · ':'')+new Date(v.t||0).toLocaleString([],{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}):'';
+const svBox=(v,lbl,cl)=>'<div'+(cl?' class="cl"':'')+'><i>'+lbl+'</i><b>'+(v?'LEVEL '+(v.level|0):'EMPTY')+'</b><small>'+escH(svLine(v))+'</small></div>';
+const escH=t=>String(t==null?'':t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+function syncDlg(kick,title,html,btns){$('sy_dk').textContent=kick;$('sy_dt').textContent=title;$('sy_db').innerHTML=html;const row=$('sy_dbtn');row.innerHTML='';
+ for(const[t,cls,fn]of btns){const b=document.createElement('button');b.className=cls;b.textContent=t;b.onclick=()=>{$('sydlg').style.display='none';fn()};row.appendChild(b)}$('sydlg').style.display='flex'}
+// waits for the main menu, so a run in progress is never swapped out from under the player
+function syncAsk(){if(!SC.list)return;if(stt!=='menu'){clearTimeout(SC.t);SC.t=setTimeout(syncAsk,1000);return}
+ const where=acctOn()?'your account':'your sync code';
+ syncDlg('CLOUD SYNC','Cloud save is different',
+  '<p>The cloud copy from '+escH(where)+' and this device have different progress in '+(SC.list.length>1?'these slots':'this slot')+'. Pick which one to keep.</p>'+
+  SC.list.map(c=>'<div class="syslot"><span>'+escH((c.k[0]==='m'?'CO-OP ':'')+slotName_(c.a||c.b,c.k).toUpperCase())+'</span><div class="sycmp">'+svBox(store.get('save_'+c.k,null),'THIS DEVICE')+svBox(c.b,'CLOUD',1)+'</div></div>').join('')+
+  '<p>Use cloud save replaces the progress here. Keep this device\'s overwrites the cloud copy, and your other devices pick it up the next time they sync.</p>',
+  [['USE CLOUD SAVE','btnp',()=>syncResolve(true)],['KEEP THIS DEVICE\'S','btng',()=>syncResolve(false)]])}
+function syncResolve(cloud){const list=SC.list||[];SC.list=null;const B=store.get('sybase',{});syncApplying=true;try{for(const c of list){if(cloud)store.set('save_'+c.k,c.b);B[c.k]=c.b.t||0}store.set('sybase',B)}finally{syncApplying=false}
+ note(cloud?'Loaded the cloud save.':'Kept this device\'s save. The cloud copy is being updated.');syncRefresh();SC.want=0;syncDirty('merge')}
+// ---- save file: everything sync carries, as a .json download ----
+function saveExport(){const d=Object.assign({app:'backrooms-endless',ver:1},syncSnap()),u=URL.createObjectURL(new Blob([JSON.stringify(d,null,1)],{type:'application/json'})),a=document.createElement('a');
+ a.href=u;a.download='backrooms-endless-save-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1500);note('Save file downloaded.')}
+function saveImport(file){const rd=new FileReader();rd.onerror=()=>note('Could not read that file.');rd.onload=()=>{let d;try{d=JSON.parse(rd.result)}catch(e){note('That isn\'t a Backrooms save file.');return}
+ if(!d||d.app!=='backrooms-endless'||!d.saves||typeof d.saves!=='object'){note('That isn\'t a Backrooms save file.');return}
+ const ks=[...SLOTS.sp,...SLOTS.mp].filter(k=>d.saves[k]&&d.saves[k].v===1);
+ syncDlg('SAVE FILE','Load this save file?','<p>Saved '+escH(new Date(d.t||0).toLocaleString())+'. It has '+ks.length+' save'+(ks.length===1?'':'s')+(d.best?' and a deepest level of '+(d.best|0):'')+'.</p>'+
+  ks.map(k=>'<div class="syslot"><span>'+escH((k[0]==='m'?'CO-OP ':'')+slotName_(d.saves[k],k).toUpperCase())+'</span><div class="sycmp">'+svBox(store.get('save_'+k,null),'THIS DEVICE')+svBox(d.saves[k],'FILE',1)+'</div></div>').join('')+
+  '<p>Loading it replaces the saves, records and suit on this device'+(acctOn()||SYNC.on?', and in your cloud save':'')+'.</p>',
+  [['LOAD FILE','btnp',()=>saveLoad(d)],['CANCEL','btng',()=>{}]])};rd.readAsText(file)}
+function saveLoad(d){const now=Date.now(),del=store.get('sdel',{});syncApplying=true;try{
+  // the loaded saves count as brand new, so they win over every device's older copy; slots the file doesn't have are cleared everywhere
+  for(const k of[...SLOTS.sp,...SLOTS.mp]){const v=d.saves[k];if(v&&v.v===1){store.set('save_'+k,Object.assign({},v,{t:now}));delete del[k]}else{try{localStorage.removeItem('br_save_'+k)}catch(e){}del[k]=now}}
+  store.set('sdel',del);store.set('sybase',{});
+  for(const k of Object.keys(stats))delete stats[k];Object.assign(stats,{runs:0,deaths:0,easy:0,normal:0,hard:0,wins:0,seenL:[],seenE:[],ach:{},heads:0},d.stats||{});store.set('stats',stats);
+  best=d.best|0;store.set('best',best);
+  if(d.prof){if(d.prof.suit!=null&&validSuit(d.prof.suit)!==undefined)CFG.suit=d.prof.suit;if(d.prof.name)CFG.name=cleanName(d.prof.name);CFG.profT=now;store.set('cfg',CFG);try{mkHand()}catch(e){}}
+ }finally{syncApplying=false}slot=null;SC.list=null;note('Save file loaded.');syncRefresh();syncDirty('merge')}
+$('sf_exp').onclick=saveExport;$('sf_imp').onclick=()=>$('sf_in').click();
+$('sf_in').onchange=e=>{const f=e.target.files&&e.target.files[0];if(f)saveImport(f);e.target.value=''};
 function syncUI(){const ac=acctAvail(),show=(id,v)=>{const e=$(id);if(e)e.style.display=v?'':'none'};show('sy_lk1',!ac);show('sy_lk2',!ac);$('sy_copy').style.display=ac?'none':'';
  if(ac){const on=acctOn(),u=acctUser();$('sy_on').checked=on;$('sy_box').style.display=on?'block':'none';$('sy_lbl').textContent='Keep saves, records and suits in sync on every device signed in to your account.';
   $('sy_cl').textContent='ACCOUNT';$('sy_code').textContent=u;$('sy_p').textContent='Sign in to '+u+' on another device (Account \u2192 Sign in, with a sign-in code from this one) and your saves follow you there.';
@@ -2609,10 +2676,10 @@ async function syncStart(){syncStop(true);if(!SYNC.on||!SYNC.code||acctOn())retu
  syncStatus('');setTimeout(()=>syncPush(),2500)}
 function syncStop(keep){for(const c of syncCli)try{c.close()}catch(e){}syncCli=[];clearTimeout(syncT);if(!keep)syncUI()}
 // publish the current copy (retained, so the next device to connect gets it)
-async function syncPush(){if(!SYNC.on||!syncKey||!syncCli.length||syncBusy)return;syncBusy=true;try{const m=await syncSeal(syncSnap());
+async function syncPush(){if(SC.list){SC.want=1;return}if(!SYNC.on||!syncKey||!syncCli.length||syncBusy)return;syncBusy=true;try{const sn=syncSnap(),m=await syncSeal(sn);
  for(const c of syncCli)try{const pl=new TextEncoder().encode(JSON.stringify(m)),tp=new TextEncoder().encode(syncTopic),body=new Uint8Array(2+tp.length+pl.length);body.set([tp.length>>8,tp.length&255]);body.set(tp,2);body.set(pl,2+tp.length);c.raw(0x31,body)}catch(e){}
- SYNC.last=Date.now();store.set('sync',SYNC);syncStatus('')}catch(e){syncStatus('Sync failed. It will try again.')}syncBusy=false}
-function syncDirty(k){if(syncApplying||!/^(save_|stats|best|sdel|cfg|merge)/.test(k))return;if(acctOn()){clearTimeout(syncT);syncT=setTimeout(asPush,4000);return}if(!SYNC.on)return;clearTimeout(syncT);syncT=setTimeout(syncPush,k==='merge'?500:4000)}
+ SYNC.last=Date.now();store.set('sync',SYNC);syncBaseFrom(sn.saves);syncStatus('')}catch(e){syncStatus('Sync failed. It will try again.')}syncBusy=false}
+function syncDirty(k){if(syncApplying||!/^(save_|stats|best|sdel|cfg|merge|rst)/.test(k))return;if(acctOn()){clearTimeout(syncT);syncT=setTimeout(asPush,4000);return}if(!SYNC.on)return;clearTimeout(syncT);syncT=setTimeout(syncPush,k==='merge'?500:4000)}
 $('sy_on').onchange=e=>{if(acctAvail()){SYNC.acct=e.target.checked;store.set('sync',SYNC);note(SYNC.acct?'Cloud sync is on for your account.':'Cloud sync is off on this device.');syncWho='';syncRoute();return}if(e.target.checked){if(!SYNC.code)SYNC.code=syncNewCode();SYNC.on=true;note('Cloud sync is on. Your code is '+syncFmt(SYNC.code)+'.')}else{SYNC.on=false;SYNC.code='';syncKey=null;note('Cloud sync is off on this device.')}store.set('sync',SYNC);syncStart();syncUI()};
 $('sy_copy').onclick=()=>{try{navigator.clipboard.writeText(syncFmt(SYNC.code));note('Code copied.')}catch(e){}};
 $('sy_now').onclick=()=>{if(acctOn()){AS.err='';syncStatus('Syncing\u2026');asPull(true);return}if(!syncCli.length)syncStart();else{syncStatus('Syncing…');syncPush()}};
@@ -2630,13 +2697,13 @@ const acctUser=()=>{try{return/^https?:/.test(location.protocol)&&window.c823Acc
 const acctAvail=()=>!!acctUser()&&!AS.fail,acctOn=()=>acctAvail()&&SYNC.acct!==false;
 const asStrip=o=>{const c=Object.assign({},o||{});delete c.t;delete c.dev;return JSON.stringify(c)};
 async function asPull(push){if(!acctOn())return;try{const r=await fetch('/api/save?game=backrooms&pid='+encodeURIComponent(window.c823Account.pid),{cache:'no-store'});
-  if(r.status===501||r.status===403||r.status===404){AS.fail=true;syncRoute();return}if(!r.ok)throw 0;const j=await r.json();AS.rev=j.rev|0;AS.pulled=Date.now();AS.err='';
+  if(r.status===501||(r.status>=400&&r.status<500)){AS.fail=true;console.warn('account sync unavailable: /api/save answered '+r.status);syncRoute();return}if(!r.ok)throw 0;const j=await r.json();if(!j||typeof j.rev!=='number'){AS.fail=true;syncRoute();return}AS.rev=j.rev|0;AS.pulled=Date.now();AS.err='';
   const ch=j.data?syncMerge(j.data):false;SYNC.last=Date.now();store.set('sync',SYNC);if(ch)note('Cloud sync: pulled your saves from your account.');
   if(push&&(!j.data||asStrip(syncSnap())!==asStrip(j.data)))await asPush()}catch(e){AS.err='Can\'t reach the sync server. Your saves are still kept on this device.'}syncUI()}
-async function asPush(keep){if(!acctOn())return;if(AS.busy){AS.again=true;return}AS.busy=true;try{for(let i=0;i<3;i++){const body=JSON.stringify({pid:window.c823Account.pid,game:'backrooms',rev:AS.rev,data:syncSnap()});
+async function asPush(keep){if(!acctOn())return;if(SC.list){SC.want=1;return}if(AS.busy){AS.again=true;return}AS.busy=true;try{for(let i=0;i<3;i++){if(SC.list)break;const sn=syncSnap(),body=JSON.stringify({pid:window.c823Account.pid,game:'backrooms',rev:AS.rev,data:sn});
   const r=await fetch('/api/save',{method:'PUT',headers:{'content-type':'application/json'},body,keepalive:!!keep&&body.length<60000});
-  if(r.status===409){await asPull(false);continue}if(r.status===501||r.status===403){AS.fail=true;break}if(!r.ok)throw 0;
-  AS.rev=(await r.json()).rev|0;SYNC.last=Date.now();store.set('sync',SYNC);AS.err='';break}}catch(e){AS.err='Sync failed. It will try again.'}
+  if(r.status===409){await asPull(false);continue}if(r.status===501||(r.status>=400&&r.status<500)){AS.fail=true;break}if(!r.ok)throw 0;
+  AS.rev=(await r.json()).rev|0;syncBaseFrom(sn.saves);SYNC.last=Date.now();store.set('sync',SYNC);AS.err='';break}}catch(e){AS.err='Sync failed. It will try again.'}
  AS.busy=false;syncUI();if(AS.fail)syncRoute();else if(AS.again){AS.again=false;clearTimeout(syncT);syncT=setTimeout(asPush,1500)}}
 function asStop(){clearInterval(AS.poll);AS.poll=null}
 // pick the sync to run: the account if there is one, otherwise the code (if it's switched on)
