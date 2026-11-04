@@ -4,6 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Dirt &amp; Air</title>
+<meta name="description" content="A stylized 3D downhill MTB and BMX park trick game that runs in your browser.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ffcc29'/%3E%3Cstop offset='1' stop-color='%23ff4d6d'/%3E%3C/linearGradient%3E%3CclipPath id='c'%3E%3Crect width='64' height='64' rx='14'/%3E%3C/clipPath%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Cpath clip-path='url(%23c)' d='M-2 58 Q22 46 66 54 L66 66 L-2 66Z' fill='%231b1626' opacity='.28'/%3E%3Cg stroke='%23fff' stroke-width='3' stroke-linecap='round' opacity='.75'%3E%3Cpath d='M5 22 H14 M3 30 H11 M6 38 H12'/%3E%3C/g%3E%3Cg transform='rotate(-18 33 34)' fill='none' stroke='%231b1626' stroke-width='4.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='19' cy='40' r='9'/%3E%3Ccircle cx='49' cy='40' r='9'/%3E%3Cpath d='M19 40 L31 40 L27 27 Z M27 27 L43 27 L31 40 M43 27 L49 40 M43 27 L41 21 L47 20 M24 25.5 H30'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="favicon-180.png">
+<meta property="og:title" content="Dirt &amp; Air">
+<meta property="og:description" content="Downhill · Park · Tricks. A 3D MTB &amp; BMX trick game in your browser.">
+<meta property="og:image" content="thumbnail.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#ff4d6d">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Rubik:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
@@ -903,7 +913,13 @@ const combo = { list: [], pts: 0, timer: 0, active: false };
 const I = { thr: 0, brk: 0, steer: 0, flip: 0, jump: false, sup: false, noh: false, whip: false, bar: false };
 const BK = () => bike.B;
 const _n = new V3(), _n2 = new V3(), _f = new V3(), _v1 = new V3(), _v2 = new V3(), _v3 = new V3(), _v4 = new V3();
-function worldNormal(x, z, out) { const e = 0.12, h = world.height; return out.set(h(x - e, z) - h(x + e, z), 2 * e, h(x, z - e) - h(x, z + e)).normalize(); }
+// One-sided differences, picking the gentler side, so sharp lips/edges don't produce garbage normals.
+const gentler = (a, b) => Math.abs(a) < Math.abs(b) ? a : b;
+function worldNormal(x, z, out) {
+  const e = 0.12, h = world.height, h0 = h(x, z);
+  const sx = gentler(h(x + e, z) - h0, h0 - h(x - e, z)) / e, sz = gentler(h(x, z + e) - h0, h0 - h(x, z - e)) / e;
+  return out.set(-sx, 1, -sz).normalize();
+}
 
 function resetPlayer(sp) {
   P.pos.set(sp.x, sp.y, sp.z); P.vel.set(0, 0, 0); P.yaw = sp.yaw; P.speed = sp.speed || 0; P.onGround = true; P.crashed = false; P.crashRoll = 0; P.crashW = 0;
@@ -1468,7 +1484,8 @@ applySettings();
 buildMenu();
 $('loading').style.display = 'none';
 state = 'menu'; show('menu');
-window.__game = { P, S, get world() { return world; }, get state() { return state; }, I, startRun };
+// debug/test hook: lets automated tests step the simulation deterministically
+window.__game = { P, S, I, combo, startRun, physStep, bankCombo, setWorld, resetPlayer, get world() { return world; }, get state() { return state; }, set state(v) { state = v; }, get score() { return score; }, get bike() { return bike; } };
 requestAnimationFrame(frame);
 </script>
 </body>
