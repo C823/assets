@@ -724,6 +724,12 @@ p.plan-note{justify-content:flex-start;gap:6px}
 .lb-medal.m1{background:#e7c25a}.lb-medal.m2{background:#c7ccd3}.lb-medal.m3{background:#c98a55}
 .lb-link{background:none;border:none;padding:0;font:inherit;color:var(--text);text-decoration:underline;text-underline-offset:2px;cursor:pointer}
 .lb-link:hover{color:var(--good)}
+.c823-home{position:fixed;top:14px;left:14px;z-index:20;display:flex;align-items:center;justify-content:center;width:48px;height:48px;padding:6px;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid var(--line);transition:background .15s,transform .15s}
+.c823-home:hover{background:rgba(255,255,255,.14);transform:translateY(-1px)}
+.c823-home img{width:100%;height:100%;object-fit:contain}
+.c823-home span{display:none;font:800 13px var(--disp);color:var(--text);letter-spacing:.04em}
+.c823-home.noimg img{display:none}.c823-home.noimg span{display:block}
+@media (max-width:860px){.setup{position:relative;padding-top:58px}.c823-home{position:absolute;top:10px;left:auto;right:12px;width:42px;height:42px}}
 /* Buck's dialog */
 .talk{border-radius:6px;border:1px solid #3a4049;border-top:3px solid var(--text);background:#16191d}
 .talk .portrait{border:2px solid #3a4049;box-shadow:none}
@@ -1702,7 +1708,7 @@ function titleScreen() {
       <span class="cash">${fmtM(d.cash)}</span><span class="blurb">${DIFF_INFO[k].blurb}</span></button>`;
   const styleCard = (coach, ic, title, blurb) => `<button class="choice style ${!!s.coach === coach ? 'on' : ''}" onclick="act.setSetup('coach',${coach})">
       <span class="style-ico">${icon(ic, 26)}</span><span><b>${title}</b><span class="blurb">${blurb}</span></span></button>`;
-  return `<div class="setup"><div class="setup-wrap">
+  return `<div class="setup"><a class="c823-home" href="https://home.c823.workers.dev" title="C823 home: more games" aria-label="C823 home"><img src="https://cdn.jsdelivr.net/gh/C823/assets@main/C823%20logo.png" alt="C823" onerror="this.parentNode.classList.add('noimg')"><span>C823</span></a><div class="setup-wrap">
     <div class="setup-intro">
       <div class="logo-big"><span>GRIDIRON</span><b>TYCOON</b><i class="edition">2026 TEAMS</i></div>
       <p class="setup-pitch">Buy a football team, win on Sundays, and grow your fortune one season at a time. Every team comes with its real 2026 roster.</p>
