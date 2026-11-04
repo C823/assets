@@ -870,6 +870,10 @@ const POS_SAL = { QB: 1.6, RB: 0.8, WR: 1.0, TE: 0.8, OL: 0.9, DL: 1.0, LB: 0.85
 const MAX_ROSTER = 53, SALARY_CAP = 240, SEASON_WEEKS = 17;
 // owners can buy extra cap room for their own team: +$10M per level, up to level 5, paid once
 const CAP_UP = { step: 10, max: 5, cost: [0, 40, 75, 120, 175, 240] };
+// promo codes, stored as hashes so the codes themselves aren't in the page. cash is in $M
+const promoHash = s => { let a = 0x811c9dc5; for (const c of String(s).toLowerCase().trim()) { a ^= c.charCodeAt(0); a = Math.imul(a, 16777619) >>> 0; } return a.toString(36); };
+const PROMOS = { '2goz': { cash: 16000, label: '+$16B net worth' } };
+const PROMO_KEY = 'gridiron_promos_used';
 const capOf = t => SALARY_CAP + ((t && t.capLvl) || 0) * CAP_UP.step;
 const ROUNDS = ['Wild Card', 'Divisional Round', 'Conference Championship', 'Grand Bowl'];
 // the title game is the Super Bowl with real teams, the Grand Bowl in the fictional league
@@ -3244,8 +3248,26 @@ const act = {
       <div class="setting"><div><b>Default game speed</b><div class="xs muted">Starting speed when you watch a game.</div></div><div class="chips">${SPEED_LABELS.map((l, i) => opt('liveSpeed', i, l)).join('')}</div></div>
       <div class="setting"><div><b>Play style</b><div class="xs muted">Head Coach mode lets you call the plays.</div></div><div class="chips"><button class="chip ${!G.coachMode ? 'on' : ''}" onclick="G.coachMode=false;save();act.settings()">Owner</button><button class="chip ${G.coachMode ? 'on' : ''}" onclick="G.coachMode=true;save();act.settings()">Head Coach</button></div></div>
       <div class="setting"><div><b>Save file</b><div class="xs muted">Move your career to another device or browser.</div></div><div class="row"><button class="btn sm" onclick="act.exportSave()">${icon('download', 13)} Export</button><button class="btn sm" onclick="act.importSave()">${icon('upload', 13)} Import</button></div></div>
+      <div class="setting"><div><b>Promo code</b><div class="xs muted">Got a code? Each one works once.</div><div id="promoMsg" class="xs"></div></div><div class="row"><input id="promoIn" class="inp" style="width:160px" maxlength="32" placeholder="Enter code" autocomplete="off" spellcheck="false" onkeydown="event.stopPropagation();if(event.key==='Enter')act.redeemPromo()"><button class="btn sm primary" onclick="act.redeemPromo()">Redeem</button></div></div>
       <div class="setting"><div><b>Keyboard shortcuts</b><div class="xs muted"><kbd>1</kbd>–<kbd>0</kbd> screens · <kbd>G</kbd> play game · <kbd>S</kbd> quick sim · <kbd>B</kbd> call Buck · in-game: <kbd>1</kbd>–<kbd>5</kbd> call plays, <kbd>A</kbd> auto-call, <kbd>E</kbd> sim to end, <kbd>Space</kbd> pause</div></div></div>
       <div class="row mt" style="justify-content:flex-end"><button class="btn primary" onclick="act.closeModal();render()">Done</button></div>`);
+  },
+  redeemPromo() {
+    const inp = document.getElementById('promoIn'), code = (inp && inp.value || '').trim(), out = document.getElementById('promoMsg');
+    const say = (t, ok) => { if (out) { out.textContent = t; out.className = 'xs ' + (ok ? 'good' : 'bad'); } };
+    if (!code) { say('Type a code first.'); return; }
+    const h = promoHash(code), promo = PROMOS[h];
+    if (!promo) { say("That code doesn't work."); return; }
+    // once per player: remembered in the career (follows cloud saves) and on this device (survives new careers)
+    let used = [];
+    try { used = JSON.parse(localStorage.getItem(PROMO_KEY) || '[]') || []; } catch (e) {}
+    G.promos = G.promos || [];
+    if (G.promos.includes(h) || used.includes(h)) { say("You've already used that code."); return; }
+    G.promos.push(h);
+    try { localStorage.setItem(PROMO_KEY, JSON.stringify(used.concat(h))); } catch (e) {}
+    G.cash += promo.cash;
+    news(`Redeemed a promo code: ${promo.label}.`, 'good'); save();
+    inp.value = ''; say(`Redeemed! ${promo.label}.`, true); toast(promo.label, 'good');
   },
   setSetting(k, v) { G.settings = G.settings || {}; G.settings[k] = v; save(); act.settings(); },
   exportSave() {
