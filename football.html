@@ -3552,7 +3552,8 @@ window.addEventListener('beforeunload', e => {
 });
 
 SAVED = peekSave();
-render();
+// a saved career opens straight away; the title screen is still there from the menu (Main menu / New career)
+if (SAVED) act.continueCareer(); else render();
 </script>
 </body>
 </html>
