@@ -574,7 +574,7 @@ body.touch #hbn{bottom:auto;top:70px}
 <div class="mcard"><h4><i>B</i>PLAYERS</h4><div id="mp_list"></div></div>
 <div id="mp_chat" class="mcard"><h4><i>C</i>CHAT</h4><div id="mp_chatlog"></div><div class="chrow"><input id="mp_chatin" type="text" maxlength="120" spellcheck="false" autocomplete="off" placeholder="Say hi to the room"><button class="btng" id="mp_chatgo">SEND</button></div></div></div><div id="mp_saves"></div><button class="btnp" id="mp_start">START NEW GAME</button></div>
 <div class="pfoot"><p id="mp_status"></p><div class="nrow"><button class="btng" id="mp_back">BACK</button></div></div></div>
-<div id="ver">v3.32 &middot; 2026-11-05</div></div>
+<div id="ver">v3.33 &middot; 2026-11-05</div></div>
 <div id="sydlg"><div class="sybox glass"><div class="lbl" id="sy_dk"></div><h3 id="sy_dt"></h3><div id="sy_db"></div><div class="sybtn" id="sy_dbtn"></div></div></div>
 <div id="ov" style="display:none"><div class="ovl"><div class="lbl" id="olbl">GAME PAUSED</div><div id="dkick"></div><h1 id="t">PAUSED</h1><i id="dline"></i><p id="s"></p><div id="dgrid"></div><div id="ostats"></div>
 <div class="obtn"><button id="btn" class="btnp">RESUME</button><button id="m2" class="btng">MAIN MENU</button></div><p id="best"></p>
@@ -1593,7 +1593,7 @@ function pzInteract(){if(!PZ||B||down)return false;const d=PZ.d;
  if(d.t==='col'&&PZ.st&&pzNear(PZ.st.x,PZ.st.z,2.4)){if(hasKey)return false;if(pzCount()<PZ.n){say('It needs '+PZ.n+'. You have '+pzCount()+'.',1600);return true}
   giveKey();netOnKey();say(d.done,3000);sfx({f:660,dur:.15,v:.1});sfx({f:990,dur:.3,v:.1,d:.12});if(PZ.st.o.gw)PZ.st.o.gw.material.color.setHex(0x40ff80);hud();return true}
  if(d.t==='car'&&pzNear(PZ.car.x,PZ.car.z,3)){if(!pzCount()){say('Locked. The key must be around here somewhere.',1600);sfx({n:1,ft:'bandpass',ff:900,q:3,dur:.15,v:.15});return true}
-  if(stt!=='play')return true;giveKey();netOnKey();if(NET.on&&!NET.host){netSend('h',{t:'door',l:level});say('Waiting for the others…',2000);return true}if(NET.on)netNext();else nextLevel();return true}
+  if(stt!=='play')return true;giveKey();netOnKey();if(NET.on&&!NET.host){netEscape();return true}if(NET.on)netNext();else nextLevel();return true}
  return false}
 function pzTick(dt,now){if(!PZ)return;const d=PZ.d;
  if(d.t==='col'||d.t==='car')for(const it of PZ.it){if(it.done)continue;it.o.g.rotation.y+=dt*1.5;it.o.g.position.y=.9+Math.sin(now/350+it.i)*.08;if(pzNear(it.x,it.z,1.4))pzApply(it.i)}
@@ -2228,7 +2228,7 @@ function update(dt){
  const dd=Math.hypot(door.fx-px,door.fz-pz);
  if(hasKey&&dd<6&&!door.snd){door.snd=1;sfx({n:1,ft:'lowpass',ff:600,dur:.25,v:.25,r:.5});sfx({t:'sawtooth',f:90,f2:140,dur:1.1,v:.05,ft:'bandpass',ff:600,q:6,a:.2,r:.6,d:.15})}
  door.open=lerp(door.open,hasKey&&dd<6?1:0,Math.min(1,dt*2.5));door.piv.rotation.y=-door.open*1.45;exitL.intensity=1.2+Math.sin(now/250)*.3+door.open;
- lockT-=dt;if(dd<1.25){if(hasKey&&!(PZ&&PZ.d.t==='car')){if(NET.on){if(NET.host)netNext();else if(!door.sent){door.sent=1;netSend('h',{t:'door',l:level});say('Through the door. Taking everyone with you…',2500)}return}nextLevel();return}if(VZ){if(lockT<=0&&!kpOn){lockT=3;kpOpen()}}else if(PZ&&lockT<=0){lockT=2.4;say(PZ.d.hint,2200);for(let i=0;i<2;i++)sfx({n:1,ft:'bandpass',ff:900,q:2,dur:.08,v:.15,d:i*.12})}else if(lockT<=0){lockT=1.6;say('The door is locked. Find the key.',1400);for(let i=0;i<3;i++)sfx({n:1,ft:'bandpass',ff:1800,q:2,dur:.06,v:.18,r:.3,d:i*.09})}}
+ lockT-=dt;if(dd<1.25){if(hasKey&&!(PZ&&PZ.d.t==='car')){if(NET.on){if(NET.host)netNext();else netEscape();return}nextLevel();return}if(VZ){if(lockT<=0&&!kpOn){lockT=3;kpOpen()}}else if(PZ&&lockT<=0){lockT=2.4;say(PZ.d.hint,2200);for(let i=0;i<2;i++)sfx({n:1,ft:'bandpass',ff:900,q:2,dur:.08,v:.15,d:i*.12})}else if(lockT<=0){lockT=1.6;say('The door is locked. Find the key.',1400);for(let i=0;i<3;i++)sfx({n:1,ft:'bandpass',ff:1800,q:2,dur:.06,v:.18,r:.3,d:i*.09})}}
  // monsters
  let dmin=99,sting=0;chasing=false;vFear=0;
  const chaseSp=Math.min(3+level*.12,4.7+Math.min(1.2,endEx()*.04))*cur.sp*DIFF.ms,wanderSp=(1.6+level*.05)*cur.sp*DIFF.ms,searchSp=(chaseSp+wanderSp)/2,dark=cur.pb===0,seeR=(lit?(dark?15:17):(dark?6:12)*(crouch?.7:1))*DIFF.see,cfx=-Math.sin(yaw),cfz=-Math.cos(yaw);
@@ -2847,8 +2847,14 @@ function hostMsg(id,d){let p=NET.players.get(id);
  else if(d.t==='pick'&&d.l===level){netPick(d.k,d.i);netAll(d,id)}
  else if(d.t==='door'&&d.l===level){if(!hasKey)giveKey();netNext()}}
 function netLobby(){setTimeout(discAd,50);const list=[...NET.players.values()].map(q=>({id:q.id,name:q.name,c:q.c,suit:q.suit}));netAll({t:'lobby',list});if(document.body.classList.contains('mpo'))mpLobbyUI(list)}
-function netKey(who){if(!hasKey){giveKey();sfx({f:880,dur:.5,v:.2,r:.5});sfx({f:1320,dur:.6,v:.15,r:.5,d:.1});say((who||'A teammate')+' found the key! Head for the exit.',3200)}netAll({t:'key',l:level})}
-function netOnKey(){if(!NET.on)return;if(NET.host)netAll({t:'key',l:level});else netSend('h',{t:'key',l:level})}
+function netKey(who){NET.keyL=Math.max(NET.keyL||0,level);if(!hasKey){giveKey();sfx({f:880,dur:.5,v:.2,r:.5});sfx({f:1320,dur:.6,v:.15,r:.5,d:.1});say((who||'A teammate')+' found the key! Head for the exit.',3200)}netAll({t:'key',l:level})}
+// a client that escaped: tell the host now, and again every 2 s (see the lobby check below) until the next level starts
+function netEscape(){if(NET.escL===level)return;NET.escL=level;NET.escT=performance.now();netSend('h',{t:'door',l:level});say('Through the exit. Taking everyone with you…',2500)}
+// lobby check, every second: catch up on a key a teammate found, and keep an escape from getting lost
+setInterval(()=>{if(!NET.on||!NET.started||(stt!=='play'&&stt!=='pause'))return;
+ if(!hasKey&&NET.keyL===level){giveKey();sfx({f:880,dur:.5,v:.2,r:.5});say('A teammate found the key! Head for the exit.',3200)}
+ if(!NET.host&&NET.escL===level&&performance.now()-(NET.escT||0)>2000){NET.escT=performance.now();netSend('h',{t:'door',l:level})}},1000);
+function netOnKey(){if(!NET.on)return;NET.keyL=Math.max(NET.keyL||0,level);if(NET.host)netAll({t:'key',l:level});else netSend('h',{t:'key',l:level})}
 function netOnPick(k,i){if(!NET.on)return;const m={t:'pick',k,i,l:level};if(NET.host)netAll(m);else netSend('h',m)}
 function netPick(k,i){const a=k==='b'?bats:waters;if(a[i])a[i].visible=false}
 function forcePlay(){if(stt==='pause')$('ov').style.display='none';if(stt==='caught'){caught=null;E.fade.style.opacity=0;R.domElement.style.filter='';if(AC)MG.gain.setTargetAtTime(CFG.vol,AC.currentTime,.2)}if(stt!=='loading')stt='play'}
@@ -2878,9 +2884,9 @@ function clientMsg(d){
  else if(d.t==='lobby'){const ids=new Set(d.list.map(q=>q.id));for(const[id,q]of NET.players)if(!ids.has(id)){if(q.A)scene.remove(q.A.g);NET.players.delete(id)}
   for(const l of d.list){const q=NET.players.get(l.id)||{id:l.id};q.name=cleanName(l.name);if(validSuit(l.suit)!==undefined)q.suit=validSuit(l.suit);q.c=l.c;NET.players.set(l.id,q)}if(document.body.classList.contains('mpo'))mpLobbyUI(d.list)}
  else if(d.t==='start')mpStart(d.seed,d.diff,d.level);
- else if(d.t==='ps'){for(const q of d.a){if(q.id===NET.me)continue;const r=NET.players.get(q.id)||{id:q.id};Object.assign(r,q);r.name=cleanName(r.name);NET.players.set(q.id,r)}}
+ else if(d.t==='ps'){if(NET.started&&stt!=='menu'&&(d.L|0)>level)netGoto(d.L|0);if(d.K)NET.keyL=Math.max(NET.keyL||0,d.K|0);for(const q of d.a){if(q.id===NET.me)continue;const r=NET.players.get(q.id)||{id:q.id};Object.assign(r,q);r.name=cleanName(r.name);NET.players.set(q.id,r)}}
  else if(d.t==='m')NET.snap=d;
- else if(d.t==='key'){if(!hasKey&&d.l===level&&stt!=='loading'){giveKey();sfx({f:880,dur:.5,v:.2,r:.5});say('A teammate found the key! Head for the exit.',3200)}}
+ else if(d.t==='key'){NET.keyL=Math.max(NET.keyL||0,d.l|0);if(!hasKey&&d.l===level&&stt!=='loading'){giveKey();sfx({f:880,dur:.5,v:.2,r:.5});say('A teammate found the key! Head for the exit.',3200)}}
  else if(d.t==='pick'&&d.l===level)netPick(d.k,d.i);
  else if(d.t==='caught'){const m=mons[d.i];if(m&&(stt==='play'||stt==='pause')&&!NET.spec&&!A.god)catchPlayer(m)}
  else if(d.t==='next')netGoto(d.l|0);
@@ -2895,14 +2901,14 @@ function netMonsters(dt,now){let dmin=99;const S_=NET.snap;if(!S_||S_.l!==level)
   if(sp>0&&de<28&&!m.k.smiler&&!m.k.moth&&(m.ft-=sp*dt)<=0){m.ft=m.k.quad?.7:st==='chase'?1.3:1.1;monStep(m,de,(st==='chase'?.75:.45)*(m.k.quad?.6:1))}
   if(!m.k.verity||m.vp===3)animMon(m,sp,dt,now)});return dmin}
 function netSpectate(why){NET.spec=true;die(why);stt='play';R.domElement.style.filter='grayscale(1) brightness(.8)';card('SPECTATING','You were taken. You will rejoin on the next level.','','dead')}
-function mpStart(seed,diff,lvl){NET.started=true;NET.goto=lvl||1;setTimeout(discAd,300);if(!NET.host)slot=null;closeSlots();endless=false;thiC={};ach('coop');closeMP();closePlay();openSub(null);CFG.diff=diff;runSeed=seed;perma=false;noMap=false;noWand=false;restart(lvl||1);if((lvl||1)>1)bumpBest();inRun=false;NET.spec=false;NET.snap=null;R.domElement.style.filter='';
+function mpStart(seed,diff,lvl){NET.started=true;NET.goto=lvl||1;NET.keyL=0;NET.escL=0;setTimeout(discAd,300);if(!NET.host)slot=null;closeSlots();endless=false;thiC={};ach('coop');closeMP();closePlay();openSub(null);CFG.diff=diff;runSeed=seed;perma=false;noMap=false;noWand=false;restart(lvl||1);if((lvl||1)>1)bumpBest();inRun=false;NET.spec=false;NET.snap=null;R.domElement.style.filter='';
  if(NET.host)go();else{if(!AC)audio();AC.resume();document.body.classList.remove('menu');$('ov').style.display='none';stt='play';pause('The game has started! Click RESUME to jump in.')}}
 function mpWin(){if(stt==='menu')return;if(NET.host)slotClear();ach('coopwin');stt='loading';sfx({f:523,dur:1.2,v:.15,r:.6});sfx({f:659,dur:1.2,v:.15,r:.6,d:.2});sfx({f:784,dur:1.6,v:.15,r:.6,d:.4});
  card('YOU ESCAPED TOGETHER','Level ? is single-player only, for now.','The end of the co-op run');setTimeout(()=>{netLeave(true);toMenu()},4000)}
 // ---- sending ----
 function myState(){return{x:+px.toFixed(2),z:+pz.toFixed(2),y:+jY.toFixed(2),yaw:+yaw.toFixed(2),lit:flashOn&&bat>0,cr:crouch,noise:netNoise,hd:hid?(hid.exp?2:1):0,dn:down?Math.max(1,Math.ceil(down.t)):0,pr:prot>0?1:0,alive:!NET.spec&&stt!=='over',lives,lvl:level}}
 function netTick(rdt){if(NET.started&&(NET.sendT-=rdt)<=0&&stt!=='menu'){NET.sendT=.066;const s_=myState();
-  if(NET.host){Object.assign(NET.players.get('h'),s_,{name:NET.name});netAll({t:'ps',a:[...NET.players.values()].map(q=>({id:q.id,name:q.name,c:q.c,x:q.x,z:q.z,y:q.y,yaw:q.yaw,lit:q.lit,cr:q.cr,alive:q.alive,lives:q.lives,lvl:q.lvl,hd:q.hd,dn:q.dn,suit:q.suit}))});
+  if(NET.host){Object.assign(NET.players.get('h'),s_,{name:NET.name});netAll({t:'ps',L:level,K:hasKey&&(stt==='play'||stt==='pause')?level:(NET.keyL||0),a:[...NET.players.values()].map(q=>({id:q.id,name:q.name,c:q.c,x:q.x,z:q.z,y:q.y,yaw:q.yaw,lit:q.lit,cr:q.cr,alive:q.alive,lives:q.lives,lvl:q.lvl,hd:q.hd,dn:q.dn,suit:q.suit}))});
    if(stt!=='loading')netAll({t:'m',l:level,a:mons.map(m=>[+m.g.position.x.toFixed(2),+m.g.position.z.toFixed(2),+m.g.rotation.y.toFixed(2),+(m.nsp||0).toFixed(1),m.st==='chase'?2:m.st==='search'?1:0,m.lure?1:0,m.vp|0,m.dead|0])});netCheckOver()}
   else netSend('h',{t:'p',s:s_})}
  netAvatars(rdt)}
