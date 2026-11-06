@@ -274,8 +274,8 @@ body.touch #holdb{display:block}body.hiding #mini,body.hiding #comp,body.hiding 
 #osd{position:absolute;inset:0;pointer-events:none;font:400 clamp(22px,3.6vh,34px) var(--fd);text-shadow:var(--osd)}
 #osd_tr{position:absolute;right:3vw;top:4vh}#osd_br{position:absolute;right:3vw;bottom:4.5vh;text-align:right;line-height:1.05}#osd b{font-weight:400}
 #mp_name.lockd{opacity:.75;cursor:default}
-#mc823{position:absolute;right:3vw;bottom:calc(4.5vh + clamp(64px,9vh,84px));z-index:31;display:grid;place-items:center;width:clamp(44px,7vh,64px);height:clamp(44px,7vh,64px);opacity:.7;transition:opacity .15s,transform .15s;font:400 22px var(--fd);color:var(--ink);text-decoration:none;filter:drop-shadow(0 2px 6px rgba(0,0,0,.8))}
-#mc823 img{width:100%;height:100%;object-fit:contain}#mc823:hover,#mc823:focus-visible{opacity:1;transform:scale(1.06)}body.fsub #mc823{display:none}
+#mph{position:absolute;right:3vw;bottom:calc(4.5vh + clamp(64px,9vh,84px));z-index:31;display:grid;place-items:center;width:clamp(44px,7vh,64px);height:clamp(44px,7vh,64px);opacity:.7;transition:opacity .15s,transform .15s;font:400 22px var(--fd);color:var(--ink);text-decoration:none;filter:drop-shadow(0 2px 6px rgba(0,0,0,.8))}
+#mph img{width:100%;height:100%;object-fit:contain}#mph:hover,#mph:focus-visible{opacity:1;transform:scale(1.06)}body.fsub #mph{display:none}
 #sydlg{position:fixed;inset:0;z-index:45;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.66);animation:fin .2s}
 #sydlg .sybox{width:min(600px,92vw);max-height:88vh;overflow:auto;padding:22px 24px 24px}
 #sydlg h3{font:400 clamp(28px,4.4vh,40px)/1.05 var(--fd);margin:6px 0 10px;color:var(--ink);text-shadow:var(--osd)}
@@ -519,7 +519,7 @@ body.touch #hbn{bottom:auto;top:70px}
 <div id="admpw" class="glass"><b>ADMIN PANEL</b><p>Enter the password to unlock the admin panel. You only need to do this once.</p><input id="pw_in" type="password" maxlength="24" autocomplete="off" spellcheck="false"><div class="r"><button class="btnp" id="pw_ok">UNLOCK</button><button class="btng" id="pw_x">CANCEL</button></div><p id="pw_msg"></p></div>
 <div id="menu">
 <div id="osd"><span id="osd_tr">&#9654; PLAY &nbsp;SP <b id="osd_t">0:00:00</b></span><span id="osd_br"></span><span id="osd_sync"></span><button id="osd_acct" style="display:none" title="Your site account"></button></div>
-<a id="mc823" href="https://powerhouse.c823.workers.dev" target="_top" title="Powerhouse" aria-label="Go to powerhouse.c823.workers.dev"><img alt="Powerhouse" src="https://raw.githubusercontent.com/C823/Powerhouse/main/icons/POWERHOUSE-icon-dark.png" onerror="this.parentNode.textContent='Powerhouse'"></a>
+<a id="mph" href="https://powerhouse.c823.workers.dev" target="_top" title="Powerhouse" aria-label="Go to Powerhouse"><img alt="Powerhouse" src="https://raw.githubusercontent.com/C823/Powerhouse/main/icons/POWERHOUSE-icon-dark.png" onerror="this.parentNode.textContent='PWR'"></a>
 <div id="mlogo"><img alt="Backrooms" src="https://raw.githubusercontent.com/C823/assets/main/backrooms_logo.png" data-alt="assets/backrooms_logo.png|backrooms_logo.png" onload="this.nextSibling.style.display='none'" onerror="if(!imgAlt(this))this.remove()"><span>BACKROOMS<small>ENDLESS</small></span></div>
 <div id="mchip"><span class="lbl">DEEPEST</span><b id="mc_best">1</b><span class="lbl">RUNS</span><b id="mc_runs">0</b></div>
 <nav id="mpanel" class="glass"><button class="mb" data-m="play">PLAY</button><button class="mb" data-m="mp">MULTIPLAYER</button><i class="gap"></i><button class="mb" data-m="how">HOW TO PLAY</button><button class="mb" data-m="enc">ENCYCLOPEDIA</button><button class="mb" data-m="ach">ACHIEVEMENTS</button><button class="mb" data-m="suit">SUIT</button><button class="mb" data-m="fs">FULLSCREEN</button><i class="gap"></i><button class="mb" data-m="set">SETTINGS</button></nav>
@@ -574,7 +574,7 @@ body.touch #hbn{bottom:auto;top:70px}
 <div class="mcard"><h4><i>B</i>PLAYERS</h4><div id="mp_list"></div></div>
 <div id="mp_chat" class="mcard"><h4><i>C</i>CHAT</h4><div id="mp_chatlog"></div><div class="chrow"><input id="mp_chatin" type="text" maxlength="120" spellcheck="false" autocomplete="off" placeholder="Say hi to the room"><button class="btng" id="mp_chatgo">SEND</button></div></div></div><div id="mp_saves"></div><button class="btnp" id="mp_start">START NEW GAME</button></div>
 <div class="pfoot"><p id="mp_status"></p><div class="nrow"><button class="btng" id="mp_back">BACK</button></div></div></div>
-<div id="ver">v3.33 &middot; 2026-11-05</div></div>
+<div id="ver">v3.35 &middot; 2026-11-06</div></div>
 <div id="sydlg"><div class="sybox glass"><div class="lbl" id="sy_dk"></div><h3 id="sy_dt"></h3><div id="sy_db"></div><div class="sybtn" id="sy_dbtn"></div></div></div>
 <div id="ov" style="display:none"><div class="ovl"><div class="lbl" id="olbl">GAME PAUSED</div><div id="dkick"></div><h1 id="t">PAUSED</h1><i id="dline"></i><p id="s"></p><div id="dgrid"></div><div id="ostats"></div>
 <div class="obtn"><button id="btn" class="btnp">RESUME</button><button id="m2" class="btng">MAIN MENU</button></div><p id="best"></p>
@@ -1617,9 +1617,12 @@ const CSK={0:'noclip',1:'car',3:'lift',5:'lift',7:'dive'},
   11:'Verity\'s code opened the door. Behind it: yellow wallpaper, the hum... and something waiting.'};
 let CS=null;
 function csMat(c,b){return b?new THREE.MeshBasicMaterial({color:c}):new THREE.MeshLambertMaterial({color:c})}
+// co-op: a cutscene only plays while the screen draws, so in a background or minimised tab it would never end and the level change would stall.
+// It ends itself there instead (the timers that finish loading still run in the background)
+function csWatch(c){setTimeout(function chk(){if(CS!==c||c.ended)return;if(NET.on&&(document.hidden||performance.now()-lastFrame>1500)){csEnd();return}setTimeout(chk,1000)},1000)}
 function csPlay(kind,cap,done){stt='cut';document.body.classList.add('cut');$('cs_cap').textContent='';$('cs_n').textContent=String(level).padStart(2,'0');$('cs_blk').style.opacity=0;$('cs_tint').style.opacity=0;
  const av=mkSuitBody(CFG.suit,csMat),u=av.userData;av.position.set(px,0,pz);av.rotation.y=yaw+Math.PI;world.add(av);
- CS={kind,cap,done,t:0,dur:kind==='car'?7:6.5,av,u,x0:px,z0:pz,yaw0:yaw,ended:false};
+ CS={kind,cap,done,t:0,dur:kind==='car'?7:6.5,av,u,x0:px,z0:pz,yaw0:yaw,ended:false};csWatch(CS);
  if(kind==='door'||kind==='lift'){// stand back from the door, facing it
   const nx=door.nx,nz=door.nz;CS.sx=door.g.position.x+nx*4;CS.sz=door.g.position.z+nz*4;CS.ex=door.g.position.x-nx*1.4;CS.ez=door.g.position.z-nz*1.4;av.position.set(CS.sx,0,CS.sz);av.rotation.y=Math.atan2(-nx,-nz)}
  if(kind==='car'&&PZ&&PZ.car){av.visible=false;CS.car=PZ.car}else if(kind==='car')CS.kind='door';
@@ -2861,7 +2864,7 @@ function forcePlay(){if(stt==='pause')$('ov').style.display='none';if(stt==='cau
 // clients: go to the lobby's level. Waits out a loading screen or cutscene, then jumps there even if it was behind
 function netGoto(L){NET.goto=Math.max(NET.goto||0,L);const go=()=>{if(!NET.on||level>=NET.goto)return;if(stt==='loading'||stt==='cut'||stt==='menu'){setTimeout(go,400);return}
   if(kpOn)kpClose();invClose();forcePlay();if(stt!=='play'){setTimeout(go,400);return}level=NET.goto-1;nextLevel()};go()}
-function netNext(){if(stt==='loading')return;if(level>=12){netAll({t:'win'});mpWin();return}netAll({t:'next',l:level+1});forcePlay();nextLevel()}
+function netNext(){if(stt==='loading'||stt==='cut'||(NET.leaving===level&&performance.now()-NET.leaveT<20000))return;NET.leaving=level;NET.leaveT=performance.now();if(level>=12){netAll({t:'win'});mpWin();return}netAll({t:'next',l:level+1});forcePlay();nextLevel()}
 // the nearest living player (you or a teammate) is who each monster goes after
 function netTarget(m,HP,dark){const gx=m.g.position.x,gz=m.g.position.z;let best=NET.spec||down?null:HP,bd=NET.spec||down?1e9:Math.hypot(HP.px-gx,HP.pz-gz);
  for(const r of NET.players.values()){if(r.id==='h'||!r.alive||r.dn||r.lvl!==level||!r.dmap)continue;const d=Math.hypot(r.x-gx,r.z-gz);if(d>=bd)continue;bd=d;
@@ -2901,7 +2904,7 @@ function netMonsters(dt,now){let dmin=99;const S_=NET.snap;if(!S_||S_.l!==level)
   if(sp>0&&de<28&&!m.k.smiler&&!m.k.moth&&(m.ft-=sp*dt)<=0){m.ft=m.k.quad?.7:st==='chase'?1.3:1.1;monStep(m,de,(st==='chase'?.75:.45)*(m.k.quad?.6:1))}
   if(!m.k.verity||m.vp===3)animMon(m,sp,dt,now)});return dmin}
 function netSpectate(why){NET.spec=true;die(why);stt='play';R.domElement.style.filter='grayscale(1) brightness(.8)';card('SPECTATING','You were taken. You will rejoin on the next level.','','dead')}
-function mpStart(seed,diff,lvl){NET.started=true;NET.goto=lvl||1;NET.keyL=0;NET.escL=0;setTimeout(discAd,300);if(!NET.host)slot=null;closeSlots();endless=false;thiC={};ach('coop');closeMP();closePlay();openSub(null);CFG.diff=diff;runSeed=seed;perma=false;noMap=false;noWand=false;restart(lvl||1);if((lvl||1)>1)bumpBest();inRun=false;NET.spec=false;NET.snap=null;R.domElement.style.filter='';
+function mpStart(seed,diff,lvl){NET.started=true;NET.goto=lvl||1;NET.keyL=0;NET.escL=0;NET.leaving=0;setTimeout(discAd,300);if(!NET.host)slot=null;closeSlots();endless=false;thiC={};ach('coop');closeMP();closePlay();openSub(null);CFG.diff=diff;runSeed=seed;perma=false;noMap=false;noWand=false;restart(lvl||1);if((lvl||1)>1)bumpBest();inRun=false;NET.spec=false;NET.snap=null;R.domElement.style.filter='';
  if(NET.host)go();else{if(!AC)audio();AC.resume();document.body.classList.remove('menu');$('ov').style.display='none';stt='play';pause('The game has started! Click RESUME to jump in.')}}
 function mpWin(){if(stt==='menu')return;if(NET.host)slotClear();ach('coopwin');stt='loading';sfx({f:523,dur:1.2,v:.15,r:.6});sfx({f:659,dur:1.2,v:.15,r:.6,d:.2});sfx({f:784,dur:1.6,v:.15,r:.6,d:.4});
  card('YOU ESCAPED TOGETHER','Level ? is single-player only, for now.','The end of the co-op run');setTimeout(()=>{netLeave(true);toMenu()},4000)}
@@ -3289,7 +3292,7 @@ function renderMap(g,W,full){const fx=px/T,fz=pz/T;g.setTransform(1,0,0,1,0,0);g
 function drawMap(){renderMap(mc,512,true)}
 function drawMini(){renderMap(mnc,170,false)}
 const gc=$('grain').getContext('2d'),gi=gc.createImageData(160,90),_c=new THREE.Color();let gf=0,frames=0,fAcc=0;
-function loop(){requestAnimationFrame(loop);const rdt=clock.getDelta(),dt=Math.min(rdt,.05);
+let lastFrame=0;function loop(){requestAnimationFrame(loop);lastFrame=performance.now();const rdt=clock.getDelta(),dt=Math.min(rdt,.05);
  if((stt==='play'||(stt==='pause'&&NET.on&&NET.started))&&!A.open){update(dt);mapF++;if(mapOn){if(mapF%2===0)drawMap()}else if(!noMap&&mapF%3===0&&stt==='play')drawMini()}else if(stt==='caught')updCaught(dt);else if(stt==='cut')csTick(dt);else if(stt==='menu'&&world)menuCam(dt);
  flickT-=dt;if(flickT<=0){flickT=.04+rnd()*.18;const dip=rnd()<.035+cur.fk+lvl*.4;fL=dip?.12+rnd()*.2:1;
   if(panelMesh){panelMesh.material.color.setHex(cur.pc).multiplyScalar(fL*Math.min(1.3,cur.pb*1.15));let ch=false;panelSt.forEach((s,i)=>{if(s===2){panelMesh.setColorAt(i,_c.setScalar(rnd()<.5?.06:1));ch=true}});if(ch)panelMesh.instanceColor.needsUpdate=true}
