@@ -873,14 +873,13 @@ const POS_NAME = { QB: 'Quarterback', RB: 'Running Back', WR: 'Wide Receiver', T
 const STARTERS = { QB: 1, RB: 1, WR: 3, TE: 1, OL: 5, DL: 4, LB: 3, CB: 2, S: 2, K: 1 };
 const ROSTER_GEN = { QB: 3, RB: 3, WR: 6, TE: 3, OL: 8, DL: 7, LB: 5, CB: 5, S: 3, K: 1 };
 const POS_SAL = { QB: 1.6, RB: 0.8, WR: 1.0, TE: 0.8, OL: 0.9, DL: 1.0, LB: 0.85, CB: 0.95, S: 0.8, K: 0.35 };
-const MAX_ROSTER = 53, SALARY_CAP = 240, SEASON_WEEKS = 17;
-// owners can buy extra cap room for their own team: +$10M per level, up to level 5, paid once
-const CAP_UP = { step: 10, max: 5, cost: [0, 40, 75, 120, 175, 240] };
+const MAX_ROSTER = 53, SEASON_WEEKS = 17;
 // promo codes, stored as hashes so the codes themselves aren't in the page. cash is in $M
 const promoHash = s => { let a = 0x811c9dc5; for (const c of String(s).toLowerCase().trim()) { a ^= c.charCodeAt(0); a = Math.imul(a, 16777619) >>> 0; } return a.toString(36); };
 const PROMOS = { '2goz': { cash: 16000, label: '+$16B net worth' } };
 const PROMO_KEY = 'gridiron_promos_used';
-const capOf = t => SALARY_CAP + ((t && t.capLvl) || 0) * CAP_UP.step;
+// there's no salary cap: teams can spend as much as they like on players (salaries still come out of cash)
+const capOf = () => Infinity;
 const ROUNDS = ['Wild Card', 'Divisional Round', 'Conference Championship', 'Grand Bowl'];
 // the title game is the Super Bowl with real teams, the Grand Bowl in the fictional league
 const bowl = () => G && G.real ? 'Super Bowl' : 'Grand Bowl';
@@ -1942,8 +1941,8 @@ function outlookHtml(t) {
     ${up.length ? `<div class="ol-row"><span class="muted">Coming up</span><span class="ol-games">${up.map(g => { const o = team(g.h === t.id ? g.a : g.h); return `<span title="${o.city} ${o.name} (${recStr(o)}, ${units(o).ovr} OVR)">${g.h === t.id ? 'vs' : '@'} ${badge(o, 18)} ${o.abbr}</span>`; }).join('')}</span></div>` : ''}
     <div class="ol-row"><span class="muted">Season profit</span><b class="${seasonNet() >= 0 ? 'good' : 'bad'}">${fmtM(seasonNet())}</b></div>
     <div class="ol-row"><span class="muted" title="Fans get happier when you win and when tickets are fairly priced. Happy fans spend more.">Fan mood</span><span class="ol-bar"><span class="bar"><i style="width:${t.mood}%"></i></span><b>${t.mood}</b></span></div>
-    <div class="ol-row"><span class="muted" title="Total player salaries. You can't sign anyone who would push you over the cap.">Payroll</span><span class="ol-bar"><span class="bar"><i style="width:${Math.min(100, payroll(t) / capOf(t) * 100)}%"></i></span><b>${fmtM(payroll(t))}</b></span></div>
-    <p class="xs dim" style="margin:8px 0 0">${fmtM(capOf(t) - payroll(t))} of cap space left.</p></div>`;
+    <div class="ol-row"><span class="muted" title="Total player salaries per year, compared with the biggest payroll in the league. There's no salary cap, but salaries come out of your cash.">Payroll</span><span class="ol-bar"><span class="bar"><i style="width:${Math.min(100, payroll(t) / Math.max(...G.teams.map(payroll)) * 100)}%"></i></span><b>${fmtM(payroll(t))}</b></span></div>
+    <p class="xs dim" style="margin:8px 0 0">No salary cap. Salaries come out of your cash each week.</p></div>`;
 }
 function strengthHtml(t) {
   const gr = groupRanks(t);
@@ -2063,7 +2062,7 @@ function executeTrade(partner, give, get) {
   news(`Trade with the ${a.city} ${a.name}: sent ${give.map(assetName).join(', ') || 'nothing'}; received ${get.map(assetName).join(', ') || 'nothing'}.`, 'gold');
   G.offers = (G.offers || []).filter(o => o.team !== partner);
   UI.odds = null; UI._slots = null;
-  mentor('firstTrade', ['Your first trade! Now you are a real general manager.', 'Remember: players you trade for keep their contracts. Watch the salary cap, and never give away a young star for an old one.']);
+  mentor('firstTrade', ['Your first trade! Now you are a real general manager.', 'Remember: players you trade for keep their contracts. Watch your payroll, and never give away a young star for an old one.']);
 }
 // cheapest set of the user's assets that would get the AI to yes; null if it can't be done
 function counterOffer(give, get, partner) {
@@ -2146,7 +2145,7 @@ function viewTrades() {
     <div class="row wrap" style="gap:12px">
       <label class="sm muted" for="trPartner">Trade with</label>
       <select id="trPartner" class="inp tr-sel" onchange="act.trPartner(+this.value)">${others.map(t => `<option value="${t.id}" ${t.id === a.id ? 'selected' : ''}>${t.city} ${t.name} (${recStr(t)}, OVR ${units(t).ovr})</option>`).join('')}</select>
-      ${badge(a, 30)}<span class="xs muted">Cap space ${fmtM(capOf(a) - payroll(a))} · Roster ${a.roster.length}/${MAX_ROSTER}</span>
+      ${badge(a, 30)}<span class="xs muted">Payroll ${fmtM(payroll(a))} · Roster ${a.roster.length}/${MAX_ROSTER}</span>
     </div>
     <div class="tr-summary">
       <div><div class="xs muted">You send</div><b>${give.length ? give.map(x => esc(assetName(x))).join(', ') : '—'}</b></div>
@@ -2162,7 +2161,7 @@ function viewTrades() {
     </div>
   </div>
   <div class="grid2 tr-cols">
-    <div class="card">${ch('users', 'Your team sends', `<span class="xs muted">${fmtM(capOf(u) - payroll(u))} cap space</span>`)}${posFilter('give')}<div class="tr-list">${tradeAssetRows(u, 'give', T.give)}</div><h3 class="h mt">Your draft picks</h3><div class="chips">${tradePickChips(G.user, 'give', T.give)}</div></div>
+    <div class="card">${ch('users', 'Your team sends', `<span class="xs muted">Payroll ${fmtM(payroll(u))}</span>`)}${posFilter('give')}<div class="tr-list">${tradeAssetRows(u, 'give', T.give)}</div><h3 class="h mt">Your draft picks</h3><div class="chips">${tradePickChips(G.user, 'give', T.give)}</div></div>
     <div class="card">${ch('users', `${esc(a.name)} send`, badge(a, 24))}${posFilter('get')}<div class="tr-list">${tradeAssetRows(a, 'get', T.get)}</div><h3 class="h mt">Their draft picks</h3><div class="chips">${tradePickChips(a.id, 'get', T.get)}</div></div>
   </div>`;
 }
@@ -2396,7 +2395,7 @@ function viewRoster() {
   const tips = { ovr: 'Overall rating, 40 to 99. Higher is better.', pot: 'Potential grade: how good he could become. Young players with A or B potential keep improving.', years: 'Years left on his contract', salary: 'Salary per season' };
   const th = (k, l, c = '') => `<th class="sort ${c} ${rs.k === k ? 'sorted' : ''}" onclick="act.sortRoster('${k}')" ${tips[k] ? `title="${tips[k]}"` : ''}>${l}${rs.k === k ? (rs.d > 0 ? ' ▲' : ' ▼') : ''}</th>`;
   const inj = t.roster.filter(p => p.inj > 0).length;
-  return `${pageHead('users', 'Roster', `${t.roster.length}/${MAX_ROSTER} players · Payroll ${fmtM(payroll(t))} of ${fmtM(capOf(t))} · ${inj ? `<span class="bad">${inj} injured</span> · ` : ''}Best healthy players start automatically (★)`)}
+  return `${pageHead('users', 'Roster', `${t.roster.length}/${MAX_ROSTER} players · Payroll ${fmtM(payroll(t))}/yr · ${inj ? `<span class="bad">${inj} injured</span> · ` : ''}Best healthy players start automatically (★)`)}
   ${groupStrip(t)}
   <p class="xs dim" style="margin:-4px 0 12px">Each tile shows how good your starters are at that position and where that ranks in the league. Red means it's one of the league's weakest; click a tile to see those players.</p>
   <div class="card" style="padding:6px"><div class="tbl-wrap"><table class="tbl">
@@ -2492,7 +2491,7 @@ function viewFinances() {
     ${kpi('trend', 'Team value', fmtM(value))}
     ${kpi('star', 'Net worth', fmtM(G.cash + value), 'gold')}
     ${kpi('chart', 'Season profit', fmtM(seasonNet()), seasonNet() >= 0 ? 'good' : 'bad')}
-    ${kpi('users', 'Payroll', fmtM(payroll(t)), '', `<div class="xs muted">of ${fmtM(capOf(t))} cap</div>`)}
+    ${kpi('users', 'Payroll', fmtM(payroll(t)), '', `<div class="xs muted">per year · no salary cap</div>`)}
   </div>
   <div class="grid2">
     <div class="card">${ch('ticket', 'Ticket price', `<button class="btn sm" onclick="act.fairTicket()">${icon('target', 13)} Set to fair price</button>`)}
@@ -2517,21 +2516,14 @@ function viewFinances() {
 /* ---- Facilities ---- */
 function viewFacilities() {
   const t = userTeam();
-  return `${pageHead('building', 'Facilities', 'Upgrades take effect immediately. Each building level adds $0.3M/week in upkeep. Salary cap upgrades have no upkeep.', `<div class="kpi"><label>${icon('wallet', 12)} Cash</label><b class="${G.cash < 0 ? 'bad' : 'good'}">${fmtM(G.cash)}</b></div>`)}
+  return `${pageHead('building', 'Facilities', 'Upgrades take effect immediately. Each level adds $0.3M/week in upkeep.', `<div class="kpi"><label>${icon('wallet', 12)} Cash</label><b class="${G.cash < 0 ? 'bad' : 'good'}">${fmtM(G.cash)}</b></div>`)}
   <div class="grid">${Object.entries(FAC).map(([k, f]) => {
     const l = t[k], cost = f.cost[l + 1];
     return `<div class="card fac"><div class="row"><div class="fac-ico">${icon(FAC_ICON[k], 26)}</div><div><h2 class="h" style="margin:0">${f.name}</h2><div class="pips" style="margin-top:8px">${[1, 2, 3, 4, 5].map(i => `<i class="${i <= l ? 'on' : ''}"></i>`).join('')}</div></div><b style="margin-left:auto;font-size:24px;font-family:var(--disp)">Lv ${l}</b></div>
       <p class="sm muted" style="margin:0">${f.desc(l)}</p>
       ${l < 5 ? `<div class="sm row" style="gap:6px;align-items:flex-start"><span class="good">${icon('arrowUp', 14)}</span><span><span class="dim">Next level:</span> ${f.desc(l + 1)}</span></div><button class="btn primary" ${G.cash < cost ? 'disabled' : ''} onclick="act.upgrade('${k}')">${icon('arrowUp', 15)} Upgrade to Lv ${l + 1} · ${fmtM(cost)}</button>` : `<b class="gold row" style="gap:6px">${icon('star', 15)} Maxed out</b>`}
     </div>`;
-  }).join('')}${capCard(t)}</div>`;
-}
-function capCard(t) {
-  const l = t.capLvl || 0, cost = CAP_UP.cost[l + 1], space = capOf(t) - payroll(t);
-  return `<div class="card fac"><div class="row"><div class="fac-ico">${icon('dollar', 26)}</div><div><h2 class="h" style="margin:0">Salary Cap</h2><div class="pips" style="margin-top:8px">${[1, 2, 3, 4, 5].map(i => `<i class="${i <= l ? 'on' : ''}"></i>`).join('')}</div></div><b style="margin-left:auto;font-size:24px;font-family:var(--disp)">${fmtM(capOf(t))}</b></div>
-    <p class="sm muted" style="margin:0">How much you can spend on player salaries. You have ${fmtM(space)} of room left. Extra cap room is paid once and lasts for good. It only applies to your team.</p>
-    ${l < CAP_UP.max ? `<div class="sm row" style="gap:6px;align-items:flex-start"><span class="good">${icon('arrowUp', 14)}</span><span><span class="dim">Next level:</span> cap goes to ${fmtM(capOf(t) + CAP_UP.step)}.</span></div><button class="btn primary" ${G.cash < cost ? 'disabled' : ''} onclick="act.upgradeCap()">${icon('arrowUp', 15)} Raise cap by ${fmtM(CAP_UP.step)} · ${fmtM(cost)}</button>` : `<b class="gold row" style="gap:6px">${icon('star', 15)} Maxed out</b>`}
-  </div>`;
+  }).join('')}</div>`;
 }
 
 /* ---- Free agents ---- */
@@ -2545,7 +2537,7 @@ function viewFA() {
   const sorters = { fit: (a, b) => gain(b) - gain(a) || b.ovr - a.ovr, ovr: (a, b) => b.ovr - a.ovr, pot: (a, b) => b.pot - a.pot || b.ovr - a.ovr, cost: (a, b) => salaryFor(a) - salaryFor(b) || b.ovr - a.ovr };
   list.sort(sorters[sortBy]); list = list.slice(0, 80);
   const open = G.phase !== 'draft';
-  return `${pageHead('userPlus', 'Free Agents', `Cap space <b class="${space >= 0 ? 'good' : 'bad'}">${fmtM(space)}</b> · Roster ${t.roster.length}/${MAX_ROSTER}${open ? '' : ' · Signings are paused during the draft'}`)}
+  return `${pageHead('userPlus', 'Free Agents', `Payroll <b>${fmtM(payroll(t))}/yr</b> · Cash <b class="${G.cash >= 0 ? 'good' : 'bad'}">${fmtM(G.cash)}</b> · Roster ${t.roster.length}/${MAX_ROSTER}${open ? '' : ' · Signings are paused during the draft'}`)}
   <div class="row wrap between">${posChips(UI.ff, 'UI.ff', posCounts(t))}<button class="chip ${UI.faAff ? 'on' : ''} mb" onclick="UI.faAff=!UI.faAff;render()">${icon('wallet', 12)} Only affordable</button></div>
   <div class="row wrap mb" style="gap:8px"><span class="sm muted">Sort by</span><div class="chips">${[['fit', 'Best fit for you'], ['ovr', 'Rating'], ['pot', 'Potential'], ['cost', 'Cheapest']].map(([k, l]) => `<button class="chip ${sortBy === k ? 'on' : ''}" onclick="UI.faSort='${k}';render()">${l}</button>`).join('')}</div></div>
   ${t.roster.length >= MAX_ROSTER ? `<div class="plan-note sm bad"><span>Your roster is full (${MAX_ROSTER}/${MAX_ROSTER}). Cut a backup on the Roster screen before you can sign anyone.</span><button class="btn sm" onclick="act.nav('roster')">Roster</button></div>` : ''}
@@ -3162,7 +3154,7 @@ function mentorDraft() {
   mentor('draft', ['Draft day! My favorite day of the year. Better than Christmas.', `Those ratings are estimates. Your scouts are only accurate to about ±${SCOUT_ERR[userTeam().scouting]} points. A kid listed at 70 might really be a 60, or an 80.`, 'Potential matters. A kid with an A grade can turn into a superstar with good coaching.']);
 }
 function mentorFA() {
-  mentor('fa', ['Free agency. The shopping mall of football.', 'Veterans cost more than rookies, but they can help you win right now. Just mind the salary cap.', "When you're done shopping, start the new season from Home. Whoever's left signs with other teams."]);
+  mentor('fa', ['Free agency. The shopping mall of football.', 'Veterans cost more than rookies, but they can help you win right now. Just mind your payroll: salaries come out of your cash.', "When you're done shopping, start the new season from Home. Whoever's left signs with other teams."]);
 }
 function mentorTip() {
   const t = userTeam(), u = units(t), d = depth(t);
@@ -3175,7 +3167,6 @@ function mentorTip() {
   if (G.phase === 'fa') return 'Free agency is where you plug holes. Look for the best rating per dollar, not the biggest name.';
   if (t.ticket > fairPrice(t) * 1.3) return `Fans are grumbling about $${t.ticket} tickets. Fair price is around $${fairPrice(t)}. Greed empties seats.`;
   if (injured.length) return `${injured[0].pos} ${fullName(injured[0])} is hurt. Check free agency for a fill-in if the backup can't cut it.`;
-  if (payroll(t) > capOf(t) * 0.95) return "You're right up against the salary cap. No room to sign anybody until some contracts come off the books, unless you buy more cap room in Facilities.";
   if (t.mood < 35) return 'Fans are miserable. Win some games, or at least drop ticket prices to keep the seats full.';
   if ((d.QB[0] ? d.QB[0].ovr : 0) < u.ovr - 3) return "Your quarterback is the weak link. In this league, you don't win without a gunslinger.";
   if (stad && G.cash > stad * 1.6) return `You've got ${fmtM(G.cash)} just sitting there. A stadium upgrade pays for itself in ticket sales.`;
@@ -3350,7 +3341,7 @@ const act = {
       <ol style="padding-left:18px;line-height:1.7;margin:0">
         <li><b>Play each week.</b> Watch, coach or quick-sim your game from Home. Win to make fans happy.</li>
         <li><b>Make money.</b> Revenue comes from tickets (home games), merch, sponsors and TV. Payroll and upkeep are your costs. Happy fans spend more.</li>
-        <li><b>Improve the roster.</b> Train players, sign free agents, draft prospects and trade with other teams (until the Week ${TRADE_DEADLINE} deadline). Stay under the ${fmtM(capOf(userTeam()))} salary cap.</li>
+        <li><b>Improve the roster.</b> Train players, sign free agents, draft prospects and trade with other teams (until the Week ${TRADE_DEADLINE} deadline). There's no salary cap, but every salary comes out of your cash.</li>
         <li><b>Upgrade facilities.</b> A bigger stadium earns more. Training grows young players. Medical prevents injuries. Scouting improves draft intel.</li>
         <li><b>Make the playoffs.</b> The top 7 teams in each conference get in. Win 4 rounds to take the ${bowl()}.</li>
         <li><b>Grow your net worth.</b> Cash plus team value. You can sell your team any time and buy another.</li>
@@ -3363,7 +3354,7 @@ const act = {
         <div><b>Fit</b><span>In free agency: how a player compares with your weakest starter at his position.</span></div>
         <div><b>Rank</b><span>Where each of your position groups ranks out of 32 teams. Red = bottom of the league.</span></div>
         <div><b>Fan mood</b><span>Rises with wins, falls with losses and overpriced tickets. Happy fans spend more.</span></div>
-        <div><b>Cap</b><span>Total salary can't go over ${fmtM(capOf(userTeam()))}. Cap space is what you have left to sign players.</span></div>
+        <div><b>Payroll</b><span>What you pay your players each year. There's no salary cap, so you can sign anyone, as long as you can pay them.</span></div>
         <div><b>Team value</b><span>What your team would sell for. Grows with winning, fans, market size and stadium.</span></div>
       </div>
       <div class="row mt" style="justify-content:flex-end"><button class="btn primary" onclick="act.closeModal()">Got it</button></div>`);
@@ -3484,14 +3475,6 @@ const act = {
     confirmModal(`Sign ${fullName(p)}?`, `${p.pos} · ${p.ovr} OVR · age ${p.age}<br>Contract: <b>${yrs} year(s) at ${fmtM(ask)}/yr</b>`, 'Sign player', () => {
       G.fa = G.fa.filter(x => x !== p); p.salary = ask; p.years = yrs; p.stats = p.stats || blankStats(); t.roster.push(p);
       news(`Signed ${p.pos} ${fullName(p)} (${p.ovr} OVR): ${yrs} yr, ${fmtM(ask)}/yr.`, 'good'); save(); render();
-    });
-  },
-  upgradeCap() {
-    const t = userTeam(), l = t.capLvl || 0, cost = CAP_UP.cost[l + 1];
-    if (l >= CAP_UP.max || G.cash < cost) return;
-    confirmModal('Raise your salary cap?', `Your cap goes from <b>${fmtM(capOf(t))}</b> to <b>${fmtM(capOf(t) + CAP_UP.step)}</b> for a one-time <b>${fmtM(cost)}</b>.`, 'Raise cap', () => {
-      addFin('invest', -cost); t.capLvl = l + 1;
-      news(`Raised the salary cap to ${fmtM(capOf(t))}.`, 'good'); save(); render();
     });
   },
   upgrade(k) {
