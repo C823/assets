@@ -628,11 +628,12 @@ body.menu #objective348,body.hubmode #objective348,body.cut #objective348{displa
 <div class="mcard"><h4><i>B</i>PLAYERS</h4><div id="mp_list"></div></div>
 <div id="mp_chat" class="mcard"><h4><i>C</i>CHAT</h4><div id="mp_chatlog"></div><div class="chrow"><input id="mp_chatin" type="text" maxlength="120" spellcheck="false" autocomplete="off" placeholder="Say hi to the room"><button class="btng" id="mp_chatgo">SEND</button></div></div></div><div id="mp_saves"></div><button class="btnp" id="mp_start">START NEW GAME</button></div>
 <div class="pfoot"><p id="mp_status"></p><div class="nrow"><button class="btng" id="mp_back">BACK</button></div></div></div>
-<button id="ver" type="button" aria-haspopup="dialog" aria-controls="patchnotes" title="View patch notes">v3.51 &middot; 2026-11-09 <span aria-hidden="true">[PATCH NOTES]</span></button></div>
+<button id="ver" type="button" aria-haspopup="dialog" aria-controls="patchnotes" title="View patch notes">v3.52 &middot; 2026-11-09 <span aria-hidden="true">[PATCH NOTES]</span></button></div>
 <div id="patchnotes" role="dialog" aria-modal="true" aria-labelledby="patchtitle" aria-hidden="true">
  <div id="patchbox">
-  <div id="patchhead"><h2 id="patchtitle">PATCH NOTES <span style="color:var(--hi)">v3.51</span></h2><button id="patchclose" type="button" aria-label="Close patch notes">X CLOSE</button></div>
+  <div id="patchhead"><h2 id="patchtitle">PATCH NOTES <span style="color:var(--hi)">v3.52</span></h2><button id="patchclose" type="button" aria-label="Close patch notes">X CLOSE</button></div>
   <div id="patchbody">
+   <section class="patchentry"><h3>v3.52 <time datetime="2026-11-09">NOV 09, 2026</time></h3><ul><li>Fixed collision on parked cars and office desks: the player now collides with their visible footprint instead of an entire floor tile.</li><li>Collision boxes follow furniture rotation; desk chairs have their own small hitbox.</li><li>Preserved enemy pathfinding and other solid obstacles while allowing movement around furniture edges.</li></ul></section>
    <section class="patchentry"><h3>v3.51 <time datetime="2026-11-09">NOV 09, 2026</time></h3><ul><li>Chapter 2 environments now resemble long-abandoned industrial test facilities, with decayed concrete, damaged panels and exposed equipment.</li><li>Procedural vegetation, hanging vines, moss-covered floors, ruined ceiling panels, rubble and suspended cables vary by level.</li><li>Retuned several Chapter 2 color palettes for a more desolate, green-overgrown atmosphere while preserving puzzle and AI paths.</li></ul></section>
    <section class="patchentry"><h3>v3.50 <time datetime="2026-11-09">NOV 09, 2026</time></h3><ul><li>Rebuilt the Toethesis skin with a more authentic hockey-player silhouette.</li><li>Improved the helmet and metal face cage, widened the shoulder pads, added hockey pants, striped socks, gloves, and more realistic skates.</li><li>Refined the hockey stick shape and added front and back jersey numbers so the skin reads more clearly in portraits and third-person view.</li></ul></section>
    <section class="patchentry"><h3>v3.49 <time datetime="2026-11-09">NOV 09, 2026</time></h3><ul><li>Added Toethesis, a hockey-player suit with helmet, jersey, padded gear, skates and hockey stick.</li><li>Opening either admin panel permanently unlocks the Toethesis skin in the Suit menu.</li><li>Renamed the original Racer suit to C823 (its existing model and unlock conditions remain intact).</li><li>Chapter 2's final boss is now Toethesis, with a hockey-player model, updated dialogue and boss presentation.</li></ul></section>
@@ -802,7 +803,32 @@ function mkLM(pts,pst){const px=Math.min(16,Math.floor(1024/S)),N=S*px,c=cv(N),g
  const m=cv(N),mg=m.getContext('2d');mg.fillStyle='#fff';mg.fillRect(0,0,N,N);for(let y=0;y<S;y++)for(let x=0;x<S;x++)if(w[y][x]){mg.fillStyle=w[y][x]===1?'#666':'#aaa';mg.fillRect(x*px,y*px,px,px)}
  g.filter='blur('+Math.round(px*.5)+'px)';g.drawImage(m,0,0);g.filter='none';g.globalCompositeOperation='source-over';
  const t=new THREE.CanvasTexture(c);t.flipY=false;t.generateMipmaps=false;t.minFilter=THREE.LinearFilter;return t}
-function mkProp(t,M,pg,eg){const c=new THREE.Color(),m=new THREE.Matrix4(),B=(a,h,d,col,x,y,z,e,geo)=>{m.makeScale(a,h,d).setPosition(x,y,z).premultiply(M);(e?eg:pg).add(geo||UB,m,c.setHex(col))};
+// v3.52: precise furniture hitboxes rather than making a full 3m floor tile solid.
+// The map keeps tile 2 for enemy navigation, while the player's collision uses
+// the visible prop's actual footprint (including its orientation).
+let furnitureCollision=new Map();
+function registerFurniture(t,M){
+ if(t!=='car'&&t!=='desk')return;
+ const e=M.elements,x=e[12],z=e[14],tx=Math.floor(x/T),tz=Math.floor(z/T);
+ const o={x,z,ux:e[0],uz:e[2],vx:e[8],vz:e[10],parts:t==='car'?[[0,0,.85,1.40]]:[[0,0,1.01,.71],[0,.77,.27,.34]]};
+ const key=tz*S+tx;if(!furnitureCollision.has(key))furnitureCollision.set(key,[]);
+ furnitureCollision.get(key).push(o);
+}
+function touchesFurniture(x,z,radius){
+ const tx=Math.floor(x/T),tz=Math.floor(z/T);
+ for(let dz=-1;dz<=1;dz++)for(let dx=-1;dx<=1;dx++){
+  const items=furnitureCollision.get((tz+dz)*S+tx+dx);if(!items)continue;
+  for(const o of items){
+   const rx=x-o.x,rz=z-o.z,lx=rx*o.ux+rz*o.uz,lz=rx*o.vx+rz*o.vz;
+   for(const[cx,cz,hx,hz]of o.parts){
+    const qx=Math.max(Math.abs(lx-cx)-hx,0),qz=Math.max(Math.abs(lz-cz)-hz,0);
+    if(qx*qx+qz*qz<radius*radius)return true;
+   }
+  }
+ }
+ return false;
+}
+function mkProp(t,M,pg,eg){registerFurniture(t,M);const c=new THREE.Color(),m=new THREE.Matrix4(),B=(a,h,d,col,x,y,z,e,geo)=>{m.makeScale(a,h,d).setPosition(x,y,z).premultiply(M);(e?eg:pg).add(geo||UB,m,c.setHex(col))};
  if(t==='car'){const k=[0x7a1a1a,0x1a2a4a,0x555555,0x2a4a2a][rnd()*4|0];B(1.7,.7,2.8,k,0,.6,0);B(1.4,.55,1.5,0x222a30,0,1.2,-.1);for(const sx of[-.8,.8])for(const sz of[-.9,.9])B(.22,.5,.5,0x111111,sx,.25,sz);if(rnd()<.3){B(.3,.12,.02,0xbba870,-.55,.65,1.41,1);B(.3,.12,.02,0xbba870,.55,.65,1.41,1)}}
  else if(t==='desk'){B(2,.08,1.4,0x6b4a2a,0,.78,0);B(.08,.78,1.3,0x4a3a22,-.92,.39,0);B(.08,.78,1.3,0x4a3a22,.92,.39,0);B(.6,.42,.06,0x111111,0,1.05,-.3);B(.54,.36,.02,0x3a80d0,0,1.06,-.26,1);B(.5,.06,.5,0x222222,0,.48,.75);B(.5,.6,.06,0x222222,0,.8,1);B(.06,.45,.06,0x333333,0,.24,.75)}
  else if(t==='cab'){B(1.4,2.2,1,0x6a6a2a,0,1.1,0);for(let i=0;i<4;i++)B(1.2,.04,.02,0x333311,0,.4+i*.45,.51);B(.1,.1,.02,0x33ff55,.4,1.85,.52,1);B(.1,.1,.02,0xff3333,.2,1.85,.52,1)}
@@ -1240,7 +1266,7 @@ function decor(pg,eg,M4){if(cur.lay==='cave')for(let y=1;y<S-1;y++)for(let x=1;x
 function pipeRun(g,fx,fz,a,b){const m=new THREE.Matrix4(),q=new THREE.Quaternion().setFromEuler(new THREE.Euler(b?0:Math.PI/2,0,b?Math.PI/2:0)),v=new THREE.Vector3(),sc=new THREE.Vector3(),c=new THREE.Color();
  for(const[r,y,col,o]of[[.12,H-.42,0x6a4a35,.17],[.065,H-.74,0x55585a,.1],[.05,.38,0x3a3532,.08]]){if(r<.1&&rnd()<.35)continue;m.compose(v.set(fx+a*o,y,fz+b*o),q,sc.set(r,T,r));g.add(CYL,m,c.setHex(col))}}
 function buildLevel(){
- extraWalls348=[];extraSwitches348=[];extraCP348=null;disposeWorld();world=new THREE.Group();scene.add(world);
+ extraWalls348=[];extraSwitches348=[];extraCP348=null;furnitureCollision.clear();disposeWorld();world=new THREE.Group();scene.add(world);
  applyTheme();unHide();invClose();kpClose();VZ=null;PZ=null;slabT=null;if(down)endDown();prot=0;roomsL=[];roomItems=[];lockers=[];dropL=[];safeO=null;narrow=null;B=null;clearBossFx();exitL.distance=12;document.body.classList.toggle('boss',!!cur.boss&&!bossMenu);if(cur.boss){buildBoss();if(!bossMenu)bossArm();return}
  rnd=mulberry((levelSeed^0x51a7e1)>>>0);S=Math.min(29+2*level,61);const ST=S*T;
  w=Array.from({length:S},()=>Array(S).fill(1));
@@ -2272,7 +2298,7 @@ document.querySelectorAll('#tbtns [data-k]').forEach(b=>{const k=b.dataset.k;
 
 // ---- simulation ----
 const r=.42;
-function hit(x,z){if(A.nc)return false;if(extraWalls348.some(o=>Math.abs(x-o.x)<1.1&&Math.abs(z-o.z)<1.1))return true;if(slabT)for(const sl of slabT.values())if(slabHit(sl,x,z,r))return true;for(const[a,b]of[[-r,-r],[r,-r],[-r,r],[r,r]]){const tx=Math.floor((x+a)/T),tz=Math.floor((z+b)/T),sl=slabT&&slabT.get(tz*S+tx);if(sl)continue;if(!w[tz]||w[tz][tx]!==0)return true;if(narrow&&narrow[tz*S+tx]&&Math.abs(narrow[tz*S+tx]===2?z+b-(tz+.5)*T:x+a-(tx+.5)*T)>.62)return true;if(safeO&&Math.abs(x+a-safeO.x)<(safeO.a?.46:.56)&&Math.abs(z+b-safeO.z)<(safeO.a?.56:.46))return true;for(const L of lockers)if(Math.abs(x+a-L.x)<(L.a?.36:.5)&&Math.abs(z+b-L.z)<(L.a?.5:.36))return true}return false}
+function hit(x,z){if(A.nc)return false;if(touchesFurniture(x,z,r))return true;if(extraWalls348.some(o=>Math.abs(x-o.x)<1.1&&Math.abs(z-o.z)<1.1))return true;if(slabT)for(const sl of slabT.values())if(slabHit(sl,x,z,r))return true;for(const[a,b]of[[-r,-r],[r,-r],[-r,r],[r,r]]){const tx=Math.floor((x+a)/T),tz=Math.floor((z+b)/T),sl=slabT&&slabT.get(tz*S+tx);if(sl)continue;if(!w[tz]||(w[tz][tx]!==0&&!(w[tz][tx]===2&&furnitureCollision.has(tz*S+tx))))return true;if(narrow&&narrow[tz*S+tx]&&Math.abs(narrow[tz*S+tx]===2?z+b-(tz+.5)*T:x+a-(tx+.5)*T)>.62)return true;if(safeO&&Math.abs(x+a-safeO.x)<(safeO.a?.46:.56)&&Math.abs(z+b-safeO.z)<(safeO.a?.56:.46))return true;for(const L of lockers)if(Math.abs(x+a-L.x)<(L.a?.36:.5)&&Math.abs(z+b-L.z)<(L.a?.5:.36))return true}return false}
 function los(ax,az,bx,bz){const d=Math.hypot(bx-ax,bz-az),n=Math.ceil(d/.7);for(let i=1;i<n;i++){const t=i/n,row=w[Math.floor((az+(bz-az)*t)/T)];if(!row||row[Math.floor((ax+(bx-ax)*t)/T)])return false}return true}
 function steer(m,dm,spd,dt,fx,fz){const g=m.g,ex=g.position.x,ez=g.position.z,etx=Math.floor(ex/T),etz=Math.floor(ez/T);let tx=fx,tz=fz,best=dm[etz*S+etx];if(best<0){m.dm=null;if(m.st!=='wander')m.st='wander';m.wait=Math.max(m.wait||0,1.5+rnd()*2);return 0}
  if(best>0)for(const[a,b]of D){const nx=etx+a,nz=etz+b,v=nx>=0&&nz>=0&&nx<S&&nz<S?dm[nz*S+nx]:-1;if(v>=0&&v<best){best=v;tx=(nx+.5)*T;tz=(nz+.5)*T}}
