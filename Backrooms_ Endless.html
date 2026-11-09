@@ -628,11 +628,12 @@ body.menu #objective348,body.hubmode #objective348,body.cut #objective348{displa
 <div class="mcard"><h4><i>B</i>PLAYERS</h4><div id="mp_list"></div></div>
 <div id="mp_chat" class="mcard"><h4><i>C</i>CHAT</h4><div id="mp_chatlog"></div><div class="chrow"><input id="mp_chatin" type="text" maxlength="120" spellcheck="false" autocomplete="off" placeholder="Say hi to the room"><button class="btng" id="mp_chatgo">SEND</button></div></div></div><div id="mp_saves"></div><button class="btnp" id="mp_start">START NEW GAME</button></div>
 <div class="pfoot"><p id="mp_status"></p><div class="nrow"><button class="btng" id="mp_back">BACK</button></div></div></div>
-<button id="ver" type="button" aria-haspopup="dialog" aria-controls="patchnotes" title="View patch notes">v3.48 &middot; 2026-11-09 <span aria-hidden="true">[PATCH NOTES]</span></button></div>
+<button id="ver" type="button" aria-haspopup="dialog" aria-controls="patchnotes" title="View patch notes">v3.49 &middot; 2026-11-09 <span aria-hidden="true">[PATCH NOTES]</span></button></div>
 <div id="patchnotes" role="dialog" aria-modal="true" aria-labelledby="patchtitle" aria-hidden="true">
  <div id="patchbox">
-  <div id="patchhead"><h2 id="patchtitle">PATCH NOTES <span style="color:var(--hi)">v3.48</span></h2><button id="patchclose" type="button" aria-label="Close patch notes">X CLOSE</button></div>
+  <div id="patchhead"><h2 id="patchtitle">PATCH NOTES <span style="color:var(--hi)">v3.49</span></h2><button id="patchclose" type="button" aria-label="Close patch notes">X CLOSE</button></div>
   <div id="patchbody">
+   <section class="patchentry"><h3>v3.49 <time datetime="2026-11-09">NOV 09, 2026</time></h3><ul><li>Added Toethesis, a hockey-player suit with helmet, jersey, padded gear, skates and hockey stick.</li><li>Opening either admin panel permanently unlocks the Toethesis skin in the Suit menu.</li><li>Renamed the original Racer suit to C823 (its existing model and unlock conditions remain intact).</li><li>Chapter 2's final boss is now Toethesis, with a hockey-player model, updated dialogue and boss presentation.</li></ul></section>
    <section class="patchentry"><h3>v3.48 <time datetime="2026-11-09">NOV 09, 2026</time></h3><ul><li>Chapter 2 has unique color palettes, atmospheric scenery and three-switch generator objectives.</li><li>New checkpoint beacons offer protection, supplies and a respawn location.</li><li>Enemies investigate last-known positions and noises, and can search a recently entered locker.</li><li>Chapter 2 now concludes with The Archivist: a harder, uniquely styled finale with its own completion record.</li><li>Added a playable 12x12 community level editor with placed cover, threats, supplies and switches, plus export/import codes.</li></ul></section>
    <section class="patchentry"><h3>v3.47 <time datetime="2026-11-09">NOV 09, 2026</time></h3><ul><li>Racer boss fight rebalanced: faster shifting walls, more frequent traps, and longer blackouts in Phase 1.</li><li>Phase 2 enemies move faster and hit harder, with shorter delays between spawns.</li><li>Phase 3 bike charges faster, gives less warning, and recovers from crashes more quickly.</li><li>Reduced boss-fight health regeneration; Easy, Normal, and Hard still scale differently.</li></ul></section>
    <section class="patchentry"><h3>v3.46 <time datetime="2026-11-09">NOV 09, 2026</time></h3><ul><li>The twelve curated challenges now form Chapter 2, unlocked by defeating the Chapter 1 boss.</li><li>Beating the Racer now sends you straight into Chapter 2, Level 1.</li><li>Chapter 2 levels unlock in order, automatically advance on escape, and remember completion.</li><li>Custom and imported community levels remain available separately in the Hub.</li></ul></section>
@@ -1146,7 +1147,7 @@ dgeo.setAttribute('position',new THREE.BufferAttribute(dpos,3));const dust=new T
 let world,w,key,door,mons=[],bats=[],openT=[],seen,dmap=null,lastPT='',level=1,hasKey=false,panelMesh=null,panelSt=[],surfM=[],waterM=null;
 function applyTheme(){cur=TH[thi()];
  if(communityActive&&communityActive.chapter2&&!communityActive.chapter2Boss){const v=CH2_VIS[communityActive.chapterIndex];if(v)cur=Object.assign({},cur,{n:communityActive.n,w:v[1],f:v[2],c:v[3],fog:v[4],pc:v[5],lc:v[5],fd:.062+(communityActive.chapterIndex%3)*.008,am:.25,sp:1.07})}
- if(communityActive&&communityActive.chapter2Boss)cur=Object.assign({},cur,{n:'The Archivist',fog:0x13071c,lc:0xc78aff,pc:0xd6b8ff,am:.2});
+ if(communityActive&&communityActive.chapter2Boss)cur=Object.assign({},cur,{n:'Toethesis',fog:0x13071c,lc:0xc78aff,pc:0xd6b8ff,am:.2});
  H=cur.h;setHum();
  scene.fog.color.setHex(cur.fog);scene.fog.density=cur.fd;scene.background.setHex(cur.fog);pl.color.setHex(cur.lc);amb.color.setHex(cur.lc);dust.material.color.setHex(cur.dcol??(cur.pb>0?cur.pc:cur.lc));dust.material.size=cur.dsz||.035;dust.material.opacity=cur.dop??.45}
 function bfs(sx,sz){const d=new Int16Array(S*S).fill(-1),q=[[sx,sz]],s0=slabT&&slabT.get(sz*S+sx),sk=s0&&(s0.win||!s0.rm.open)?s0:null;d[sz*S+sx]=0;for(let i=0;i<q.length;i++){const[x,z]=q[i];for(const[a,b]of D){if(i===0&&sk&&a===sk.a&&b===sk.b)continue;const nx=x+a,nz=z+b;if(nx>=0&&nz>=0&&nx<S&&nz<S&&!w[nz][nx]&&d[nz*S+nx]<0){d[nz*S+nx]=d[z*S+x]+1;q.push([nx,nz])}}}return d}
@@ -1368,7 +1369,7 @@ let san=100,bag={bat:1,aw:0},breakdown=0,phT=6,phantoms=[],waters=[],batWarn=0,s
 const E={stv:$('stv'),btv:$('btv'),infw:$('infw'),infb:$('infb'),stb:$('stb'),btb:$('btb'),dmg:$('dmg'),pose:$('pose'),tc:$('tc'),fade:$('fade')};
 function say(t,ms=2400){const m=$('msg'),e=x=>x.replace(/</g,'&lt;'),sp=t.match(/^(Wanderer|Verity|Racer): /);m.innerHTML=sp?'<b class="who">'+sp[1].toUpperCase()+'</b>'+e(t.slice(sp[0].length)):e(t);m.classList.add('on');clearTimeout(mt);mt=setTimeout(()=>m.classList.remove('on'),ms)}
 function card(t,s,k,cls,bw){const c=$('card');c.className=cls||'';c.innerHTML=(k?'<small class="k">'+k+'</small>':'')+'<h2>'+t+'</h2><i class="ln"></i><p>'+s+'</p>'+(bw?'<div class="bw">'+bw+'</div>':'');c.style.transition='none';c.style.opacity=1;clearTimeout(ct);ct=setTimeout(()=>{c.style.transition='opacity 1.5s';c.style.opacity=0},2300)}
-function levelCard(){cardPending=false;if(communityActive&&communityActive.chapter2Boss){card('CHAPTER 2 FINALE','The Archivist','A FINAL RECORDING','','Survive all three phases.');return}if(communityActive&&communityActive.chapter2){card('CHAPTER 2 · '+(communityActive.chapterIndex+1)+'/12',communityActive.n,'THE LOST TAPES','',communityActive.rules||'Find the exit');return}if(cur.boss){markSeen('L',TH.length-1,cur.n);card('LEVEL ?','The workshop of the Racer.','The final level','dead','Beat the Racer');return}markSeen('L',thi(),cur.n);const nm=[...new Set(mons.map(m=>m.k.n))];if(wins.length)nm.push('Windows');if(swarms.length)nm.push('Male Deathmoths');if(plague)nm.push('Hydrolitis Plague');card('LEVEL '+level,cur.n,endless?'Endless':(VZ?'Lead Verity to the TVs.':PZ?pzObj():'Find the key. Reach the exit.'),'',nm.length?'Watch out for: '+nm.join(', '):'')}
+function levelCard(){cardPending=false;if(communityActive&&communityActive.chapter2Boss){card('CHAPTER 2 FINALE','Toethesis','A FINAL RECORDING','','Survive all three phases.');return}if(communityActive&&communityActive.chapter2){card('CHAPTER 2 · '+(communityActive.chapterIndex+1)+'/12',communityActive.n,'THE LOST TAPES','',communityActive.rules||'Find the exit');return}if(cur.boss){markSeen('L',TH.length-1,cur.n);card('LEVEL ?','The workshop of the Racer.','The final level','dead','Beat the Racer');return}markSeen('L',thi(),cur.n);const nm=[...new Set(mons.map(m=>m.k.n))];if(wins.length)nm.push('Windows');if(swarms.length)nm.push('Male Deathmoths');if(plague)nm.push('Hydrolitis Plague');card('LEVEL '+level,cur.n,endless?'Endless':(VZ?'Lead Verity to the TVs.':PZ?pzObj():'Find the key. Reach the exit.'),'',nm.length?'Watch out for: '+nm.join(', '):'')}
 function hud(){$('hud').innerHTML='<div class="hl">Level '+level+' <span>&ndash; '+cur.n+'</span></div><div class="obj'+(hasKey?' ok':'')+'">'+(cur.boss&&!bossMenu?(B&&B.mode==='dead'?(hasKey?'Go through the door.':'Take the key.'):(B&&B.obj)||'Beat the Racer.'):VZ?(hasKey?'Door unlocked. Get out.':'Lead Verity to the 4 TVs. Code: '+vzShown()):PZ?pzObj():hasKey?'Key found. Find the exit.':'Find the key.')+'</div><div class="lives">'+lives+(lives===1?' life':' lives')+' &middot; '+DIFF.n+(perma?' (one life)':'')+(endless?' &middot; Endless':'')+'</div>';$('mini').style.display=noMap?'none':''}
 const fmt=t=>[t/3600,t/60%60,t%60].map(v=>String(v|0).padStart(2,'0')).join(':');
 function startYaw(){for(const[a,b,y]of[[1,0,-Math.PI/2],[0,1,Math.PI],[-1,0,Math.PI/2],[0,-1,0]])if(!w[1+b][1+a])return y;return -Math.PI/2}
@@ -1426,11 +1427,11 @@ function admToggle(){if($('admpw').style.display==='block'){closePw(true);return
 function openPw(){A.open=true;for(const k in K)K[k]=0;$('admpw').style.display='block';$('pw_in').value='';$('pw_msg').textContent='';document.exitPointerLock&&document.exitPointerLock();setTimeout(()=>$('pw_in').focus(),60)}
 function closePw(relock){$('admpw').style.display='none';A.open=false;if(relock)lockReq()}
 function submitPw(){const v=$('pw_in').value.trim().toLowerCase(),lv=v==='arsenal8'?2:v==='uncle'?1:0;if(lv){const was=adminLvl(),nw=Math.max(was,lv);admMem=nw;try{localStorage.setItem('br_admin',String(nw))}catch(e){}closePw(false);sfx({f:880,dur:.3,v:.12});sfx({f:1320,dur:.4,v:.1,d:.1});
-  note(lv<was?'You already have the full admin panel.':lv===2?'Full admin panel unlocked, with the testing tools.'+(was?'':' A secret Racer suit is waiting in SUIT.'):'Admin panel unlocked. A secret Racer suit is waiting in SUIT.');admToggle0()}
+  note(lv<was?'You already have the full admin panel.':lv===2?'Full admin panel unlocked, with the testing tools.'+(was?'':' Secret C823 and Toethesis suits are waiting in SUIT.'):'Admin panel unlocked. C823 and Toethesis suits are waiting in SUIT.');admToggle0()}
  else{const p=$('admpw');p.classList.remove('shake');void p.offsetWidth;p.classList.add('shake');$('pw_msg').textContent='Wrong password.';$('pw_in').value='';sfx({t:'square',f:140,dur:.2,v:.08})}}
 $('pw_ok').onclick=submitPw;$('pw_x').onclick=()=>closePw(true);$('pw_in').onkeydown=e=>{e.stopPropagation();if(e.key==='Enter')submitPw();else if(e.key==='Escape')closePw(true)};
 function admToggle0(){A.open=!A.open;for(const k in K)K[k]=0;const full=adminLvl()>=2;$('adm').classList.toggle('full',full);$('adm_t').textContent=full?'ADMIN PANEL \u00b7 FULL':'ADMIN PANEL';
- if(!full){for(const[id,k]of[['a_nc','nc'],['a_fr','fr']]){A[k]=false;$(id).checked=false}A.ts=1;$('a_ts').value=1}$('adm').style.display=A.open?'block':'none';if(A.open){mapOn=false;$('mapw').style.display='none';document.exitPointerLock&&document.exitPointerLock()}else lockReq()}
+ if(!full){for(const[id,k]of[['a_nc','nc'],['a_fr','fr']]){A[k]=false;$(id).checked=false}A.ts=1;$('a_ts').value=1}$('adm').style.display=A.open?'block':'none';if(A.open){unlockSuit('toethesis');mapOn=false;$('mapw').style.display='none';document.exitPointerLock&&document.exitPointerLock()}else lockReq()}
 const ADM_BASIC=new Set(['key','exit','tp','map','san','code']);
 $('adm').onclick=e=>{const a=e.target.dataset.a;if(!a)return;if(!ADM_BASIC.has(a)&&adminLvl()<2)return;
  if(a==='code'){admToggle0();openPw();return}
@@ -2503,7 +2504,10 @@ const RACER_SAYS={
  crash:['Who put that there? ...I put that there.','My visor\'s cracked. You\'re paying for that.','...Okay. Okay. You win. Take your stupid key.'],
  hit:['Beep beep.','Look both ways!','Road rage? Never heard of it.'],
  death:['Back to the start. I love this part.','Again! Do it again!','That one looked like it hurt.']};
-function racerSay(k,i){const L=RACER_SAYS[k],t=Array.isArray(L)?L[i!=null?Math.min(i,L.length-1):rnd()*L.length|0]:L;sfx({n:1,ft:'bandpass',ff:2200,q:1.5,dur:.22,v:.06});say('Racer: '+t,Math.max(2600,t.length*70))}
+const TOETHESIS_SAYS={intro:['You crossed all twelve tapes? Welcome to my rink.','Overtime starts now. Let us see if you can survive the final period.'],shift:['Line change!','Watch the boards!','New formation!'],brk:['That is a penalty!','You took out my power play!','Third period, no mercy.'],drop:['Watch the ice!'],dark:['Lights out at the rink.'],theme:['New arena, same rules.'],p2:'My teammates are coming onto the ice.',crush:['That was a hard hit.','You are still in this game?','Time for sudden death.'],p3:'Final period. You had better skate fast.',crash:['Big collision!','My helmet!','You won the championship...'],hit:['Body check!','You got benched!'],death:['Back to the faceoff!','Another round!']};
+function toethesisSay(k,i){const a=TOETHESIS_SAYS[k]||TOETHESIS_SAYS.shift;return Array.isArray(a)?a[i!=null?Math.min(i,a.length-1):rnd()*a.length|0]:a}
+function bossName(){return communityActive&&communityActive.chapter2Boss?'Toethesis':'The Racer'}
+function racerSay(k,i){const L=RACER_SAYS[k],t=Array.isArray(L)?L[i!=null?Math.min(i,L.length-1):rnd()*L.length|0]:L;sfx({n:1,ft:'bandpass',ff:2200,q:1.5,dur:.22,v:.06});say((communityActive&&communityActive.chapter2Boss?'Toethesis':'Racer')+': '+(communityActive&&communityActive.chapter2Boss?toethesisSay(k,i):t),Math.max(2600,t.length*70))}
 function buildBoss(){S=31;H=8;const ST=S*T,c=S>>1,CT=(c+.5)*T,R_=mulberry(0x2ace9);
  // static walls: the border and a few plain pillars. Everything that moves or breaks is kept out of the static mesh
  const stat=Array.from({length:S},(_,y)=>Array.from({length:S},(_,x)=>(!x||!y||x===S-1||y===S-1)?1:0));
@@ -2542,7 +2546,7 @@ function buildBoss(){S=31;H=8;const ST=S*T,c=S>>1,CT=(c+.5)*T,R_=mulberry(0x2ace
  const floorB=new THREE.Mesh(UB,frame);floorB.scale.set(bw,.2,bw);floorB.position.set(CT,3.3,CT);s1.add(floorB);const roofB=floorB.clone();roofB.position.y=6.25;s1.add(roofB);
  for(const sx of[-1,1])for(const sz of[-1,1]){const p_=new THREE.Mesh(UB,frame);p_.scale.set(.18,2.9,.18);p_.position.set(CT+sx*bw/2,4.75,CT+sz*bw/2);s1.add(p_)}
  const bl=new THREE.PointLight(0x6aa8ff,1.4,22,1.6);bl.position.set(CT,5.6,CT);s1.add(bl);const bglow=glow(0x6aa8ff,7,.3,1);bglow.position.set(CT,5,CT);s1.add(bglow);
- const MATr=(c,b)=>b?new THREE.MeshBasicMaterial({color:c}):new THREE.MeshLambertMaterial({color:c}),racer=mkSuitBody('racer',MATr);racer.scale.setScalar(1.7);racer.position.set(CT,3.4,CT);s1.add(racer);
+ const MATr=(c,b)=>b?new THREE.MeshBasicMaterial({color:c}):new THREE.MeshLambertMaterial({color:c}),racer=mkSuitBody(communityActive&&communityActive.chapter2Boss?'toethesis':'racer',MATr);racer.scale.setScalar(1.7);racer.position.set(CT,3.4,CT);s1.add(racer);
  // ---- shutter walls (one box per tile; up = solid) ----
  const shT=tex((g,s)=>{g.fillStyle='#7a7058';g.fillRect(0,0,s,s);grain(g,s,22);g.fillStyle='rgba(0,0,0,.28)';for(let x=0;x<s;x+=s/8)g.fillRect(x,0,3,s);g.fillStyle='#c8a020';for(let x=-s;x<s*2;x+=s/4){g.save();g.translate(x,s*.9);g.rotate(-.7);g.fillRect(0,0,s/10,s/2);g.restore()}g.fillStyle='rgba(0,0,0,.6)';g.fillRect(0,s*.86,s,3)},256);
  const shM=surf(shT,{color:0xd8d0b8}),shut=new Map(),warnM=new THREE.MeshBasicMaterial({color:0xff2a1a,transparent:true,opacity:0,depthWrite:false});
@@ -2577,7 +2581,7 @@ function buildBoss(){S=31;H=8;const ST=S*T,c=S>>1,CT=(c+.5)*T,R_=mulberry(0x2ace
  B={g:racer,u:racer.userData,hittable:false,hs:[],de:99,mode:'p1',ph:1,sc:1,P,c,CT,LA,LB,cfg:0,shut,blocks,brks,gates,plates,themes,base:{w:wt,f:ft,c:ct,fog:cur.fog},wm,fm,cm,bl,bglow,glassM,mul,
   shiftT:3.2,trickT:6.5,last:'',pits:[],dark:0,theme:0,themeK:0,crushed:0,mins:[],nextMin:0,bike:null,crashes:0,stun:0,spawn:{x:px,z:pz},obj:'',talk:0,mt:0};
  shiftTo(0,true);bossUI();
- setTimeout(()=>{if(B&&B.mode==='p1')racerSay('intro',0)},1800);setTimeout(()=>{if(B&&B.mode==='p1'){racerSay('intro',1);card('PHASE 1 · POWER','Find the 3 breakers and pull them.','The Racer','dead')}},6500)}
+ setTimeout(()=>{if(B&&B.mode==='p1')racerSay('intro',0)},1800);setTimeout(()=>{if(B&&B.mode==='p1'){racerSay('intro',1);card('PHASE 1 · POWER','Find the 3 breakers and pull them.',bossName(),'dead')}},6500)}
 // ---- shutter walls ----
 function shiftTo(cfg,now){const b=B,L=new Set(cfg?b.LB:b.LA),ptx=Math.floor(px/T),ptz=Math.floor(pz/T);b.cfg=cfg;
  for(const[i,s_]of b.shut){const want=L.has(i)&&!(Math.abs(s_.x-ptx)<=1&&Math.abs(s_.y-ptz)<=1)?1:0;s_.want=want;if(now){s_.up=want;s_.k=want;s_.m.visible=!!want;s_.m.position.y=want?H/2:-H/2;w[s_.y][s_.x]=want;s_.warn=0}else if(want&&!s_.up)s_.warn=1.1;else if(!want&&s_.up){s_.up=0;w[s_.y][s_.x]=0}}
@@ -2608,7 +2612,7 @@ function bossUse(){const k=nearBreaker();if(!k)return;const b=B,i=b.brks.filter(
 function startP2(){const b=B;b.mode='p2';b.ph=2;b.crushed=0;b.dark=0;b.theme=0;setTheme(b.base);clearPits();
  for(const s_ of b.shut.values()){s_.warn=0;s_.wn.material.opacity=0;if(s_.up){s_.up=0;w[s_.y][s_.x]=0}}lastPT='';
  b.bl.intensity=0;b.bglow.visible=false;b.glassM.opacity=.12;sfx({t:'sawtooth',f:90,f2:30,dur:1.6,v:.2,r:.8});flickT=0;
- card('PHASE 2 · LURE','Lead each monster over a crusher plate.','The Racer','dead');racerSay('p2');b.nextMin=2.2;bossUI()}
+ card('PHASE 2 · LURE','Lead each monster over a crusher plate.',bossName(),'dead');racerSay('p2');b.nextMin=2.2;bossUI()}
 const MIN_KINDS=[['hound',4.9],['skin',4.4],['thing',4.1]];
 function spawnMinion(){const b=B,i=b.crushed;if(i>=3)return;const gt=b.gates[i%3],[k,sp]=MIN_KINDS[i],M=(c,bb)=>bb?new THREE.MeshBasicMaterial({color:c}):new THREE.MeshLambertMaterial({color:c});
  let m;if(k==='thing'){// The Thing has no monster entry of its own, so it's built from its model
@@ -2627,17 +2631,17 @@ function crush(m,pl_){const b=B;sfx({n:1,ft:'lowpass',ff:900,ff2:80,dur:.9,v:.6,
   if(Math.floor(px/T)===pl_.x&&Math.floor(pz/T)===pl_.y)hurt(70,'The crusher came down on you too.');
   racerSay('crush',b.crushed);b.crushed++;bossUI();if(b.crushed>=3)setTimeout(()=>{if(B===b&&b.mode==='p2')startP3()},3200);else b.nextMin=1.7},150)}
 // ---- phase 3: the bike ----
-function mkRacerBike(){const g=mkWheelie(),u=g.userData;u.bk.remove(u.rider);const MATr=(c,bb)=>bb?new THREE.MeshBasicMaterial({color:c}):new THREE.MeshLambertMaterial({color:c}),r=mkSuitBody('racer',MATr),ru=r.userData;
+function mkRacerBike(){const g=mkWheelie(),u=g.userData;u.bk.remove(u.rider);const MATr=(c,bb)=>bb?new THREE.MeshBasicMaterial({color:c}):new THREE.MeshLambertMaterial({color:c}),r=mkSuitBody(communityActive&&communityActive.chapter2Boss?'toethesis':'racer',MATr),ru=r.userData;
  r.position.set(0,-.3,.32);u.bk.add(r);ru.up.rotation.x=.45;ru.legL.rotation.x=ru.legR.rotation.x=-1.25;if(ru.knL){ru.knL.rotation.x=ru.knR.rotation.x=1.5}ru.shL.rotation.x=ru.shR.rotation.x=-1.1;if(ru.elL){ru.elL.rotation.x=ru.elR.rotation.x=-.35}
  u.rider=r;u.ru=ru;g.scale.setScalar(1.25);return g}
 function startP3(){const b=B;b.mode='p3';b.ph=3;b.crashes=0;b.g.visible=false;const g=mkRacerBike();world.add(g);const sx=b.CT,sz=b.CT+2.4*T;g.position.set(sx,0,sz);b.bike={g,st:'aim',t:1.9,dx:0,dz:1,sp:0,ph:0,hitT:0,home:{x:sx,z:sz}};
- sfx({t:'sawtooth',f:60,f2:180,dur:1.4,v:.18,ft:'lowpass',ff:900});card('PHASE 3 · CHASE','Make the bike crash into the UNSAFE blocks.','The Racer','dead');racerSay('p3');bossUI()}
+ sfx({t:'sawtooth',f:60,f2:180,dur:1.4,v:.18,ft:'lowpass',ff:900});card('PHASE 3 · CHASE','Make the bike crash into the UNSAFE blocks.',bossName(),'dead');racerSay('p3');bossUI()}
 function updP3(dt,now){const b=B,k=b.bike;if(!k)return;const g=k.g,u=g.userData;let sp=0;const face=(tx,tz,r)=>{let da=Math.atan2(tx-g.position.x,tz-g.position.z)-g.rotation.y;da=Math.atan2(Math.sin(da),Math.cos(da));g.rotation.y+=da*Math.min(1,dt*r)};
  if(k.st==='aim'){k.t-=dt;face(px,pz,5);u.hl.material.color.setHex(Math.sin(now/60)>0?0xfff4d0:0xff6040);if(k.t<.8&&!k.rev){k.rev=1;sfx({t:'sawtooth',f:70,f2:220,dur:.9,v:.14,ft:'lowpass',ff:1200,p:panOf(g.position.x,g.position.z)})}
   if(k.t<=0){const dx=px-g.position.x,dz=pz-g.position.z,d=Math.hypot(dx,dz)||1;k.dx=dx/d;k.dz=dz/d;g.rotation.y=Math.atan2(k.dx,k.dz);k.st='charge';k.t=3.25;k.rev=0;k.hit=0}}
  else if(k.st==='charge'){const v=19*b.mul;k.t-=dt;sp=v;const nx=g.position.x+k.dx*v*dt,nz=g.position.z+k.dz*v*dt,ax=nx+k.dx*1.1,az=nz+k.dz*1.1,cx=Math.floor(ax/T),cz=Math.floor(az/T);
   const solid=!w[cz]||w[cz][cx]===1;if(solid||k.t<=0){const blk=b.blocks.find(q=>!q.broken&&q.cs.some(([x,y])=>x===cx&&y===cz));if(blk)bikeCrash(blk);else{k.st='aim';k.t=1.15;bShake=Math.max(bShake,.05);sfx({n:1,ft:'lowpass',ff:500,dur:.3,v:.25,p:panOf(nx,nz)})}}
-  else{g.position.x=nx;g.position.z=nz;if(!k.hit&&Math.hypot(px-nx,pz-nz)<1.6){k.hit=1;b.runOver=1;hurt(48,'Run over by the Racer.');vx+=k.dx*14;vz+=k.dz*14;if(rnd()<.6)racerSay('hit')}}}
+  else{g.position.x=nx;g.position.z=nz;if(!k.hit&&Math.hypot(px-nx,pz-nz)<1.6){k.hit=1;b.runOver=1;hurt(48,'Run over by '+bossName()+'.');vx+=k.dx*14;vz+=k.dz*14;if(rnd()<.6)racerSay('hit')}}}
  else if(k.st==='stun'){k.t-=dt;u.bk.rotation.z=Math.sin(now/80)*.15*Math.min(1,k.t);if((k.ct=(k.ct||0)-dt)<=0){k.ct=.15;burst(g.position.x,1.2,g.position.z,4,0x777777,1.2)}if(k.t<=0){u.bk.rotation.z=0;k.st='aim';k.t=1.25}}
  else if(k.st==='wreck'){k.t+=dt;u.bk.rotation.z=lerp(u.bk.rotation.z,1.3,dt*3);g.position.y=Math.max(-.2,g.position.y-dt*.2);if((k.ct=(k.ct||0)-dt)<=0){k.ct=.12;burst(g.position.x,1+rnd(),g.position.z,5,rnd()<.3?0xff7020:0x555555,1.5)}}
  if(k.st!=='wreck')wheelieAnim({g},sp,dt,now)}
@@ -2656,7 +2660,7 @@ function updBoss(dt,now){const b=B;if(wEq==='pistol')gunUpd(dt);bShake=Math.max(
  else if(b.mode==='p2')updP2(dt,now);
  else if(b.mode==='p3'||b.mode==='dead')updP3(dt,now);
  return stt!=='play'}
-function bossUI(){if(!B)return;$('bossui').querySelector('.bn').firstChild.textContent=communityActive&&communityActive.chapter2Boss?'THE ARCHIVIST':'THE RACER';const b=B,ph=b.mode==='dead'?4:b.ph,prog=ph===1?b.brks.filter(q=>q.on).length:ph===2?b.crushed:ph===3?b.crashes:3;
+function bossUI(){if(!B)return;$('bossui').querySelector('.bn').firstChild.textContent=communityActive&&communityActive.chapter2Boss?'TOETHESIS':'THE RACER';const b=B,ph=b.mode==='dead'?4:b.ph,prog=ph===1?b.brks.filter(q=>q.on).length:ph===2?b.crushed:ph===3?b.crashes:3;
  $('bhearts').innerHTML=[1,2,3].map(i=>'<i class="'+(i>=ph?'on':'')+'"></i>').join('');$('bhp').style.width=(ph>3?0:(1-prog/3)*100)+'%';
  $('bstage').textContent=ph>3?'Beaten':['','Phase 1 · Power','Phase 2 · Lure','Phase 3 · Chase'][ph]+' · '+prog+'/3';
  b.obj=ph===1?'Pull the breakers ('+prog+'/3).':ph===2?'Lead the monsters onto the crusher plates ('+prog+'/3).':ph===3?'Make the bike crash into the UNSAFE blocks ('+prog+'/3).':'';hud()}
@@ -2673,18 +2677,18 @@ function bossRespawn(){const b=B;php=100;px=b.spawn.x;pz=b.spawn.z;yaw=0;vx=vz=0
 function openTile(x,z){const r_=w[Math.floor(z/T)];return r_&&r_[Math.floor(x/T)]===0}
 function hurt(n,why,quiet){if(A.god||!B||stt!=='play')return;php-=n;lastHurt=performance.now();
  if(!quiet){hurtF=Math.min(1,hurtF+.55);bShake=Math.max(bShake,.07);sfx({n:1,ft:'lowpass',ff:500,dur:.2,v:.3});sfx({f:180,f2:90,dur:.2,v:.15})}else hurtF=Math.max(hurtF,.3);
- if(php<=0){php=0;killPlayer(why||'The Racer got you.')}}
+ if(php<=0){php=0;killPlayer(why||bossName()+' got you.')}}
 // the gun can't hurt the Racer; these stay so the weapon code has something to call
 function dmgBoss(){}
 function breakProj(pr){world.remove(pr.m);projs=projs.filter(q=>q!==pr)}
 function roar(v){sfx({t:'sawtooth',f:110,f2:38,dur:2.2,v:.35*v,ft:'lowpass',ff:900,r:.9})}
 
 function bossWin(){if(communityActive&&communityActive.chapter2Boss){
-  communityActive=null;stt='loading';store.set('chapter2BossCleared',true);stats.wins=(stats.wins||0)+1;saveStats();inRun=false;slotClear();sfx({f:784,dur:1.5,v:.2});card('CHAPTER 2 COMPLETE','The Archivist has fallen.','ALL TAPES RECOVERED');
-  setTimeout(()=>{B=null;document.body.classList.remove('boss');openHub();hubScreen('chapter2');$('hubnote').textContent='CHAPTER 2 COMPLETE — The Archivist defeated. The finale can be replayed.'},2600);return}
+  communityActive=null;stt='loading';store.set('chapter2BossCleared',true);stats.wins=(stats.wins||0)+1;saveStats();inRun=false;slotClear();sfx({f:784,dur:1.5,v:.2});card('CHAPTER 2 COMPLETE','Toethesis has been defeated.','ALL TAPES RECOVERED');
+  setTimeout(()=>{B=null;document.body.classList.remove('boss');openHub();hubScreen('chapter2');$('hubnote').textContent='CHAPTER 2 COMPLETE — Toethesis defeated. The finale can be replayed.'},2600);return}
  stt='loading';ach('win');if(!stats.goldKey){stats.goldKey=1;saveStats()}ach('golden');setTimeout(()=>{try{mkHand()}catch(e){}},50);if(DIFF.key==='hard')ach('winhard');if(perma)ach('perma');bumpBest();stats.wins=(stats.wins||0)+1;const newRacer=!stats.racerWin;stats.racerWin=1;saveStats();inRun=false;slotClear();
  sfx({f:523,dur:1.2,v:.15,r:.6});sfx({f:659,dur:1.2,v:.15,r:.6,d:.2});sfx({f:784,dur:1.6,v:.15,r:.6,d:.4});const f=$('flash');f.style.transition='opacity 1.2s';f.style.opacity=1;
- setTimeout(()=>{card('CHAPTER 1 COMPLETE','The Racer is defeated. Your next nightmare begins.','CHAPTER 2 UNLOCKED');if(newRacer)setTimeout(()=>note('The Racer suit is yours. Find it in SUIT.'),1500);setTimeout(()=>{f.style.transition='opacity 1.5s';f.style.opacity=0;B=null;document.body.classList.remove('boss');openHub();chapter2Start(0)},3000)},1300)}
+ setTimeout(()=>{card('CHAPTER 1 COMPLETE','The Racer is defeated. Your next nightmare begins.','CHAPTER 2 UNLOCKED');if(newRacer)setTimeout(()=>note('The C823 suit is yours. Find it in SUIT.'),1500);setTimeout(()=>{f.style.transition='opacity 1.5s';f.style.opacity=0;B=null;document.body.classList.remove('boss');openHub();chapter2Start(0)},3000)},1300)}
 
 
 // ================= Multiplayer: peer-to-peer co-op over WebRTC (PeerJS). The host simulates monsters; everyone else mirrors them =================
@@ -3063,11 +3067,41 @@ function netTick(rdt){if(NET.started&&(NET.sendT-=rdt)<=0&&stt!=='menu'){NET.sen
 // ---- suit colour: picked in the main menu, shown on your first-person sleeve and on your avatar in multiplayer ----
 const SUITS=[['Hazard yellow',0xd8c020],['Safety orange',0xe8701e],['Signal red',0xc8302a],['Lab white',0xe4e2da],['Graphite',0x3a3d42],['Cobalt',0x2f63c8],['Teal',0x1f9a8f],['Moss',0x5f8a2e],['Violet',0x7a4ac0],['Pink',0xe06aa8]];
 // special suits unlock by escaping Level ?: a polished gold suit, and The Thing's own fused body
-const SPECIAL={gold:{n:'Escapee gold',c:0xd4a52a,bg:'linear-gradient(135deg,#f6dc7a,#b8861c 55%,#f0cf62)'},thanos:{n:'Thanos',c:0x7a5a9a,unl:'thanos',how:'redeem a code',bg:'linear-gradient(180deg,#8a6aa8 0 38%,#2c4a7a 38% 80%,#d4a52a 80% 88%,#2c4a7a 88%)'},sahur:{n:'Tung Tung Tung Sahur',c:0xb07a46,unl:'sahur',how:'redeem a code',bg:'radial-gradient(circle at 36% 38%,#fff 0 9%,#111 10% 13%,transparent 14%),radial-gradient(circle at 64% 38%,#fff 0 9%,#111 10% 13%,transparent 14%),repeating-linear-gradient(180deg,#b07a46 0 7px,#9a6838 7px 9px)'},halloween:{n:'Halloween',c:0x1c1820,unl:'halloween',how:'redeem a code',bg:'radial-gradient(circle at 50% 42%,#ff9a2a 0 30%,transparent 31%),linear-gradient(180deg,#2a1838,#120c16)'},ironman:{n:'Iron Man',c:0xa8161a,unl:'ironman',how:'redeem a code',bg:'radial-gradient(ellipse 30% 9% at 36% 40%,#e8f6ff 0 60%,transparent 70%),radial-gradient(ellipse 30% 9% at 64% 40%,#e8f6ff 0 60%,transparent 70%),radial-gradient(ellipse 42% 46% at 50% 52%,#d6a63a 0 70%,transparent 72%),#a8161a'},ultron:{n:'Ultron',c:0x8c919a,unl:'ultron',how:'redeem a code',bg:'radial-gradient(ellipse 26% 7% at 36% 40%,#ff2a1a 0 60%,transparent 70%),radial-gradient(ellipse 26% 7% at 64% 40%,#ff2a1a 0 60%,transparent 70%),linear-gradient(180deg,#d8dce2,#7a7e86)'},reindeer:{n:'Reindeer',c:0x7a4a2a,unl:'reindeer',how:'redeem a code',bg:'radial-gradient(circle at 50% 62%,#ff2a2a 0 12%,transparent 13%),linear-gradient(180deg,#5a3a20 0 22%,#7a4a2a 22%)'},elf:{n:'Elf',c:0x2a8a3a,unl:'elf',how:'redeem a code',bg:'linear-gradient(180deg,#2a8a3a 0 30%,#f0c8a8 30% 52%,#2a8a3a 52% 80%,#d02a2a 80%)'},snowman:{n:'Snowman',c:0xf0f0f0,unl:'snowman',how:'redeem a code',bg:'linear-gradient(180deg,#141414 0 22%,#f4f4f4 22% 48%,#c8302a 48% 56%,#f4f4f4 56%)'},ghost:{n:'Ghost',c:0xf4f4f0,unl:'ghost',how:'redeem a code',bg:'radial-gradient(ellipse 9% 13% at 38% 42%,#111 0 90%,transparent 100%),radial-gradient(ellipse 9% 13% at 62% 42%,#111 0 90%,transparent 100%),radial-gradient(ellipse 8% 10% at 50% 66%,#111 0 90%,transparent 100%),#f4f4f0'},skeleton:{n:'Skeleton',c:0x141414,unl:'skeleton',how:'redeem a code',bg:'repeating-linear-gradient(180deg,#e8e2d0 0 4px,#141414 4px 10px)'},witch:{n:'Witch',c:0x1c1420,unl:'witch',how:'redeem a code',bg:'linear-gradient(180deg,#111 0 30%,#7a3aa8 30% 36%,#7ab04a 36% 58%,#1c1420 58%)'},kenny:{n:'Kenny',c:0xe8701e,unl:'kenny',how:'redeem a code',bg:'radial-gradient(ellipse 20% 16% at 50% 50%,#f6d8b8 0 60%,#6a4426 62% 78%,transparent 80%),#e8701e'},cartman:{n:'Cartman',c:0xc8302a,unl:'cartman',how:'redeem a code',bg:'linear-gradient(180deg,#2ab0b8 0 22%,#f0c020 22% 28%,#f6d8b8 28% 56%,#c8302a 56%)'},santa:{n:'Santa',c:0xc8202a,unl:'santa',how:'redeem a code',bg:'linear-gradient(180deg,#f4f1e8 0 18%,#c8202a 18% 60%,#111 60% 68%,#c8202a 68%)'},alig:{n:'Ali G',c:0xf2c41c,unl:'alig',how:'redeem a code',bg:'linear-gradient(180deg,#1c2440 0 26%,#f2c41c 26% 38%,#c8a02a 38% 46%,#f2c41c 46%)'},racer:{n:'Racer',c:0x161618,adm:1,how:'beating the Racer, or the admin code',bg:'radial-gradient(ellipse 34% 20% at 50% 46%,#4fa3e8 0 70%,transparent 74%),linear-gradient(160deg,#2a2a2e,#0c0c0e)'},thing:{n:'The Thing',c:0x2b2420,bg:'radial-gradient(circle at 35% 40%,#ff3a2a 0 9%,transparent 10%),radial-gradient(circle at 65% 40%,#7aff4a 0 8%,transparent 9%),linear-gradient(160deg,#3a302a,#141110)'}};
+const SPECIAL={gold:{n:'Escapee gold',c:0xd4a52a,bg:'linear-gradient(135deg,#f6dc7a,#b8861c 55%,#f0cf62)'},thanos:{n:'Thanos',c:0x7a5a9a,unl:'thanos',how:'redeem a code',bg:'linear-gradient(180deg,#8a6aa8 0 38%,#2c4a7a 38% 80%,#d4a52a 80% 88%,#2c4a7a 88%)'},sahur:{n:'Tung Tung Tung Sahur',c:0xb07a46,unl:'sahur',how:'redeem a code',bg:'radial-gradient(circle at 36% 38%,#fff 0 9%,#111 10% 13%,transparent 14%),radial-gradient(circle at 64% 38%,#fff 0 9%,#111 10% 13%,transparent 14%),repeating-linear-gradient(180deg,#b07a46 0 7px,#9a6838 7px 9px)'},halloween:{n:'Halloween',c:0x1c1820,unl:'halloween',how:'redeem a code',bg:'radial-gradient(circle at 50% 42%,#ff9a2a 0 30%,transparent 31%),linear-gradient(180deg,#2a1838,#120c16)'},ironman:{n:'Iron Man',c:0xa8161a,unl:'ironman',how:'redeem a code',bg:'radial-gradient(ellipse 30% 9% at 36% 40%,#e8f6ff 0 60%,transparent 70%),radial-gradient(ellipse 30% 9% at 64% 40%,#e8f6ff 0 60%,transparent 70%),radial-gradient(ellipse 42% 46% at 50% 52%,#d6a63a 0 70%,transparent 72%),#a8161a'},ultron:{n:'Ultron',c:0x8c919a,unl:'ultron',how:'redeem a code',bg:'radial-gradient(ellipse 26% 7% at 36% 40%,#ff2a1a 0 60%,transparent 70%),radial-gradient(ellipse 26% 7% at 64% 40%,#ff2a1a 0 60%,transparent 70%),linear-gradient(180deg,#d8dce2,#7a7e86)'},reindeer:{n:'Reindeer',c:0x7a4a2a,unl:'reindeer',how:'redeem a code',bg:'radial-gradient(circle at 50% 62%,#ff2a2a 0 12%,transparent 13%),linear-gradient(180deg,#5a3a20 0 22%,#7a4a2a 22%)'},elf:{n:'Elf',c:0x2a8a3a,unl:'elf',how:'redeem a code',bg:'linear-gradient(180deg,#2a8a3a 0 30%,#f0c8a8 30% 52%,#2a8a3a 52% 80%,#d02a2a 80%)'},snowman:{n:'Snowman',c:0xf0f0f0,unl:'snowman',how:'redeem a code',bg:'linear-gradient(180deg,#141414 0 22%,#f4f4f4 22% 48%,#c8302a 48% 56%,#f4f4f4 56%)'},ghost:{n:'Ghost',c:0xf4f4f0,unl:'ghost',how:'redeem a code',bg:'radial-gradient(ellipse 9% 13% at 38% 42%,#111 0 90%,transparent 100%),radial-gradient(ellipse 9% 13% at 62% 42%,#111 0 90%,transparent 100%),radial-gradient(ellipse 8% 10% at 50% 66%,#111 0 90%,transparent 100%),#f4f4f0'},skeleton:{n:'Skeleton',c:0x141414,unl:'skeleton',how:'redeem a code',bg:'repeating-linear-gradient(180deg,#e8e2d0 0 4px,#141414 4px 10px)'},witch:{n:'Witch',c:0x1c1420,unl:'witch',how:'redeem a code',bg:'linear-gradient(180deg,#111 0 30%,#7a3aa8 30% 36%,#7ab04a 36% 58%,#1c1420 58%)'},kenny:{n:'Kenny',c:0xe8701e,unl:'kenny',how:'redeem a code',bg:'radial-gradient(ellipse 20% 16% at 50% 50%,#f6d8b8 0 60%,#6a4426 62% 78%,transparent 80%),#e8701e'},cartman:{n:'Cartman',c:0xc8302a,unl:'cartman',how:'redeem a code',bg:'linear-gradient(180deg,#2ab0b8 0 22%,#f0c020 22% 28%,#f6d8b8 28% 56%,#c8302a 56%)'},santa:{n:'Santa',c:0xc8202a,unl:'santa',how:'redeem a code',bg:'linear-gradient(180deg,#f4f1e8 0 18%,#c8202a 18% 60%,#111 60% 68%,#c8202a 68%)'},alig:{n:'Ali G',c:0xf2c41c,unl:'alig',how:'redeem a code',bg:'linear-gradient(180deg,#1c2440 0 26%,#f2c41c 26% 38%,#c8a02a 38% 46%,#f2c41c 46%)'},racer:{n:'C823',c:0x161618,adm:1,how:'beating the Chapter 1 boss, or opening an admin panel',bg:'radial-gradient(ellipse 34% 20% at 50% 46%,#4fa3e8 0 70%,transparent 74%),linear-gradient(160deg,#2a2a2e,#0c0c0e)'},toethesis:{n:'Toethesis',c:0x214c9b,adm:1,how:'open either admin panel',bg:'linear-gradient(180deg,#e9e9eb 0 17%,#172b57 17% 29%,#f2f3f4 29% 47%,#2556a4 47% 72%,#101620 72%)'},thing:{n:'The Thing',c:0x2b2420,bg:'radial-gradient(circle at 35% 40%,#ff3a2a 0 9%,transparent 10%),radial-gradient(circle at 65% 40%,#7aff4a 0 8%,transparent 9%),linear-gradient(160deg,#3a302a,#141110)'}};
 const validSuit=v=>typeof v==='number'&&v>=0&&v<=0xffffff?v|0:SPECIAL[v]?v:undefined;
 const suitColOf=v=>SPECIAL[v]?SPECIAL[v].c:typeof v==='number'&&v>=0&&v<=0xffffff?v:0xe8701e;
-const suitCol=()=>suitColOf(CFG.suit),suitKind=()=>SPECIAL[CFG.suit]?CFG.suit:null,suitsOpen=()=>(stats.wins||0)>0,specialOpen=k=>k==='racer'?adminOK()||!!stats.racerWin:true;
-function mkSuitBody(v,MAT){if(v==='gold'){const m=new THREE.MeshPhongMaterial({color:0xd4a52a,specular:0xffe2a0,shininess:70});m.userData.vc=new THREE.MeshPhongMaterial({vertexColors:true,specular:0xffe2a0,shininess:70});return mkEntity(m,MAT(0x1a2626,1),SUIT_O)}
+const suitCol=()=>suitColOf(CFG.suit),suitKind=()=>SPECIAL[CFG.suit]?CFG.suit:null,suitsOpen=()=>(stats.wins||0)>0,specialOpen=k=>k==='racer'?adminOK()||!!stats.racerWin:k==='toethesis'?!!(stats.suits&&stats.suits.toethesis)||adminOK():true;
+function mkSuitBody(v,MAT){
+ // Toethesis: original ice-hockey player, blue/white jersey, padded gloves, skate boots,
+ // face-cage helmet and a stick. Use the same skeleton as other skins so multiplayer,
+ // third-person camera and first-person sleeves keep working.
+ if(v==='toethesis'){
+  const o={tw:.53,th:.84,lw:.17,aw:.13,hw:.29,hh:.33,hunch:.07,face:0,ears:0,lc:0x10151e,shoes:1,shoe:0x111621,hand:0x151923,arm:1.27,leg:1.08};
+  const g=mkEntity(MAT(0x2453a0),null,o),u=g.userData;
+  const L=c=>new THREE.MeshLambertMaterial({color:c}),blue=L(0x2453a0),navy=L(0x101d3d),white=L(0xf0f1eb),silver=L(0xa9b4c2),black=L(0x11151d),ice=new THREE.MeshPhongMaterial({color:0xe6eaf0,specular:0xffffff,shininess:75});
+  const add=(par,geo,mat,sx,sy,sz,x,y,z,rx=0,ry=0,rz=0)=>{const m=new THREE.Mesh(geo,mat);m.scale.set(sx,sy,sz);m.position.set(x,y,z);m.rotation.set(rx,ry,rz);par.add(m);return m};
+  // Jersey front stripes and number 83 on a small canvas decal.
+  add(u.up,UB,white,.42,.115,.02,0,.48,.325);
+  add(u.up,UB,navy,.42,.052,.025,0,.39,.343);
+  add(u.up,UB,white,.43,.045,.024,0,.15,.326);
+  for(const shoulder of[u.shL,u.shR]){add(shoulder,SPH,blue,.19,.16,.2,0,-.10,0);add(shoulder,UB,white,.16,.05,.16,0,-.27,0)}
+  for(const arm of[u.elL,u.elR]){add(arm,UB,navy,.14,.12,.13,0,-.15,0);add(arm,SPH,black,.14,.1,.16,0,-.36,.04)}
+  for(const leg of[u.legL,u.legR]){add(leg,UB,blue,.17,.3,.18,0,-.32,.02)}
+  for(const leg of[u.knL,u.knR]){add(leg,UB,white,.18,.05,.17,0,-.11,.01);add(leg,UB,navy,.19,.08,.18,0,-.31,.02);add(leg,UB,silver,.14,.018,.28,0,-.55,.07)}
+  const hd=u.head;add(hd,SPH,navy,.235,.24,.24,0,.17,0);add(hd,UB,white,.24,.036,.19,0,.365,.03);
+  // Visor and metal cage of the hockey mask.
+  add(hd,SPH,black,.18,.135,.075,0,.18,.215);
+  for(const xx of[-.13,-.065,0,.065,.13])add(hd,UB,silver,.008,.19,.009,xx,.16,.275);
+  for(const yy of[.08,.16,.24])add(hd,UB,silver,.17,.008,.009,0,yy,.284);
+  for(const xx of[-1,1])add(hd,SPH,ice,.035,.042,.025,xx*.22,.19,0);
+  const c=cv(128,128),ctx=c.getContext('2d');ctx.clearRect(0,0,128,128);ctx.fillStyle='#ffffff';ctx.font='bold 88px Arial';ctx.textAlign='center';ctx.fillText('83',64,96);
+  const num=new THREE.Mesh(new THREE.PlaneGeometry(.25,.25),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(c),transparent:true,side:THREE.DoubleSide,depthWrite:false}));num.position.set(0,.66,.344);u.up.add(num);
+  // The stick is secured to the right glove so it animates with the player.
+  const shaft=add(u.elR,CYL,L(0xa88854),.019,.78,.019,-.14,-.53,.22,0,0,-.19);
+  const blade=add(u.elR,UB,black,.23,.06,.065,-.24,-.92,.24,0,0,-.18);
+  return g
+ }
+ if(v==='gold'){const m=new THREE.MeshPhongMaterial({color:0xd4a52a,specular:0xffe2a0,shininess:70});m.userData.vc=new THREE.MeshPhongMaterial({vertexColors:true,specular:0xffe2a0,shininess:70});return mkEntity(m,MAT(0x1a2626,1),SUIT_O)}
  // Thanos (Infinity War look): purple skin, ridged chin, blue armour vest with gold trim, grey trousers, gold-trimmed boots, the Gauntlet on his left hand
  if(v==='thanos'){const o={tw:.64,th:.95,lw:.21,aw:.16,hw:.31,hh:.37,hunch:.08,arm:1.38,leg:1.15,hc:0x7a5a9a,lc:0x3a3a40,shoes:1,shoe:0x4a3424},g=mkEntity(MAT(0x7a5a9a),null,o),u=g.userData,
   L=c=>new THREE.MeshPhongMaterial({color:c,shininess:35,specular:0x333333}),blue=L(0x2c4a7a),gold=new THREE.MeshPhongMaterial({color:0xd4a52a,specular:0xffe2a0,shininess:70}),dkp=new THREE.MeshLambertMaterial({color:0x553e70}),
@@ -3333,7 +3367,7 @@ $('suit_sw').onclick=e=>{const b=e.target.closest('[data-c]');if(!b)return;if(b.
 // first-person hand: gloved fist around the flashlight, suit sleeve and reflective band, drawn in the viewmodel pass
 let fpHand=null;
 function mkHand(){if(fpHand)gunScene.remove(fpHand);const g=new THREE.Group(),b=GB(),m=new THREE.Matrix4(),q=new THREE.Quaternion(),e=new THREE.Euler(),v=new THREE.Vector3(),sv=new THREE.Vector3(),
-  P=(geo,sx,sy,sz,x,y,z,c,rx=0,rz=0)=>{q.setFromEuler(e.set(rx,0,rz));m.compose(v.set(x,y,z),q,sv.set(sx,sy,sz));b.add(geo,m,new THREE.Color(c))},sk=suitKind(),glv=sk==='thing'?0x1a1412:sk==='gold'?0x8a6a1a:sk==='racer'?0xd9b48f:sk==='alig'?0xd6a98a:sk==='santa'?0xf2f2ee:sk==='cartman'?0xf0c020:sk==='kenny'?0x5a3a20:sk==='ironman'?0xa8161a:sk==='ultron'?0x8c919a:sk==='reindeer'?0x2a1a10:sk==='elf'?0xf0c8a8:sk==='snowman'?0x5a3a20:sk==='ghost'?0xf4f4f0:sk==='skeleton'?0xe8e2d0:sk==='witch'?0x7ab04a:sk==='halloween'?0x22202a:sk==='thanos'?0x7a5a9a:sk==='sahur'?0xa06c3c:0x2a2c2e,su=suitCol(),gold=(stats.wins||0)>0;
+  P=(geo,sx,sy,sz,x,y,z,c,rx=0,rz=0)=>{q.setFromEuler(e.set(rx,0,rz));m.compose(v.set(x,y,z),q,sv.set(sx,sy,sz));b.add(geo,m,new THREE.Color(c))},sk=suitKind(),glv=sk==='thing'?0x1a1412:sk==='gold'?0x8a6a1a:sk==='racer'?0xd9b48f:sk==='toethesis'?0x11151d:sk==='alig'?0xd6a98a:sk==='santa'?0xf2f2ee:sk==='cartman'?0xf0c020:sk==='kenny'?0x5a3a20:sk==='ironman'?0xa8161a:sk==='ultron'?0x8c919a:sk==='reindeer'?0x2a1a10:sk==='elf'?0xf0c8a8:sk==='snowman'?0x5a3a20:sk==='ghost'?0xf4f4f0:sk==='skeleton'?0xe8e2d0:sk==='witch'?0x7ab04a:sk==='halloween'?0x22202a:sk==='thanos'?0x7a5a9a:sk==='sahur'?0xa06c3c:0x2a2c2e,su=suitCol(),gold=(stats.wins||0)>0;
  fl.color.setHex(gold?0xffe2a8:0xfff6e0);P(CYL,.021,.2,.021,0,0,-.06,gold?0xd4a52a:0x1c1c1e,Math.PI/2);P(CYL,.03,.05,.03,0,0,-.18,gold?0xb8891c:0x2a2a2c,Math.PI/2);if(gold)for(const z of[-.02,-.1])P(CYL,.0225,.008,.0225,0,0,z,0x8a6410,Math.PI/2);if(sk==='thing')for(let i=0;i<4;i++)P(TAP,.006,.035,.006,-.03,-.03+i*.0,-.088+i*.021,0x0c0a08,Math.PI*.8);P(CYL,.026,.006,.026,0,0,-.207,0xfff3c8,Math.PI/2);P(UB,.008,.012,.03,0,.024,-.07,0x8a8a8a);
  P(SPH,.04,.036,.058,.003,-.008,-.04,glv);for(let i=0;i<4;i++)P(SPH,.016,.017,.016,-.026,-.014+i*.0,-.075+i*.021,glv);P(CYL,.012,.05,.012,.02,.024,-.05,glv,Math.PI/2-.35);
  // forearm runs down and back toward the body from the wrist so the sleeve shows under the glove
@@ -3612,8 +3646,8 @@ function communityFinish(){
    card('CHAPTER 2','LEVEL '+(o.chapterIndex+1)+' COMPLETE','NEXT: '+HUB_FEATURED[next].n);
    setTimeout(()=>chapter2Start(next),1600);
   }else{
-   card('THE LAST TAPE','All twelve tapes recovered.','THE ARCHIVIST IS WAITING.');
-   setTimeout(()=>{openHub();hubEnter(13,'archivist-finale-823',{id:'archivist',n:'The Archivist',chapter2Boss:true})},2200);
+   card('THE LAST TAPE','All twelve tapes recovered.','TOETHESIS IS WAITING.');
+   setTimeout(()=>{openHub();hubEnter(13,'toethesis-finale-823',{id:'toethesis',n:'Toethesis',chapter2Boss:true})},2200);
   }
   return;
  }
@@ -3628,7 +3662,7 @@ function hubScreen(t){
  else if(t==='chapter2'){
   const progress=chapter2Progress();
   $('hublist').innerHTML=HUB_FEATURED.map((o,i)=>{const locked=i>progress,cleared=i<progress;
-   return '<button data-ch="'+i+'" '+(locked?'disabled aria-disabled="true"':'')+' title="'+esc(o.d)+'"><b>'+(i+1)+'. '+esc(o.n)+'</b><span>'+esc(o.d)+'<br>'+esc(o.rules)+'</span><em>'+(locked?'LOCKED':cleared?'CLEARED':'NEXT')+'</em></button>'}).join('')+(progress>=HUB_FEATURED.length?'<button data-final="1"><b>13. THE ARCHIVIST</b><span>Chapter 2 final boss encounter</span><em>'+(store.get('chapter2BossCleared',false)?'DEFEATED':'ENTER')+'</em></button>':'');
+   return '<button data-ch="'+i+'" '+(locked?'disabled aria-disabled="true"':'')+' title="'+esc(o.d)+'"><b>'+(i+1)+'. '+esc(o.n)+'</b><span>'+esc(o.d)+'<br>'+esc(o.rules)+'</span><em>'+(locked?'LOCKED':cleared?'CLEARED':'NEXT')+'</em></button>'}).join('')+(progress>=HUB_FEATURED.length?'<button data-final="1"><b>13. TOETHESIS</b><span>Chapter 2 final boss encounter</span><em>'+(store.get('chapter2BossCleared',false)?'DEFEATED':'ENTER')+'</em></button>':'');
  }else if(t==='community'){
   const done=communityCompleted(),items=hubCommunity();
   $('hublist').innerHTML=items.length?items.map((o,i)=>{const clear=!!done[o.id||('custom:'+o.n+':'+o.s)];return '<button data-c="'+i+'" title="'+esc(o.d||'Seeded custom map')+'"><b>'+esc(o.n)+'</b><span>'+esc(o.d||TH[o.t-1].n)+'</span><em>'+(clear?'CLEARED':'PLAY')+'</em></button>'}).join(''):'<p>No shared levels yet. Choose CREATE / IMPORT to add one.</p>';
@@ -3642,7 +3676,7 @@ function hubEnter(l,s=null,community=null){if(stt!=='hub')return;
  startLoad();loadScreen(()=>{restart(l);inRun=false;if(community){if(community.st!=null)stam=community.st;if(community.bt!=null)bat=community.bt;hud()}stats.runs++;saveStats()},false,()=>{enterRun();if(community)setTimeout(()=>say((community.chapter2?'CHAPTER 2 · LEVEL '+(community.chapterIndex+1)+'/12: ':'COMMUNITY LEVEL: ')+community.n+' — '+(community.rules||'CUSTOM'),4500),1200)})} 
 $('hubentry').onclick=()=>openHub();
 $('hubtabs').onclick=e=>{const b=e.target.closest('[data-ht]');if(b)hubScreen(b.dataset.ht)};
-$('hublist').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.l)hubEnter(+b.dataset.l);else if(b.dataset.ch!==undefined)chapter2Start(+b.dataset.ch);else if(b.dataset.final){hubEnter(13,'archivist-finale-823',{id:'archivist',n:'The Archivist',chapter2Boss:true})}else if(b.dataset.c!==undefined){const o=hubCommunity()[+b.dataset.c];if(o)hubEnter(o.t,o.s,o)}};
+$('hublist').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.l)hubEnter(+b.dataset.l);else if(b.dataset.ch!==undefined)chapter2Start(+b.dataset.ch);else if(b.dataset.final){hubEnter(13,'toethesis-finale-823',{id:'toethesis',n:'Toethesis',chapter2Boss:true})}else if(b.dataset.c!==undefined){const o=hubCommunity()[+b.dataset.c];if(o)hubEnter(o.t,o.s,o)}};
 $('hubmenu').onclick=toMenu;
 $('hubpause').style.display='none';
 const hubThemeSel=$('hubtheme');TH.slice(0,12).forEach((t,i)=>{const o=document.createElement('option');o.value=i+1;o.textContent='Level '+(i+1)+' - '+t.n;hubThemeSel.appendChild(o)});
