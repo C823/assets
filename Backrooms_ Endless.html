@@ -487,6 +487,18 @@ body.touch #hbn{bottom:auto;top:70px}
 .plb .btnp{height:40px;font-size:24px;padding:0 16px}.plb .btnp:disabled{opacity:.4;cursor:not-allowed}.plb em{font-style:normal;color:var(--grn)}.plb em.ig{color:var(--hi)}
 .plb-empty{font:400 22px var(--fd);color:var(--mute);padding:6px 0}
 .mpub{display:flex;align-items:center;gap:12px;margin:0 0 14px;cursor:pointer;font:500 15px var(--fb)}.mpub small{display:block;font:13px var(--fb);color:var(--mute)}
+
+/* v3.44: post-story hub and community challenges */
+#hub{position:fixed;inset:0;z-index:20;display:none;pointer-events:none;color:var(--ink);text-shadow:var(--osd)}
+body.hubmode #hub{display:block}body.hubmode #hud,body.hubmode #rec,body.hubmode #bars,body.hubmode #hint,body.hubmode #dot,body.hubmode #mini,body.hubmode #comp,body.hubmode #team,body.hubmode #hb,body.hubmode #tbtns,body.hubmode #chat,body.hubmode #ammo,body.hubmode #bossui{display:none!important}
+#hub:before{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(0,0,0,.78),rgba(0,0,0,.17) 72%),linear-gradient(0deg,rgba(0,0,0,.7),transparent 35%)}
+#hubhead{position:absolute;top:5vh;left:5vw;right:5vw;display:flex;justify-content:space-between;align-items:flex-start;gap:20px}#hubhead h1{font:400 clamp(54px,10vw,132px)/.8 var(--fd);margin:0;letter-spacing:.02em}#hubhead p{font:500 13px var(--fb);margin:14px 0;color:var(--mute);max-width:550px;line-height:1.6}#hubmain{position:absolute;left:5vw;bottom:8vh;width:min(750px,90vw);pointer-events:auto}#hubtabs{display:flex;gap:7px;margin-bottom:12px;flex-wrap:wrap}
+#hub button{cursor:pointer;color:var(--ink);font:400 27px var(--fd);padding:8px 14px;background:#050505;border:2px solid rgba(233,228,214,.55)}#hub button:hover,#hub button:focus-visible,#hub button.on{color:#080808;background:var(--ink);border-color:var(--ink);outline:none}#hub button:disabled{opacity:.3;cursor:not-allowed}
+#hublist{max-height:min(39vh,330px);overflow:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;scrollbar-width:thin}#hublist button{display:flex;align-items:center;gap:10px;text-align:left;padding:10px 12px;min-height:66px;background:rgba(5,5,5,.93)}#hublist button:hover{background:var(--ink)}#hublist button b{font:400 27px/1 var(--fd);white-space:normal}#hublist button span{font:12px/1.5 var(--fb);color:var(--mute);flex:1}#hublist button:hover span{color:#444}#hublist button em{font:400 18px var(--fd);font-style:normal;color:var(--hi);margin-left:auto}
+#hubnote{font:13px/1.6 var(--fb);color:var(--mute);background:rgba(0,0,0,.85);padding:10px 13px;margin:0 0 9px}#hubcreate{background:rgba(4,4,4,.94);padding:14px;border:2px solid rgba(233,228,214,.55);display:none;max-width:650px}#hubcreate label{display:block;font:400 20px var(--fd);margin:0 0 9px}#hubcreate input,#hubcreate select{display:block;width:100%;max-width:none;min-height:36px;margin:3px 0 0;font:500 14px var(--fb);padding:6px;background:#0b0b0b;color:var(--ink);border:1px solid var(--mute)}#hubcreate .actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}#hubcreate small{display:block;font:12px/1.5 var(--fb);color:var(--mute)}#hubmsg{font:13px/1.5 var(--fb);min-height:1.5em;color:var(--grn);margin-top:9px;overflow-wrap:anywhere}#hubcode{user-select:text;-webkit-user-select:text}#hubmain .hbt{font:400 24px var(--fd)}
+#hubmenu{pointer-events:auto;white-space:nowrap}#hubmark{position:absolute;right:5vw;bottom:6vh;font:400 22px var(--fd);color:var(--mute)}
+body.hubmode #menu,body.hubmode #ov{display:none!important}
+@media(max-width:700px){#hubhead{top:3vh}#hubhead h1{font-size:58px}#hubhead p{font-size:11px;max-width:300px}#hubmain{bottom:3vh;width:90vw}#hublist{grid-template-columns:1fr;max-height:42vh}#hublist button{min-height:50px}#hublist button b{font-size:22px}#hubmark{display:none}#hubhead{right:3vw;left:4vw}#hubmenu{font-size:20px!important;padding:6px!important}}
 </style></head><body>
 <canvas id="grain" class="fx" width="160" height="90"></canvas><div id="scan" class="fx"></div><div id="vig" class="fx"></div><div id="dmg" class="fx"></div><div id="insane" class="fx"></div><div id="flash" class="fx"></div>
 <div id="mapw" class="glass"><div class="mh"><b>Map</b><span class="lbl" id="mtitle"></span></div><canvas id="mm" width="512" height="512"></canvas>
@@ -497,13 +509,13 @@ body.touch #hbn{bottom:auto;top:70px}
 <div class="bar" id="hpw"><div class="bh" style="color:#f08a7e">HEALTH<em id="hpv">100</em></div><div class="tr"><i id="hpb" style="background:#d84a3a"></i></div></div><div class="bar"><div class="bh"><svg viewBox="0 0 16 16"><path d="M9 1L3 9h4l-1 6 6-8H8z" fill="currentColor"/></svg>STAMINA<em id="stv">100</em></div><div class="tr"><i id="stb"></i></div></div>
 <div class="bar"><div class="bh"><svg viewBox="0 0 16 16"><path d="M1 6h7l4-3v10l-4-3H1z" fill="currentColor"/></svg>FLASHLIGHT<em id="btv">100</em></div><div class="tr"><i id="btb"></i></div></div>
 <div class="bar" id="nrgw" style="display:none"><div class="bh" style="color:#9aff5a">ENERGY<em id="nrgv"></em></div><div class="tr"><i id="nrgb" style="background:#9aff5a"></i></div></div><div class="bar" id="infw" style="display:none;color:#8dffa8"><div class="bh" style="color:#8dffa8"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="2" fill="currentColor"/><circle cx="8" cy="3.5" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="4" cy="10.5" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="10.5" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>INFECTION</div><div class="tr"><i id="infb" style="background:#3aff6a;width:0"></i></div></div></div>
-<div id="hint"><span><b class="kbd">WASD</b>Move</span><span><b class="kbd">SHIFT</b>Sprint</span><span><b class="kbd">C</b>Crouch</span><span><b class="kbd">E</b>Hide</span><span><b class="kbd">1-4</b>Hotbar</span><span><b class="kbd">R-CLICK</b>Use</span><span><b class="kbd">I</b>Items</span><span><b class="kbd">M</b>Map</span><span><b class="kbd">ESC</b>Pause</span></div><div id="msg"></div><div id="card"></div><div id="act"></div><div id="hideov"><i class="vent"></i></div><div id="downv"></div><div id="downui"><b>YOU'RE DOWN</b><div class="hb"><i id="dnb"></i></div><span id="dnmsg"></span></div><div id="hideui"><div class="hb"><i id="hbr"></i></div><span id="hmsg"></span><button id="holdb">HOLD BREATH</button></div>
+<div id="hint"><span><b class="kbd">WASD</b>Move</span><span><b class="kbd">SHIFT</b>Sprint</span><span><b class="kbd">C</b>Crouch</span><span><b class="kbd">E</b>Hide</span><span><b class="kbd">1-4</b>Hotbar</span><span><b class="kbd">R-CLICK</b>Use</span><span><b class="kbd">I</b>Items</span><span><b class="kbd">M</b>Map</span><span><b class="kbd">V</b>Camera</span><span><b class="kbd">ESC</b>Pause</span></div><div id="msg"></div><div id="card"></div><div id="act"></div><div id="hideov"><i class="vent"></i></div><div id="downv"></div><div id="downui"><b>YOU'RE DOWN</b><div class="hb"><i id="dnb"></i></div><span id="dnmsg"></span></div><div id="hideui"><div class="hb"><i id="hbr"></i></div><span id="hmsg"></span><button id="holdb">HOLD BREATH</button></div>
 <div id="inv" class="glass"><div class="iv-h"><b>INVENTORY</b><button id="iv_x" aria-label="Close">[I] CLOSE</button></div><div id="iv_hbw"><span>HOTBAR</span><div id="iv_hb"></div><small>Drag items onto a slot. Drag one off to clear it.</small></div>
 <div class="iv-b"><div id="iv_grid"></div><div id="iv_det"><div id="iv_ico"></div><h4 id="iv_name"></h4><p id="iv_desc"></p><p id="iv_stat"></p><div class="iv-act"><button class="btnp" id="iv_use">USE</button><button class="btng" id="iv_drop">DROP</button></div></div></div>
 <div id="i_san"><div class="sh"><span class="lbl">Sanity</span><span id="i_sant">STABLE</span></div><div class="sb"><i id="i_sanb"></i></div></div>
 <div class="iv-f">[1-0] select &middot; [ENTER] use / equip &middot; [Q] drop &middot; drag to rearrange or set the hotbar &middot; [I] close</div></div>
 <div id="tz"></div><div id="stick"><i></i></div>
-<div id="tbtns"><div data-k="pause">II</div><div data-k="fire" class="bk">FIRE</div><div data-k="reload" class="bk">RELOAD</div><div data-k="inv">ITEMS</div><div data-k="map">MAP</div><div data-k="light">ITEM</div><div data-k="hide">USE</div><div data-k="crouch">CROUCH</div><div data-k="run">RUN</div><div data-k="jump">JUMP</div></div>
+<div id="tbtns"><div data-k="pause">II</div><div data-k="camera">CAM</div><div data-k="fire" class="bk">FIRE</div><div data-k="reload" class="bk">RELOAD</div><div data-k="inv">ITEMS</div><div data-k="map">MAP</div><div data-k="light">ITEM</div><div data-k="hide">USE</div><div data-k="crouch">CROUCH</div><div data-k="run">RUN</div><div data-k="jump">JUMP</div></div>
 <div id="fade" class="fx"></div>
 <div id="splash"><div class="sp-logos"><img id="sp_c" alt="C823" src="https://raw.githubusercontent.com/C823/assets/main/C823%20logo.png" data-alt="assets/C823%20logo.png|C823%20logo.png" onerror="imgAlt(this)"><i class="sp-div"></i><img id="sp_p" alt="Powerhouse" src="https://raw.githubusercontent.com/C823/Powerhouse/main/icons/POWERHOUSE-icon-dark.png" data-alt="assets/POWERHOUSE-icon-dark.png|POWERHOUSE-icon-dark.png" onerror="imgAlt(this)"></div><div class="sp-t">A POWERHOUSE ORIGINAL</div><i class="spin"></i></div>
 <div id="load" class="off"><i id="lprev"></i>
@@ -528,15 +540,17 @@ body.touch #hbn{bottom:auto;top:70px}
 <div class="ah">UNLOCK ALL</div><div class="r"><button data-a="u_ach">Achievements</button><button data-a="u_enc">Encyclopedia</button><button data-a="u_lvl">Starting levels</button><button data-a="u_gold">Golden key</button></div>
 </div></div>
 <div id="admpw" class="glass"><b>ADMIN PANEL</b><p>Enter an admin code to unlock the admin panel. You only need to do this once per code.</p><input id="pw_in" type="password" maxlength="24" autocomplete="off" spellcheck="false"><div class="r"><button class="btnp" id="pw_ok">UNLOCK</button><button class="btng" id="pw_x">CANCEL</button></div><p id="pw_msg"></p></div>
+
+<div id="hub"><div id="hubhead"><div><h1>THE HUB</h1><p>YOU MADE IT OUT. EVERY DOOR LEADS SOMEWHERE ELSE.<br>REVISIT THE BACKROOMS OR EXPLORE 12 COMMUNITY CHALLENGES.</p></div><button id="hubmenu">MAIN MENU</button></div><div id="hubmain"><div id="hubtabs"><button data-ht="story" class="on">STORY LEVELS</button><button data-ht="community">COMMUNITY LEVELS</button><button data-ht="create">CREATE / IMPORT</button></div><p id="hubnote"></p><div id="hublist"></div><div id="hubcreate"><label>LEVEL NAME<input id="hubname" type="text" maxlength="36" placeholder="The Forgotten Hallway"></label><label>ENVIRONMENT<select id="hubtheme"></select></label><label>WORLD SEED<input id="hubseed" type="text" maxlength="40" placeholder="Enter a seed or leave blank for random"></label><div class="actions"><button id="hubmake">SAVE LEVEL + COPY CODE</button><button id="hubplaycustom">PLAY CUSTOM LEVEL</button></div><label style="margin-top:14px">IMPORT SHARED LEVEL CODE<input id="hubimport" type="text" maxlength="400" placeholder="BR43-..."></label><div class="actions"><button id="hubadd">IMPORT LEVEL</button></div><small>Community levels use the game's existing procedural layouts and enemies, with a chosen theme and world seed. Codes can be shared directly; this is not yet an online public level server.</small><div id="hubmsg"></div></div></div><div id="hubmark">CH 03 &middot; POST-STORY ACCESS &middot; v3.44</div></div>
 <div id="menu">
 <div id="osd"><span id="osd_tr">&#9654; PLAY &nbsp;SP <b id="osd_t">0:00:00</b></span><span id="osd_br"></span><span id="osd_sync"></span><button id="osd_acct" style="display:none" title="Your site account"></button></div>
 <a id="mph" href="https://powerhouse.c823.workers.dev" target="_top" title="Powerhouse" aria-label="Go to Powerhouse"><img alt="Powerhouse" src="https://raw.githubusercontent.com/C823/Powerhouse/main/icons/POWERHOUSE-icon-dark.png" onerror="this.parentNode.textContent='PWR'"></a>
 <div id="mlogo"><img alt="Backrooms" src="https://raw.githubusercontent.com/C823/assets/main/backrooms_logo.png" data-alt="assets/backrooms_logo.png|backrooms_logo.png" onload="this.nextSibling.style.display='none'" onerror="if(!imgAlt(this))this.remove()"><span>BACKROOMS<small>ENDLESS</small></span></div>
 <div id="mchip"><span class="lbl">DEEPEST</span><b id="mc_best">1</b><span class="lbl">RUNS</span><b id="mc_runs">0</b></div>
-<nav id="mpanel" class="glass"><button class="mb" data-m="play">PLAY</button><button class="mb" data-m="mp">MULTIPLAYER</button><i class="gap"></i><button class="mb" data-m="how">HOW TO PLAY</button><button class="mb" data-m="enc">ENCYCLOPEDIA</button><button class="mb" data-m="ach">ACHIEVEMENTS</button><button class="mb" data-m="suit">SUIT</button><button class="mb" data-m="fs">FULLSCREEN</button><i class="gap"></i><button class="mb" data-m="set">SETTINGS</button></nav>
+<nav id="mpanel" class="glass"><button class="mb" data-m="play">PLAY</button><button class="mb" data-m="mp">MULTIPLAYER</button><button class="mb" id="hubentry" style="display:none">THE HUB</button><i class="gap"></i><button class="mb" data-m="how">HOW TO PLAY</button><button class="mb" data-m="enc">ENCYCLOPEDIA</button><button class="mb" data-m="ach">ACHIEVEMENTS</button><button class="mb" data-m="suit">SUIT</button><button class="mb" data-m="fs">FULLSCREEN</button><i class="gap"></i><button class="mb" data-m="set">SETTINGS</button></nav>
 <div id="msub" class="glass"><button id="m_x" aria-label="Close">&#10005;</button>
 <section id="s_how"><h3>HOW TO PLAY</h3><p>Find the cyan key, then find the exit door and walk through it. Every exit leads one level deeper, to a bigger maze with more things hunting you.</p><div id="m_ents"></div>
-<div class="keys2"><span><b class="kbd">WASD</b>Move</span><span><b class="kbd">SHIFT</b>Sprint (loud)</span><span><b class="kbd">C</b>Crouch (silent)</span><span><b class="kbd">E</b>Hide in a locker</span><span><b class="kbd">SPACE</b>Hold breath (hiding)</span><span><b class="kbd">E</b>Open safe / doors</span><span><b class="kbd">1-4</b>Pick hotbar slot</span><span><b class="kbd">WHEEL</b>Next / previous slot</span><span><b class="kbd">R-CLICK</b>Use held item</span><span><b class="kbd">CLICK</b>Attack</span><span><b class="kbd">Q</b>Drop held item</span><span><b class="kbd">M</b>Map</span><span><b class="kbd">I</b>Inventory</span><span><b class="kbd">ESC</b>Pause</span><span><b class="kbd">T</b>Chat (co-op)</span></div>
+<div class="keys2"><span><b class="kbd">WASD</b>Move</span><span><b class="kbd">SHIFT</b>Sprint (loud)</span><span><b class="kbd">C</b>Crouch (silent)</span><span><b class="kbd">E</b>Hide in a locker</span><span><b class="kbd">SPACE</b>Hold breath (hiding)</span><span><b class="kbd">E</b>Open safe / doors</span><span><b class="kbd">1-4</b>Pick hotbar slot</span><span><b class="kbd">WHEEL</b>Next / previous slot</span><span><b class="kbd">R-CLICK</b>Use held item</span><span><b class="kbd">CLICK</b>Attack</span><span><b class="kbd">Q</b>Drop held item</span><span><b class="kbd">M</b>Map</span><span><b class="kbd">I</b>Inventory</span><span><b class="kbd">V</b>Switch camera</span><span><b class="kbd">ESC</b>Pause</span><span><b class="kbd">T</b>Chat (co-op)</span></div>
 <p>Monsters see what is in front of them, and a flashlight beam is easy to spot. On Hard, darkness and monsters drain your sanity; almond water restores it. Your run saves to the slot you picked when you started it.</p></section>
 <section id="s_enc"><h3>ENCYCLOPEDIA</h3><div class="etabs"><button data-t="L" class="on">Levels</button><button data-t="E">Entities</button><span id="enc_ct"></span></div><div id="enc_list"></div></section>
 <section id="s_ach"><h3>ACHIEVEMENTS</h3><h4 class="ssub"><i>01</i>RECORDS</h4><div id="m_rec"></div><h4 class="ssub"><i>02</i>TROPHIES</h4><div class="achh"><span id="ach_ct"></span><div class="achb"><i id="ach_bar"></i></div></div><div id="ach_list"></div></section>
@@ -545,7 +559,8 @@ body.touch #hbn{bottom:auto;top:70px}
 <span>Look sensitivity</span><input type="range" id="c_sens" min=".2" max="3" step=".1">
 <span>Master volume</span><input type="range" id="c_vol" min="0" max="1" step=".05">
 <span>Graphics quality</span><select id="c_q"><option value="auto">Auto (recommended)</option><option value="low">Low (fastest)</option><option value="medium">Medium</option><option value="high">High</option></select>
-<span>Invert mouse Y</span><input type="checkbox" class="sw" id="c_inv">
+<span>Camera view<small>Press V in game to cycle between First, Second and Third person.</small></span><select id="c_cam"><option value="0">First person</option><option value="1">Second person (front facing)</option><option value="2">Third person (behind)</option></select>
+ <span>Invert mouse Y</span><input type="checkbox" class="sw" id="c_inv">
 <span>Show FPS counter</span><input type="checkbox" class="sw" id="c_fps">
 <span>Cloud sync<small id="sy_lbl" style="display:block;font-size:12px;color:var(--mute)">Keep saves, records and suits in sync between devices with a code.</small><small id="sy_st" style="display:block;font:400 20px var(--fd);color:var(--mute)"></small></span><input type="checkbox" class="sw" id="sy_on">
 <div id="sy_box" style="grid-column:1/3;display:none"><div class="sy_code"><span id="sy_cl">YOUR SYNC CODE</span><b id="sy_code">----</b><button class="btng" id="sy_copy">COPY</button><button class="btng" id="sy_now">SYNC NOW</button></div><p class="sy_p" id="sy_p">Type this code on your other device (Settings &rarr; Cloud sync &rarr; Link). Anyone with the code can load your saves, so keep it to yourself.</p></div>
@@ -585,10 +600,10 @@ body.touch #hbn{bottom:auto;top:70px}
 <div class="mcard"><h4><i>B</i>PLAYERS</h4><div id="mp_list"></div></div>
 <div id="mp_chat" class="mcard"><h4><i>C</i>CHAT</h4><div id="mp_chatlog"></div><div class="chrow"><input id="mp_chatin" type="text" maxlength="120" spellcheck="false" autocomplete="off" placeholder="Say hi to the room"><button class="btng" id="mp_chatgo">SEND</button></div></div></div><div id="mp_saves"></div><button class="btnp" id="mp_start">START NEW GAME</button></div>
 <div class="pfoot"><p id="mp_status"></p><div class="nrow"><button class="btng" id="mp_back">BACK</button></div></div></div>
-<div id="ver">v3.39 &middot; 2026-11-09</div></div>
+<div id="ver">v3.43 &middot; 2026-11-09</div></div>
 <div id="sydlg"><div class="sybox glass"><div class="lbl" id="sy_dk"></div><h3 id="sy_dt"></h3><div id="sy_db"></div><div class="sybtn" id="sy_dbtn"></div></div></div>
 <div id="ov" style="display:none"><div class="ovl"><div class="lbl" id="olbl">GAME PAUSED</div><div id="dkick"></div><h1 id="t">PAUSED</h1><i id="dline"></i><p id="s"></p><div id="dgrid"></div><div id="ostats"></div>
-<div class="obtn"><button id="btn" class="btnp">RESUME</button><button id="m2" class="btng">MAIN MENU</button></div><p id="best"></p>
+<div class="obtn"><button id="btn" class="btnp">RESUME</button><button id="m2" class="btng">MAIN MENU</button><button id="hubpause" class="btng" style="display:none">RETURN TO HUB</button></div><p id="best"></p>
 <div id="keys"><span><b class="kbd">WASD</b>Move</span><span><b class="kbd">SHIFT</b>Sprint</span><span><b class="kbd">C</b>Crouch</span><span><b class="kbd">E</b>Hide</span><span><b class="kbd">M</b>Map</span><span><b class="kbd">I</b>Items</span><span><b class="kbd">1-4</b>/<b class="kbd">WHEEL</b>Hotbar</span><span><b class="kbd">R-CLICK</b>Use item</span></div></div>
 <div id="setPause" class="glass"><div class="lbl" style="margin-bottom:14px">Settings</div></div></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -602,13 +617,14 @@ let S=31,H=3;const T=3,D=[[1,0],[-1,0],[0,1],[0,-1]];
 
 // ---- settings & storage ----
 const store={get(k,d){try{const v=localStorage.getItem('br_'+k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('br_'+k,JSON.stringify(v))}catch(e){}if(window.__syncOK)syncDirty(k)}};
-const CFG=Object.assign({sens:1,vol:.8,q:'auto',inv:false,fps:false,diff:'normal'},store.get('cfg',{}));let best=store.get('best',0);
+const CFG=Object.assign({sens:1,vol:.8,q:'auto',inv:false,fps:false,camView:0,diff:'normal'},store.get('cfg',{}));let best=store.get('best',0);
 const QP={low:{ph:false,max:1,sc:.6,tx:256},medium:{ph:true,max:1,sc:.85,tx:512},high:{ph:true,max:1.5,sc:1,tx:512},auto:{ph:true,max:1,sc:.85,tx:512}};
 let Q=QP.auto,rs=.85,autoLow=false;
 const DF={easy:{key:'easy',n:'Easy',lives:5,ms:.85,mc:-1,see:.8,drain:160,bats:2,sbat:2,lose:3.5,san:false},
  normal:{key:'normal',n:'Normal',lives:3,ms:1,mc:0,see:1,drain:110,bats:0,sbat:1,lose:5,san:false},
  hard:{key:'hard',n:'Hard',lives:2,ms:1.1,mc:1,see:1.15,drain:85,bats:-1,sbat:0,lose:7,san:true}};
 let DIFF=DF[CFG.diff]||DF.normal;
+let cameraView=[0,1,2].includes(+CFG.camView)?+CFG.camView:0;
 const usePhong=()=>Q.ph&&!autoLow;
 
 // ---- renderer ----
@@ -1289,10 +1305,10 @@ const fmt=t=>[t/3600,t/60%60,t%60].map(v=>String(v|0).padStart(2,'0')).join(':')
 function startYaw(){for(const[a,b,y]of[[1,0,-Math.PI/2],[0,1,Math.PI],[-1,0,Math.PI/2],[0,-1,0]])if(!w[1+b][1+a])return y;return -Math.PI/2}
 function reset(){lvStart=runT;px=1.5*T;pz=1.5*T;yaw=startYaw();if(B&&B.spawn){px=B.spawn.x;pz=B.spawn.z;yaw=0}pitch=0;vx=vz=0;stam=1;exh=false;crouch=false;bob=0;hud();cardPending=true;
  for(let i=0;i<DN;i++){dpos[i*3]=px+(rnd()-.5)*18;dpos[i*3+1]=rnd()*H;dpos[i*3+2]=pz+(rnd()-.5)*18}}
-function show(t,s,b,setg){const o=$('ov'),ov=stt==='over';o.className=ov?'over':'';if(!ov)o.style.removeProperty('--shot');$('t').textContent=t;$('s').textContent=s;$('btn').textContent=b;
+function show(t,s,b,setg){$('hubpause').style.display='none';const o=$('ov'),ov=stt==='over';o.className=ov?'over':'';if(!ov)o.style.removeProperty('--shot');$('t').textContent=t;$('s').textContent=s;$('btn').textContent=b;
  $('ostats').textContent=['Level '+level+' – '+cur.n,fmt(runT),ov?'Deepest: level '+Math.max(best,level):lives+(lives===1?' life':' lives'),DIFF.n+(perma?' (one life)':'')].concat(runSeed!=null&&RUN.seed?['Seed: '+RUN.seed]:[]).join('  ·  ');
  $('best').textContent=best>1?'DEEPEST LEVEL REACHED: '+best:'';$('m2').textContent=ov?'MAIN MENU':NET.on?'LEAVE GAME':'SAVE AND QUIT';$('btn').style.display=ov&&NET.on?'none':'';if(setg)$('setPause').appendChild($('set'));$('setPause').style.display=setg?'block':'none';o.style.display='flex';$('btn').focus()}
-function pause(m){if(stt!=='play')return;stt='pause';for(const k in K)K[k]=0;mapOn=false;$('mapw').style.display='none';if(AC)MG.gain.setTargetAtTime(CFG.vol*.3,AC.currentTime,.1);show('PAUSED',m||'Take a breath. They are still out there.','RESUME',1);saveGame()}
+function pause(m){if(stt!=='play')return;stt='pause';for(const k in K)K[k]=0;mapOn=false;$('mapw').style.display='none';if(AC)MG.gain.setTargetAtTime(CFG.vol*.3,AC.currentTime,.1);show('PAUSED',m||'Take a breath. They are still out there.','RESUME',1);$('hubpause').style.display=(stats.wins>0&&!NET.on)?'inline-flex':'none';saveGame()}
 function over(why){stt='over';const pb=endless?(stats.endBest||0):best;bumpBest();const nbst=endless?(stats.endBest||0):best,rec=nbst>pb&&pb>0;inRun=false;const kept=(!NET.on||NET.host)&&deathSave();stats.deaths++;saveStats();achDeath();document.exitPointerLock&&document.exitPointerLock();
  sfx({t:'sawtooth',f:70,dur:2,v:.4});sfx({t:'square',f:52,dur:2.4,v:.25,r:.5});show('IT FOUND YOU','The hum never stops. Neither do they.',kept&&!NET.on?'RETRY LEVEL '+level:'TRY AGAIN');if(kept)$('best').textContent='Saved to '+(slotName||'your slot')+': you can carry on from the start of Level '+level+' with full lives.';
  const o=$('ov');o.style.setProperty('--shot',deathShot?'url('+deathShot+')':'none');$('dkick').textContent=(why||'Your run is over').replace(/\.$/,'')+'  \u00b7  Level '+level;
@@ -1320,7 +1336,7 @@ function loadScreen(cb,quick,done){const L=$('load'),th=TH[thi()],hx=n=>'#'+n.to
   if(i===4)setTimeout(()=>{L.classList.add('off');stt=prev;clearInterval(tk);clearInterval(tipT);E.fade.style.opacity=0;if(done){done();return}
    if(prev==='play'){if(!document.pointerLockElement&&!drag&&!touchMode&&!A.open)pause('Click RESUME to continue.');else levelCard()}},600)},T0*i/4))}
 function nextLevel(){if(stt!=='play')return;if(cur.boss||bossMenu){nextLevelNow();return}const i=thi();csPlay(CSK[i]||'door',CSC[i]||'You stepped through the door into somewhere new.',()=>nextLevelNow())}
-function nextLevelNow(){if(stt!=='play')return;if(NET.on){const was=NET.spec||!!down||lives<=0;NET.spec=false;lives=Math.max(lives,1);R.domElement.style.filter='';if(down)endDown();if(was)setTimeout(()=>say('New level. You are back on your feet.',2800),2800)}else if(NET.spec){NET.spec=false;lives=Math.max(lives,1);R.domElement.style.filter=''}if(cur.boss){bossWin();return}level++;bumpBest();if(runT-lvStart<60&&level>1)ach('speed');if(level>=2)ach('deeper');if(level>=6)ach('half');if(!endless){if(level>=12)ach('home');if(level>=13)ach('finale')}else if(level>=25)ach('endless');
+function nextLevelNow(){if(stt!=='play')return;if(communityActive){communityFinish();return;}if(NET.on){const was=NET.spec||!!down||lives<=0;NET.spec=false;lives=Math.max(lives,1);R.domElement.style.filter='';if(down)endDown();if(was)setTimeout(()=>say('New level. You are back on your feet.',2800),2800)}else if(NET.spec){NET.spec=false;lives=Math.max(lives,1);R.domElement.style.filter=''}if(cur.boss){bossWin();return}level++;bumpBest();if(runT-lvStart<60&&level>1)ach('speed');if(level>=2)ach('deeper');if(level>=6)ach('half');if(!endless){if(level>=12)ach('home');if(level>=13)ach('finale')}else if(level>=25)ach('endless');
  sfx({f:523,dur:.7,v:.18,r:.5});sfx({f:659,dur:.7,v:.18,r:.5,d:.15});sfx({f:784,dur:1,v:.18,r:.5,d:.3});sfx({n:1,ft:'bandpass',ff:200,ff2:4000,q:1,dur:1.2,v:.15,a:.6});
  const fs=$('flash');fs.style.transition='opacity .5s';fs.style.opacity=1;setTimeout(()=>{fs.style.transition='opacity 1.2s';fs.style.opacity=0},500);
  san=Math.min(100,san+25);breakdown=0;const bonus=(level-1)%(endless?5:3)===0&&lives<5&&!perma;if(bonus)lives++;
@@ -1332,6 +1348,10 @@ $('a_ts').oninput=e=>A.ts=Math.min(2,Math.max(.25,+e.target.value||1));
 $('a_mon').innerHTML=Object.keys(EK).map(k=>'<option value="'+k+'">'+EK[k].n+'</option>').join('');
 // the admin panel is locked behind a password the first time; once unlocked it stays unlocked (Reset progress does not touch it)
 // two codes: 'uncle' opens the smaller panel, 'Arsenal8' the full one with the testing tools. Codes ignore capital letters
+// Admin authorization reset for v3.43: all browsers loading this release must unlock again.
+// This is client-side only; older deployed builds cannot be remotely invalidated.
+const ADMIN_AUTH_EPOCH='v3.42';
+try{if(localStorage.getItem('br_admin_epoch')!==ADMIN_AUTH_EPOCH){localStorage.removeItem('br_admin');localStorage.setItem('br_admin_epoch',ADMIN_AUTH_EPOCH)}}catch(e){}
 let admMem=0;const adminLvl=()=>{let v=0;try{v=+localStorage.getItem('br_admin')||0}catch(e){}return Math.max(admMem,v)},adminOK=()=>adminLvl()>0;
 function admToggle(){if($('admpw').style.display==='block'){closePw(true);return}if(!adminOK()&&!A.open){openPw();return}admToggle0()}
 function openPw(){A.open=true;for(const k in K)K[k]=0;$('admpw').style.display='block';$('pw_in').value='';$('pw_msg').textContent='';document.exitPointerLock&&document.exitPointerLock();setTimeout(()=>$('pw_in').focus(),60)}
@@ -1908,7 +1928,7 @@ function hideTick(dt){const h=hid,L=h.L;h.t+=dt;flashOn=false;px=L.x-L.a*.05;pz=
  const pv=L.g.userData.piv,closed=!L.want&&Math.abs(pv.rotation.y)<.06;pv.visible=!closed;$('hideov').classList.toggle('on',closed);
  let dn=99,nm=null;for(const m of mons){if(m.lure||m.dead||(m.k.verity&&m.vp<3))continue;const d=Math.hypot(m.g.position.x-px,m.g.position.z-pz);if(d<dn){dn=d;nm=m}}
  const near=dn<6,hold=(K.Space||holdB)&&h.gasp<=0&&h.br>0;
- if(hold){h.br=Math.max(0,h.br-dt*.24);if(h.br<=0){h.gasp=1.8;sfx({n:1,ft:'bandpass',ff:1100,q:.8,dur:.55,v:.32,a:.02,r:.3});sfx({n:1,ft:'bandpass',ff:700,q:.8,dur:.7,v:.2,a:.1,d:.5});if(near)h.sus+=.9}}
+ if(hold){h.br=Math.max(0,h.br-dt*.12);if(h.br<=0){h.gasp=1.8;sfx({n:1,ft:'bandpass',ff:1100,q:.8,dur:.55,v:.32,a:.02,r:.3});sfx({n:1,ft:'bandpass',ff:700,q:.8,dur:.7,v:.2,a:.1,d:.5});if(near)h.sus+=.9}}
  else h.br=Math.min(1,h.br+dt*(near?.07:.22));if(h.gasp>0)h.gasp-=dt;
  if(near&&!hold)h.sus+=dt*(1-dn/6)*.6;else h.sus=Math.max(0,h.sus-dt*.2);
  if(!hold&&(h.bt-=dt)<=0){h.bt=near?1.15:2.3;const v=near?.07:.03;sfx({n:1,ft:'bandpass',ff:950,q:1,dur:.7,v,a:.3});sfx({n:1,ft:'bandpass',ff:620,q:1,dur:.85,v:v*.8,a:.25,d:.75})}
@@ -2119,12 +2139,12 @@ function contLoad(sv){endless=!!sv.endless;endSeed=sv.endSeed|0;thiC={};runSeed=
  if(sv.seen&&sv.seen.length===S*S)for(let i=0;i<S*S;i++)seen[i]=sv.seen.charCodeAt(i)===49?1:0;
  if(typeof sv.px==='number'&&!hit(sv.px,sv.pz)){px=sv.px;pz=sv.pz;yaw=sv.yaw||yaw}
  inRun=true;hud();invUI()}
-function toMenu(){closePlay();if(NET.on)netLeave(true);if(stt!=='over')saveGame();menuBG();stt='menu';document.exitPointerLock&&document.exitPointerLock();$('ov').style.display='none';mapOn=false;$('mapw').style.display='none';if(AC)MG.gain.setTargetAtTime(CFG.vol*.5,AC.currentTime,.2);menuUI()}
+function toMenu(){communityActive=null;closePlay();if(NET.on)netLeave(true);if(stt!=='over'&&stt!=='hub')saveGame();document.body.classList.remove('hubmode');menuBG();stt='menu';document.exitPointerLock&&document.exitPointerLock();$('ov').style.display='none';mapOn=false;$('mapw').style.display='none';if(AC)MG.gain.setTargetAtTime(CFG.vol*.5,AC.currentTime,.2);menuUI()}
 function menuUI(sec){const EC={bacteria:'#8a8a8a',skin:'#d8d0c0',hound:'#e8dcd0',smiler:'#ffffff',scratcher:'#ff7a2a',party:'#e8c830',anim:'#ff7020',fmoth:'#7aff4a',wanderer:'#ffd84a',windows:'#ff2a2a',mmoth:'#a08060',plague:'#3aff6a'};
  $('m_ents').innerHTML='<p>Everything you run into is recorded in the <b>Encyclopedia</b>.</p><div class="lbl" style="margin-top:2vh">Controls</div>';document.body.classList.add('menu');const svs=SLOTS.sp.map(k=>[k,slotGet(k)]).filter(q=>q[1]);
  $('m_cwrap').style.display=svs.length?'block':'none';
  $('m_clist').innerHTML=svs.map(([k,sv])=>'<div class="crow"><p><b>'+esc(slotName_(sv,k))+'</b>'+(sv.nm?'<em>Slot '+k.slice(2)+' &middot; </em>':'')+saveInfo(sv)+'</p><button class="btnp" data-cs="'+k+'">CONTINUE</button></div>').join('');
- $('m_rec').innerHTML='<div class="stats">'+[['Deepest level',Math.max(best,1)],['Runs started',stats.runs],['Deaths',stats.deaths],['Escapes',stats.wins||0],['Endless record',stats.endBest?'Level '+stats.endBest:'&ndash;'],['Best on Easy',stats.easy||'&ndash;'],['Best on Normal',stats.normal||'&ndash;'],['Best on Hard',stats.hard||'&ndash;']].map(([a,v])=>'<div class="st"><b>'+v+'</b><span>'+a+'</span></div>').join('')+'</div>';$('mc_best').textContent=Math.max(best,1);$('mc_runs').textContent=stats.runs;
+ $('hubentry').style.display=(stats.wins||0)>0?'block':'none';$('m_rec').innerHTML='<div class="stats">'+[['Deepest level',Math.max(best,1)],['Runs started',stats.runs],['Deaths',stats.deaths],['Escapes',stats.wins||0],['Endless record',stats.endBest?'Level '+stats.endBest:'&ndash;'],['Best on Easy',stats.easy||'&ndash;'],['Best on Normal',stats.normal||'&ndash;'],['Best on Hard',stats.hard||'&ndash;']].map(([a,v])=>'<div class="st"><b>'+v+'</b><span>'+a+'</span></div>').join('')+'</div>';$('mc_best').textContent=Math.max(best,1);$('mc_runs').textContent=stats.runs;
  openSub(sec||null)}
 // camcorder readouts on the main menu: tape counter and date stamp
 let osdT0=performance.now();setInterval(()=>{if(!document.body.classList.contains('menu'))return;const s_=(performance.now()-osdT0)/1000|0,d=new Date(),M=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'][d.getMonth()];
@@ -2145,7 +2165,7 @@ function toggleCrouch(){crouch=!crouch}
 let drag=false,mdown=false,lockFail=0,touchMode=false;
 function lockReq(){if(drag||touchMode)return;try{const p=R.domElement.requestPointerLock();if(p&&p.catch)p.catch(()=>{})}catch(e){}}
 function go(){if(!AC)audio();AC.resume();MG.gain.setTargetAtTime(CFG.vol,AC.currentTime,.1);$('ov').style.display='none';document.body.classList.remove('menu');stt='play';lockReq();if(cardPending)levelCard()}
-$('btn').onclick=()=>{if(stt==='over'){if(!NET.on&&slot&&slotGet(slot)){$('ov').style.display='none';continueGame(slot)}else newGame(DIFF.key)}else if(stt==='pause')go()};$('m2').onclick=toMenu;
+$('btn').onclick=()=>{if(stt==='over'){if(!NET.on&&slot&&slotGet(slot)){$('ov').style.display='none';continueGame(slot)}else newGame(DIFF.key)}else if(stt==='pause')go()};$('m2').onclick=toMenu;$('hubpause').onclick=()=>{if((stats.wins||0)>0&&!NET.on)openHub()};
 document.addEventListener('pointerlockerror',()=>{if(stt!=='play')return;if(++lockFail>=3){drag=true;say('Mouse lock unavailable. Click and drag to look around.',4000)}else pause('Chrome needs a moment. Click RESUME again.')});
 document.addEventListener('pointerlockchange',()=>{if(document.pointerLockElement){lockFail=0;return}if(chatOn){chatClose();return}if(kpOn)return;if(stt==='play'&&!A.open&&!invOn&&!drag&&!touchMode)pause()});
 R.domElement.addEventListener('mousedown',()=>{if(stt==='play'&&!document.pointerLockElement&&!A.open&&!invOn)lockReq()});
@@ -2157,7 +2177,7 @@ function look(dx,dy,k){dx=clamp(dx,-250,250);dy=clamp(dy,-250,250);const s=.0022
 addEventListener('mousemove',e=>{if(stt==='play'&&!A.open&&!invOn&&(document.pointerLockElement||(drag&&mdown)))look(e.movementX,e.movementY,1)});
 addEventListener('keydown',e=>{if(kpOn){kpKey(e);return}if(stt==='cut'){if(['Space','Enter','KeyE','Escape','NumpadEnter'].includes(e.code)){e.preventDefault();csSkip()}return}if(stt==='menu'&&e.code==='Escape'){if(document.body.classList.contains('slp')){$('slot_back').click();return}closePlay();closeMP();openSub(null);return}
  if((stt==='menu'||stt==='pause'||stt==='over')&&(e.code==='ArrowDown'||e.code==='ArrowUp')&&e.target.tagName!=='SELECT'){const root=stt!=='menu'?$('ov'):document.body.classList.contains('np')?$('newg'):$('mpanel'),L=[...root.querySelectorAll('button:not(:disabled)')].filter(b=>b.offsetParent),i=L.indexOf(document.activeElement),nx=L[(i+(e.code==='ArrowDown'?1:-1)+L.length)%L.length];if(nx){nx.focus();e.preventDefault();sfx({f:2400,dur:.025,v:.02})}return}if(NET.on&&NET.started&&!chatOn&&(stt==='play'||stt==='pause')&&(e.code==='KeyT'||e.code==='Enter')&&e.target.tagName!=='INPUT'&&!invOn&&!A.open){e.preventDefault();chatOpen();return}if(e.key==='/'&&stt==='play'&&e.target.tagName!=='INPUT'){e.preventDefault();admToggle();return}if(A.open||e.target.tagName==='INPUT')return;K[e.code]=1;if(stt!=='play')return;if(e.code==='Space')e.preventDefault();
- if(invOn){invKey(e);return}if(e.code==='KeyE')interact();if(/^Digit[1-4]$/.test(e.code))hbSelect(+e.code.slice(5)-1);if(e.code==='KeyQ'){const h_=hbHeld();if(h_&&h_!=='fl')dropItem(h_)}if(e.code==='KeyM')toggleMap();if(e.code==='KeyC')toggleCrouch();if(e.code==='KeyI'||e.code==='Tab'){e.preventDefault();toggleInv()}if(e.code==='KeyR'&&(B||wEq==='pistol'))reload();
+ if(invOn){invKey(e);return}if(e.code==='KeyE')interact();if(/^Digit[1-4]$/.test(e.code))hbSelect(+e.code.slice(5)-1);if(e.code==='KeyQ'){const h_=hbHeld();if(h_&&h_!=='fl')dropItem(h_)}if(e.code==='KeyM')toggleMap();if(e.code==='KeyV'&&!e.repeat){e.preventDefault();setCameraView((cameraView+1)%3)}if(e.code==='KeyC')toggleCrouch();if(e.code==='KeyI'||e.code==='Tab'){e.preventDefault();toggleInv()}if(e.code==='KeyR'&&(B||wEq==='pistol'))reload();
  if(e.code==='KeyP'||(e.code==='Escape'&&(drag||touchMode))){if(document.pointerLockElement)document.exitPointerLock();else pause()}});
 addEventListener('keyup',e=>K[e.code]=0);addEventListener('pointerdown',()=>{if(stt==='cut')csSkip()});addEventListener('blur',()=>{for(const k in K)K[k]=0;if(stt==='play'&&(drag||touchMode))pause()});
 const TS={id:null,ox:0,oy:0,x:0,y:0,lid:null,lx:0,ly:0,run:false},tzone=$('tz'),stick=$('stick');
@@ -2170,9 +2190,9 @@ tzone.addEventListener('touchmove',e=>{e.preventDefault();for(const t of e.chang
 const tend=e=>{for(const t of e.changedTouches){if(t.identifier===TS.id){TS.id=null;TS.x=TS.y=0;stick.style.display='none'}if(t.identifier===TS.lid)TS.lid=null}};
 tzone.addEventListener('touchend',tend);tzone.addEventListener('touchcancel',tend);
 document.querySelectorAll('#tbtns [data-k]').forEach(b=>{const k=b.dataset.k;
- b.addEventListener('touchstart',e=>{e.preventDefault();e.stopPropagation();if(k==='run'){TS.run=true;b.classList.add('on');return}if(stt!=='play')return;if(k==='hide'){TS.use=true;interact()}else if(k==='light')useHeld();else if(k==='map')toggleMap();else if(k==='crouch'){toggleCrouch();b.classList.toggle('on',crouch)}else if(k==='pause')pause();else if(k==='inv')toggleInv();else if(k==='jump')TS.jump=true;else if(k==='fire')attack();else if(k==='reload')reload()},{passive:false});
+ b.addEventListener('touchstart',e=>{e.preventDefault();e.stopPropagation();if(k==='run'){TS.run=true;b.classList.add('on');return}if(stt!=='play')return;if(k==='hide'){TS.use=true;interact()}else if(k==='light')useHeld();else if(k==='map')toggleMap();else if(k==='camera')setCameraView((cameraView+1)%3);else if(k==='crouch'){toggleCrouch();b.classList.toggle('on',crouch)}else if(k==='pause')pause();else if(k==='inv')toggleInv();else if(k==='jump')TS.jump=true;else if(k==='fire')attack();else if(k==='reload')reload()},{passive:false});
  b.addEventListener('touchend',e=>{e.preventDefault();if(k==='hide')TS.use=false;if(k==='run'){TS.run=false;b.classList.remove('on')}})});
-(function(){const s=$('c_sens'),v=$('c_vol'),q=$('c_q'),inv=$('c_inv'),fp=$('c_fps'),save=()=>store.set('cfg',CFG);s.value=CFG.sens;v.value=CFG.vol;q.value=CFG.q;inv.checked=CFG.inv;fp.checked=CFG.fps;$('fps').style.display=CFG.fps?'block':'none';
+(function(){const s=$('c_sens'),v=$('c_vol'),q=$('c_q'),inv=$('c_inv'),fp=$('c_fps'),cvw=$('c_cam'),save=()=>store.set('cfg',CFG);s.value=CFG.sens;v.value=CFG.vol;q.value=CFG.q;inv.checked=CFG.inv;fp.checked=CFG.fps;cvw.value=String(cameraView);cvw.onchange=()=>setCameraView(+cvw.value);$('fps').style.display=CFG.fps?'block':'none';
  s.oninput=()=>{CFG.sens=+s.value;save()};v.oninput=()=>{CFG.vol=+v.value;if(MG)MG.gain.value=stt==='pause'?CFG.vol*.3:CFG.vol;save()};
  q.onchange=()=>{const was=usePhong();autoLow=false;setQuality(q.value);if(usePhong()!==was)swapMats();save()};
  inv.onchange=()=>{CFG.inv=inv.checked;save()};fp.onchange=()=>{CFG.fps=fp.checked;$('fps').style.display=CFG.fps?'block':'none';save()};
@@ -2592,7 +2612,7 @@ function roar(v){sfx({t:'sawtooth',f:110,f2:38,dur:2.2,v:.35*v,ft:'lowpass',ff:9
 
 function bossWin(){stt='loading';ach('win');if(!stats.goldKey){stats.goldKey=1;saveStats()}ach('golden');setTimeout(()=>{try{mkHand()}catch(e){}},50);if(DIFF.key==='hard')ach('winhard');if(perma)ach('perma');bumpBest();stats.wins=(stats.wins||0)+1;const newRacer=!stats.racerWin;stats.racerWin=1;saveStats();inRun=false;slotClear();
  sfx({f:523,dur:1.2,v:.15,r:.6});sfx({f:659,dur:1.2,v:.15,r:.6,d:.2});sfx({f:784,dur:1.6,v:.15,r:.6,d:.4});const f=$('flash');f.style.transition='opacity 1.2s';f.style.opacity=1;
- setTimeout(()=>{card('YOU ESCAPED','You kept the key. It turned to gold in your hand.','The end');if(newRacer)setTimeout(()=>note('The Racer suit is yours. Find it in SUIT.'),1500);setTimeout(()=>{f.style.transition='opacity 1.5s';f.style.opacity=0;B=null;document.body.classList.remove('boss');toMenu()},3000)},1300)}
+ setTimeout(()=>{card('YOU ESCAPED','You kept the key. It turned to gold in your hand.','The end');if(newRacer)setTimeout(()=>note('The Racer suit is yours. Find it in SUIT.'),1500);setTimeout(()=>{f.style.transition='opacity 1.5s';f.style.opacity=0;B=null;document.body.classList.remove('boss');openHub()},3000)},1300)}
 
 
 // ================= Multiplayer: peer-to-peer co-op over WebRTC (PeerJS). The host simulates monsters; everyone else mirrors them =================
@@ -3236,7 +3256,7 @@ function suitUI(){const cvs=$('suit_cv');if(!suitR){try{suitR=new THREE.WebGLRen
   Object.entries(SPECIAL).filter(([k])=>specialOpen(k)).map(([k,o])=>{const op=specialOpen(k);return'<button title="'+o.n+(op?'':' ('+(o.how||'escape Level ? to unlock')+')')+'" data-c="'+k+'" class="sp'+(k===cur_?' on':'')+(op?'':' lk')+'" style="background:url('+suitFace(k)+'),'+o.bg+'">'+(op?'':'<i>&#128274;</i>')+'</button>'}).join('');
  $('suit_in').value='#'+suitCol().toString(16).padStart(6,'0');const nm=SPECIAL[cur_]?[SPECIAL[cur_].n]:SUITS.find(x=>x[1]===cur_);$('suit_nm').textContent=nm?nm[0]:'Custom';
  const spin=()=>{if(!$('s_suit').classList.contains('on')||!document.body.classList.contains('menu'))return;suitT+=.016;suitM.rotation.y=.5+suitT*.6;suitR.render(suitS,suitC);requestAnimationFrame(spin)};requestAnimationFrame(spin)}
-function setSuit(c){CFG.suit=c;CFG.profT=Date.now();store.set('cfg',CFG);suitUI();mkHand();if(NET.on){const me=NET.players.get(NET.me);if(me)me.suit=c;if(NET.host)netLobby();else netSend('h',{t:'suit',c:validSuit(c)})}}
+function setSuit(c){CFG.suit=c;if(cameraAvatar){scene.remove(cameraAvatar);cameraAvatar=null;cameraSuit=null;}CFG.profT=Date.now();store.set('cfg',CFG);suitUI();mkHand();if(NET.on){const me=NET.players.get(NET.me);if(me)me.suit=c;if(NET.host)netLobby();else netSend('h',{t:'suit',c:validSuit(c)})}}
 $('suit_sw').onclick=e=>{const b=e.target.closest('[data-c]');if(!b)return;if(b.classList.contains('lk')){const o=SPECIAL[b.dataset.c];note('To unlock: '+((o&&o.how)||'escape Level ? and keep its key')+'.');return}const v=b.dataset.c;setSuit(/^\d+$/.test(v)?+v:v)};$('suit_in').oninput=e=>setSuit(parseInt(e.target.value.slice(1),16));
 // first-person hand: gloved fist around the flashlight, suit sleeve and reflective band, drawn in the viewmodel pass
 let fpHand=null;
@@ -3277,6 +3297,57 @@ function netAvatars(dt){for(const q of NET.players.values()){if(q.id===NET.me)co
    const dn=q.dn||0;A_.lie=lerp(A_.lie||0,dn?1:0,Math.min(1,dt*6));if(A_.lie>.01){A_.hip.rotation.x=-1.5*A_.lie;A_.hip.position.y=lerp(A_.hip.position.y,.22,A_.lie);A_.tag.position.y=lerp(A_.tag.position.y,1.1,A_.lie);A_.beam.visible=A_.bl.visible=false}else A_.hip.rotation.x=0;
    if(!A_.bc){A_.bc=glow(0xff2a2a,1.8,.6,1);A_.bc.position.y=.4;g.add(A_.bc)}A_.bc.visible=!!dn;if(dn)A_.bc.material.opacity=.35+.3*Math.sin(performance.now()/180);
    if(A_.dnT!==dn){A_.dnT=dn;const cv_=A_.tag.userData.cv,x=cv_.getContext('2d');x.clearRect(0,0,256,64);x.fillStyle=dn?'rgba(150,10,10,.8)':'rgba(0,0,0,.55)';x.fillRect(8,8,240,48);x.fillStyle='#fff';x.font='600 '+(dn?28:34)+'px Barlow,Arial';x.textAlign='center';x.fillText(dn?(q.name||'Player')+' \u00b7 DOWN '+dn+'s':(q.name||'Player'),128,44);A_.tag.material.map.needsUpdate=true}}}
+// ---- three camera perspectives (V / Settings / mobile CAM) ----
+// 0: eyes, 1: face-on camera looking back at the player, 2: over-the-shoulder chase view.
+
+let cameraAvatar=null,cameraSuit=null;
+const cameraTmpP=new THREE.Vector3(),cameraTmpQ=new THREE.Quaternion(),cameraAim=new THREE.Vector3();
+function setCameraView(v){
+ cameraView=([0,1,2].includes(+v)?+v:0);CFG.camView=cameraView;store.set('cfg',CFG);
+ if($('c_cam'))$('c_cam').value=String(cameraView);
+ note(['Camera: First person','Camera: Second person (front)','Camera: Third person (behind)'][cameraView]);
+}
+function cameraModel(){
+ if(cameraAvatar&&cameraSuit===CFG.suit)return cameraAvatar;
+ if(cameraAvatar)scene.remove(cameraAvatar);
+ const MAT=(c,b)=>b?new THREE.MeshBasicMaterial({color:c,fog:false}):new THREE.MeshLambertMaterial({color:c});
+ cameraAvatar=mkSuitBody(CFG.suit,MAT);cameraSuit=CFG.suit;
+ scene.add(cameraAvatar);return cameraAvatar;
+}
+// Pull the camera forward when a wall, closed door or locker blocks the desired offset.
+function cameraClearance(x,z,dx,dz,dist){
+ let safe=0;
+ for(let d=.15;d<=dist;d+=.16){const q=Math.min(d,dist);
+  if(hit(x+dx*q,z+dz*q))break;
+  safe=q;
+ }
+ return Math.max(.13,safe-.12);
+}
+function cameraBeginView(){
+ const external=cameraView!==0&&stt==='play'&&!hid&&!down&&!NET.spec;
+ if(!external){if(cameraAvatar)cameraAvatar.visible=false;return false}
+ const model=cameraModel();model.visible=true;
+ model.position.set(px,jY,pz);model.rotation.set(0,yaw+Math.PI,0);
+ // Keep first-person controls independent of the displayed perspective.
+ cameraTmpP.copy(cam.position);cameraTmpQ.copy(cam.quaternion);
+ const front=cameraView===1;
+ const dx=Math.sin(yaw)*(front?-1:1),dz=Math.cos(yaw)*(front?-1:1);
+ const dist=cameraClearance(px,pz,dx,dz,front?3.0:3.8);
+ cam.position.set(px+dx*dist,Math.max(.75,camY+jY+(front?.65:.8)),pz+dz*dist);
+ cameraAim.set(px,camY+jY-.13,pz);
+ if(front){cam.lookAt(cameraAim)}else{
+  // Aim slightly past the player's head, keeping the crosshair near the character's facing direction.
+  cameraAim.x-=Math.sin(yaw)*4;cameraAim.z-=Math.cos(yaw)*4;
+  cameraAim.y+=Math.tan(pitch)*3;
+  cam.lookAt(cameraAim);
+ }
+ return true;
+}
+function cameraEndView(external){
+ if(!external)return;
+ cam.position.copy(cameraTmpP);cam.quaternion.copy(cameraTmpQ);
+ if(cameraAvatar)cameraAvatar.visible=false;
+}
 // close-up portrait of a suit's face, rendered once per suit and cached as an image
 let faceR=null,faceS=null,faceC=null;const faceCache={};
 function suitFace(v){v=validSuit(v);if(v===undefined)v=0xe8701e;const key=String(v);if(faceCache[key])return faceCache[key];
@@ -3344,16 +3415,79 @@ function renderMap(g,W,full){const fx=px/T,fz=pz/T;g.setTransform(1,0,0,1,0,0);g
 function drawMap(){renderMap(mc,512,true)}
 function drawMini(){renderMap(mnc,170,false)}
 const gc=$('grain').getContext('2d'),gi=gc.createImageData(160,90),_c=new THREE.Color();let gf=0,frames=0,fAcc=0;
+
+// ===== v3.43: THE HUB / shareable community tapes =====
+// Hub is a dedicated Three.js scene, leaving the original level/collision/AI state untouched.
+const hubScene=new THREE.Scene();hubScene.background=new THREE.Color(0x090b11);hubScene.fog=new THREE.FogExp2(0x090b11,.023);
+const hubCamera=new THREE.PerspectiveCamera(73,innerWidth/innerHeight,.1,100);
+const hubRoot=new THREE.Group();hubScene.add(hubRoot);
+hubScene.add(new THREE.HemisphereLight(0xb5c7f6,0x10100b,.9));
+const hubFloor=new THREE.Mesh(new THREE.PlaneGeometry(54,54),new THREE.MeshStandardMaterial({color:0x262627,roughness:.95}));hubFloor.rotation.x=-Math.PI/2;hubRoot.add(hubFloor);
+const hubMat=new THREE.MeshStandardMaterial({color:0x23272c,roughness:.9}),hubTrim=new THREE.MeshStandardMaterial({color:0x889294,metalness:.4,roughness:.55});
+function hubBox(w,h,d,x,y,z,m){const o=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m);o.position.set(x,y,z);hubRoot.add(o);return o}
+for(let z=-24;z<=24;z+=3){hubBox(.045,.015,48,z,0.02,0,hubTrim);hubBox(48,.015,.045,0,.025,z,hubTrim)}
+for(const [x,z,w,d] of [[0,-25,50,.7],[0,25,50,.7],[-25,0,.7,50],[25,0,.7,50]])hubBox(w,9,d,x,4.5,z,hubMat);
+hubBox(50,.35,50,0,9.2,0,hubMat);
+for(const x of[-18,-6,6,18])for(const z of[-18,-6,6,18]){const l=new THREE.PointLight(0xffedb0,.8,11);l.position.set(x,7,z);hubRoot.add(l);hubBox(3,.08,1.6,x,8.95,z,new THREE.MeshBasicMaterial({color:0xddc68b}))}
+function hubPortal(title,sub,x,z,col){const g=new THREE.Group();g.position.set(x,0,z);hubRoot.add(g);const edge=new THREE.MeshStandardMaterial({color:col,emissive:col,emissiveIntensity:.5});const core=new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:.22,side:THREE.DoubleSide});
+ const frame=(w,h,d,X,Y)=>{const o=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),edge);o.position.set(X,Y,0);g.add(o)};frame(.25,5,.4,-2,2.5);frame(.25,5,.4,2,2.5);frame(4.2,.22,.4,0,5);const panel=new THREE.Mesh(new THREE.PlaneGeometry(3.75,4.75),core);panel.position.y=2.55;g.add(panel);
+ const cv_=document.createElement('canvas');cv_.width=512;cv_.height=256;const ctx=cv_.getContext('2d');ctx.fillStyle='#070909';ctx.fillRect(0,0,512,256);ctx.strokeStyle='#a6adb1';ctx.strokeRect(5,5,502,246);ctx.textAlign='center';ctx.fillStyle='#f1eedc';ctx.font='bold 63px monospace';ctx.fillText(title,256,112);ctx.fillStyle='#bdc5c9';ctx.font='24px monospace';ctx.fillText(sub,256,173);const sign=new THREE.Mesh(new THREE.PlaneGeometry(3.7,1.85),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(cv_),transparent:false,side:THREE.DoubleSide}));sign.position.y=6.55;g.add(sign);const lamp=new THREE.PointLight(col,.8,7);lamp.position.y=3;g.add(lamp);return g}
+hubPortal('STORY','REVISIT',-9,-13,0xd8c46a);hubPortal('COMMUNITY','SHARED TAPES',0,-16,0x61aaff);hubPortal('CREATE','MAKE A TAPE',9,-13,0x8fd6a3);
+let hubTime=0,hubTab='story',hubReturning=false;
+// Curated post-story challenge tapes. These are unsaved one-level runs with unique loadouts and restrictions.
+const HUB_FEATURED=[
+ {id:'nightshift',n:'The Endless Shift',t:5,s:'nightshift-823',d:'No map. Find your way through the abandoned offices.',rules:'NO MAP',nm:1},
+ {id:'deepwater',n:'Forgotten Pool',t:8,s:'forgotten-pool',d:'Start with half your stamina and make it to the exit.',rules:'LOW STAMINA',st:.5},
+ {id:'hotel',n:'Midnight Hotel',t:6,s:'midnight-hotel',d:'A hotel you cannot map. One life to get out.',rules:'ONE LIFE / NO MAP',one:1,nm:1},
+ {id:'dark',n:'Darkest Hour',t:10,s:'darkest-hour',d:'Lights Out with no map and only one life. Your flashlight still has infinite charge.',rules:'ONE LIFE / NO MAP',one:1,nm:1},
+ {id:'pipes',n:'The Rust Tunnels',t:3,s:'rust-tunnels-823',d:'An industrial maze without any starting battery reserves.',rules:'NO SPARES',bt:.35},
+ {id:'garage',n:'Concrete Maze',t:2,s:'concrete-maze-823',d:'Find the exit of the garage without consulting your map.',rules:'NO MAP',nm:1},
+ {id:'static',n:'Static Signal',t:4,s:'static-signal-823',d:'The electrical station has become a one-life challenge.',rules:'ONE LIFE',one:1},
+ {id:'funhouse',n:'The Last Party',t:7,s:'last-party-823',d:'No friendly survivors. No map. The party has ended.',rules:'NO HELP / NO MAP',nm:1,nw:1},
+ {id:'redrun',n:'Red Tape',t:9,s:'red-tape-823',d:'A desperate run through red corridors with only one life.',rules:'ONE LIFE',one:1},
+ {id:'caves',n:'Beneath the Walls',t:11,s:'beneath-the-walls-823',d:'Underground with diminished stamina and no map.',rules:'LOW STAMINA / NO MAP',nm:1,st:.6},
+ {id:'neighborhood',n:'Empty Neighborhood',t:12,s:'empty-neighborhood-823',d:'Face the deserted streets with no friendly wanderers.',rules:'NO HELP',nw:1},
+ {id:'yellow',n:'Back Where It Began',t:1,s:'origin-tape-823',d:'The original yellow maze. One chance, no map.',rules:'ONE LIFE / NO MAP',one:1,nm:1}
+ ];
+let communityActive=null;
+function communityCompleted(){return store.get('communityCleared',{})||{}}
+function communityFinish(){if(!communityActive)return;const o=communityActive;const cleared=communityCompleted();cleared[o.id||('custom:'+o.n+':'+o.s)]=true;store.set('communityCleared',cleared);communityActive=null;inRun=false;slot=null;document.body.classList.remove('cut');stt='loading';sfx({f:659,dur:.55,v:.15});card('TAPE COMPLETE',o.n,'Returning to the Hub');setTimeout(()=>{openHub();hubScreen('community');$('hubnote').textContent='TAPE CLEARED: '+o.n+' — Choose another challenge or return to story levels.'},1250)}
+function hubCommunity(){return HUB_FEATURED.concat((store.get('community',[])||[]).filter(x=>x&&typeof x.n==='string'&&Number.isInteger(x.t)&&x.t>=1&&x.t<=12&&typeof x.s==='string').slice(0,35))}
+function hubScreen(t){hubTab=t;document.querySelectorAll('#hubtabs [data-ht]').forEach(b=>b.classList.toggle('on',b.dataset.ht===t));$('hubcreate').style.display=t==='create'?'block':'none';$('hublist').style.display=t==='create'?'none':'grid';$('hubnote').textContent=t==='story'?'Choose any story level. Each portal begins a fresh unsaved visit; existing save slots are not overwritten.':t==='community'?'12 challenge tapes and your imported creations. Clear a tape to mark it completed. All community tapes unlock after the story ending.':'Make a seeded custom level, copy its code, or import a code from a friend.';
+ if(t==='story')$('hublist').innerHTML=TH.map((th,i)=>'<button data-l="'+(i+1)+'"><b>'+(i===12?'LEVEL ?':'LEVEL '+(i+1))+'</b><span>'+esc(th.n)+'</span><em>ENTER</em></button>').join('');
+ else if(t==='community'){const done=communityCompleted();$('hublist').innerHTML=hubCommunity().map((o,i)=>{const clear=!!done[o.id||('custom:'+o.n+':'+o.s)];return '<button data-c="'+i+'" title="'+esc(o.d||'Seeded custom map')+'"><b>'+esc(o.n)+'</b><span>'+esc(o.d||TH[o.t-1].n)+'<br>'+esc(o.rules||'CUSTOM TAPE')+'</span><em>'+(clear?'CLEARED':'PLAY')+'</em></button>'}).join('')}}
+function openHub(){if(NET.on){toMenu();return}if(!(stats.wins>0)){toMenu();return}
+ if(stt==='play'||stt==='pause')saveGame();inRun=false;document.exitPointerLock&&document.exitPointerLock();$('ov').style.display='none';$('load').classList.add('off');$('mapw').style.display='none';$('inv').classList.remove('on');invOn=false;mapOn=false;document.body.classList.remove('menu','boss','armed','downed','hiding','invo','cut');$('adm').style.display='none';A.open=false;document.body.classList.add('hubmode');stt='hub';if(AC)MG.gain.setTargetAtTime(CFG.vol*.4,AC.currentTime,.2);hubScreen('story')}
+function hubFrame(dt){hubTime+=dt;hubCamera.aspect=innerWidth/innerHeight;hubCamera.updateProjectionMatrix();hubCamera.position.set(Math.sin(hubTime*.12)*1.0,2.35+Math.sin(hubTime*.27)*.11,4.5+Math.cos(hubTime*.1)*.3);hubCamera.lookAt(0,2.8,-14)}
+function hubEnter(l,s=null,community=null){if(stt!=='hub')return;
+ communityActive=community;document.body.classList.remove('hubmode');stt='menu';document.body.classList.remove('menu');NET.on=false;slot=null;slotName=null;inRun=false;endless=false;thiC={};runSeed=s?hashStr(s):null;perma=!!(community&&community.one);noMap=!!(community&&community.nm);noWand=!!(community&&community.nw);level=l;DIFF=DF[CFG.diff]||DF.normal;
+ startLoad();loadScreen(()=>{restart(l);inRun=false;if(community){if(community.st!=null)stam=community.st;if(community.bt!=null)bat=community.bt;hud()}stats.runs++;saveStats()},false,()=>{enterRun();if(community)setTimeout(()=>say('COMMUNITY TAPE: '+community.n+' — '+(community.rules||'CUSTOM'),4500),1200)})} 
+$('hubentry').onclick=()=>openHub();
+$('hubtabs').onclick=e=>{const b=e.target.closest('[data-ht]');if(b)hubScreen(b.dataset.ht)};
+$('hublist').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.l)hubEnter(+b.dataset.l);else if(b.dataset.c){const o=hubCommunity()[+b.dataset.c];if(o)hubEnter(o.t,o.s,o)}};
+$('hubmenu').onclick=toMenu;
+$('hubpause').style.display='none';
+const hubThemeSel=$('hubtheme');TH.slice(0,12).forEach((t,i)=>{const o=document.createElement('option');o.value=i+1;o.textContent='Level '+(i+1)+' - '+t.n;hubThemeSel.appendChild(o)});
+function hubDraft(){return{n:($('hubname').value.trim()||'Untitled Tape').slice(0,36),t:+hubThemeSel.value||1,s:($('hubseed').value.trim()||('random-'+Math.random().toString(36).slice(2,10))).slice(0,40)}}
+function hubEncode(o){return 'BR43-'+btoa(unescape(encodeURIComponent(JSON.stringify({v:1,n:o.n,t:o.t,s:o.s})))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
+function hubDecode(code){try{const raw=code.trim();if(!/^BR43-[A-Za-z0-9_-]{12,350}$/.test(raw))return null;const txt=decodeURIComponent(escape(atob(raw.slice(5).replace(/-/g,'+').replace(/_/g,'/'))));const o=JSON.parse(txt);if(o.v!==1||typeof o.n!=='string'||typeof o.s!=='string'||!Number.isInteger(o.t)||o.t<1||o.t>12)return null;return{n:o.n.slice(0,36),t:o.t,s:o.s.slice(0,40)}}catch(e){return null}}
+function hubSaveCustom(o){const arr=(store.get('community',[])||[]).filter(q=>q&&!(q.n===o.n&&q.s===o.s));arr.unshift(o);store.set('community',arr.slice(0,35))}
+$('hubmake').onclick=()=>{const o=hubDraft();$('hubseed').value=o.s;hubSaveCustom(o);const code=hubEncode(o);$('hubmsg').textContent='Saved locally. Share code: '+code;if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(code).catch(()=>{})};
+$('hubplaycustom').onclick=()=>{const o=hubDraft();hubSaveCustom(o);hubEnter(o.t,o.s,o)};
+$('hubadd').onclick=()=>{const o=hubDecode($('hubimport').value);if(!o){$('hubmsg').textContent='Invalid tape code. Paste a BR43- code.';return}hubSaveCustom(o);$('hubmsg').textContent='Imported '+o.n+'. Find it under COMMUNITY LEVELS.';hubScreen('create')};
+// Esc in the hub returns to the normal main menu.
+addEventListener('keydown',e=>{if(stt==='hub'&&e.code==='Escape'){e.preventDefault();toMenu()}});
+
 let lastFrame=0;function loop(){requestAnimationFrame(loop);lastFrame=performance.now();const rdt=clock.getDelta(),dt=Math.min(rdt,.05)*(A.ts||1);
- if((stt==='play'||(stt==='pause'&&NET.on&&NET.started))&&!A.open){update(dt);mapF++;if(mapOn){if(mapF%2===0)drawMap()}else if(!noMap&&mapF%3===0&&stt==='play')drawMini()}else if(stt==='caught')updCaught(dt);else if(stt==='cut')csTick(dt);else if(stt==='menu'&&world)menuCam(dt);
+ if(stt==='hub'){hubFrame(dt)}else if((stt==='play'||(stt==='pause'&&NET.on&&NET.started))&&!A.open){update(dt);mapF++;if(mapOn){if(mapF%2===0)drawMap()}else if(!noMap&&mapF%3===0&&stt==='play')drawMini()}else if(stt==='caught')updCaught(dt);else if(stt==='cut')csTick(dt);else if(stt==='menu'&&world)menuCam(dt);
  flickT-=dt;if(flickT<=0){flickT=.04+rnd()*.18;const dip=rnd()<.035+cur.fk+lvl*.4;fL=dip?.12+rnd()*.2:1;
   if(panelMesh){panelMesh.material.color.setHex(cur.pc).multiplyScalar(fL*Math.min(1.3,cur.pb*1.15));let ch=false;panelSt.forEach((s,i)=>{if(s===2){panelMesh.setColorAt(i,_c.setScalar(rnd()<.5?.06:1));ch=true}});if(ch)panelMesh.instanceColor.needsUpdate=true}
   amb.intensity=A.fb?1.3:cur.am*.55*(.4+.6*fL);pl.intensity=cur.pi*(.3+.7*fL);for(const m of surfM)m.material.lightMapIntensity=A.fb?2:1.15*(.15+.85*fL);
   scene.fog.density=A.fb?.015:cur.fd;
   if(AC&&cur.pb>0&&!cur.out){humBus.gain.setTargetAtTime(.3+.7*fL,AC.currentTime,.02);if(dip&&stt==='play'&&rnd()<.5)sfx({n:1,ft:'highpass',ff:3500,dur:.05,v:.025})}}
  if(++gf%(usePhong()?2:4)===0){const d=gi.data;for(let i=0;i<d.length;i+=4){d[i]=d[i+1]=d[i+2]=rnd()*255;d[i+3]=90}gc.putImageData(gi,0,0)}
- updFx(dt);if(NET.on)netTick(rdt);R.render(scene,cam);
- handUpd(dt);if((B||fpHand.visible||wEq||(hvm&&hvm.visible))&&(stt==='play'||stt==='pause'||stt==='caught')){if(gunCam.aspect!==cam.aspect){gunCam.aspect=cam.aspect;gunCam.updateProjectionMatrix()}R.autoClear=false;R.clearDepth();R.render(gunScene,gunCam);R.autoClear=true}
+ updFx(dt);if(NET.on)netTick(rdt);const externalCamera=stt==='hub'?false:cameraBeginView();if(stt==='hub')R.render(hubScene,hubCamera);else{R.render(scene,cam);cameraEndView(externalCamera)}
+ handUpd(dt);if(stt!=='hub'&&!externalCamera&&(B||fpHand.visible||wEq||(hvm&&hvm.visible))&&(stt==='play'||stt==='pause'||stt==='caught')){if(gunCam.aspect!==cam.aspect){gunCam.aspect=cam.aspect;gunCam.updateProjectionMatrix()}R.autoClear=false;R.clearDepth();R.render(gunScene,gunCam);R.autoClear=true}
  // adaptive resolution keeps low-end Chromebooks smooth
  frames++;fAcc+=rdt;if(fAcc>=1.5){const fps=frames/fAcc;frames=0;fAcc=0;if(CFG.fps)$('fps').textContent=(fps|0)+' FPS · '+Math.round(rs*100)+'%';
   if(CFG.q==='auto'&&stt==='play'){if(fps<42&&rs>.5){rs=Math.max(.5,rs-.1);applyRes()}else if(fps>57&&rs<1){rs=Math.min(1,rs+.05);applyRes()}if(fps<28&&rs<=.5&&!autoLow){autoLow=true;swapMats()}}}}
