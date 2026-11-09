@@ -519,11 +519,19 @@ body.hubmode #menu,body.hubmode #ov{display:none!important}
 .patchentry li{margin:3px 0}
 #patchfoot{padding:10px 16px;border-top:1px solid rgba(233,228,214,.25);font:400 19px var(--fd);color:var(--mute)}
 @media(max-width:600px){#patchbody{padding:12px 15px}#ver span{display:none}}
+/* v3.48 editor and in-game objectives */
+#hubcreate .edrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0}
+#hubcreate .edrow select{width:auto;max-width:240px;margin:0;flex:1}
+#hubcreate #editgrid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:3px;max-width:480px;margin:12px 0;background:#151411;padding:8px;border:2px solid var(--line)}
+#hubcreate #editgrid button{min-width:0;width:100%;aspect-ratio:1;padding:0;font:400 clamp(13px,1.8vw,23px) var(--fd);border:1px solid #514d42;color:#e9e4d6;background:#272727}
+#hubcreate #editgrid button.wall{background:#65605b}#hubcreate #editgrid button.enemy{background:#692c2e}#hubcreate #editgrid button.supply{background:#2d6450}#hubcreate #editgrid button.switch{background:#675c21}#hubcreate #editgrid button:hover{outline:2px solid #fff}
+#objective348{position:fixed;left:50%;top:64px;transform:translateX(-50%);font:400 21px var(--fd);z-index:3;color:#e4cf74;text-shadow:2px 2px #000;pointer-events:none;text-align:center;display:none}
+body.menu #objective348,body.hubmode #objective348,body.cut #objective348{display:none!important}
 </style></head><body>
 <canvas id="grain" class="fx" width="160" height="90"></canvas><div id="scan" class="fx"></div><div id="vig" class="fx"></div><div id="dmg" class="fx"></div><div id="insane" class="fx"></div><div id="flash" class="fx"></div>
 <div id="mapw" class="glass"><div class="mh"><b>Map</b><span class="lbl" id="mtitle"></span></div><canvas id="mm" width="512" height="512"></canvas>
 <div class="leg"><span><i style="background:#fff"></i>You</span><span><img src="https://raw.githubusercontent.com/C823/assets/main/backrooms_key_icon.png" data-alt="assets/backrooms_key_icon.png|backrooms_key_icon.png" alt="" onerror="if(!imgAlt(this))this.outerHTML='<i style=&quot;background:#44ffee&quot;></i>'">Key</span><span><i style="background:#ff3344"></i>Exit</span><span><i style="background:#e0b43a"></i>Safe</span><span><i style="background:#e09a3a"></i>Door</span><span><i style="background:#b0ff70"></i>Battery</span><span><i style="background:#9fdcff"></i>Almond water</span><span><i style="background:#ffd84a"></i>Wanderer</span><span><i style="background:#ffb35a"></i>Light</span><span><i style="background:#3fae5a"></i>Plague</span></div></div>
-<div id="hud"></div><div id="comp"><div id="cstrip"></div><i id="cneedle"></i><b id="cobj"></b></div>
+<div id="hud"></div><div id="objective348"></div><div id="comp"><div id="cstrip"></div><i id="cneedle"></i><b id="cobj"></b></div>
 <div id="rec"><b></b>REC <span id="tc">00:00:00</span><div id="fps"></div></div><div id="dot"></div><div id="team"></div><div id="hb"></div><div id="cs"><div id="cs_tint"></div><div id="cs_blk"></div><div id="cs_top"><b>&#9679;</b> REC &nbsp;TAPE <span id="cs_n"></span></div><div id="cs_cap"></div><div id="cs_skip">&#9654;&#9654; SPACE / CLICK TO SKIP</div></div><div id="kpad"><div class="kp glass"><div class="phead"><h3>KEYPAD</h3><span class="pch">EXIT DOOR</span></div><div id="kp_d">____</div><div id="kp_k"></div><p id="kp_m"></p><div class="nrow"><button class="btng" id="kp_x">CLOSE</button></div></div></div><div id="chat"><div id="chatlog"></div><input id="chatin" type="text" maxlength="120" spellcheck="false" autocomplete="off" placeholder="Say something to your team"><div class="ch">ENTER send &middot; ESC cancel</div></div><div id="hitm"></div><canvas id="crack" class="fx"></canvas><div id="bossui"><div class="bn">The Racer<span id="bstage">Phase 1</span></div><div id="bhearts"></div><div class="bbar"><i id="bhp"></i></div></div><div id="ammo"><b>Glock 19</b><span id="ammoc">15 / &infin;</span></div><canvas id="mini" width="170" height="170"></canvas><div id="note"></div><div id="achT"></div>
 <div id="bars"><div id="pose"></div>
 <div class="bar" id="hpw"><div class="bh" style="color:#f08a7e">HEALTH<em id="hpv">100</em></div><div class="tr"><i id="hpb" style="background:#d84a3a"></i></div></div><div class="bar"><div class="bh"><svg viewBox="0 0 16 16"><path d="M9 1L3 9h4l-1 6 6-8H8z" fill="currentColor"/></svg>STAMINA<em id="stv">100</em></div><div class="tr"><i id="stb"></i></div></div>
@@ -561,7 +569,7 @@ body.hubmode #menu,body.hubmode #ov{display:none!important}
 </div></div>
 <div id="admpw" class="glass"><b>ADMIN PANEL</b><p>Enter an admin code to unlock the admin panel. You only need to do this once per code.</p><input id="pw_in" type="password" maxlength="24" autocomplete="off" spellcheck="false"><div class="r"><button class="btnp" id="pw_ok">UNLOCK</button><button class="btng" id="pw_x">CANCEL</button></div><p id="pw_msg"></p></div>
 
-<div id="hub"><div id="hubhead"><div><h1>THE HUB</h1><p>CHAPTER 1 COMPLETE. THE NEXT TAPE IS WAITING.<br>EXPLORE CHAPTER 2 OR REVISIT YOUR FAVORITE LEVELS.</p></div><button id="hubmenu">MAIN MENU</button></div><div id="hubmain"><div id="hubtabs"><button data-ht="story" class="on">STORY LEVELS</button><button data-ht="chapter2">CHAPTER 2</button><button data-ht="community">COMMUNITY LEVELS</button><button data-ht="create">CREATE / IMPORT</button></div><p id="hubnote"></p><div id="hublist"></div><div id="hubcreate"><label>LEVEL NAME<input id="hubname" type="text" maxlength="36" placeholder="The Forgotten Hallway"></label><label>ENVIRONMENT<select id="hubtheme"></select></label><label>WORLD SEED<input id="hubseed" type="text" maxlength="40" placeholder="Enter a seed or leave blank for random"></label><div class="actions"><button id="hubmake">SAVE LEVEL + COPY CODE</button><button id="hubplaycustom">PLAY CUSTOM LEVEL</button></div><label style="margin-top:14px">IMPORT SHARED LEVEL CODE<input id="hubimport" type="text" maxlength="400" placeholder="BR43-..."></label><div class="actions"><button id="hubadd">IMPORT LEVEL</button></div><small>Community levels use the game's existing procedural layouts and enemies, with a chosen theme and world seed. Codes can be shared directly; this is not yet an online public level server.</small><div id="hubmsg"></div></div></div><div id="hubmark">CH 02 &middot; THE LOST TAPES &middot; v3.46</div></div>
+<div id="hub"><div id="hubhead"><div><h1>THE HUB</h1><p>CHAPTER 1 COMPLETE. THE NEXT TAPE IS WAITING.<br>EXPLORE CHAPTER 2 OR REVISIT YOUR FAVORITE LEVELS.</p></div><button id="hubmenu">MAIN MENU</button></div><div id="hubmain"><div id="hubtabs"><button data-ht="story" class="on">STORY LEVELS</button><button data-ht="chapter2">CHAPTER 2</button><button data-ht="community">COMMUNITY LEVELS</button><button data-ht="create">CREATE / IMPORT</button></div><p id="hubnote"></p><div id="hublist"></div><div id="hubcreate"><label>LEVEL NAME<input id="hubname" type="text" maxlength="36" placeholder="The Forgotten Hallway"></label><label>ENVIRONMENT<select id="hubtheme"></select></label><label>WORLD SEED<input id="hubseed" type="text" maxlength="40" placeholder="Enter a seed or leave blank for random"></label><h4 style="margin:14px 0 4px;font:400 26px var(--fd)">VISUAL LEVEL EDITOR</h4><small>Paint a 12x12 layout. Objects snap to reachable rooms when your map is generated. Click or drag tiles to paint. Switches must be activated before escaping.</small><div class="edrow"><label style="flex:1;margin:0">BRUSH<select id="edbrush"><option value="wall">COVER / WALL</option><option value="enemy">ENTITY SPAWN</option><option value="supply">SUPPLY CACHE</option><option value="switch">GENERATOR SWITCH</option><option value="erase">ERASER</option></select></label><button id="edclear">CLEAR GRID</button></div><div id="editgrid"></div><small id="edcount">0 objects placed</small><div class="actions"><button id="hubmake">SAVE LEVEL + COPY CODE</button><button id="hubplaycustom">PLAY CUSTOM LEVEL</button></div><label style="margin-top:14px">IMPORT SHARED LEVEL CODE<input id="hubimport" type="text" maxlength="4000" placeholder="BR43-... or BR48-..."></label><div class="actions"><button id="hubadd">IMPORT LEVEL</button></div><small>Community levels support authored placements layered onto procedural rooms. Export a code to share; public online uploading still needs a server.</small><div id="hubmsg"></div></div></div><div id="hubmark">CH 02 &middot; THE LOST TAPES &middot; v3.48</div></div>
 <div id="menu">
 <div id="osd"><span id="osd_tr">&#9654; PLAY &nbsp;SP <b id="osd_t">0:00:00</b></span><span id="osd_br"></span><span id="osd_sync"></span><button id="osd_acct" style="display:none" title="Your site account"></button></div>
 <a id="mph" href="https://powerhouse.c823.workers.dev" target="_top" title="Powerhouse" aria-label="Go to Powerhouse"><img alt="Powerhouse" src="https://raw.githubusercontent.com/C823/Powerhouse/main/icons/POWERHOUSE-icon-dark.png" onerror="this.parentNode.textContent='PWR'"></a>
@@ -570,7 +578,7 @@ body.hubmode #menu,body.hubmode #ov{display:none!important}
 <nav id="mpanel" class="glass"><button class="mb" data-m="play">PLAY</button><button class="mb" data-m="mp">MULTIPLAYER</button><button class="mb" id="hubentry" style="display:none">THE HUB</button><i class="gap"></i><button class="mb" data-m="how">HOW TO PLAY</button><button class="mb" data-m="enc">ENCYCLOPEDIA</button><button class="mb" data-m="ach">ACHIEVEMENTS</button><button class="mb" data-m="suit">SUIT</button><button class="mb" data-m="fs">FULLSCREEN</button><i class="gap"></i><button class="mb" data-m="set">SETTINGS</button></nav>
 <div id="msub" class="glass"><button id="m_x" aria-label="Close">&#10005;</button>
 <section id="s_how"><h3>HOW TO PLAY</h3><p>Find the cyan key, then find the exit door and walk through it. Every exit leads one level deeper, to a bigger maze with more things hunting you.</p><div id="m_ents"></div>
-<div class="keys2"><span><b class="kbd">WASD</b>Move</span><span><b class="kbd">SHIFT</b>Sprint (loud)</span><span><b class="kbd">C</b>Crouch (silent)</span><span><b class="kbd">E</b>Hide in a locker</span><span><b class="kbd">SPACE</b>Hold breath (hiding)</span><span><b class="kbd">E</b>Open safe / doors</span><span><b class="kbd">1-4</b>Pick hotbar slot</span><span><b class="kbd">WHEEL</b>Next / previous slot</span><span><b class="kbd">R-CLICK</b>Use held item</span><span><b class="kbd">CLICK</b>Attack</span><span><b class="kbd">Q</b>Drop held item</span><span><b class="kbd">M</b>Map</span><span><b class="kbd">I</b>Inventory</span><span><b class="kbd">V</b>Switch camera</span><span><b class="kbd">ESC</b>Pause</span><span><b class="kbd">T</b>Chat (co-op)</span></div>
+<div class="keys2"><span><b class="kbd">WASD</b>Move</span><span><b class="kbd">SHIFT</b>Sprint (loud)</span><span><b class="kbd">C</b>Crouch (silent)</span><span><b class="kbd">E</b>Hide in a locker</span><span><b class="kbd">G</b>Noise decoy (25s cooldown)</span><span><b class="kbd">SPACE</b>Hold breath (hiding)</span><span><b class="kbd">E</b>Open safe / doors</span><span><b class="kbd">1-4</b>Pick hotbar slot</span><span><b class="kbd">WHEEL</b>Next / previous slot</span><span><b class="kbd">R-CLICK</b>Use held item</span><span><b class="kbd">CLICK</b>Attack</span><span><b class="kbd">Q</b>Drop held item</span><span><b class="kbd">M</b>Map</span><span><b class="kbd">I</b>Inventory</span><span><b class="kbd">V</b>Switch camera</span><span><b class="kbd">ESC</b>Pause</span><span><b class="kbd">T</b>Chat (co-op)</span></div>
 <p>Monsters see what is in front of them, and a flashlight beam is easy to spot. On Hard, darkness and monsters drain your sanity; almond water restores it. Your run saves to the slot you picked when you started it.</p></section>
 <section id="s_enc"><h3>ENCYCLOPEDIA</h3><div class="etabs"><button data-t="L" class="on">Levels</button><button data-t="E">Entities</button><span id="enc_ct"></span></div><div id="enc_list"></div></section>
 <section id="s_ach"><h3>ACHIEVEMENTS</h3><h4 class="ssub"><i>01</i>RECORDS</h4><div id="m_rec"></div><h4 class="ssub"><i>02</i>TROPHIES</h4><div class="achh"><span id="ach_ct"></span><div class="achb"><i id="ach_bar"></i></div></div><div id="ach_list"></div></section>
@@ -620,11 +628,12 @@ body.hubmode #menu,body.hubmode #ov{display:none!important}
 <div class="mcard"><h4><i>B</i>PLAYERS</h4><div id="mp_list"></div></div>
 <div id="mp_chat" class="mcard"><h4><i>C</i>CHAT</h4><div id="mp_chatlog"></div><div class="chrow"><input id="mp_chatin" type="text" maxlength="120" spellcheck="false" autocomplete="off" placeholder="Say hi to the room"><button class="btng" id="mp_chatgo">SEND</button></div></div></div><div id="mp_saves"></div><button class="btnp" id="mp_start">START NEW GAME</button></div>
 <div class="pfoot"><p id="mp_status"></p><div class="nrow"><button class="btng" id="mp_back">BACK</button></div></div></div>
-<button id="ver" type="button" aria-haspopup="dialog" aria-controls="patchnotes" title="View patch notes">v3.47 &middot; 2026-11-09 <span aria-hidden="true">[PATCH NOTES]</span></button></div>
+<button id="ver" type="button" aria-haspopup="dialog" aria-controls="patchnotes" title="View patch notes">v3.48 &middot; 2026-11-09 <span aria-hidden="true">[PATCH NOTES]</span></button></div>
 <div id="patchnotes" role="dialog" aria-modal="true" aria-labelledby="patchtitle" aria-hidden="true">
  <div id="patchbox">
-  <div id="patchhead"><h2 id="patchtitle">PATCH NOTES <span style="color:var(--hi)">v3.47</span></h2><button id="patchclose" type="button" aria-label="Close patch notes">X CLOSE</button></div>
+  <div id="patchhead"><h2 id="patchtitle">PATCH NOTES <span style="color:var(--hi)">v3.48</span></h2><button id="patchclose" type="button" aria-label="Close patch notes">X CLOSE</button></div>
   <div id="patchbody">
+   <section class="patchentry"><h3>v3.48 <time datetime="2026-11-09">NOV 09, 2026</time></h3><ul><li>Chapter 2 has unique color palettes, atmospheric scenery and three-switch generator objectives.</li><li>New checkpoint beacons offer protection, supplies and a respawn location.</li><li>Enemies investigate last-known positions and noises, and can search a recently entered locker.</li><li>Chapter 2 now concludes with The Archivist: a harder, uniquely styled finale with its own completion record.</li><li>Added a playable 12x12 community level editor with placed cover, threats, supplies and switches, plus export/import codes.</li></ul></section>
    <section class="patchentry"><h3>v3.47 <time datetime="2026-11-09">NOV 09, 2026</time></h3><ul><li>Racer boss fight rebalanced: faster shifting walls, more frequent traps, and longer blackouts in Phase 1.</li><li>Phase 2 enemies move faster and hit harder, with shorter delays between spawns.</li><li>Phase 3 bike charges faster, gives less warning, and recovers from crashes more quickly.</li><li>Reduced boss-fight health regeneration; Easy, Normal, and Hard still scale differently.</li></ul></section>
    <section class="patchentry"><h3>v3.46 <time datetime="2026-11-09">NOV 09, 2026</time></h3><ul><li>The twelve curated challenges now form Chapter 2, unlocked by defeating the Chapter 1 boss.</li><li>Beating the Racer now sends you straight into Chapter 2, Level 1.</li><li>Chapter 2 levels unlock in order, automatically advance on escape, and remember completion.</li><li>Custom and imported community levels remain available separately in the Hub.</li></ul></section>
    <section class="patchentry"><h3>v3.45 <time datetime="2026-11-09">NOV 09, 2026</time></h3><ul><li>Click the version number on the main menu to open the patch notes.</li><li>Added a scrollable update history popup with Escape and click-outside closing.</li></ul></section>
@@ -1135,7 +1144,10 @@ dgeo.setAttribute('position',new THREE.BufferAttribute(dpos,3));const dust=new T
 
 // ---- world ----
 let world,w,key,door,mons=[],bats=[],openT=[],seen,dmap=null,lastPT='',level=1,hasKey=false,panelMesh=null,panelSt=[],surfM=[],waterM=null;
-function applyTheme(){cur=TH[thi()];H=cur.h;setHum();
+function applyTheme(){cur=TH[thi()];
+ if(communityActive&&communityActive.chapter2&&!communityActive.chapter2Boss){const v=CH2_VIS[communityActive.chapterIndex];if(v)cur=Object.assign({},cur,{n:communityActive.n,w:v[1],f:v[2],c:v[3],fog:v[4],pc:v[5],lc:v[5],fd:.062+(communityActive.chapterIndex%3)*.008,am:.25,sp:1.07})}
+ if(communityActive&&communityActive.chapter2Boss)cur=Object.assign({},cur,{n:'The Archivist',fog:0x13071c,lc:0xc78aff,pc:0xd6b8ff,am:.2});
+ H=cur.h;setHum();
  scene.fog.color.setHex(cur.fog);scene.fog.density=cur.fd;scene.background.setHex(cur.fog);pl.color.setHex(cur.lc);amb.color.setHex(cur.lc);dust.material.color.setHex(cur.dcol??(cur.pb>0?cur.pc:cur.lc));dust.material.size=cur.dsz||.035;dust.material.opacity=cur.dop??.45}
 function bfs(sx,sz){const d=new Int16Array(S*S).fill(-1),q=[[sx,sz]],s0=slabT&&slabT.get(sz*S+sx),sk=s0&&(s0.win||!s0.rm.open)?s0:null;d[sz*S+sx]=0;for(let i=0;i<q.length;i++){const[x,z]=q[i];for(const[a,b]of D){if(i===0&&sk&&a===sk.a&&b===sk.b)continue;const nx=x+a,nz=z+b;if(nx>=0&&nz>=0&&nx<S&&nz<S&&!w[nz][nx]&&d[nz*S+nx]<0){d[nz*S+nx]=d[z*S+x]+1;q.push([nx,nz])}}}return d}
 function mulberry(a){return()=>{a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
@@ -1225,7 +1237,7 @@ function decor(pg,eg,M4){if(cur.lay==='cave')for(let y=1;y<S-1;y++)for(let x=1;x
 function pipeRun(g,fx,fz,a,b){const m=new THREE.Matrix4(),q=new THREE.Quaternion().setFromEuler(new THREE.Euler(b?0:Math.PI/2,0,b?Math.PI/2:0)),v=new THREE.Vector3(),sc=new THREE.Vector3(),c=new THREE.Color();
  for(const[r,y,col,o]of[[.12,H-.42,0x6a4a35,.17],[.065,H-.74,0x55585a,.1],[.05,.38,0x3a3532,.08]]){if(r<.1&&rnd()<.35)continue;m.compose(v.set(fx+a*o,y,fz+b*o),q,sc.set(r,T,r));g.add(CYL,m,c.setHex(col))}}
 function buildLevel(){
- disposeWorld();world=new THREE.Group();scene.add(world);
+ extraWalls348=[];extraSwitches348=[];extraCP348=null;disposeWorld();world=new THREE.Group();scene.add(world);
  applyTheme();unHide();invClose();kpClose();VZ=null;PZ=null;slabT=null;if(down)endDown();prot=0;roomsL=[];roomItems=[];lockers=[];dropL=[];safeO=null;narrow=null;B=null;clearBossFx();exitL.distance=12;document.body.classList.toggle('boss',!!cur.boss&&!bossMenu);if(cur.boss){buildBoss();if(!bossMenu)bossArm();return}
  rnd=mulberry((levelSeed^0x51a7e1)>>>0);S=Math.min(29+2*level,61);const ST=S*T;
  w=Array.from({length:S},()=>Array(S).fill(1));
@@ -1289,7 +1301,7 @@ function buildLevel(){
  spawnEntities(mx,kc,ex);
  phantoms=[];if(DIFF.san){const pm=new THREE.MeshLambertMaterial({color:0x050505,transparent:true,opacity:.85}),pe=new THREE.MeshBasicMaterial({color:0xff2020,fog:false});for(let i=0;i<4;i++){const g=mkEntity(pm,pe);g.visible=false;world.add(g);phantoms.push({g,life:0,look:0})}}
  let bs=-1;for(const[x,y]of openT){let c=0;for(let j=-2;j<=2;j++)for(let i=-2;i<=2;i++)if(w[y+j]&&w[y+j][x+i]===0)c++;if(c>bs){bs=c;menuSpot=[x,y]}}
- seen=new Uint8Array(S*S);trail=[];dmap=null;lastPT='';hasKey=false;lockDoor();mapCols();placeLockers();placeSafe();buildRooms();setupTVs();setupPZ();hud()}
+ seen=new Uint8Array(S*S);trail=[];dmap=null;lastPT='';hasKey=false;lockDoor();mapCols();placeLockers();placeSafe();buildRooms();setupTVs();setupPZ();extraBuild348();hud()}
 function swapMats(){for(const m of surfM){const o=m.material;m.material=surf(o.map,{lightMap:o.lightMap,vertexColors:o.vertexColors},m.userData.spec);o.dispose()}}
 function lockDoor(){keyL.intensity=1;if(key)key.visible=true;exitL.color.setHex(0xff3344);if(door){door.sign.material.color.setHex(0xff2233);door.snd=0}}
 function giveKey(){if(stt!=='menu')ach('key');hasKey=true;key.visible=false;keyL.intensity=0;exitL.color.setHex(0x33ff77);door.sign.material.color.setHex(0x22ff66);hud();invUI()}
@@ -1356,7 +1368,7 @@ let san=100,bag={bat:1,aw:0},breakdown=0,phT=6,phantoms=[],waters=[],batWarn=0,s
 const E={stv:$('stv'),btv:$('btv'),infw:$('infw'),infb:$('infb'),stb:$('stb'),btb:$('btb'),dmg:$('dmg'),pose:$('pose'),tc:$('tc'),fade:$('fade')};
 function say(t,ms=2400){const m=$('msg'),e=x=>x.replace(/</g,'&lt;'),sp=t.match(/^(Wanderer|Verity|Racer): /);m.innerHTML=sp?'<b class="who">'+sp[1].toUpperCase()+'</b>'+e(t.slice(sp[0].length)):e(t);m.classList.add('on');clearTimeout(mt);mt=setTimeout(()=>m.classList.remove('on'),ms)}
 function card(t,s,k,cls,bw){const c=$('card');c.className=cls||'';c.innerHTML=(k?'<small class="k">'+k+'</small>':'')+'<h2>'+t+'</h2><i class="ln"></i><p>'+s+'</p>'+(bw?'<div class="bw">'+bw+'</div>':'');c.style.transition='none';c.style.opacity=1;clearTimeout(ct);ct=setTimeout(()=>{c.style.transition='opacity 1.5s';c.style.opacity=0},2300)}
-function levelCard(){cardPending=false;if(communityActive&&communityActive.chapter2){card('CHAPTER 2 · '+(communityActive.chapterIndex+1)+'/12',communityActive.n,'THE LOST TAPES','',communityActive.rules||'Find the exit');return}if(cur.boss){markSeen('L',TH.length-1,cur.n);card('LEVEL ?','The workshop of the Racer.','The final level','dead','Beat the Racer');return}markSeen('L',thi(),cur.n);const nm=[...new Set(mons.map(m=>m.k.n))];if(wins.length)nm.push('Windows');if(swarms.length)nm.push('Male Deathmoths');if(plague)nm.push('Hydrolitis Plague');card('LEVEL '+level,cur.n,endless?'Endless':(VZ?'Lead Verity to the TVs.':PZ?pzObj():'Find the key. Reach the exit.'),'',nm.length?'Watch out for: '+nm.join(', '):'')}
+function levelCard(){cardPending=false;if(communityActive&&communityActive.chapter2Boss){card('CHAPTER 2 FINALE','The Archivist','A FINAL RECORDING','','Survive all three phases.');return}if(communityActive&&communityActive.chapter2){card('CHAPTER 2 · '+(communityActive.chapterIndex+1)+'/12',communityActive.n,'THE LOST TAPES','',communityActive.rules||'Find the exit');return}if(cur.boss){markSeen('L',TH.length-1,cur.n);card('LEVEL ?','The workshop of the Racer.','The final level','dead','Beat the Racer');return}markSeen('L',thi(),cur.n);const nm=[...new Set(mons.map(m=>m.k.n))];if(wins.length)nm.push('Windows');if(swarms.length)nm.push('Male Deathmoths');if(plague)nm.push('Hydrolitis Plague');card('LEVEL '+level,cur.n,endless?'Endless':(VZ?'Lead Verity to the TVs.':PZ?pzObj():'Find the key. Reach the exit.'),'',nm.length?'Watch out for: '+nm.join(', '):'')}
 function hud(){$('hud').innerHTML='<div class="hl">Level '+level+' <span>&ndash; '+cur.n+'</span></div><div class="obj'+(hasKey?' ok':'')+'">'+(cur.boss&&!bossMenu?(B&&B.mode==='dead'?(hasKey?'Go through the door.':'Take the key.'):(B&&B.obj)||'Beat the Racer.'):VZ?(hasKey?'Door unlocked. Get out.':'Lead Verity to the 4 TVs. Code: '+vzShown()):PZ?pzObj():hasKey?'Key found. Find the exit.':'Find the key.')+'</div><div class="lives">'+lives+(lives===1?' life':' lives')+' &middot; '+DIFF.n+(perma?' (one life)':'')+(endless?' &middot; Endless':'')+'</div>';$('mini').style.display=noMap?'none':''}
 const fmt=t=>[t/3600,t/60%60,t%60].map(v=>String(v|0).padStart(2,'0')).join(':');
 function startYaw(){for(const[a,b,y]of[[1,0,-Math.PI/2],[0,1,Math.PI],[-1,0,Math.PI/2],[0,-1,0]])if(!w[1+b][1+a])return y;return -Math.PI/2}
@@ -1393,7 +1405,7 @@ function loadScreen(cb,quick,done){const L=$('load'),th=TH[thi()],hx=n=>'#'+n.to
   if(i===4)setTimeout(()=>{L.classList.add('off');stt=prev;clearInterval(tk);clearInterval(tipT);E.fade.style.opacity=0;if(done){done();return}
    if(prev==='play'){if(!document.pointerLockElement&&!drag&&!touchMode&&!A.open)pause('Click RESUME to continue.');else levelCard()}},600)},T0*i/4))}
 function nextLevel(){if(stt!=='play')return;if(cur.boss||bossMenu){nextLevelNow();return}const i=thi();csPlay(CSK[i]||'door',CSC[i]||'You stepped through the door into somewhere new.',()=>nextLevelNow())}
-function nextLevelNow(){if(stt!=='play')return;if(communityActive){communityFinish();return;}if(NET.on){const was=NET.spec||!!down||lives<=0;NET.spec=false;lives=Math.max(lives,1);R.domElement.style.filter='';if(down)endDown();if(was)setTimeout(()=>say('New level. You are back on your feet.',2800),2800)}else if(NET.spec){NET.spec=false;lives=Math.max(lives,1);R.domElement.style.filter=''}if(cur.boss){bossWin();return}level++;bumpBest();if(runT-lvStart<60&&level>1)ach('speed');if(level>=2)ach('deeper');if(level>=6)ach('half');if(!endless){if(level>=12)ach('home');if(level>=13)ach('finale')}else if(level>=25)ach('endless');
+function nextLevelNow(){if(stt!=='play')return;if(communityActive&&!communityActive.chapter2Boss){communityFinish();return;}if(NET.on){const was=NET.spec||!!down||lives<=0;NET.spec=false;lives=Math.max(lives,1);R.domElement.style.filter='';if(down)endDown();if(was)setTimeout(()=>say('New level. You are back on your feet.',2800),2800)}else if(NET.spec){NET.spec=false;lives=Math.max(lives,1);R.domElement.style.filter=''}if(cur.boss){bossWin();return}level++;bumpBest();if(runT-lvStart<60&&level>1)ach('speed');if(level>=2)ach('deeper');if(level>=6)ach('half');if(!endless){if(level>=12)ach('home');if(level>=13)ach('finale')}else if(level>=25)ach('endless');
  sfx({f:523,dur:.7,v:.18,r:.5});sfx({f:659,dur:.7,v:.18,r:.5,d:.15});sfx({f:784,dur:1,v:.18,r:.5,d:.3});sfx({n:1,ft:'bandpass',ff:200,ff2:4000,q:1,dur:1.2,v:.15,a:.6});
  const fs=$('flash');fs.style.transition='opacity .5s';fs.style.opacity=1;setTimeout(()=>{fs.style.transition='opacity 1.2s';fs.style.opacity=0},500);
  san=Math.min(100,san+25);breakdown=0;const bonus=(level-1)%(endless?5:3)===0&&lives<5&&!perma;if(bonus)lives++;
@@ -1787,7 +1799,7 @@ function safeUse(){const s=safeO;
   s.show=mkPickup(s.item);s.show.position.set(0,.8,-.05);if(s.item==='sahur')s.show.position.y=.86;s.g.add(s.show);say('The safe swings open.',1600);saveGame();return}
  if(s.item&&!s.taken){s.taken=1;s.g.remove(s.show);s.show=null;giveWeapon(s.item);saveGame()}}
 function unlockSuit(k){if(!k)return;const S_=stats.suits||(stats.suits={});if(S_[k])return;S_[k]=1;saveStats();setTimeout(()=>note('New suit unlocked: '+SPECIAL[k].n+'. Wear it from SUIT on the main menu.'),1800)}
-function interact(){if(B&&stt==='play'&&!down){bossUse();return}if(B||stt!=='play'||down||reviveTarget())return;if(vzAsk())return;if(pzInteract())return;const rd=nearRoomDoor();if(rd){toggleRoomDoor(rd);return}if(!hid&&nearSafe()){safeUse();return}hideKey()}
+function interact(){if(extraInteract348())return;if(B&&stt==='play'&&!down){bossUse();return}if(B||stt!=='play'||down||reviveTarget())return;if(vzAsk())return;if(pzInteract())return;const rd=nearRoomDoor();if(rd){toggleRoomDoor(rd);return}if(!hid&&nearSafe()){safeUse();return}hideKey()}
 // ---- weapons ----
 // Level ?: you are handed the Glock for the final fight; it stays in your inventory
 // the Racer can't be shot, so the final level no longer hands you the Glock
@@ -2036,7 +2048,7 @@ function updCaught(dt){const c=caught;c.t+=dt;
   cam.position.set(px+(rnd()-.5)*sh,camY+(rnd()-.5)*sh,pz+(rnd()-.5)*sh);cam.rotation.set(pitch,yaw,(rnd()-.5)*sh*2);E.dmg.style.opacity=1;
   if(c.t>.85&&!c.f){c.f=1;E.fade.style.transition='opacity .35s';E.fade.style.opacity=1}}
  if(c.t>1.5){caught=null;R.domElement.style.filter='';if(AC){MG.gain.cancelScheduledValues(AC.currentTime);MG.gain.setTargetAtTime(CFG.vol,AC.currentTime,.3)}const why=c.why||(c.m&&c.m.why)||(c.m&&c.m.k?'Taken by the '+c.m.k.n+'.':'');if(NET.on&&NET.started&&!NET.spec&&mateUp()){goDown(why,c.m);setTimeout(()=>{E.fade.style.transition='opacity 1.2s';E.fade.style.opacity=0},200);return}lives--;if(lives<=0){if(NET.on&&NET.started)netSpectate(why);else over(why)}else{die(why);stt='play';stats.deaths++;saveStats();achDeath();saveGame()}setTimeout(()=>{E.fade.style.transition='opacity 1.2s';E.fade.style.opacity=0},200)}}
-function die(why){unHide();for(const L of lockers)L.want=0;san=Math.max(san,60);breakdown=0;for(const p of phantoms)p.g.visible=false;px=1.5*T;pz=1.5*T;yaw=startYaw();pitch=0;vx=vz=0;stam=1;exh=false;bat=Math.max(bat,.5);
+function die(why){unHide();for(const L of lockers)L.want=0;san=Math.max(san,60);breakdown=0;for(const p of phantoms)p.g.visible=false;px=1.5*T;pz=1.5*T;if(extraCP348&&extraCP348.active){px=extraCP348.x;pz=extraCP348.z}yaw=startYaw();pitch=0;vx=vz=0;stam=1;exh=false;bat=Math.max(bat,.5);
  if(hasKey&&!NET.on){hasKey=false;lockDoor()}
  for(const m of mons){m.g.position.set(m.sx,0,m.sz);m.st='wander';m.hunt=0;m.stare=0;m.watch=0;m.dm=null;m.lose=0;m.wait=cur.aw?3:6;const u=m.g.userData;if(u.shL)u.shL.rotation.x=u.shR.rotation.x=0;if(m.k.verity)vReset(m)}
  if(cur.boss&&B)bossRespawn();
@@ -2180,11 +2192,11 @@ function loadSave(){return slotGet(slot)}
 // co-op: the host keeps the run's seed, level and its own supplies; clients rejoin from the level start
 function mpSave(){if(!NET.on||!NET.host||!slot||slot[0]!=='m')return;
  store.set('save_'+slot,{v:1,mp:1,t:Date.now(),nm:slotName,level,seed:runSeed,diff:DIFF.key,lives,runT:Math.round(runT),bat,san,bag,names:[...NET.players.values()].map(q=>q.name)})}
-function newGame(d){ach('start');CFG.diff=d;store.set('cfg',CFG);if(stt==='menu')readRun();closePlay();startLoad();level=RUN.start||1;loadScreen(()=>{restart(RUN.start);inRun=true;stats.runs++;saveStats();saveGame(1)},false,enterRun)}
+function newGame(d){communityActive=null;ach('start');CFG.diff=d;store.set('cfg',CFG);if(stt==='menu')readRun();closePlay();startLoad();level=RUN.start||1;loadScreen(()=>{restart(RUN.start);inRun=true;stats.runs++;saveStats();saveGame(1)},false,enterRun)}
 // leaving the menu: grab audio + pointer lock while we still have the click, then play once the loading screen is done
 function startLoad(){if(!AC)audio();AC.resume();lockReq()}
 function enterRun(){go();if(!document.pointerLockElement&&!drag&&!touchMode)pause('Click RESUME to continue.')}
-function continueGame(k){const sv=slotGet(k);if(!sv)return;slot=k;slotName=sv.nm||null;closePlay();startLoad();level=sv.level;endless=!!sv.endless;endSeed=sv.endSeed|0;thiC={};loadScreen(()=>contLoad(sv),false,enterRun)}
+function continueGame(k){communityActive=null;const sv=slotGet(k);if(!sv)return;slot=k;slotName=sv.nm||null;closePlay();startLoad();level=sv.level;endless=!!sv.endless;endSeed=sv.endSeed|0;thiC={};loadScreen(()=>contLoad(sv),false,enterRun)}
 function contLoad(sv){endless=!!sv.endless;endSeed=sv.endSeed|0;thiC={};runSeed=sv.runSeed??null;perma=!!sv.perma;noMap=!!sv.noMap;noWand=!!sv.noWand;DIFF=DF[sv.diff]||DF.normal;level=sv.level;build(sv.seed);reset();
  lives=sv.lives;runT=sv.runT||0;bat=sv.bat;san=sv.san;bag=Object.assign({bat:0,aw:0},sv.bag);flashOn=sv.flashOn!==false;breakdown=0;wobG=0;$('insane').style.opacity=0;
  bag.w=bag.w||{};bag.choc=bag.choc||0;bag.nrg=bag.nrg||0;if(sv.hasKey)giveKey();if(sv.vtv&&VZ)vzSet(sv.vtv);if(sv.pz&&PZ)pzSet(sv.pz);
@@ -2257,7 +2269,7 @@ document.querySelectorAll('#tbtns [data-k]').forEach(b=>{const k=b.dataset.k;
 
 // ---- simulation ----
 const r=.42;
-function hit(x,z){if(A.nc)return false;if(slabT)for(const sl of slabT.values())if(slabHit(sl,x,z,r))return true;for(const[a,b]of[[-r,-r],[r,-r],[-r,r],[r,r]]){const tx=Math.floor((x+a)/T),tz=Math.floor((z+b)/T),sl=slabT&&slabT.get(tz*S+tx);if(sl)continue;if(!w[tz]||w[tz][tx]!==0)return true;if(narrow&&narrow[tz*S+tx]&&Math.abs(narrow[tz*S+tx]===2?z+b-(tz+.5)*T:x+a-(tx+.5)*T)>.62)return true;if(safeO&&Math.abs(x+a-safeO.x)<(safeO.a?.46:.56)&&Math.abs(z+b-safeO.z)<(safeO.a?.56:.46))return true;for(const L of lockers)if(Math.abs(x+a-L.x)<(L.a?.36:.5)&&Math.abs(z+b-L.z)<(L.a?.5:.36))return true}return false}
+function hit(x,z){if(A.nc)return false;if(extraWalls348.some(o=>Math.abs(x-o.x)<1.1&&Math.abs(z-o.z)<1.1))return true;if(slabT)for(const sl of slabT.values())if(slabHit(sl,x,z,r))return true;for(const[a,b]of[[-r,-r],[r,-r],[-r,r],[r,r]]){const tx=Math.floor((x+a)/T),tz=Math.floor((z+b)/T),sl=slabT&&slabT.get(tz*S+tx);if(sl)continue;if(!w[tz]||w[tz][tx]!==0)return true;if(narrow&&narrow[tz*S+tx]&&Math.abs(narrow[tz*S+tx]===2?z+b-(tz+.5)*T:x+a-(tx+.5)*T)>.62)return true;if(safeO&&Math.abs(x+a-safeO.x)<(safeO.a?.46:.56)&&Math.abs(z+b-safeO.z)<(safeO.a?.56:.46))return true;for(const L of lockers)if(Math.abs(x+a-L.x)<(L.a?.36:.5)&&Math.abs(z+b-L.z)<(L.a?.5:.36))return true}return false}
 function los(ax,az,bx,bz){const d=Math.hypot(bx-ax,bz-az),n=Math.ceil(d/.7);for(let i=1;i<n;i++){const t=i/n,row=w[Math.floor((az+(bz-az)*t)/T)];if(!row||row[Math.floor((ax+(bx-ax)*t)/T)])return false}return true}
 function steer(m,dm,spd,dt,fx,fz){const g=m.g,ex=g.position.x,ez=g.position.z,etx=Math.floor(ex/T),etz=Math.floor(ez/T);let tx=fx,tz=fz,best=dm[etz*S+etx];if(best<0){m.dm=null;if(m.st!=='wander')m.st='wander';m.wait=Math.max(m.wait||0,1.5+rnd()*2);return 0}
  if(best>0)for(const[a,b]of D){const nx=etx+a,nz=etz+b,v=nx>=0&&nz>=0&&nx<S&&nz<S?dm[nz*S+nx]:-1;if(v>=0&&v<best){best=v;tx=(nx+.5)*T;tz=(nz+.5)*T}}
@@ -2289,9 +2301,9 @@ function monTick(m,dt,now,P,chaseSp,wanderSp,searchSp,dark){const{px,pz,dmap,lit
     if(u.head)u.head.rotation.z=Math.sin(now/60)*.25}
    else{let sr=seeR*K_.see;if(K_.light)sr=lit?(dark?22:18)*K_.see:3.5;
     const facing=((px-gx)*Math.sin(g.rotation.y)+(pz-gz)*Math.cos(g.rotation.y))/(de||1)>.3,see=hunt||(vis&&de<sr&&(de<3.5||facing||m.st==='chase'||K_.light)),hear=!P.hid&&noise>0&&de<noise*K_.hear;
-    if(see){if(m.st!=='chase'){m.st='chase';spotted(m,ad);m.stare=K_.quad||K_.moth?.3:.6;m.burst=1.4}m.lose=0;m.wait=0;m.watch=0}
-    else if(m.st==='chase'){if(hear||(de<3.5&&!P.hid))m.lose=0;else if((m.lose+=dt*(K_.light&&!lit?3:1))>DIFF.lose){m.st='search';m.dm=dmap;m.tg=[ptx,ptz]}}
-    else if(hear&&dmap){if(m.st!=='search')sfx({t:'sawtooth',f:110,f2:80,dur:1.2,v:.12*Math.pow(Math.max(0,1-de/18),2),ft:'bandpass',ff:500,q:5,a:.3,p:panOf(gx,gz),r:.6});m.st='search';m.dm=dmap;m.tg=[ptx,ptz];m.wait=0}
+    if(see){m.lastKnown=[ptx,ptz];m.lastSeen=now;if(m.st!=='chase'){m.st='chase';spotted(m,ad);m.stare=K_.quad||K_.moth?.3:.6;m.burst=1.4}m.lose=0;m.wait=0;m.watch=0}
+    else if(m.st==='chase'){if(hear||(de<3.5&&!P.hid))m.lose=0;else if((m.lose+=dt*(K_.light&&!lit?3:1))>DIFF.lose){m.st='search';m.dm=m.lastKnown?bfs(m.lastKnown[0],m.lastKnown[1]):dmap;m.tg=m.lastKnown||[ptx,ptz]}}
+    else if((hear||extraNoise348(m.g.position.x,m.g.position.z))&&dmap){if(m.st!=='search')sfx({t:'sawtooth',f:110,f2:80,dur:1.2,v:.12*Math.pow(Math.max(0,1-de/18),2),ft:'bandpass',ff:500,q:5,a:.3,p:panOf(gx,gz),r:.6});m.st='search';if(extraNoise348(gx,gz)&&extraDecoyState348){const ex=Math.floor(extraDecoyState348.x/T),ez=Math.floor(extraDecoyState348.z/T);m.dm=bfs(ex,ez);m.tg=[ex,ez]}else{m.dm=dmap;m.tg=[ptx,ptz]}m.wait=0}
     const jit=K_.jitter?.45+Math.abs(Math.sin(now/240+m.sx))*1.1:1;if(m.st==='chase')chasing=true;
     if(frozen){if(!m.fz&&m.st==='chase')sfx({n:1,ft:'bandpass',ff:2500,q:4,dur:.08,v:.12,p:panOf(gx,gz),r:.4})}
     else if(m.wait>0){m.wait-=dt;if(u.head)u.head.rotation.y=Math.sin(now/600+m.sx)*.9}
@@ -2303,7 +2315,7 @@ function monTick(m,dt,now,P,chaseSp,wanderSp,searchSp,dark){const{px,pz,dmap,lit
     if(sp>0&&de<28&&!K_.smiler&&!K_.moth&&(m.ft-=sp*dt)<=0){m.ft=K_.quad?.7:m.st==='chase'?1.3:1.1;monStep(m,ad,(m.st==='chase'?.75:.45)*(K_.quad?.6:1))}
     entSound(m,ad,dt);stalkSound(m,ad,vis,dt)}}
   m.nsp=sp;animMon(m,sp,dt,now);
-  if(de<(hunt?1.75:(K_.moth?1.3:.9)*(cur.ms||1))&&!(m.scared>0)&&(!P.hid||hunt)&&!P.prot&&!A.god&&!frozen&&!m.lure&&!K_.verity){if(P.remote){netSend(P.id,{t:'caught',i:mons.indexOf(m)});m.wait=3;m.st='wander';m.dm=null;return false}catchPlayer(m);return true}
+  if(de<(hunt?1.75:(K_.moth?1.3:.9)*(cur.ms||1))&&!(m.scared>0)&&(!P.hid||hunt)&&!P.prot&&!extraProtected348()&&!A.god&&!frozen&&!m.lure&&!K_.verity){if(P.remote){netSend(P.id,{t:'caught',i:mons.indexOf(m)});m.wait=3;m.st='wander';m.dm=null;return false}catchPlayer(m);return true}
  return false}
 function update(dt){
  runT+=dt;if(down)downTick(dt);if(!down)reviveTick(dt);prot=Math.max(0,prot-dt);if(hid)hideTick(dt);lockerTick(dt);const HB=!!hid||invOn||!!down;
@@ -2332,14 +2344,14 @@ function update(dt){
  // key, batteries, exit
  const now=performance.now();
  if(!hasKey){key.rotation.y+=dt*2;key.position.y=1.05+Math.sin(now/300)*.08;if(Math.hypot(key.position.x-px,key.position.z-pz)<1.5&&key.userData.arm!==false&&!key.userData.off){giveKey();netOnKey();sfx({f:880,dur:.5,v:.2,r:.5});sfx({f:1320,dur:.6,v:.15,r:.5,d:.1});sfx({f:1760,dur:.8,v:.1,r:.6,d:.2});say('Key found. The exit is unlocked. Follow the green light.',3400)}}
- itemsTick(dt,now);
+ itemsTick(dt,now);extraTick348(dt);
  for(const b of bats)if(b.visible){b.rotation.y+=dt;b.position.y=.3+Math.sin(now/400+b.position.x)*.05;if(Math.hypot(b.position.x-px,b.position.z-pz)<1.3){if(!batPick())continue;b.visible=false;netOnPick('b',bats.indexOf(b))}}
  for(const b of waters)if(b.visible){b.rotation.y+=dt*.8;b.position.y=.3+Math.sin(now/450+b.position.z)*.05;if(Math.hypot(b.position.x-px,b.position.z-pz)<1.3&&bag.aw<5){b.visible=false;netOnPick('w',waters.indexOf(b));bag.aw++;invUI();sfx({f:700,f2:1100,dur:.3,v:.1,r:.4});say('Almond water picked up.',2000)}}
  if(bat<.1&&flashOn&&(batWarn-=dt)<=0){batWarn=14;say('Your flashlight is dying. Batteries charge it back up.',2600)}
  const dd=Math.hypot(door.fx-px,door.fz-pz);
  if(hasKey&&dd<6&&!door.snd){door.snd=1;sfx({n:1,ft:'lowpass',ff:600,dur:.25,v:.25,r:.5});sfx({t:'sawtooth',f:90,f2:140,dur:1.1,v:.05,ft:'bandpass',ff:600,q:6,a:.2,r:.6,d:.15})}
  door.open=lerp(door.open,hasKey&&dd<6?1:0,Math.min(1,dt*2.5));door.piv.rotation.y=-door.open*1.45;exitL.intensity=1.2+Math.sin(now/250)*.3+door.open;
- lockT-=dt;if(dd<1.25){if(hasKey&&!(PZ&&PZ.d.t==='car')){if(NET.on){if(NET.host)netNext();else netEscape();return}nextLevel();return}if(VZ){if(lockT<=0&&!kpOn){lockT=3;kpOpen()}}else if(PZ&&lockT<=0){lockT=2.4;say(PZ.d.hint,2200);for(let i=0;i<2;i++)sfx({n:1,ft:'bandpass',ff:900,q:2,dur:.08,v:.15,d:i*.12})}else if(lockT<=0){lockT=1.6;say('The door is locked. Find the key.',1400);for(let i=0;i<3;i++)sfx({n:1,ft:'bandpass',ff:1800,q:2,dur:.06,v:.18,r:.3,d:i*.09})}}
+ lockT-=dt;if(dd<1.25){if(hasKey&&extraCanExit348()&&!(PZ&&PZ.d.t==='car')){if(NET.on){if(NET.host)netNext();else netEscape();return}nextLevel();return}if(hasKey&&!extraCanExit348()){if(lockT<=0){lockT=1.6;say('Power is offline. Activate every generator switch.',2200)}}else if(VZ){if(lockT<=0&&!kpOn){lockT=3;kpOpen()}}else if(PZ&&lockT<=0){lockT=2.4;say(PZ.d.hint,2200);for(let i=0;i<2;i++)sfx({n:1,ft:'bandpass',ff:900,q:2,dur:.08,v:.15,d:i*.12})}else if(lockT<=0){lockT=1.6;say('The door is locked. Find the key.',1400);for(let i=0;i<3;i++)sfx({n:1,ft:'bandpass',ff:1800,q:2,dur:.06,v:.18,r:.3,d:i*.09})}}
  // monsters
  let dmin=99,sting=0;chasing=false;vFear=0;
  const chaseSp=Math.min(3+level*.12,4.7+Math.min(1.2,endEx()*.04))*cur.sp*DIFF.ms,wanderSp=(1.6+level*.05)*cur.sp*DIFF.ms,searchSp=(chaseSp+wanderSp)/2,dark=cur.pb===0,seeR=(lit?(dark?15:17):(dark?6:12)*(crouch?.7:1))*DIFF.see,cfx=-Math.sin(yaw),cfz=-Math.cos(yaw);
@@ -2601,14 +2613,14 @@ const MIN_KINDS=[['hound',4.9],['skin',4.4],['thing',4.1]];
 function spawnMinion(){const b=B,i=b.crushed;if(i>=3)return;const gt=b.gates[i%3],[k,sp]=MIN_KINDS[i],M=(c,bb)=>bb?new THREE.MeshBasicMaterial({color:c}):new THREE.MeshLambertMaterial({color:c});
  let m;if(k==='thing'){// The Thing has no monster entry of its own, so it's built from its model
   const t=mkThingModel(new THREE.MeshLambertMaterial({color:0x4a443c}),new THREE.MeshBasicMaterial({color:0xff2020,fog:false}));t.g.scale.setScalar(.62);t.g.position.set(gt.x,0,gt.z);world.add(t.g);m={g:t.g,k:{n:'The Thing'},ph:0,st:'hunt',wait:0}}
- else{addMon(k,gt.x,gt.z,0,M);m=mons.pop()}if(!m)return;m.spd=sp*b.mul;m.cd=0;m.stun=0;m.st='hunt';b.mins.push(m);gt.lt.material.opacity=.9;setTimeout(()=>{gt.lt.material.opacity=0},1500);
+ else{addMon(k,gt.x,gt.z,0,M);m=mons.pop()}if(!m)return;m.spd=sp*b.mul*(communityActive&&communityActive.chapter2Boss?1.25:1);m.cd=0;m.stun=0;m.st='hunt';b.mins.push(m);gt.lt.material.opacity=.9;setTimeout(()=>{gt.lt.material.opacity=0},1500);
  sfx({n:1,ft:'lowpass',ff:400,dur:1,v:.3,p:panOf(gt.x,gt.z),r:.6});sfx({t:'sawtooth',f:60,f2:120,dur:.8,v:.12,p:panOf(gt.x,gt.z)});say('A gate grinds open.',1600)}
 function updP2(dt,now){const b=B;if(b.nextMin>0){b.nextMin-=dt;if(b.nextMin<=0)spawnMinion()}
  for(const pl_ of b.plates){if(pl_.t>0){pl_.t-=dt;const k=pl_.t>.45?1-(pl_.t-.45)/.15:pl_.t/.45;pl_.pr.position.y=lerp(H-.6,.6,clamp(k,0,1));pl_.rod.scale.y=1+(H-1.2)*clamp(k,0,1);pl_.rod.position.y=H-.1-(H-1.2)*clamp(k,0,1)/2}else{pl_.pr.position.y=H-.6;pl_.rod.scale.y=1;pl_.rod.position.y=H-.1}if(pl_.cd>0)pl_.cd-=dt}
  for(const m of b.mins.slice()){const g=m.g,gx=g.position.x,gz=g.position.z,de=Math.hypot(px-gx,pz-gz);let sp=0;
   if(m.stun>0)m.stun-=dt;else if(dmap){sp=steer(m,dmap,m.spd,dt,px,pz);let da=Math.atan2(px-gx,pz-gz)-g.rotation.y;da=Math.atan2(Math.sin(da),Math.cos(da));g.rotation.y+=da*Math.min(1,dt*6)}
   animMon(m,sp,dt,now);
-  if(de<1.45&&m.stun<=0){hurt(34,'Caught by the '+m.k.n+'.');m.stun=1.05;const k=5/(de||1);vx+=(px-gx)*k;vz+=(pz-gz)*k}
+  if(de<1.45&&m.stun<=0){hurt(communityActive&&communityActive.chapter2Boss?42:34,'Caught by the '+m.k.n+'.');m.stun=1.05;const k=5/(de||1);vx+=(px-gx)*k;vz+=(pz-gz)*k}
   const tx=Math.floor(gx/T),tz=Math.floor(gz/T);for(const pl_ of b.plates)if(pl_.cd<=0&&pl_.x===tx&&pl_.y===tz){pl_.t=.6;pl_.cd=3;crush(m,pl_)}}}
 function crush(m,pl_){const b=B;sfx({n:1,ft:'lowpass',ff:900,ff2:80,dur:.9,v:.6,a:.005,p:panOf(m.g.position.x,m.g.position.z),r:.6});sfx({f:55,f2:25,dur:.6,v:.4});bShake=.15;
  setTimeout(()=>{if(B!==b)return;burst(m.g.position.x,.6,m.g.position.z,60,0x3a1010,6);world.remove(m.g);b.mins=b.mins.filter(q=>q!==m);
@@ -2644,7 +2656,7 @@ function updBoss(dt,now){const b=B;if(wEq==='pistol')gunUpd(dt);bShake=Math.max(
  else if(b.mode==='p2')updP2(dt,now);
  else if(b.mode==='p3'||b.mode==='dead')updP3(dt,now);
  return stt!=='play'}
-function bossUI(){if(!B)return;const b=B,ph=b.mode==='dead'?4:b.ph,prog=ph===1?b.brks.filter(q=>q.on).length:ph===2?b.crushed:ph===3?b.crashes:3;
+function bossUI(){if(!B)return;$('bossui').querySelector('.bn').firstChild.textContent=communityActive&&communityActive.chapter2Boss?'THE ARCHIVIST':'THE RACER';const b=B,ph=b.mode==='dead'?4:b.ph,prog=ph===1?b.brks.filter(q=>q.on).length:ph===2?b.crushed:ph===3?b.crashes:3;
  $('bhearts').innerHTML=[1,2,3].map(i=>'<i class="'+(i>=ph?'on':'')+'"></i>').join('');$('bhp').style.width=(ph>3?0:(1-prog/3)*100)+'%';
  $('bstage').textContent=ph>3?'Beaten':['','Phase 1 · Power','Phase 2 · Lure','Phase 3 · Chase'][ph]+' · '+prog+'/3';
  b.obj=ph===1?'Pull the breakers ('+prog+'/3).':ph===2?'Lead the monsters onto the crusher plates ('+prog+'/3).':ph===3?'Make the bike crash into the UNSAFE blocks ('+prog+'/3).':'';hud()}
@@ -2667,7 +2679,10 @@ function dmgBoss(){}
 function breakProj(pr){world.remove(pr.m);projs=projs.filter(q=>q!==pr)}
 function roar(v){sfx({t:'sawtooth',f:110,f2:38,dur:2.2,v:.35*v,ft:'lowpass',ff:900,r:.9})}
 
-function bossWin(){stt='loading';ach('win');if(!stats.goldKey){stats.goldKey=1;saveStats()}ach('golden');setTimeout(()=>{try{mkHand()}catch(e){}},50);if(DIFF.key==='hard')ach('winhard');if(perma)ach('perma');bumpBest();stats.wins=(stats.wins||0)+1;const newRacer=!stats.racerWin;stats.racerWin=1;saveStats();inRun=false;slotClear();
+function bossWin(){if(communityActive&&communityActive.chapter2Boss){
+  communityActive=null;stt='loading';store.set('chapter2BossCleared',true);stats.wins=(stats.wins||0)+1;saveStats();inRun=false;slotClear();sfx({f:784,dur:1.5,v:.2});card('CHAPTER 2 COMPLETE','The Archivist has fallen.','ALL TAPES RECOVERED');
+  setTimeout(()=>{B=null;document.body.classList.remove('boss');openHub();hubScreen('chapter2');$('hubnote').textContent='CHAPTER 2 COMPLETE — The Archivist defeated. The finale can be replayed.'},2600);return}
+ stt='loading';ach('win');if(!stats.goldKey){stats.goldKey=1;saveStats()}ach('golden');setTimeout(()=>{try{mkHand()}catch(e){}},50);if(DIFF.key==='hard')ach('winhard');if(perma)ach('perma');bumpBest();stats.wins=(stats.wins||0)+1;const newRacer=!stats.racerWin;stats.racerWin=1;saveStats();inRun=false;slotClear();
  sfx({f:523,dur:1.2,v:.15,r:.6});sfx({f:659,dur:1.2,v:.15,r:.6,d:.2});sfx({f:784,dur:1.6,v:.15,r:.6,d:.4});const f=$('flash');f.style.transition='opacity 1.2s';f.style.opacity=1;
  setTimeout(()=>{card('CHAPTER 1 COMPLETE','The Racer is defeated. Your next nightmare begins.','CHAPTER 2 UNLOCKED');if(newRacer)setTimeout(()=>note('The Racer suit is yours. Find it in SUIT.'),1500);setTimeout(()=>{f.style.transition='opacity 1.5s';f.style.opacity=0;B=null;document.body.classList.remove('boss');openHub();chapter2Start(0)},3000)},1300)}
 
@@ -3473,6 +3488,59 @@ function drawMap(){renderMap(mc,512,true)}
 function drawMini(){renderMap(mnc,170,false)}
 const gc=$('grain').getContext('2d'),gi=gc.createImageData(160,90),_c=new THREE.Color();let gf=0,frames=0,fAcc=0;
 
+// ===== v3.48: gameplay additions =====
+// Generator puzzles, safe checkpoints and custom placables are built into existing generated maps.
+let extraSwitches348=[],extraCP348=null,extraDecoyState348=null,extraDecoyCd348=0,extraWalls348=[];
+function extraGeom348(type,x,z,i){
+ const g=new THREE.Group();g.position.set(x,0,z);const cube=(w,h,d,y,col)=>{const o=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),new THREE.MeshLambertMaterial({color:col}));o.position.y=y;g.add(o);return o};
+ if(type==='switch'){cube(.65,1.35,.38,.7,0x555b60);cube(.45,.45,.41,1,0x2a3030);const bulb=new THREE.Mesh(new THREE.SphereGeometry(.13,8,6),new THREE.MeshBasicMaterial({color:0xff3344}));bulb.position.set(0,1.16,.24);g.add(bulb);g.userData.bulb=bulb}
+ else if(type==='supply'){cube(1,.65,.9,.33,0x3b634b);cube(.9,.11,.8,.72,0x9bcfa4)}
+ else if(type==='enemy'){cube(.65,1.7,.5,.85,0x20131d);cube(.48,.45,.4,1.88,0x160b18);for(const p of[-.12,.12]){const eye=new THREE.Mesh(new THREE.SphereGeometry(.055,8,6),new THREE.MeshBasicMaterial({color:0xff3344}));eye.position.set(p,1.94,-.21);g.add(eye)}}
+ else if(type==='wall'){cube(1.7,2.5,1.7,1.25,0x5b6267);cube(1.8,.12,1.8,2.55,0x9ca8a8)}
+ else if(type==='checkpoint'){cube(1.25,.35,1.25,.18,0x355a54);cube(.25,2,.25,1.2,0x77998f);const lamp=new THREE.Mesh(new THREE.SphereGeometry(.32,9,7),new THREE.MeshBasicMaterial({color:0x67ffc0}));lamp.position.y=2.35;g.add(lamp);g.add(new THREE.PointLight(0x67ffc0,1.4,7))}
+ world.add(g);return g}
+function extraPlace348(type,q){const x=(q[0]+.5)*T,z=(q[1]+.5)*T;return extraGeom348(type,x,z)}
+function extraBuild348(){extraSwitches348=[];extraCP348=null;extraWalls348=[];extraDecoyState348=null;extraDecoyCd348=0;$('objective348').style.display='none';if(!communityActive||cur.boss||!openT.length)return;
+ const avail=openT.filter(q=>q[2]>7&&Math.hypot((q[0]+.5)*T-door.fx,(q[1]+.5)*T-door.fz)>5&&Math.hypot((q[0]+.5)*T-key.position.x,(q[1]+.5)*T-key.position.z)>4);
+ if(!avail.length)return;
+ const used=new Set();function take(nx,ny){let out=null,bd=Infinity;for(const q of avail){const key=q[0]+','+q[1];if(used.has(key))continue;const d=(q[0]-nx)**2+(q[1]-ny)**2;if(d<bd){bd=d;out=q}}if(out)used.add(out[0]+','+out[1]);return out}
+ // Chapter-specific landmarks: market kiosks, subway pillars, laboratory machines,
+ // archive shelves and more. Their collision-free placement leaves maze routes usable.
+ if(communityActive.chapter2){const theme=CH2_VIS[communityActive.chapterIndex][6];const hues={office:0x4c7773,subway:0x4b7788,manor:0x613b59,ward:0x3b395b,boiler:0x8a4b26,mall:0x9b8265,lab:0x397b75,arcade:0x924e9b,metro:0x963b45,crypt:0x796449,street:0x596e90,archive:0x8a7e52};
+  const material=new THREE.MeshLambertMaterial({color:hues[theme]||0x666666});
+  for(let j=0;j<Math.min(26,Math.floor(avail.length/15));j++){
+   const q=avail[Math.floor((j+.5)*avail.length/Math.max(26,Math.floor(avail.length/15)))];if(!q)continue;
+   const obj=new THREE.Group();obj.position.set((q[0]+.5)*T,0,(q[1]+.5)*T);
+   const h=theme==='subway'||theme==='metro'?2.4:theme==='lab'||theme==='ward'?1.6:theme==='archive'?2.5:1.3;
+   const m=new THREE.Mesh(new THREE.BoxGeometry(.5,h,.45),material);m.position.y=h/2;obj.add(m);
+   if(['arcade','mall','lab','ward'].includes(theme)){const glow=new THREE.Mesh(new THREE.PlaneGeometry(.36,.4),new THREE.MeshBasicMaterial({color:theme==='arcade'?0xff6ff1:0x9ce9e1}));glow.position.set(0,h*.65,-.238);obj.add(glow)}
+   if(['subway','metro','crypt','archive'].includes(theme)){const trim=new THREE.Mesh(new THREE.BoxGeometry(.7,.1,.7),new THREE.MeshLambertMaterial({color:0xabb1a3}));trim.position.y=h;obj.add(trim)}
+   world.add(obj);
+  }
+ }
+ // Chapter 2 provides three generator puzzles and a defensible checkpoint.
+ if(communityActive.chapter2){const rr=mulberry(levelSeed^0x382a1);for(let i=0;i<3;i++){const q=avail[Math.min(avail.length-1,Math.floor(avail.length*(.2+i*.27)))];const p=take(q[0],q[1]);if(p){const g=extraPlace348('switch',p);extraSwitches348.push({x:g.position.x,z:g.position.z,g,on:false})}}}
+ const cpq=avail[Math.floor(avail.length*.18)];const cp=take(cpq[0],cpq[1]);if(cp&&(communityActive.chapter2||communityActive.e&&communityActive.e.length)){const g=extraPlace348('checkpoint',cp);extraCP348={x:g.position.x,z:g.position.z,active:false};}
+ // Authored objects follow normalized 12x12 editor grid, snapping to open reachable rooms.
+ const edits=Array.isArray(communityActive.e)?communityActive.e:[];
+ for(let i=0;i<Math.min(144,edits.length);i++){const val=edits[i];if(!val)continue;const type=['','wall','enemy','supply','switch'][val];if(!type)continue;const q=take(1+Math.round(i%12/11*(S-3)),1+Math.round(Math.floor(i/12)/11*(S-3)));if(!q)continue;const g=extraPlace348(type,q);
+ if(type==='switch')extraSwitches348.push({x:g.position.x,z:g.position.z,g,on:false});if(type==='wall')extraWalls348.push({x:g.position.x,z:g.position.z});
+ if(type==='supply'){const b=mkWater();b.position.set(g.position.x,.93,g.position.z);world.add(b);waters.push(b)}
+ if(type==='enemy'){
+  // Use the native hostile-entity constructor and AI, not only a visual marker.
+  const MAT=(c,b)=>b?new THREE.MeshBasicMaterial({color:c}):new THREE.MeshLambertMaterial({color:c});
+  const kinds=['hound','skin','bacteria','smiler'];const kind=kinds[(i+levelSeed)%kinds.length];addMon(kind,g.position.x,g.position.z,mons.length,MAT);g.visible=false;
+ }
+ }
+ extraHud348();}
+function extraHud348(){const el=$('objective348');if(extraSwitches348.length){const done=extraSwitches348.filter(q=>q.on).length;el.style.display='block';el.textContent='GENERATORS '+done+'/'+extraSwitches348.length+' · '+(done===extraSwitches348.length?'EXIT POWER RESTORED':'PRESS E NEAR A SWITCH')}else el.style.display='none'}
+function extraCanExit348(){return !extraSwitches348.length||extraSwitches348.every(q=>q.on)}
+function extraInteract348(){if(stt!=='play'||hid||down||B)return false;for(const o of extraSwitches348){const d=Math.hypot(o.x-px,o.z-pz);if(d<2.8){if(!o.on){o.on=true;o.g.userData.bulb.material.color.setHex(0x49ff8e);sfx({t:'square',f:240,f2:850,dur:.45,v:.16});say('Generator '+extraSwitches348.filter(x=>x.on).length+'/'+extraSwitches348.length+' activated.',2000);extraHud348()}else say('Generator already active.',1200);return true}}return false}
+function extraProtected348(){return !!(extraCP348&&extraCP348.active&&Math.hypot(px-extraCP348.x,pz-extraCP348.z)<3.2)}
+function extraTick348(dt){if(extraDecoyCd348>0)extraDecoyCd348-=dt;if(extraDecoyState348){extraDecoyState348.t-=dt;if(extraDecoyState348.t<=0){extraDecoyState348.g.visible=false;extraDecoyState348=null}}
+ if(!extraCP348)return;const near=Math.hypot(px-extraCP348.x,pz-extraCP348.z)<2.7;if(near&&!extraCP348.active){extraCP348.active=true;note('SAFE ROOM CHECKPOINT ACTIVATED');sfx({f:750,f2:1050,dur:.5,v:.13})}if(near){stam=Math.min(1,stam+dt*.18);if(bat<.85)bat=Math.min(.85,bat+dt*.018)}}
+function extraNoise348(x,z){return !!(extraDecoyState348&&Math.hypot(extraDecoyState348.x-x,extraDecoyState348.z-z)<19)}
+function extraDecoy348(){if(extraDecoyCd348>0){say('Noise maker recharging.',1000);return}extraDecoyCd348=25;const g=extraGeom348('supply',px,pz);g.scale.setScalar(.35);extraDecoyState348={x:px,z:pz,t:6,g};sfx({t:'square',f:420,f2:120,dur:.8,v:.24});say('Noise maker thrown. Monsters may investigate. [G] cooldown 25s.',2200)}
 // ===== v3.43: THE HUB / shareable community tapes =====
 // Hub is a dedicated Three.js scene, leaving the original level/collision/AI state untouched.
 const hubScene=new THREE.Scene();hubScene.background=new THREE.Color(0x090b11);hubScene.fog=new THREE.FogExp2(0x090b11,.023);
@@ -3506,6 +3574,21 @@ const HUB_FEATURED=[
  {id:'neighborhood',n:'Empty Neighborhood',t:12,s:'empty-neighborhood-823',d:'Face the deserted streets with no friendly wanderers.',rules:'NO HELP',nw:1},
  {id:'yellow',n:'Back Where It Began',t:1,s:'origin-tape-823',d:'The original yellow maze. One chance, no map.',rules:'ONE LIFE / NO MAP',one:1,nm:1}
  ];
+// Distinct environments for Chapter 2 rather than identical copies of Chapter 1.
+const CH2_VIS=[
+ ['Night Shift Complex','#8baba8','#283b3d','#b5c4b1',0x071a1d,0x9fffe3,'office'],
+ ['Flooded Transit','#7a939b','#244451','#b1c4c8',0x031723,0x61daff,'subway'],
+ ['Blackwood Manor','#6e4b64','#302033','#66505e',0x190717,0xff69c9,'manor'],
+ ['The Unlit Ward','#42435d','#202131','#45435b',0x03020e,0x947bff,'ward'],
+ ['Boiler City','#8e5b36','#39261d','#664637',0x1b0801,0xff9c40,'boiler'],
+ ['Empty Mall','#9d8f87','#3a3841','#827e82',0x110c1a,0xffde89,'mall'],
+ ['Research Wing','#77999c','#263f41','#8abebc',0x041c1c,0x9effc5,'lab'],
+ ['The Funhouse','#964b8b','#35193d','#b97479',0x190018,0xff68db,'arcade'],
+ ['Emergency Line','#a75353','#2d1218','#66252d',0x200004,0xff4444,'metro'],
+ ['The Catacombs','#635c48','#292519','#4c4835',0x090804,0xe9d484,'crypt'],
+ ['Nocturne Estate','#4d6373','#26303b','#50616c',0x030a12,0x85b7ff,'street'],
+ ['Archive Zero','#a8a58b','#464434','#77745a',0x141206,0xffd96a,'archive']
+];
 let communityActive=null;
 function communityCompleted(){return store.get('communityCleared',{})||{}}
 // Highest Chapter 2 index reached (0 = first level, 12 = chapter cleared).
@@ -3529,8 +3612,8 @@ function communityFinish(){
    card('CHAPTER 2','LEVEL '+(o.chapterIndex+1)+' COMPLETE','NEXT: '+HUB_FEATURED[next].n);
    setTimeout(()=>chapter2Start(next),1600);
   }else{
-   card('CHAPTER 2 COMPLETE','You survived all twelve tapes.','The Hub awaits.');
-   setTimeout(()=>{openHub();hubScreen('chapter2');$('hubnote').textContent='CHAPTER 2 COMPLETE — All twelve levels cleared. Replay any level or explore community creations.'},2300);
+   card('THE LAST TAPE','All twelve tapes recovered.','THE ARCHIVIST IS WAITING.');
+   setTimeout(()=>{openHub();hubEnter(13,'archivist-finale-823',{id:'archivist',n:'The Archivist',chapter2Boss:true})},2200);
   }
   return;
  }
@@ -3540,36 +3623,46 @@ function hubCommunity(){return (store.get('community',[])||[]).filter(x=>x&&type
 function hubScreen(t){
  hubTab=t;document.querySelectorAll('#hubtabs [data-ht]').forEach(b=>b.classList.toggle('on',b.dataset.ht===t));
  $('hubcreate').style.display=t==='create'?'block':'none';$('hublist').style.display=t==='create'?'none':'grid';
- $('hubnote').textContent=t==='story'?'CHAPTER 1 — Revisit any original story level without overwriting your saves.':t==='chapter2'?'CHAPTER 2 — THE LOST TAPES. Twelve levels in order. Escape each one to unlock and automatically enter the next. Progress is saved after each exit.':t==='community'?'COMMUNITY LEVELS — Play custom levels created by you or imported with a shared code.':'Create a seeded custom level, copy its code, or import a code from a friend.';
+ $('hubnote').textContent=t==='story'?'CHAPTER 1 — Revisit any original story level without overwriting your saves.':t==='chapter2'?'CHAPTER 2 — THE LOST TAPES. Twelve newly styled levels with generator puzzles and checkpoints. Escape each in order, then defeat the Archivist to complete the chapter.':t==='community'?'COMMUNITY LEVELS — Play custom levels created by you or imported with a shared code.':'Create a seeded custom level, copy its code, or import a code from a friend.';
  if(t==='story')$('hublist').innerHTML=TH.map((th,i)=>'<button data-l="'+(i+1)+'"><b>'+(i===12?'LEVEL ?':'LEVEL '+(i+1))+'</b><span>'+esc(th.n)+'</span><em>ENTER</em></button>').join('');
  else if(t==='chapter2'){
   const progress=chapter2Progress();
   $('hublist').innerHTML=HUB_FEATURED.map((o,i)=>{const locked=i>progress,cleared=i<progress;
-   return '<button data-ch="'+i+'" '+(locked?'disabled aria-disabled="true"':'')+' title="'+esc(o.d)+'"><b>'+(i+1)+'. '+esc(o.n)+'</b><span>'+esc(o.d)+'<br>'+esc(o.rules)+'</span><em>'+(locked?'LOCKED':cleared?'CLEARED':'NEXT')+'</em></button>'}).join('');
+   return '<button data-ch="'+i+'" '+(locked?'disabled aria-disabled="true"':'')+' title="'+esc(o.d)+'"><b>'+(i+1)+'. '+esc(o.n)+'</b><span>'+esc(o.d)+'<br>'+esc(o.rules)+'</span><em>'+(locked?'LOCKED':cleared?'CLEARED':'NEXT')+'</em></button>'}).join('')+(progress>=HUB_FEATURED.length?'<button data-final="1"><b>13. THE ARCHIVIST</b><span>Chapter 2 final boss encounter</span><em>'+(store.get('chapter2BossCleared',false)?'DEFEATED':'ENTER')+'</em></button>':'');
  }else if(t==='community'){
   const done=communityCompleted(),items=hubCommunity();
   $('hublist').innerHTML=items.length?items.map((o,i)=>{const clear=!!done[o.id||('custom:'+o.n+':'+o.s)];return '<button data-c="'+i+'" title="'+esc(o.d||'Seeded custom map')+'"><b>'+esc(o.n)+'</b><span>'+esc(o.d||TH[o.t-1].n)+'</span><em>'+(clear?'CLEARED':'PLAY')+'</em></button>'}).join(''):'<p>No shared levels yet. Choose CREATE / IMPORT to add one.</p>';
  }
 }
 function openHub(){if(NET.on){toMenu();return}if(!(stats.wins>0)){toMenu();return}
- if((stt==='play'||stt==='pause')&&!communityActive)saveGame();inRun=false;document.exitPointerLock&&document.exitPointerLock();$('ov').style.display='none';$('load').classList.add('off');$('mapw').style.display='none';$('inv').classList.remove('on');invOn=false;mapOn=false;document.body.classList.remove('menu','boss','armed','downed','hiding','invo','cut');$('adm').style.display='none';A.open=false;document.body.classList.add('hubmode');stt='hub';if(AC)MG.gain.setTargetAtTime(CFG.vol*.4,AC.currentTime,.2);hubScreen('story')}
+ if((stt==='play'||stt==='pause')&&!communityActive)saveGame();inRun=false;document.exitPointerLock&&document.exitPointerLock();$('objective348').style.display='none';$('ov').style.display='none';$('load').classList.add('off');$('mapw').style.display='none';$('inv').classList.remove('on');invOn=false;mapOn=false;document.body.classList.remove('menu','boss','armed','downed','hiding','invo','cut');$('adm').style.display='none';A.open=false;document.body.classList.add('hubmode');stt='hub';if(AC)MG.gain.setTargetAtTime(CFG.vol*.4,AC.currentTime,.2);hubScreen('story')}
 function hubFrame(dt){hubTime+=dt;hubCamera.aspect=innerWidth/innerHeight;hubCamera.updateProjectionMatrix();hubCamera.position.set(Math.sin(hubTime*.12)*1.0,2.35+Math.sin(hubTime*.27)*.11,4.5+Math.cos(hubTime*.1)*.3);hubCamera.lookAt(0,2.8,-14)}
 function hubEnter(l,s=null,community=null){if(stt!=='hub')return;
  communityActive=community;document.body.classList.remove('hubmode');stt='menu';document.body.classList.remove('menu');NET.on=false;slot=null;slotName=null;inRun=false;endless=false;thiC={};runSeed=s?hashStr(s):null;perma=!!(community&&community.one);noMap=!!(community&&community.nm);noWand=!!(community&&community.nw);level=l;DIFF=DF[CFG.diff]||DF.normal;
  startLoad();loadScreen(()=>{restart(l);inRun=false;if(community){if(community.st!=null)stam=community.st;if(community.bt!=null)bat=community.bt;hud()}stats.runs++;saveStats()},false,()=>{enterRun();if(community)setTimeout(()=>say((community.chapter2?'CHAPTER 2 · LEVEL '+(community.chapterIndex+1)+'/12: ':'COMMUNITY LEVEL: ')+community.n+' — '+(community.rules||'CUSTOM'),4500),1200)})} 
 $('hubentry').onclick=()=>openHub();
 $('hubtabs').onclick=e=>{const b=e.target.closest('[data-ht]');if(b)hubScreen(b.dataset.ht)};
-$('hublist').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.l)hubEnter(+b.dataset.l);else if(b.dataset.ch!==undefined)chapter2Start(+b.dataset.ch);else if(b.dataset.c){const o=hubCommunity()[+b.dataset.c];if(o)hubEnter(o.t,o.s,o)}};
+$('hublist').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.l)hubEnter(+b.dataset.l);else if(b.dataset.ch!==undefined)chapter2Start(+b.dataset.ch);else if(b.dataset.final){hubEnter(13,'archivist-finale-823',{id:'archivist',n:'The Archivist',chapter2Boss:true})}else if(b.dataset.c!==undefined){const o=hubCommunity()[+b.dataset.c];if(o)hubEnter(o.t,o.s,o)}};
 $('hubmenu').onclick=toMenu;
 $('hubpause').style.display='none';
 const hubThemeSel=$('hubtheme');TH.slice(0,12).forEach((t,i)=>{const o=document.createElement('option');o.value=i+1;o.textContent='Level '+(i+1)+' - '+t.n;hubThemeSel.appendChild(o)});
-function hubDraft(){return{n:($('hubname').value.trim()||'Untitled Tape').slice(0,36),t:+hubThemeSel.value||1,s:($('hubseed').value.trim()||('random-'+Math.random().toString(36).slice(2,10))).slice(0,40)}}
-function hubEncode(o){return 'BR43-'+btoa(unescape(encodeURIComponent(JSON.stringify({v:1,n:o.n,t:o.t,s:o.s})))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
-function hubDecode(code){try{const raw=code.trim();if(!/^BR43-[A-Za-z0-9_-]{12,350}$/.test(raw))return null;const txt=decodeURIComponent(escape(atob(raw.slice(5).replace(/-/g,'+').replace(/_/g,'/'))));const o=JSON.parse(txt);if(o.v!==1||typeof o.n!=='string'||typeof o.s!=='string'||!Number.isInteger(o.t)||o.t<1||o.t>12)return null;return{n:o.n.slice(0,36),t:o.t,s:o.s.slice(0,40)}}catch(e){return null}}
+let editor348=Array(144).fill(0),editorPaint348=false;
+const edTypes348={'wall':1,'enemy':2,'supply':3,'switch':4,'erase':0},edLabels348=['','▣','☠','+','⚡'];
+function editorRender348(){const g=$('editgrid');g.innerHTML=editor348.map((v,i)=>'<button type="button" data-cell="'+i+'" class="'+(['','wall','enemy','supply','switch'][v]||'')+'" title="'+(['Clear','Cover','Entity','Supply','Switch'][v]||'')+'">'+edLabels348[v]+'</button>').join('');$('edcount').textContent=editor348.filter(Boolean).length+' / 144 objects placed';}
+function edPaint348(el){const i=+(el&&el.dataset.cell);if(!el||!Number.isInteger(i)||i<0||i>=144)return;const val=edTypes348[$('edbrush').value]||0;editor348[i]=val;el.className=['','wall','enemy','supply','switch'][val];el.textContent=edLabels348[val];$('edcount').textContent=editor348.filter(Boolean).length+' / 144 objects placed'}
+$('editgrid').addEventListener('pointerdown',e=>{const b=e.target.closest('button[data-cell]');if(b){editorPaint348=true;edPaint348(b);e.preventDefault()}});
+$('editgrid').addEventListener('pointerover',e=>{if(editorPaint348)edPaint348(e.target.closest('button[data-cell]'))});
+addEventListener('pointerup',()=>editorPaint348=false);
+$('edclear').onclick=()=>{editor348.fill(0);editorRender348()};editorRender348();
+function hubDraft(){return{n:($('hubname').value.trim()||'Untitled Tape').slice(0,36),t:+hubThemeSel.value||1,s:($('hubseed').value.trim()||('random-'+Math.random().toString(36).slice(2,10))).slice(0,40),e:editor348.slice()}}
+function hubEncode(o){return 'BR48-'+btoa(unescape(encodeURIComponent(JSON.stringify({v:2,n:o.n,t:o.t,s:o.s,e:o.e||[]})))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
+function hubDecode(code){try{const raw=code.trim();if(!/^BR(?:43|48)-[A-Za-z0-9_-]{12,4000}$/.test(raw))return null;const txt=decodeURIComponent(escape(atob(raw.slice(5).replace(/-/g,'+').replace(/_/g,'/'))));const o=JSON.parse(txt);if(![1,2].includes(o.v)||typeof o.n!=='string'||typeof o.s!=='string'||!Number.isInteger(o.t)||o.t<1||o.t>12)return null;return{n:o.n.slice(0,36),t:o.t,s:o.s.slice(0,40),e:Array.isArray(o.e)?o.e.filter(q=>Number.isInteger(q)&&q>=0&&q<720).slice(0,144):[]}}catch(e){return null}}
 function hubSaveCustom(o){const arr=(store.get('community',[])||[]).filter(q=>q&&!(q.n===o.n&&q.s===o.s));arr.unshift(o);store.set('community',arr.slice(0,35))}
 $('hubmake').onclick=()=>{const o=hubDraft();$('hubseed').value=o.s;hubSaveCustom(o);const code=hubEncode(o);$('hubmsg').textContent='Saved locally. Share code: '+code;if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(code).catch(()=>{})};
 $('hubplaycustom').onclick=()=>{const o=hubDraft();hubSaveCustom(o);hubEnter(o.t,o.s,o)};
-$('hubadd').onclick=()=>{const o=hubDecode($('hubimport').value);if(!o){$('hubmsg').textContent='Invalid tape code. Paste a BR43- code.';return}hubSaveCustom(o);$('hubmsg').textContent='Imported '+o.n+'. Find it under COMMUNITY LEVELS.';hubScreen('create')};
+$('hubadd').onclick=()=>{const o=hubDecode($('hubimport').value);if(!o){$('hubmsg').textContent='Invalid tape code. Paste a BR43- or BR48- code.';return}hubSaveCustom(o);editor348=o.e||[];editorRender348();$('hubmsg').textContent='Imported '+o.n+'. Find it under COMMUNITY LEVELS.';hubScreen('create')};
+// G drops a noise decoy that nearby monsters investigate. Cooldown prevents spam.
+addEventListener('keydown',e=>{if(stt==='play'&&e.code==='KeyG'&&!e.repeat&&!NET.on&&!B&&!hid){extraDecoy348();e.preventDefault()}});
 // Esc in the hub returns to the normal main menu.
 addEventListener('keydown',e=>{if(stt==='hub'&&e.code==='Escape'){e.preventDefault();toMenu()}});
 
