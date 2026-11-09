@@ -569,7 +569,7 @@ body.menu #objective348,body.hubmode #objective348,body.cut #objective348{displa
 </div></div>
 <div id="admpw" class="glass"><b>ADMIN PANEL</b><p>Enter an admin code to unlock the admin panel. You only need to do this once per code.</p><input id="pw_in" type="password" maxlength="24" autocomplete="off" spellcheck="false"><div class="r"><button class="btnp" id="pw_ok">UNLOCK</button><button class="btng" id="pw_x">CANCEL</button></div><p id="pw_msg"></p></div>
 
-<div id="hub"><div id="hubhead"><div><h1>THE HUB</h1><p>CHAPTER 1 COMPLETE. THE NEXT TAPE IS WAITING.<br>EXPLORE CHAPTER 2 OR REVISIT YOUR FAVORITE LEVELS.</p></div><button id="hubmenu">MAIN MENU</button></div><div id="hubmain"><div id="hubtabs"><button data-ht="story" class="on">STORY LEVELS</button><button data-ht="chapter2">CHAPTER 2</button><button data-ht="community">COMMUNITY LEVELS</button><button data-ht="create">CREATE / IMPORT</button></div><p id="hubnote"></p><div id="hublist"></div><div id="hubcreate"><label>LEVEL NAME<input id="hubname" type="text" maxlength="36" placeholder="The Forgotten Hallway"></label><label>ENVIRONMENT<select id="hubtheme"></select></label><label>WORLD SEED<input id="hubseed" type="text" maxlength="40" placeholder="Enter a seed or leave blank for random"></label><h4 style="margin:14px 0 4px;font:400 26px var(--fd)">VISUAL LEVEL EDITOR</h4><small>Paint a 12x12 layout. Objects snap to reachable rooms when your map is generated. Click or drag tiles to paint. Switches must be activated before escaping.</small><div class="edrow"><label style="flex:1;margin:0">BRUSH<select id="edbrush"><option value="wall">COVER / WALL</option><option value="enemy">ENTITY SPAWN</option><option value="supply">SUPPLY CACHE</option><option value="switch">GENERATOR SWITCH</option><option value="erase">ERASER</option></select></label><button id="edclear">CLEAR GRID</button></div><div id="editgrid"></div><small id="edcount">0 objects placed</small><div class="actions"><button id="hubmake">SAVE LEVEL + COPY CODE</button><button id="hubplaycustom">PLAY CUSTOM LEVEL</button></div><label style="margin-top:14px">IMPORT SHARED LEVEL CODE<input id="hubimport" type="text" maxlength="4000" placeholder="BR43-... or BR48-..."></label><div class="actions"><button id="hubadd">IMPORT LEVEL</button></div><small>Community levels support authored placements layered onto procedural rooms. Export a code to share; public online uploading still needs a server.</small><div id="hubmsg"></div></div></div><div id="hubmark">CH 02 &middot; THE LOST TAPES &middot; v3.48</div></div>
+<div id="hub"><div id="hubhead"><div><h1>THE HUB</h1><p>CHAPTER 1 COMPLETE. THE NEXT TAPE IS WAITING.<br>EXPLORE CHAPTER 2 OR REVISIT YOUR FAVORITE LEVELS.</p></div><button id="hubmenu">MAIN MENU</button></div><div id="hubmain"><div id="hubtabs"><button data-ht="story" class="on">STORY LEVELS</button><button data-ht="chapter2">CHAPTER 2</button><button data-ht="community">COMMUNITY LEVELS</button><button data-ht="create">CREATE / IMPORT</button></div><p id="hubnote"></p><div id="hublist"></div><div id="hubcreate"><label>LEVEL NAME<input id="hubname" type="text" maxlength="36" placeholder="The Forgotten Hallway"></label><label>ENVIRONMENT<select id="hubtheme"></select></label><label>WORLD SEED<input id="hubseed" type="text" maxlength="40" placeholder="Enter a seed or leave blank for random"></label><h4 style="margin:14px 0 4px;font:400 26px var(--fd)">VISUAL LEVEL EDITOR</h4><small>Paint a 12x12 layout. Objects snap to reachable rooms when your map is generated. Click or drag tiles to paint. Switches must be activated before escaping.</small><div class="edrow"><label style="flex:1;margin:0">BRUSH<select id="edbrush"><option value="wall">COVER / WALL</option><option value="enemy">ENTITY SPAWN</option><option value="supply">SUPPLY CACHE</option><option value="switch">GENERATOR SWITCH</option><option value="erase">ERASER</option></select></label><button id="edclear">CLEAR GRID</button></div><div id="editgrid"></div><small id="edcount">0 objects placed</small><div class="actions"><button id="hubmake">SAVE LEVEL + COPY CODE</button><button id="hubplaycustom">PLAY CUSTOM LEVEL</button></div><label style="margin-top:14px">IMPORT SHARED LEVEL CODE<input id="hubimport" type="text" maxlength="4000" placeholder="BR43-... or BR48-..."></label><div class="actions"><button id="hubadd">IMPORT LEVEL</button></div><small>Community levels support authored placements layered onto procedural rooms. Export a code to share; public online uploading still needs a server.</small><div id="hubmsg"></div></div></div><div id="hubmark">CH 02 &middot; THE LOST TAPES &middot; v3.51</div></div>
 <div id="menu">
 <div id="osd"><span id="osd_tr">&#9654; PLAY &nbsp;SP <b id="osd_t">0:00:00</b></span><span id="osd_br"></span><span id="osd_sync"></span><button id="osd_acct" style="display:none" title="Your site account"></button></div>
 <a id="mph" href="https://powerhouse.c823.workers.dev" target="_top" title="Powerhouse" aria-label="Go to Powerhouse"><img alt="Powerhouse" src="https://raw.githubusercontent.com/C823/Powerhouse/main/icons/POWERHOUSE-icon-dark.png" onerror="this.parentNode.textContent='PWR'"></a>
@@ -628,11 +628,13 @@ body.menu #objective348,body.hubmode #objective348,body.cut #objective348{displa
 <div class="mcard"><h4><i>B</i>PLAYERS</h4><div id="mp_list"></div></div>
 <div id="mp_chat" class="mcard"><h4><i>C</i>CHAT</h4><div id="mp_chatlog"></div><div class="chrow"><input id="mp_chatin" type="text" maxlength="120" spellcheck="false" autocomplete="off" placeholder="Say hi to the room"><button class="btng" id="mp_chatgo">SEND</button></div></div></div><div id="mp_saves"></div><button class="btnp" id="mp_start">START NEW GAME</button></div>
 <div class="pfoot"><p id="mp_status"></p><div class="nrow"><button class="btng" id="mp_back">BACK</button></div></div></div>
-<button id="ver" type="button" aria-haspopup="dialog" aria-controls="patchnotes" title="View patch notes">v3.49 &middot; 2026-11-09 <span aria-hidden="true">[PATCH NOTES]</span></button></div>
+<button id="ver" type="button" aria-haspopup="dialog" aria-controls="patchnotes" title="View patch notes">v3.51 &middot; 2026-11-09 <span aria-hidden="true">[PATCH NOTES]</span></button></div>
 <div id="patchnotes" role="dialog" aria-modal="true" aria-labelledby="patchtitle" aria-hidden="true">
  <div id="patchbox">
-  <div id="patchhead"><h2 id="patchtitle">PATCH NOTES <span style="color:var(--hi)">v3.49</span></h2><button id="patchclose" type="button" aria-label="Close patch notes">X CLOSE</button></div>
+  <div id="patchhead"><h2 id="patchtitle">PATCH NOTES <span style="color:var(--hi)">v3.51</span></h2><button id="patchclose" type="button" aria-label="Close patch notes">X CLOSE</button></div>
   <div id="patchbody">
+   <section class="patchentry"><h3>v3.51 <time datetime="2026-11-09">NOV 09, 2026</time></h3><ul><li>Chapter 2 environments now resemble long-abandoned industrial test facilities, with decayed concrete, damaged panels and exposed equipment.</li><li>Procedural vegetation, hanging vines, moss-covered floors, ruined ceiling panels, rubble and suspended cables vary by level.</li><li>Retuned several Chapter 2 color palettes for a more desolate, green-overgrown atmosphere while preserving puzzle and AI paths.</li></ul></section>
+   <section class="patchentry"><h3>v3.50 <time datetime="2026-11-09">NOV 09, 2026</time></h3><ul><li>Rebuilt the Toethesis skin with a more authentic hockey-player silhouette.</li><li>Improved the helmet and metal face cage, widened the shoulder pads, added hockey pants, striped socks, gloves, and more realistic skates.</li><li>Refined the hockey stick shape and added front and back jersey numbers so the skin reads more clearly in portraits and third-person view.</li></ul></section>
    <section class="patchentry"><h3>v3.49 <time datetime="2026-11-09">NOV 09, 2026</time></h3><ul><li>Added Toethesis, a hockey-player suit with helmet, jersey, padded gear, skates and hockey stick.</li><li>Opening either admin panel permanently unlocks the Toethesis skin in the Suit menu.</li><li>Renamed the original Racer suit to C823 (its existing model and unlock conditions remain intact).</li><li>Chapter 2's final boss is now Toethesis, with a hockey-player model, updated dialogue and boss presentation.</li></ul></section>
    <section class="patchentry"><h3>v3.48 <time datetime="2026-11-09">NOV 09, 2026</time></h3><ul><li>Chapter 2 has unique color palettes, atmospheric scenery and three-switch generator objectives.</li><li>New checkpoint beacons offer protection, supplies and a respawn location.</li><li>Enemies investigate last-known positions and noises, and can search a recently entered locker.</li><li>Chapter 2 now concludes with The Archivist: a harder, uniquely styled finale with its own completion record.</li><li>Added a playable 12x12 community level editor with placed cover, threats, supplies and switches, plus export/import codes.</li></ul></section>
    <section class="patchentry"><h3>v3.47 <time datetime="2026-11-09">NOV 09, 2026</time></h3><ul><li>Racer boss fight rebalanced: faster shifting walls, more frequent traps, and longer blackouts in Phase 1.</li><li>Phase 2 enemies move faster and hit harder, with shorter delays between spawns.</li><li>Phase 3 bike charges faster, gives less warning, and recovers from crashes more quickly.</li><li>Reduced boss-fight health regeneration; Easy, Normal, and Hard still scale differently.</li></ul></section>
@@ -3076,29 +3078,44 @@ function mkSuitBody(v,MAT){
  // face-cage helmet and a stick. Use the same skeleton as other skins so multiplayer,
  // third-person camera and first-person sleeves keep working.
  if(v==='toethesis'){
-  const o={tw:.53,th:.84,lw:.17,aw:.13,hw:.29,hh:.33,hunch:.07,face:0,ears:0,lc:0x10151e,shoes:1,shoe:0x111621,hand:0x151923,arm:1.27,leg:1.08};
-  const g=mkEntity(MAT(0x2453a0),null,o),u=g.userData;
-  const L=c=>new THREE.MeshLambertMaterial({color:c}),blue=L(0x2453a0),navy=L(0x101d3d),white=L(0xf0f1eb),silver=L(0xa9b4c2),black=L(0x11151d),ice=new THREE.MeshPhongMaterial({color:0xe6eaf0,specular:0xffffff,shininess:75});
-  const add=(par,geo,mat,sx,sy,sz,x,y,z,rx=0,ry=0,rz=0)=>{const m=new THREE.Mesh(geo,mat);m.scale.set(sx,sy,sz);m.position.set(x,y,z);m.rotation.set(rx,ry,rz);par.add(m);return m};
-  // Jersey front stripes and number 83 on a small canvas decal.
-  add(u.up,UB,white,.42,.115,.02,0,.48,.325);
-  add(u.up,UB,navy,.42,.052,.025,0,.39,.343);
-  add(u.up,UB,white,.43,.045,.024,0,.15,.326);
-  for(const shoulder of[u.shL,u.shR]){add(shoulder,SPH,blue,.19,.16,.2,0,-.10,0);add(shoulder,UB,white,.16,.05,.16,0,-.27,0)}
-  for(const arm of[u.elL,u.elR]){add(arm,UB,navy,.14,.12,.13,0,-.15,0);add(arm,SPH,black,.14,.1,.16,0,-.36,.04)}
-  for(const leg of[u.legL,u.legR]){add(leg,UB,blue,.17,.3,.18,0,-.32,.02)}
-  for(const leg of[u.knL,u.knR]){add(leg,UB,white,.18,.05,.17,0,-.11,.01);add(leg,UB,navy,.19,.08,.18,0,-.31,.02);add(leg,UB,silver,.14,.018,.28,0,-.55,.07)}
-  const hd=u.head;add(hd,SPH,navy,.235,.24,.24,0,.17,0);add(hd,UB,white,.24,.036,.19,0,.365,.03);
-  // Visor and metal cage of the hockey mask.
-  add(hd,SPH,black,.18,.135,.075,0,.18,.215);
-  for(const xx of[-.13,-.065,0,.065,.13])add(hd,UB,silver,.008,.19,.009,xx,.16,.275);
-  for(const yy of[.08,.16,.24])add(hd,UB,silver,.17,.008,.009,0,yy,.284);
-  for(const xx of[-1,1])add(hd,SPH,ice,.035,.042,.025,xx*.22,.19,0);
-  const c=cv(128,128),ctx=c.getContext('2d');ctx.clearRect(0,0,128,128);ctx.fillStyle='#ffffff';ctx.font='bold 88px Arial';ctx.textAlign='center';ctx.fillText('83',64,96);
-  const num=new THREE.Mesh(new THREE.PlaneGeometry(.25,.25),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(c),transparent:true,side:THREE.DoubleSide,depthWrite:false}));num.position.set(0,.66,.344);u.up.add(num);
-  // The stick is secured to the right glove so it animates with the player.
-  const shaft=add(u.elR,CYL,L(0xa88854),.019,.78,.019,-.14,-.53,.22,0,0,-.19);
-  const blade=add(u.elR,UB,black,.23,.06,.065,-.24,-.92,.24,0,0,-.18);
+  const o={tw:.51,th:.86,lw:.16,aw:.12,hw:.275,hh:.34,hunch:.05,face:0,ears:0,lc:0x172338,shoes:1,shoe:0x101419,hand:0x131820,arm:1.28,leg:1.1};
+  const g=mkEntity(MAT(0x2557a8),null,o),u=g.userData;
+  const L=c=>new THREE.MeshLambertMaterial({color:c}),P=c=>new THREE.MeshPhongMaterial({color:c,specular:0xeeeeee,shininess:55}),
+   blue=L(0x2557a8),navy=L(0x16284a),white=L(0xf1f3f6),silver=P(0xb9c1cb),steel=P(0xdfe6ee),black=L(0x12161c),sock=L(0xfafbfd),stick=L(0xc39a62),tape=L(0xf3f4f6);
+  const add=(par,geo,mat,sx,sy,sz,x,y,z,rx=0,ry=0,rz=0)=>{const m=new THREE.Mesh(geo,mat);m.scale.set(sx,sy,sz);m.position.set(x,y,z);m.rotation.set(rx,ry,rz);par.add(m);return m},
+   th=o.th,tw=o.tw,hw=o.hw,hh=o.hh,L2=o.leg*.5,A2=o.arm*.43;
+  // Broader shoulder/chest silhouette and hockey pants.
+  add(u.up,SPH,navy,tw*.58,th*.18,tw*.44,0,th*.78,0);
+  add(u.up,SPH,blue,tw*.53,th*.34,tw*.34,0,th*.56,.01);
+  add(u.up,UB,white,.45,.11,.022,0,.51,.345);
+  add(u.up,UB,navy,.45,.05,.024,0,.40,.347);
+  add(u.up,UB,white,.46,.038,.022,0,.18,.34);
+  add(u.up,UB,navy,.44,.05,.34,0,.06,0);
+  for(const sx of[-1,1]){add(u.up,SPH,navy,tw*.25,th*.12,tw*.22,sx*tw*.54,th*.85,0);add(u.up,SPH,blue,tw*.18,th*.16,tw*.2,sx*tw*.44,th*.74,.02)}
+  add(u.up,UB,navy,.36,.17,.29,0,-.03,0);add(u.up,UB,black,.30,.13,.24,0,-.10,.02);
+  for(const sx of[-1,1]){add(u.up,UB,navy,.11,.13,.16,sx*.15,-.02,.11);add(u.up,UB,navy,.11,.13,.16,sx*.15,-.02,-.11)}
+  // Sleeve build: shoulder cap, arm stripes, elbow pads and gloves.
+  for(const sh of[u.shL,u.shR]){add(sh,SPH,blue,.2,.17,.22,0,-.11,.01);add(sh,SPH,navy,.16,.09,.17,0,-.04,-.01);add(sh,UB,white,.17,.048,.16,0,-.26,0);add(sh,UB,navy,.17,.03,.16,0,-.34,0)}
+  for(const el of[u.elL,u.elR]){add(el,UB,blue,.12,.22,.12,0,-.12,0);add(el,UB,white,.12,.04,.12,0,-.25,0);add(el,SPH,navy,.135,.11,.135,0,-.30,.01);add(el,UB,black,.16,.11,.18,0,-.40,.03);add(el,UB,black,.12,.06,.17,0,-.50,.08)}
+  // Socks, shin guards, skate holders and blades.
+  for(const leg of[u.legL,u.legR]){add(leg,UB,blue,.16,.18,.16,0,-.07,.01);add(leg,UB,white,.17,.06,.17,0,-.25,.01);add(leg,UB,navy,.17,.03,.17,0,-.32,.01);add(leg,UB,sock,.17,.19,.17,0,-.50,.02)}
+  for(const kn of[u.knL,u.knR]){add(kn,UB,silver,.14,.26,.12,0,-.15,.05);add(kn,UB,sock,.18,.055,.17,0,-.07,.01);add(kn,UB,navy,.18,.045,.17,0,-.31,.01);add(kn,UB,black,.15,.10,.22,0,-.54,.08);add(kn,UB,tape,.13,.025,.12,0,-.45,.16);add(kn,UB,silver,.03,.038,.28,0,-.63,.12);add(kn,UB,steel,.17,.008,.055,0,-.70,.14)}
+  // Helmet with shell, chin cup, cage and ear protection.
+  const hd=u.head;add(hd,SPH,navy,hw*.72,hh*.66,hw*.72,0,hh*.47,.01);add(hd,SPH,navy,hw*.60,hh*.24,hw*.52,0,hh*.82,-.02);
+  add(hd,UB,white,hw*.68,hh*.11,hw*.54,0,hh*.73,.03);add(hd,UB,navy,hw*.68,hh*.04,hw*.5,0,hh*.62,.05);
+  add(hd,SPH,black,hw*.42,hh*.20,hw*.16,0,hh*.23,hw*.55);add(hd,UB,black,hw*.18,hh*.10,hw*.10,0,hh*.02,hw*.48);
+  for(const sx of[-1,1])add(hd,SPH,navy,hw*.12,hh*.18,hw*.1,sx*hw*.63,hh*.36,.03);
+  for(const xx of[-.16,-.08,0,.08,.16])add(hd,UB,silver,.008,.22,.01,xx,.18,.282);
+  for(const yy of[.04,.12,.20,.28])add(hd,UB,silver,.205,.008,.01,0,yy,.288);
+  for(const sx of[-1,1])add(hd,UB,silver,.008,.11,.01,sx*.13,.07,.286,0,0,sx*-.38);
+  // Chest and back numbers.
+  const c=cv(128,128),ctx=c.getContext('2d');ctx.clearRect(0,0,128,128);ctx.fillStyle='#ffffff';ctx.font='bold 88px Arial';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('83',64,68);
+  const tex=new THREE.CanvasTexture(c),nmat=new THREE.MeshBasicMaterial({map:tex,transparent:true,side:THREE.DoubleSide,depthWrite:false});
+  const numF=new THREE.Mesh(new THREE.PlaneGeometry(.25,.25),nmat);numF.position.set(0,.64,.347);u.up.add(numF);
+  const numB=new THREE.Mesh(new THREE.PlaneGeometry(.22,.22),nmat);numB.position.set(0,.64,-.347);numB.rotation.y=Math.PI;u.up.add(numB);
+  // Proper hockey stick: shaft, taped top hand grip and flatter blade.
+  add(u.elR,CYL,stick,.018,.88,.018,-.09,-.49,.18,0,0,-.22);add(u.elR,UB,tape,.028,.08,.028,-.01,-.08,.07,0,0,-.22);add(u.elR,UB,black,.05,.05,.06,0,-.46,.08);
+  add(u.elR,UB,black,.23,.03,.06,-.20,-.95,.23,0,0,-.22);add(u.elR,UB,tape,.11,.022,.065,-.28,-.95,.23,0,0,-.22);
   return g
  }
  if(v==='gold'){const m=new THREE.MeshPhongMaterial({color:0xd4a52a,specular:0xffe2a0,shininess:70});m.userData.vc=new THREE.MeshPhongMaterial({vertexColors:true,specular:0xffe2a0,shininess:70});return mkEntity(m,MAT(0x1a2626,1),SUIT_O)}
@@ -3522,6 +3539,110 @@ function drawMap(){renderMap(mc,512,true)}
 function drawMini(){renderMap(mnc,170,false)}
 const gc=$('grain').getContext('2d'),gi=gc.createImageData(160,90),_c=new THREE.Color();let gf=0,frames=0,fAcc=0;
 
+// ===== v3.51: CHAPTER 2 / ABANDONED FACILITY =====
+// Shared instanced rubble, concrete damage, broken wall panels, vines and foliage.
+// Visual-only dressing: generated maze collision and puzzle routes stay unchanged.
+const CH2_DECAY351=[.76,.94,.83,.69,.55,.85,.93,.63,.51,.82,.99,.89];
+function chapter2Abandoned351(avail){
+ if(!communityActive||!communityActive.chapter2||communityActive.chapter2Boss||!avail.length)return;
+ const idx=Math.max(0,Math.min(11,communityActive.chapterIndex||0)),rng=mulberry((levelSeed^0x3518231^Math.imul(idx+1,193))>>>0),density=CH2_DECAY351[idx];
+ const plantHeavy=[0,1,2,5,6,9,10,11].includes(idx),industrial=[1,4,6,8,11].includes(idx);
+ const moss=idx===4?0x4a4e31:idx===8?0x344d37:0x456d42,leaf=idx===1?0x446c48:0x56804b;
+ const buckets={};
+ const shape={
+  concrete:new THREE.BoxGeometry(1,1,1),
+  slab:new THREE.BoxGeometry(1,1,1),
+  dark:new THREE.BoxGeometry(1,1,1),
+  steel:new THREE.BoxGeometry(1,1,1),
+  moss:new THREE.BoxGeometry(1,1,1),
+  stem:new THREE.CylinderGeometry(.5,.65,1,5),
+  leaf:new THREE.ConeGeometry(.5,1,5),
+  cable:new THREE.CylinderGeometry(.5,.5,1,5)
+ };
+ const materials={concrete:0x666e69,slab:0x89918b,dark:0x222e2d,steel:0x727c7d,moss,stem:0x435b33,leaf,cable:0x252b2b};
+ const colorVariants={concrete:[0x4c5653,0x6b7470,0x858985],slab:[0x7a807a,0x9ca49a,0x555d57],dark:[0x172322,0x34413d],steel:[0x525e5c,0x999e96],moss:[0x385f3c,0x668048,0x516e35],stem:[0x334b2b,0x5e713d],leaf:[0x386644,0x558c4b,0x779851],cable:[0x171a1d,0x353b3a]};
+ function put(type,x,y,z,sx,sy,sz,ry=0,rz=0,rx=0){
+  if(sx<=0||sy<=0||sz<=0)return;
+  (buckets[type]||(buckets[type]=[])).push([x,y,z,sx,sy,sz,rx,ry,rz]);
+ }
+ // Avoid dressing the first couple of cells densely, so player spawn remains readable.
+ const pool=avail.filter(q=>q[0]>4||q[1]>4),samples=Math.min(pool.length,Math.round(130+95*density));
+ const used=new Set();
+ for(let i=0;i<samples;i++){
+  const q=pool[Math.floor(rng()*pool.length)];if(!q)continue;
+  const [x,z]=q,hash=x+z*S;if(used.has(hash))continue;used.add(hash);
+  const X=(x+.5)*T,Z=(z+.5)*T;
+  const neighbours=[[1,0],[-1,0],[0,1],[0,-1]].filter(([dx,dz])=>w[z+dz]&&w[z+dz][x+dx]===1);
+  const [dx,dz]=neighbours.length?neighbours[Math.floor(rng()*neighbours.length)]:[rng()<.5?1:-1,0];
+  const alongX=dz!==0,wx=X+dx*1.43,wz=Z+dz*1.43,rot=alongX?0:Math.PI/2;
+  // Broken plaster, exposed wall infrastructure and dirty sections.
+  if(neighbours.length&&rng()<.90){
+   const yy=.5+rng()*(H-1.25),ww=.55+rng()*1.7,hh=.22+rng()*1.15;
+   put(rng()<.38?'dark':'concrete',wx,yy,wz,ww,hh,.035,rot);
+   if(rng()<.55)put('steel',wx,Math.min(H-.22,yy+hh*.48),wz,ww*.85,.055,.055,rot);
+   if(rng()<density*.65){
+    const mx=wx-dx*.065,mz=wz-dz*.065;
+    put('moss',mx,Math.min(H-.15,yy+hh*.32),mz,ww*.8,.035,.045,rot);
+   }
+  }
+  // Scattered broken ceiling panels and suspended metal rails.
+  if(rng()<.64){
+   const bx=X+(rng()-.5)*1.5,bz=Z+(rng()-.5)*1.5;
+   put('dark',bx,H-.015,bz,.7+rng()*1.45,.035,.7+rng()*1.3,rng()*1.3);
+   if(rng()<.52)put('slab',bx+.2,H-.14,bz-.18,.6+rng()*.65,.055,.45+rng()*.65,rng()*2);
+   if(rng()<.3)put('steel',bx,H-.44,bz,.045,.78,.045,0,(rng()-.5)*.45);
+  }
+  // Small rubble stays at floor level; it does not affect walkable grid cells.
+  const rubble=1+Math.floor(rng()*4);
+  for(let k=0;k<rubble;k++){
+   const rx=X+(rng()-.5)*2.3,rz=Z+(rng()-.5)*2.3,h=.035+rng()*.13;
+   put(rng()<.12?'steel':'concrete',rx,h*.5,rz,.16+rng()*.5,h,.13+rng()*.48,rng()*6.28);
+  }
+  // Organic takeover: moss spreading across tiles, ivy up concrete and clumps of grass.
+  if(rng()<density*(plantHeavy?.98:.65)){
+   const tx=X+(rng()-.5)*1.6,tz=Z+(rng()-.5)*1.6;
+   put('moss',tx,.014,tz,.7+rng()*1.7,.023,.4+rng()*1.45,rng()*6.28);
+   for(let j=0,n=3+Math.floor(rng()*7);j<n;j++){
+    const ox=tx+(rng()-.5)*1.3,oz=tz+(rng()-.5)*1.3,h=.16+rng()*(plantHeavy?.68:.28);
+    put('stem',ox,h*.48,oz,.025,h,.025,0,(rng()-.5)*.45);
+    put('leaf',ox+(rng()-.5)*.12,h*.66,oz+(rng()-.5)*.12,.10+rng()*.13,h*.58,.09+rng()*.14,rng()*6.28,(rng()-.5)*.65);
+   }
+   if(neighbours.length&&rng()<.76){
+    const hang=1+Math.floor(rng()*3);
+    for(let j=0;j<hang;j++){
+     const side=(rng()-.5)*1.6,xx=wx+(alongX?side:-dx*.12),zz=wz+(alongX?-dz*.12:side),length=.35+rng()*1.75;
+     put('stem',xx,H-length*.5,zz,.035,length,.035,0,(rng()-.5)*.4);
+     for(let k=0;k<3;k++)put('leaf',xx+(rng()-.5)*.27,H-rng()*length,zz+(rng()-.5)*.27,.12,.20+rng()*.22,.11,rng()*6.28,(rng()-.5)*1.1);
+    }
+   }
+  }
+  // Exposed conduits and hanging cables in the industrial sections.
+  if(industrial&&rng()<.45){
+   const yy=H-.4-rng()*.7;
+   put('steel',wx-dx*.06,yy,wz-dz*.06,alongX?1.7:.1,.075,alongX?.1:1.7);
+   if(rng()<.45){const cableLen=.45+rng()*1.35;put('cable',X+(rng()-.5),H-cableLen*.5,Z+(rng()-.5),.025,cableLen,.025,0,(rng()-.5)*.6)}
+  }
+  if(idx===5&&rng()<.35){ // Abandoned shopping concourse: ruined low shop counters.
+   put('slab',wx-dx*.38,.48,wz-dz*.38,alongX?1.3:.4,.92,alongX?.4:1.3,rot);
+  }
+  if(idx===6&&rng()<.35){ // Research wing: smashed observation panels.
+   put('steel',wx-dx*.1,1.4,wz-dz*.1,1.35,.07,.11,rot);
+   put('dark',wx-dx*.105,1.10,wz-dz*.105,1.05,.52,.04,rot);
+  }
+ }
+ // Batch each prop family in one draw call instead of hundreds of meshes.
+ const matrix=new THREE.Matrix4(),pos=new THREE.Vector3(),quat=new THREE.Quaternion(),scale=new THREE.Vector3(),angles=new THREE.Euler(),color=new THREE.Color();
+ for(const type of Object.keys(buckets)){
+  const items=buckets[type],mat=new THREE.MeshLambertMaterial({color:0xffffff,side:THREE.DoubleSide,roughness:1}),inst=new THREE.InstancedMesh(shape[type],mat,items.length);
+  const options=colorVariants[type];
+  for(let i=0;i<items.length;i++){
+   const [x,y,z,sx,sy,sz,rx,ry,rz]=items[i];pos.set(x,y,z);quat.setFromEuler(angles.set(rx,ry,rz));scale.set(sx,sy,sz);matrix.compose(pos,quat,scale);inst.setMatrixAt(i,matrix);
+   color.setHex(options[Math.floor(rng()*options.length)]);inst.setColorAt(i,color);
+  }
+  inst.instanceMatrix.needsUpdate=true;if(inst.instanceColor)inst.instanceColor.needsUpdate=true;inst.frustumCulled=false;world.add(inst);
+ }
+}
+
 // ===== v3.48: gameplay additions =====
 // Generator puzzles, safe checkpoints and custom placables are built into existing generated maps.
 let extraSwitches348=[],extraCP348=null,extraDecoyState348=null,extraDecoyCd348=0,extraWalls348=[];
@@ -3552,6 +3673,7 @@ function extraBuild348(){extraSwitches348=[];extraCP348=null;extraWalls348=[];ex
    world.add(obj);
   }
  }
+ chapter2Abandoned351(avail);
  // Chapter 2 provides three generator puzzles and a defensible checkpoint.
  if(communityActive.chapter2){const rr=mulberry(levelSeed^0x382a1);for(let i=0;i<3;i++){const q=avail[Math.min(avail.length-1,Math.floor(avail.length*(.2+i*.27)))];const p=take(q[0],q[1]);if(p){const g=extraPlace348('switch',p);extraSwitches348.push({x:g.position.x,z:g.position.z,g,on:false})}}}
  const cpq=avail[Math.floor(avail.length*.18)];const cp=take(cpq[0],cpq[1]);if(cp&&(communityActive.chapter2||communityActive.e&&communityActive.e.length)){const g=extraPlace348('checkpoint',cp);extraCP348={x:g.position.x,z:g.position.z,active:false};}
@@ -3610,18 +3732,18 @@ const HUB_FEATURED=[
  ];
 // Distinct environments for Chapter 2 rather than identical copies of Chapter 1.
 const CH2_VIS=[
- ['Night Shift Complex','#8baba8','#283b3d','#b5c4b1',0x071a1d,0x9fffe3,'office'],
- ['Flooded Transit','#7a939b','#244451','#b1c4c8',0x031723,0x61daff,'subway'],
+ ['Night Shift Complex','#8b988d','#303b34','#afb6aa',0x091712,0x9abca0,'office'],
+ ['Flooded Transit','#83928a','#263d3d','#b0b9ab',0x061718,0x8ccaba,'subway'],
  ['Blackwood Manor','#6e4b64','#302033','#66505e',0x190717,0xff69c9,'manor'],
  ['The Unlit Ward','#42435d','#202131','#45435b',0x03020e,0x947bff,'ward'],
  ['Boiler City','#8e5b36','#39261d','#664637',0x1b0801,0xff9c40,'boiler'],
- ['Empty Mall','#9d8f87','#3a3841','#827e82',0x110c1a,0xffde89,'mall'],
- ['Research Wing','#77999c','#263f41','#8abebc',0x041c1c,0x9effc5,'lab'],
+ ['Empty Mall','#989b8f','#353c36','#898f84',0x111911,0xc4dc9c,'mall'],
+ ['Research Wing','#a0a99c','#293a35','#828c87',0x081914,0xa5dca4,'lab'],
  ['The Funhouse','#964b8b','#35193d','#b97479',0x190018,0xff68db,'arcade'],
  ['Emergency Line','#a75353','#2d1218','#66252d',0x200004,0xff4444,'metro'],
  ['The Catacombs','#635c48','#292519','#4c4835',0x090804,0xe9d484,'crypt'],
  ['Nocturne Estate','#4d6373','#26303b','#50616c',0x030a12,0x85b7ff,'street'],
- ['Archive Zero','#a8a58b','#464434','#77745a',0x141206,0xffd96a,'archive']
+ ['Archive Zero','#a0aaa1','#363f39','#878f83',0x0a1410,0xb5d8aa,'archive']
 ];
 let communityActive=null;
 function communityCompleted(){return store.get('communityCleared',{})||{}}
@@ -3657,7 +3779,7 @@ function hubCommunity(){return (store.get('community',[])||[]).filter(x=>x&&type
 function hubScreen(t){
  hubTab=t;document.querySelectorAll('#hubtabs [data-ht]').forEach(b=>b.classList.toggle('on',b.dataset.ht===t));
  $('hubcreate').style.display=t==='create'?'block':'none';$('hublist').style.display=t==='create'?'none':'grid';
- $('hubnote').textContent=t==='story'?'CHAPTER 1 — Revisit any original story level without overwriting your saves.':t==='chapter2'?'CHAPTER 2 — THE LOST TAPES. Twelve newly styled levels with generator puzzles and checkpoints. Escape each in order, then defeat the Archivist to complete the chapter.':t==='community'?'COMMUNITY LEVELS — Play custom levels created by you or imported with a shared code.':'Create a seeded custom level, copy its code, or import a code from a friend.';
+ $('hubnote').textContent=t==='story'?'CHAPTER 1 — Revisit any original story level without overwriting your saves.':t==='chapter2'?'CHAPTER 2 — THE LOST TAPES. Twelve abandoned, overgrown facility levels with generator puzzles and checkpoints. Escape each in order, then defeat Toethesis to complete the chapter.':t==='community'?'COMMUNITY LEVELS — Play custom levels created by you or imported with a shared code.':'Create a seeded custom level, copy its code, or import a code from a friend.';
  if(t==='story')$('hublist').innerHTML=TH.map((th,i)=>'<button data-l="'+(i+1)+'"><b>'+(i===12?'LEVEL ?':'LEVEL '+(i+1))+'</b><span>'+esc(th.n)+'</span><em>ENTER</em></button>').join('');
  else if(t==='chapter2'){
   const progress=chapter2Progress();
