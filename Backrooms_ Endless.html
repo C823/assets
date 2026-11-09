@@ -561,7 +561,7 @@ body.hubmode #menu,body.hubmode #ov{display:none!important}
 </div></div>
 <div id="admpw" class="glass"><b>ADMIN PANEL</b><p>Enter an admin code to unlock the admin panel. You only need to do this once per code.</p><input id="pw_in" type="password" maxlength="24" autocomplete="off" spellcheck="false"><div class="r"><button class="btnp" id="pw_ok">UNLOCK</button><button class="btng" id="pw_x">CANCEL</button></div><p id="pw_msg"></p></div>
 
-<div id="hub"><div id="hubhead"><div><h1>THE HUB</h1><p>YOU MADE IT OUT. EVERY DOOR LEADS SOMEWHERE ELSE.<br>REVISIT THE BACKROOMS OR EXPLORE 12 COMMUNITY CHALLENGES.</p></div><button id="hubmenu">MAIN MENU</button></div><div id="hubmain"><div id="hubtabs"><button data-ht="story" class="on">STORY LEVELS</button><button data-ht="community">COMMUNITY LEVELS</button><button data-ht="create">CREATE / IMPORT</button></div><p id="hubnote"></p><div id="hublist"></div><div id="hubcreate"><label>LEVEL NAME<input id="hubname" type="text" maxlength="36" placeholder="The Forgotten Hallway"></label><label>ENVIRONMENT<select id="hubtheme"></select></label><label>WORLD SEED<input id="hubseed" type="text" maxlength="40" placeholder="Enter a seed or leave blank for random"></label><div class="actions"><button id="hubmake">SAVE LEVEL + COPY CODE</button><button id="hubplaycustom">PLAY CUSTOM LEVEL</button></div><label style="margin-top:14px">IMPORT SHARED LEVEL CODE<input id="hubimport" type="text" maxlength="400" placeholder="BR43-..."></label><div class="actions"><button id="hubadd">IMPORT LEVEL</button></div><small>Community levels use the game's existing procedural layouts and enemies, with a chosen theme and world seed. Codes can be shared directly; this is not yet an online public level server.</small><div id="hubmsg"></div></div></div><div id="hubmark">CH 03 &middot; POST-STORY ACCESS &middot; v3.44</div></div>
+<div id="hub"><div id="hubhead"><div><h1>THE HUB</h1><p>CHAPTER 1 COMPLETE. THE NEXT TAPE IS WAITING.<br>EXPLORE CHAPTER 2 OR REVISIT YOUR FAVORITE LEVELS.</p></div><button id="hubmenu">MAIN MENU</button></div><div id="hubmain"><div id="hubtabs"><button data-ht="story" class="on">STORY LEVELS</button><button data-ht="chapter2">CHAPTER 2</button><button data-ht="community">COMMUNITY LEVELS</button><button data-ht="create">CREATE / IMPORT</button></div><p id="hubnote"></p><div id="hublist"></div><div id="hubcreate"><label>LEVEL NAME<input id="hubname" type="text" maxlength="36" placeholder="The Forgotten Hallway"></label><label>ENVIRONMENT<select id="hubtheme"></select></label><label>WORLD SEED<input id="hubseed" type="text" maxlength="40" placeholder="Enter a seed or leave blank for random"></label><div class="actions"><button id="hubmake">SAVE LEVEL + COPY CODE</button><button id="hubplaycustom">PLAY CUSTOM LEVEL</button></div><label style="margin-top:14px">IMPORT SHARED LEVEL CODE<input id="hubimport" type="text" maxlength="400" placeholder="BR43-..."></label><div class="actions"><button id="hubadd">IMPORT LEVEL</button></div><small>Community levels use the game's existing procedural layouts and enemies, with a chosen theme and world seed. Codes can be shared directly; this is not yet an online public level server.</small><div id="hubmsg"></div></div></div><div id="hubmark">CH 02 &middot; THE LOST TAPES &middot; v3.46</div></div>
 <div id="menu">
 <div id="osd"><span id="osd_tr">&#9654; PLAY &nbsp;SP <b id="osd_t">0:00:00</b></span><span id="osd_br"></span><span id="osd_sync"></span><button id="osd_acct" style="display:none" title="Your site account"></button></div>
 <a id="mph" href="https://powerhouse.c823.workers.dev" target="_top" title="Powerhouse" aria-label="Go to Powerhouse"><img alt="Powerhouse" src="https://raw.githubusercontent.com/C823/Powerhouse/main/icons/POWERHOUSE-icon-dark.png" onerror="this.parentNode.textContent='PWR'"></a>
@@ -620,13 +620,15 @@ body.hubmode #menu,body.hubmode #ov{display:none!important}
 <div class="mcard"><h4><i>B</i>PLAYERS</h4><div id="mp_list"></div></div>
 <div id="mp_chat" class="mcard"><h4><i>C</i>CHAT</h4><div id="mp_chatlog"></div><div class="chrow"><input id="mp_chatin" type="text" maxlength="120" spellcheck="false" autocomplete="off" placeholder="Say hi to the room"><button class="btng" id="mp_chatgo">SEND</button></div></div></div><div id="mp_saves"></div><button class="btnp" id="mp_start">START NEW GAME</button></div>
 <div class="pfoot"><p id="mp_status"></p><div class="nrow"><button class="btng" id="mp_back">BACK</button></div></div></div>
-<button id="ver" type="button" aria-haspopup="dialog" aria-controls="patchnotes" title="View patch notes">v3.45 &middot; 2026-11-09 <span aria-hidden="true">[PATCH NOTES]</span></button></div>
+<button id="ver" type="button" aria-haspopup="dialog" aria-controls="patchnotes" title="View patch notes">v3.47 &middot; 2026-11-09 <span aria-hidden="true">[PATCH NOTES]</span></button></div>
 <div id="patchnotes" role="dialog" aria-modal="true" aria-labelledby="patchtitle" aria-hidden="true">
  <div id="patchbox">
-  <div id="patchhead"><h2 id="patchtitle">PATCH NOTES <span style="color:var(--hi)">v3.45</span></h2><button id="patchclose" type="button" aria-label="Close patch notes">X CLOSE</button></div>
+  <div id="patchhead"><h2 id="patchtitle">PATCH NOTES <span style="color:var(--hi)">v3.47</span></h2><button id="patchclose" type="button" aria-label="Close patch notes">X CLOSE</button></div>
   <div id="patchbody">
+   <section class="patchentry"><h3>v3.47 <time datetime="2026-11-09">NOV 09, 2026</time></h3><ul><li>Racer boss fight rebalanced: faster shifting walls, more frequent traps, and longer blackouts in Phase 1.</li><li>Phase 2 enemies move faster and hit harder, with shorter delays between spawns.</li><li>Phase 3 bike charges faster, gives less warning, and recovers from crashes more quickly.</li><li>Reduced boss-fight health regeneration; Easy, Normal, and Hard still scale differently.</li></ul></section>
+   <section class="patchentry"><h3>v3.46 <time datetime="2026-11-09">NOV 09, 2026</time></h3><ul><li>The twelve curated challenges now form Chapter 2, unlocked by defeating the Chapter 1 boss.</li><li>Beating the Racer now sends you straight into Chapter 2, Level 1.</li><li>Chapter 2 levels unlock in order, automatically advance on escape, and remember completion.</li><li>Custom and imported community levels remain available separately in the Hub.</li></ul></section>
    <section class="patchentry"><h3>v3.45 <time datetime="2026-11-09">NOV 09, 2026</time></h3><ul><li>Click the version number on the main menu to open the patch notes.</li><li>Added a scrollable update history popup with Escape and click-outside closing.</li></ul></section>
-   <section class="patchentry"><h3>v3.44 <time datetime="2026-11-09">NOV 09, 2026</time></h3><ul><li>Added twelve curated Community Level challenges after completing Story Mode.</li><li>Added community challenge restrictions and a CLEARED completion record.</li></ul></section>
+   <section class="patchentry"><h3>v3.44 <time datetime="2026-11-09">NOV 09, 2026</time></h3><ul><li>Introduced twelve post-story challenge levels (now organized as Chapter 2).</li><li>Added community challenge restrictions and a CLEARED completion record.</li></ul></section>
    <section class="patchentry"><h3>v3.43 <time datetime="2026-11-09">NOV 09, 2026</time></h3><ul><li>Added The Hub after the Story Mode finale, with a way to revisit story levels.</li><li>Added Community Levels, custom seeded levels, and shareable level codes.</li></ul></section>
    <section class="patchentry"><h3>v3.42</h3><ul><li>Reset previously saved admin unlocks, requiring the admin code again after updating.</li></ul></section>
    <section class="patchentry"><h3>v3.41</h3><ul><li>Added first-person, front-facing second-person, and behind-the-player third-person camera views.</li><li>Switch perspectives with V or the Camera setting.</li></ul></section>
@@ -1354,7 +1356,7 @@ let san=100,bag={bat:1,aw:0},breakdown=0,phT=6,phantoms=[],waters=[],batWarn=0,s
 const E={stv:$('stv'),btv:$('btv'),infw:$('infw'),infb:$('infb'),stb:$('stb'),btb:$('btb'),dmg:$('dmg'),pose:$('pose'),tc:$('tc'),fade:$('fade')};
 function say(t,ms=2400){const m=$('msg'),e=x=>x.replace(/</g,'&lt;'),sp=t.match(/^(Wanderer|Verity|Racer): /);m.innerHTML=sp?'<b class="who">'+sp[1].toUpperCase()+'</b>'+e(t.slice(sp[0].length)):e(t);m.classList.add('on');clearTimeout(mt);mt=setTimeout(()=>m.classList.remove('on'),ms)}
 function card(t,s,k,cls,bw){const c=$('card');c.className=cls||'';c.innerHTML=(k?'<small class="k">'+k+'</small>':'')+'<h2>'+t+'</h2><i class="ln"></i><p>'+s+'</p>'+(bw?'<div class="bw">'+bw+'</div>':'');c.style.transition='none';c.style.opacity=1;clearTimeout(ct);ct=setTimeout(()=>{c.style.transition='opacity 1.5s';c.style.opacity=0},2300)}
-function levelCard(){cardPending=false;if(cur.boss){markSeen('L',TH.length-1,cur.n);card('LEVEL ?','The workshop of the Racer.','The final level','dead','Beat the Racer');return}markSeen('L',thi(),cur.n);const nm=[...new Set(mons.map(m=>m.k.n))];if(wins.length)nm.push('Windows');if(swarms.length)nm.push('Male Deathmoths');if(plague)nm.push('Hydrolitis Plague');card('LEVEL '+level,cur.n,endless?'Endless':(VZ?'Lead Verity to the TVs.':PZ?pzObj():'Find the key. Reach the exit.'),'',nm.length?'Watch out for: '+nm.join(', '):'')}
+function levelCard(){cardPending=false;if(communityActive&&communityActive.chapter2){card('CHAPTER 2 · '+(communityActive.chapterIndex+1)+'/12',communityActive.n,'THE LOST TAPES','',communityActive.rules||'Find the exit');return}if(cur.boss){markSeen('L',TH.length-1,cur.n);card('LEVEL ?','The workshop of the Racer.','The final level','dead','Beat the Racer');return}markSeen('L',thi(),cur.n);const nm=[...new Set(mons.map(m=>m.k.n))];if(wins.length)nm.push('Windows');if(swarms.length)nm.push('Male Deathmoths');if(plague)nm.push('Hydrolitis Plague');card('LEVEL '+level,cur.n,endless?'Endless':(VZ?'Lead Verity to the TVs.':PZ?pzObj():'Find the key. Reach the exit.'),'',nm.length?'Watch out for: '+nm.join(', '):'')}
 function hud(){$('hud').innerHTML='<div class="hl">Level '+level+' <span>&ndash; '+cur.n+'</span></div><div class="obj'+(hasKey?' ok':'')+'">'+(cur.boss&&!bossMenu?(B&&B.mode==='dead'?(hasKey?'Go through the door.':'Take the key.'):(B&&B.obj)||'Beat the Racer.'):VZ?(hasKey?'Door unlocked. Get out.':'Lead Verity to the 4 TVs. Code: '+vzShown()):PZ?pzObj():hasKey?'Key found. Find the exit.':'Find the key.')+'</div><div class="lives">'+lives+(lives===1?' life':' lives')+' &middot; '+DIFF.n+(perma?' (one life)':'')+(endless?' &middot; Endless':'')+'</div>';$('mini').style.display=noMap?'none':''}
 const fmt=t=>[t/3600,t/60%60,t%60].map(v=>String(v|0).padStart(2,'0')).join(':');
 function startYaw(){for(const[a,b,y]of[[1,0,-Math.PI/2],[0,1,Math.PI],[-1,0,Math.PI/2],[0,-1,0]])if(!w[1+b][1+a])return y;return -Math.PI/2}
@@ -1363,7 +1365,7 @@ function reset(){lvStart=runT;px=1.5*T;pz=1.5*T;yaw=startYaw();if(B&&B.spawn){px
 function show(t,s,b,setg){$('hubpause').style.display='none';const o=$('ov'),ov=stt==='over';o.className=ov?'over':'';if(!ov)o.style.removeProperty('--shot');$('t').textContent=t;$('s').textContent=s;$('btn').textContent=b;
  $('ostats').textContent=['Level '+level+' – '+cur.n,fmt(runT),ov?'Deepest: level '+Math.max(best,level):lives+(lives===1?' life':' lives'),DIFF.n+(perma?' (one life)':'')].concat(runSeed!=null&&RUN.seed?['Seed: '+RUN.seed]:[]).join('  ·  ');
  $('best').textContent=best>1?'DEEPEST LEVEL REACHED: '+best:'';$('m2').textContent=ov?'MAIN MENU':NET.on?'LEAVE GAME':'SAVE AND QUIT';$('btn').style.display=ov&&NET.on?'none':'';if(setg)$('setPause').appendChild($('set'));$('setPause').style.display=setg?'block':'none';o.style.display='flex';$('btn').focus()}
-function pause(m){if(stt!=='play')return;stt='pause';for(const k in K)K[k]=0;mapOn=false;$('mapw').style.display='none';if(AC)MG.gain.setTargetAtTime(CFG.vol*.3,AC.currentTime,.1);show('PAUSED',m||'Take a breath. They are still out there.','RESUME',1);$('hubpause').style.display=(stats.wins>0&&!NET.on)?'inline-flex':'none';saveGame()}
+function pause(m){if(stt!=='play')return;stt='pause';for(const k in K)K[k]=0;mapOn=false;$('mapw').style.display='none';if(AC)MG.gain.setTargetAtTime(CFG.vol*.3,AC.currentTime,.1);show('PAUSED',m||'Take a breath. They are still out there.','RESUME',1);$('hubpause').style.display=(stats.wins>0&&!NET.on)?'inline-flex':'none';if(!communityActive)saveGame()}
 function over(why){stt='over';const pb=endless?(stats.endBest||0):best;bumpBest();const nbst=endless?(stats.endBest||0):best,rec=nbst>pb&&pb>0;inRun=false;const kept=(!NET.on||NET.host)&&deathSave();stats.deaths++;saveStats();achDeath();document.exitPointerLock&&document.exitPointerLock();
  sfx({t:'sawtooth',f:70,dur:2,v:.4});sfx({t:'square',f:52,dur:2.4,v:.25,r:.5});show('IT FOUND YOU','The hum never stops. Neither do they.',kept&&!NET.on?'RETRY LEVEL '+level:'TRY AGAIN');if(kept)$('best').textContent='Saved to '+(slotName||'your slot')+': you can carry on from the start of Level '+level+' with full lives.';
  const o=$('ov');o.style.setProperty('--shot',deathShot?'url('+deathShot+')':'none');$('dkick').textContent=(why||'Your run is over').replace(/\.$/,'')+'  \u00b7  Level '+level;
@@ -2194,7 +2196,7 @@ function contLoad(sv){endless=!!sv.endless;endSeed=sv.endSeed|0;thiC={};runSeed=
  if(sv.seen&&sv.seen.length===S*S)for(let i=0;i<S*S;i++)seen[i]=sv.seen.charCodeAt(i)===49?1:0;
  if(typeof sv.px==='number'&&!hit(sv.px,sv.pz)){px=sv.px;pz=sv.pz;yaw=sv.yaw||yaw}
  inRun=true;hud();invUI()}
-function toMenu(){communityActive=null;closePlay();if(NET.on)netLeave(true);if(stt!=='over'&&stt!=='hub')saveGame();document.body.classList.remove('hubmode');menuBG();stt='menu';document.exitPointerLock&&document.exitPointerLock();$('ov').style.display='none';mapOn=false;$('mapw').style.display='none';if(AC)MG.gain.setTargetAtTime(CFG.vol*.5,AC.currentTime,.2);menuUI()}
+function toMenu(){communityActive=null;closePlay();if(NET.on)netLeave(true);if(stt!=='over'&&stt!=='hub'&&!communityActive)saveGame();document.body.classList.remove('hubmode');menuBG();stt='menu';document.exitPointerLock&&document.exitPointerLock();$('ov').style.display='none';mapOn=false;$('mapw').style.display='none';if(AC)MG.gain.setTargetAtTime(CFG.vol*.5,AC.currentTime,.2);menuUI()}
 function menuUI(sec){const EC={bacteria:'#8a8a8a',skin:'#d8d0c0',hound:'#e8dcd0',smiler:'#ffffff',scratcher:'#ff7a2a',party:'#e8c830',anim:'#ff7020',fmoth:'#7aff4a',wanderer:'#ffd84a',windows:'#ff2a2a',mmoth:'#a08060',plague:'#3aff6a'};
  $('m_ents').innerHTML='<p>Everything you run into is recorded in the <b>Encyclopedia</b>.</p><div class="lbl" style="margin-top:2vh">Controls</div>';document.body.classList.add('menu');const svs=SLOTS.sp.map(k=>[k,slotGet(k)]).filter(q=>q[1]);
  $('m_cwrap').style.display=svs.length?'block':'none';
@@ -2561,7 +2563,7 @@ function buildBoss(){S=31;H=8;const ST=S*T,c=S>>1,CT=(c+.5)*T,R_=mulberry(0x2ace
  px=(P.spawn[0]+.5)*T;pz=(P.spawn[1]+.5)*T;yaw=0;vx=vz=0;php=100;
  const mul=DIFF.key==='easy'?.8:DIFF.key==='hard'?1.2:1;
  B={g:racer,u:racer.userData,hittable:false,hs:[],de:99,mode:'p1',ph:1,sc:1,P,c,CT,LA,LB,cfg:0,shut,blocks,brks,gates,plates,themes,base:{w:wt,f:ft,c:ct,fog:cur.fog},wm,fm,cm,bl,bglow,glassM,mul,
-  shiftT:4,trickT:8,last:'',pits:[],dark:0,theme:0,themeK:0,crushed:0,mins:[],nextMin:0,bike:null,crashes:0,stun:0,spawn:{x:px,z:pz},obj:'',talk:0,mt:0};
+  shiftT:3.2,trickT:6.5,last:'',pits:[],dark:0,theme:0,themeK:0,crushed:0,mins:[],nextMin:0,bike:null,crashes:0,stun:0,spawn:{x:px,z:pz},obj:'',talk:0,mt:0};
  shiftTo(0,true);bossUI();
  setTimeout(()=>{if(B&&B.mode==='p1')racerSay('intro',0)},1800);setTimeout(()=>{if(B&&B.mode==='p1'){racerSay('intro',1);card('PHASE 1 · POWER','Find the 3 breakers and pull them.','The Racer','dead')}},6500)}
 // ---- shutter walls ----
@@ -2575,9 +2577,9 @@ function updShutters(dt){const b=B,ptx=Math.floor(px/T),ptz=Math.floor(pz/T);
 // ---- phase 1 tricks ----
 function bossTrick(){const b=B,L=['drop','dark','theme'].filter(k=>k!==b.last),k=L[rnd()*L.length|0];b.last=k;
  if(k==='drop'){const ptx=Math.floor(px/T),ptz=Math.floor(pz/T),cells=[];for(let j=-2;j<=2;j++)for(let i=-2;i<=2;i++){const x=ptx+i,y=ptz+j;if(w[y]&&w[y][x]===0&&rnd()<.55)cells.push([x,y])}
-  for(const[x,y]of cells){const m=new THREE.Mesh(new THREE.PlaneGeometry(T*.96,T*.96),new THREE.MeshBasicMaterial({color:0xff8a20,transparent:true,opacity:.3,depthWrite:false}));m.rotation.x=-Math.PI/2;m.position.set((x+.5)*T,.05,(y+.5)*T);world.add(m);b.pits.push({x,y,m,warn:1.3,t:3.2,hit:0})}racerSay('drop')}
- else if(k==='dark'){b.dark=4;sfx({n:1,ft:'highpass',ff:3000,dur:.2,v:.15});racerSay('dark')}
- else{b.themeK=rnd()*b.themes.length|0;setTheme(b.themes[b.themeK]);b.theme=6;bShake=.05;const f=$('flash');f.style.transition='opacity .05s';f.style.opacity=.3;setTimeout(()=>{f.style.transition='opacity .6s';f.style.opacity=0},60);racerSay('theme')}}
+  for(const[x,y]of cells){const m=new THREE.Mesh(new THREE.PlaneGeometry(T*.96,T*.96),new THREE.MeshBasicMaterial({color:0xff8a20,transparent:true,opacity:.3,depthWrite:false}));m.rotation.x=-Math.PI/2;m.position.set((x+.5)*T,.05,(y+.5)*T);world.add(m);b.pits.push({x,y,m,warn:1.05,t:3.7,hit:0})}racerSay('drop')}
+ else if(k==='dark'){b.dark=5.25;sfx({n:1,ft:'highpass',ff:3000,dur:.2,v:.15});racerSay('dark')}
+ else{b.themeK=rnd()*b.themes.length|0;setTheme(b.themes[b.themeK]);b.theme=7.5;bShake=.05;const f=$('flash');f.style.transition='opacity .05s';f.style.opacity=.3;setTimeout(()=>{f.style.transition='opacity .6s';f.style.opacity=0},60);racerSay('theme')}}
 function setTheme(t){const b=B;for(const[m,k]of[[b.wm,'w'],[b.fm,'f'],[b.cm,'c']]){m.material.map=t[k];m.material.needsUpdate=true}scene.fog.color.setHex(t.fog);scene.background.setHex(t.fog)}
 function updPits(dt){const b=B,ptx=Math.floor(px/T),ptz=Math.floor(pz/T);
  for(const p of b.pits.slice()){if(p.warn>0){p.warn-=dt;p.m.material.opacity=.2+.25*Math.sin(performance.now()/60);if(p.warn<=0){p.m.material.color.setHex(0x000000);p.m.material.opacity=.97;sfx({n:1,ft:'lowpass',ff:500,dur:.5,v:.15,p:panOf((p.x+.5)*T,(p.y+.5)*T)})}}
@@ -2594,8 +2596,8 @@ function bossUse(){const k=nearBreaker();if(!k)return;const b=B,i=b.brks.filter(
 function startP2(){const b=B;b.mode='p2';b.ph=2;b.crushed=0;b.dark=0;b.theme=0;setTheme(b.base);clearPits();
  for(const s_ of b.shut.values()){s_.warn=0;s_.wn.material.opacity=0;if(s_.up){s_.up=0;w[s_.y][s_.x]=0}}lastPT='';
  b.bl.intensity=0;b.bglow.visible=false;b.glassM.opacity=.12;sfx({t:'sawtooth',f:90,f2:30,dur:1.6,v:.2,r:.8});flickT=0;
- card('PHASE 2 · LURE','Lead each monster over a crusher plate.','The Racer','dead');racerSay('p2');b.nextMin=3;bossUI()}
-const MIN_KINDS=[['hound',4.1],['skin',3.7],['thing',3.4]];
+ card('PHASE 2 · LURE','Lead each monster over a crusher plate.','The Racer','dead');racerSay('p2');b.nextMin=2.2;bossUI()}
+const MIN_KINDS=[['hound',4.9],['skin',4.4],['thing',4.1]];
 function spawnMinion(){const b=B,i=b.crushed;if(i>=3)return;const gt=b.gates[i%3],[k,sp]=MIN_KINDS[i],M=(c,bb)=>bb?new THREE.MeshBasicMaterial({color:c}):new THREE.MeshLambertMaterial({color:c});
  let m;if(k==='thing'){// The Thing has no monster entry of its own, so it's built from its model
   const t=mkThingModel(new THREE.MeshLambertMaterial({color:0x4a443c}),new THREE.MeshBasicMaterial({color:0xff2020,fog:false}));t.g.scale.setScalar(.62);t.g.position.set(gt.x,0,gt.z);world.add(t.g);m={g:t.g,k:{n:'The Thing'},ph:0,st:'hunt',wait:0}}
@@ -2606,39 +2608,39 @@ function updP2(dt,now){const b=B;if(b.nextMin>0){b.nextMin-=dt;if(b.nextMin<=0)s
  for(const m of b.mins.slice()){const g=m.g,gx=g.position.x,gz=g.position.z,de=Math.hypot(px-gx,pz-gz);let sp=0;
   if(m.stun>0)m.stun-=dt;else if(dmap){sp=steer(m,dmap,m.spd,dt,px,pz);let da=Math.atan2(px-gx,pz-gz)-g.rotation.y;da=Math.atan2(Math.sin(da),Math.cos(da));g.rotation.y+=da*Math.min(1,dt*6)}
   animMon(m,sp,dt,now);
-  if(de<1.35&&m.stun<=0){hurt(28,'Caught by the '+m.k.n+'.');m.stun=1.3;const k=5/(de||1);vx+=(px-gx)*k;vz+=(pz-gz)*k}
+  if(de<1.45&&m.stun<=0){hurt(34,'Caught by the '+m.k.n+'.');m.stun=1.05;const k=5/(de||1);vx+=(px-gx)*k;vz+=(pz-gz)*k}
   const tx=Math.floor(gx/T),tz=Math.floor(gz/T);for(const pl_ of b.plates)if(pl_.cd<=0&&pl_.x===tx&&pl_.y===tz){pl_.t=.6;pl_.cd=3;crush(m,pl_)}}}
 function crush(m,pl_){const b=B;sfx({n:1,ft:'lowpass',ff:900,ff2:80,dur:.9,v:.6,a:.005,p:panOf(m.g.position.x,m.g.position.z),r:.6});sfx({f:55,f2:25,dur:.6,v:.4});bShake=.15;
  setTimeout(()=>{if(B!==b)return;burst(m.g.position.x,.6,m.g.position.z,60,0x3a1010,6);world.remove(m.g);b.mins=b.mins.filter(q=>q!==m);
   if(Math.floor(px/T)===pl_.x&&Math.floor(pz/T)===pl_.y)hurt(70,'The crusher came down on you too.');
-  racerSay('crush',b.crushed);b.crushed++;bossUI();if(b.crushed>=3)setTimeout(()=>{if(B===b&&b.mode==='p2')startP3()},3200);else b.nextMin=2.5},150)}
+  racerSay('crush',b.crushed);b.crushed++;bossUI();if(b.crushed>=3)setTimeout(()=>{if(B===b&&b.mode==='p2')startP3()},3200);else b.nextMin=1.7},150)}
 // ---- phase 3: the bike ----
 function mkRacerBike(){const g=mkWheelie(),u=g.userData;u.bk.remove(u.rider);const MATr=(c,bb)=>bb?new THREE.MeshBasicMaterial({color:c}):new THREE.MeshLambertMaterial({color:c}),r=mkSuitBody('racer',MATr),ru=r.userData;
  r.position.set(0,-.3,.32);u.bk.add(r);ru.up.rotation.x=.45;ru.legL.rotation.x=ru.legR.rotation.x=-1.25;if(ru.knL){ru.knL.rotation.x=ru.knR.rotation.x=1.5}ru.shL.rotation.x=ru.shR.rotation.x=-1.1;if(ru.elL){ru.elL.rotation.x=ru.elR.rotation.x=-.35}
  u.rider=r;u.ru=ru;g.scale.setScalar(1.25);return g}
-function startP3(){const b=B;b.mode='p3';b.ph=3;b.crashes=0;b.g.visible=false;const g=mkRacerBike();world.add(g);const sx=b.CT,sz=b.CT+2.4*T;g.position.set(sx,0,sz);b.bike={g,st:'aim',t:2.5,dx:0,dz:1,sp:0,ph:0,hitT:0,home:{x:sx,z:sz}};
+function startP3(){const b=B;b.mode='p3';b.ph=3;b.crashes=0;b.g.visible=false;const g=mkRacerBike();world.add(g);const sx=b.CT,sz=b.CT+2.4*T;g.position.set(sx,0,sz);b.bike={g,st:'aim',t:1.9,dx:0,dz:1,sp:0,ph:0,hitT:0,home:{x:sx,z:sz}};
  sfx({t:'sawtooth',f:60,f2:180,dur:1.4,v:.18,ft:'lowpass',ff:900});card('PHASE 3 · CHASE','Make the bike crash into the UNSAFE blocks.','The Racer','dead');racerSay('p3');bossUI()}
 function updP3(dt,now){const b=B,k=b.bike;if(!k)return;const g=k.g,u=g.userData;let sp=0;const face=(tx,tz,r)=>{let da=Math.atan2(tx-g.position.x,tz-g.position.z)-g.rotation.y;da=Math.atan2(Math.sin(da),Math.cos(da));g.rotation.y+=da*Math.min(1,dt*r)};
- if(k.st==='aim'){k.t-=dt;face(px,pz,5);u.hl.material.color.setHex(Math.sin(now/60)>0?0xfff4d0:0xff6040);if(k.t<.9&&!k.rev){k.rev=1;sfx({t:'sawtooth',f:70,f2:220,dur:.9,v:.14,ft:'lowpass',ff:1200,p:panOf(g.position.x,g.position.z)})}
-  if(k.t<=0){const dx=px-g.position.x,dz=pz-g.position.z,d=Math.hypot(dx,dz)||1;k.dx=dx/d;k.dz=dz/d;g.rotation.y=Math.atan2(k.dx,k.dz);k.st='charge';k.t=3;k.rev=0;k.hit=0}}
- else if(k.st==='charge'){const v=16*b.mul;k.t-=dt;sp=v;const nx=g.position.x+k.dx*v*dt,nz=g.position.z+k.dz*v*dt,ax=nx+k.dx*1.1,az=nz+k.dz*1.1,cx=Math.floor(ax/T),cz=Math.floor(az/T);
-  const solid=!w[cz]||w[cz][cx]===1;if(solid||k.t<=0){const blk=b.blocks.find(q=>!q.broken&&q.cs.some(([x,y])=>x===cx&&y===cz));if(blk)bikeCrash(blk);else{k.st='aim';k.t=1.6;bShake=Math.max(bShake,.05);sfx({n:1,ft:'lowpass',ff:500,dur:.3,v:.25,p:panOf(nx,nz)})}}
-  else{g.position.x=nx;g.position.z=nz;if(!k.hit&&Math.hypot(px-nx,pz-nz)<1.6){k.hit=1;b.runOver=1;hurt(40,'Run over by the Racer.');vx+=k.dx*14;vz+=k.dz*14;if(rnd()<.6)racerSay('hit')}}}
- else if(k.st==='stun'){k.t-=dt;u.bk.rotation.z=Math.sin(now/80)*.15*Math.min(1,k.t);if((k.ct=(k.ct||0)-dt)<=0){k.ct=.15;burst(g.position.x,1.2,g.position.z,4,0x777777,1.2)}if(k.t<=0){u.bk.rotation.z=0;k.st='aim';k.t=1.8}}
+ if(k.st==='aim'){k.t-=dt;face(px,pz,5);u.hl.material.color.setHex(Math.sin(now/60)>0?0xfff4d0:0xff6040);if(k.t<.8&&!k.rev){k.rev=1;sfx({t:'sawtooth',f:70,f2:220,dur:.9,v:.14,ft:'lowpass',ff:1200,p:panOf(g.position.x,g.position.z)})}
+  if(k.t<=0){const dx=px-g.position.x,dz=pz-g.position.z,d=Math.hypot(dx,dz)||1;k.dx=dx/d;k.dz=dz/d;g.rotation.y=Math.atan2(k.dx,k.dz);k.st='charge';k.t=3.25;k.rev=0;k.hit=0}}
+ else if(k.st==='charge'){const v=19*b.mul;k.t-=dt;sp=v;const nx=g.position.x+k.dx*v*dt,nz=g.position.z+k.dz*v*dt,ax=nx+k.dx*1.1,az=nz+k.dz*1.1,cx=Math.floor(ax/T),cz=Math.floor(az/T);
+  const solid=!w[cz]||w[cz][cx]===1;if(solid||k.t<=0){const blk=b.blocks.find(q=>!q.broken&&q.cs.some(([x,y])=>x===cx&&y===cz));if(blk)bikeCrash(blk);else{k.st='aim';k.t=1.15;bShake=Math.max(bShake,.05);sfx({n:1,ft:'lowpass',ff:500,dur:.3,v:.25,p:panOf(nx,nz)})}}
+  else{g.position.x=nx;g.position.z=nz;if(!k.hit&&Math.hypot(px-nx,pz-nz)<1.6){k.hit=1;b.runOver=1;hurt(48,'Run over by the Racer.');vx+=k.dx*14;vz+=k.dz*14;if(rnd()<.6)racerSay('hit')}}}
+ else if(k.st==='stun'){k.t-=dt;u.bk.rotation.z=Math.sin(now/80)*.15*Math.min(1,k.t);if((k.ct=(k.ct||0)-dt)<=0){k.ct=.15;burst(g.position.x,1.2,g.position.z,4,0x777777,1.2)}if(k.t<=0){u.bk.rotation.z=0;k.st='aim';k.t=1.25}}
  else if(k.st==='wreck'){k.t+=dt;u.bk.rotation.z=lerp(u.bk.rotation.z,1.3,dt*3);g.position.y=Math.max(-.2,g.position.y-dt*.2);if((k.ct=(k.ct||0)-dt)<=0){k.ct=.12;burst(g.position.x,1+rnd(),g.position.z,5,rnd()<.3?0xff7020:0x555555,1.5)}}
  if(k.st!=='wreck')wheelieAnim({g},sp,dt,now)}
 function bikeCrash(blk){const b=B,k=b.bike;blk.broken=1;for(const[x,y]of blk.cs)w[y][x]=0;lastPT='';const m=blk.m;burst(m.position.x,2,m.position.z,90,0x6a645c,7);burst(m.position.x,1.5,m.position.z,30,0xffb040,5);m.visible=false;
  sfx({n:1,ft:'lowpass',ff:1400,ff2:90,dur:1.6,v:.7,a:.004,r:1});sfx({f:60,f2:22,dur:1.2,v:.45});bShake=.3;b.crashes++;racerSay('crash',b.crashes-1);bossUI();
- if(b.crashes>=3){if(!b.runOver)ach('heads');k.st='wreck';k.t=0;b.mode='dead';b.obj='';setTimeout(()=>{if(B===b)bossVictory()},2400)}else{k.st='stun';k.t=3}}
+ if(b.crashes>=3){if(!b.runOver)ach('heads');k.st='wreck';k.t=0;b.mode='dead';b.obj='';setTimeout(()=>{if(B===b)bossVictory()},2400)}else{k.st='stun';k.t=2.1}}
 // ---- the frame ----
 function updBoss(dt,now){const b=B;if(wEq==='pistol')gunUpd(dt);bShake=Math.max(0,bShake-dt*.12);chasing=b.mode==='p2'||b.mode==='p3';
- if(php<100&&now-lastHurt>4000)php=Math.min(100,php+3*dt);$('hpb').style.width=php+'%';const hv=Math.ceil(php);if($('hpv').textContent!=hv)$('hpv').textContent=hv;
+ if(php<100&&now-lastHurt>5500)php=Math.min(100,php+2*dt);$('hpb').style.width=php+'%';const hv=Math.ceil(php);if($('hpv').textContent!=hv)$('hpv').textContent=hv;
  const rg=b.g;b.de=Math.hypot(px-b.CT,pz-b.CT);if(rg.visible){let da=Math.atan2(px-b.CT,pz-b.CT)-rg.rotation.y;da=Math.atan2(Math.sin(da),Math.cos(da));rg.rotation.y+=da*Math.min(1,dt*3);const u=rg.userData;if(u.shR)u.shR.rotation.x=b.talk>0?-1.2+Math.sin(now/120)*.4:0;b.talk=Math.max(0,b.talk-dt)}
  updShutters(dt);updPits(dt);
  if(b.dark>0){b.dark-=dt;flickT=.5;amb.intensity=.02;pl.intensity=.15;for(const m of surfM)m.material.lightMapIntensity=.04;if(panelMesh)panelMesh.material.color.setScalar(.02);if(b.dark<=0)flickT=0}
  if(b.theme>0){b.theme-=dt;if(b.theme<=0)setTheme(b.base)}
- if(b.mode==='p1'){if((b.shiftT-=dt)<=0){b.shiftT=(DIFF.key==='hard'?6:DIFF.key==='easy'?10:8);shiftTo(1-b.cfg);if(rnd()<.45){racerSay('shift');b.talk=1.5}}
-  if((b.trickT-=dt)<=0){b.trickT=DIFF.key==='hard'?8:DIFF.key==='easy'?13:10.5;bossTrick();b.talk=1.5}}
+ if(b.mode==='p1'){if((b.shiftT-=dt)<=0){b.shiftT=(DIFF.key==='hard'?4.5:DIFF.key==='easy'?7.5:5.8);shiftTo(1-b.cfg);if(rnd()<.45){racerSay('shift');b.talk=1.5}}
+  if((b.trickT-=dt)<=0){b.trickT=DIFF.key==='hard'?6.2:DIFF.key==='easy'?10:8;bossTrick();b.talk=1.5}}
  else if(b.mode==='p2')updP2(dt,now);
  else if(b.mode==='p3'||b.mode==='dead')updP3(dt,now);
  return stt!=='play'}
@@ -2652,9 +2654,9 @@ function bossVictory(){const dd=bfs(Math.floor(px/T),Math.floor(pz/T));let far=n
   card('TAKE THE KEY','A door has opened in the distance.');say('Take the key.',3500);hud();bossUI()},1600)}
 // dying restarts the phase you were on
 function bossRespawn(){const b=B;php=100;px=b.spawn.x;pz=b.spawn.z;yaw=0;vx=vz=0;b.dark=0;flickT=0;clearPits();if(b.theme>0){b.theme=0;setTheme(b.base)}
- if(b.mode==='p1'){for(const k of b.brks){k.on=0;k.lv.rotation.x=-.6;k.lt.material.color.setHex(0xff3020);k.gl.material.color.setHex(0xff3020)}b.bl.intensity=1.4;shiftTo(0,true);b.shiftT=5;b.trickT=9}
- else if(b.mode==='p2'){for(const m of b.mins)world.remove(m.g);b.mins=[];b.crushed=0;b.nextMin=3;for(const p_ of b.plates){p_.t=0;p_.cd=0}}
- else if(b.mode==='p3'&&b.bike){const k=b.bike;b.runOver=0;for(const blk of b.blocks)if(blk.broken){blk.broken=0;blk.m.visible=true;for(const[x,y]of blk.cs)w[y][x]=1}b.crashes=0;k.g.position.set(k.home.x,0,k.home.z);k.st='aim';k.t=3;k.g.userData.bk.rotation.z=0}
+ if(b.mode==='p1'){for(const k of b.brks){k.on=0;k.lv.rotation.x=-.6;k.lt.material.color.setHex(0xff3020);k.gl.material.color.setHex(0xff3020)}b.bl.intensity=1.4;shiftTo(0,true);b.shiftT=3.5;b.trickT=7}
+ else if(b.mode==='p2'){for(const m of b.mins)world.remove(m.g);b.mins=[];b.crushed=0;b.nextMin=2.2;for(const p_ of b.plates){p_.t=0;p_.cd=0}}
+ else if(b.mode==='p3'&&b.bike){const k=b.bike;b.runOver=0;for(const blk of b.blocks)if(blk.broken){blk.broken=0;blk.m.visible=true;for(const[x,y]of blk.cs)w[y][x]=1}b.crashes=0;k.g.position.set(k.home.x,0,k.home.z);k.st='aim';k.t=2;k.g.userData.bk.rotation.z=0}
  lastPT='';setTimeout(()=>{if(B===b)racerSay('death')},1800);bossUI()}
 function openTile(x,z){const r_=w[Math.floor(z/T)];return r_&&r_[Math.floor(x/T)]===0}
 function hurt(n,why,quiet){if(A.god||!B||stt!=='play')return;php-=n;lastHurt=performance.now();
@@ -2667,7 +2669,7 @@ function roar(v){sfx({t:'sawtooth',f:110,f2:38,dur:2.2,v:.35*v,ft:'lowpass',ff:9
 
 function bossWin(){stt='loading';ach('win');if(!stats.goldKey){stats.goldKey=1;saveStats()}ach('golden');setTimeout(()=>{try{mkHand()}catch(e){}},50);if(DIFF.key==='hard')ach('winhard');if(perma)ach('perma');bumpBest();stats.wins=(stats.wins||0)+1;const newRacer=!stats.racerWin;stats.racerWin=1;saveStats();inRun=false;slotClear();
  sfx({f:523,dur:1.2,v:.15,r:.6});sfx({f:659,dur:1.2,v:.15,r:.6,d:.2});sfx({f:784,dur:1.6,v:.15,r:.6,d:.4});const f=$('flash');f.style.transition='opacity 1.2s';f.style.opacity=1;
- setTimeout(()=>{card('YOU ESCAPED','You kept the key. It turned to gold in your hand.','The end');if(newRacer)setTimeout(()=>note('The Racer suit is yours. Find it in SUIT.'),1500);setTimeout(()=>{f.style.transition='opacity 1.5s';f.style.opacity=0;B=null;document.body.classList.remove('boss');openHub()},3000)},1300)}
+ setTimeout(()=>{card('CHAPTER 1 COMPLETE','The Racer is defeated. Your next nightmare begins.','CHAPTER 2 UNLOCKED');if(newRacer)setTimeout(()=>note('The Racer suit is yours. Find it in SUIT.'),1500);setTimeout(()=>{f.style.transition='opacity 1.5s';f.style.opacity=0;B=null;document.body.classList.remove('boss');openHub();chapter2Start(0)},3000)},1300)}
 
 
 // ================= Multiplayer: peer-to-peer co-op over WebRTC (PeerJS). The host simulates monsters; everyone else mirrors them =================
@@ -3489,7 +3491,7 @@ function hubPortal(title,sub,x,z,col){const g=new THREE.Group();g.position.set(x
  const cv_=document.createElement('canvas');cv_.width=512;cv_.height=256;const ctx=cv_.getContext('2d');ctx.fillStyle='#070909';ctx.fillRect(0,0,512,256);ctx.strokeStyle='#a6adb1';ctx.strokeRect(5,5,502,246);ctx.textAlign='center';ctx.fillStyle='#f1eedc';ctx.font='bold 63px monospace';ctx.fillText(title,256,112);ctx.fillStyle='#bdc5c9';ctx.font='24px monospace';ctx.fillText(sub,256,173);const sign=new THREE.Mesh(new THREE.PlaneGeometry(3.7,1.85),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(cv_),transparent:false,side:THREE.DoubleSide}));sign.position.y=6.55;g.add(sign);const lamp=new THREE.PointLight(col,.8,7);lamp.position.y=3;g.add(lamp);return g}
 hubPortal('STORY','REVISIT',-9,-13,0xd8c46a);hubPortal('COMMUNITY','SHARED TAPES',0,-16,0x61aaff);hubPortal('CREATE','MAKE A TAPE',9,-13,0x8fd6a3);
 let hubTime=0,hubTab='story',hubReturning=false;
-// Curated post-story challenge tapes. These are unsaved one-level runs with unique loadouts and restrictions.
+// Chapter 2: twelve sequential post-boss levels with unique loadouts and restrictions.
 const HUB_FEATURED=[
  {id:'nightshift',n:'The Endless Shift',t:5,s:'nightshift-823',d:'No map. Find your way through the abandoned offices.',rules:'NO MAP',nm:1},
  {id:'deepwater',n:'Forgotten Pool',t:8,s:'forgotten-pool',d:'Start with half your stamina and make it to the exit.',rules:'LOW STAMINA',st:.5},
@@ -3506,20 +3508,58 @@ const HUB_FEATURED=[
  ];
 let communityActive=null;
 function communityCompleted(){return store.get('communityCleared',{})||{}}
-function communityFinish(){if(!communityActive)return;const o=communityActive;const cleared=communityCompleted();cleared[o.id||('custom:'+o.n+':'+o.s)]=true;store.set('communityCleared',cleared);communityActive=null;inRun=false;slot=null;document.body.classList.remove('cut');stt='loading';sfx({f:659,dur:.55,v:.15});card('TAPE COMPLETE',o.n,'Returning to the Hub');setTimeout(()=>{openHub();hubScreen('community');$('hubnote').textContent='TAPE CLEARED: '+o.n+' — Choose another challenge or return to story levels.'},1250)}
-function hubCommunity(){return HUB_FEATURED.concat((store.get('community',[])||[]).filter(x=>x&&typeof x.n==='string'&&Number.isInteger(x.t)&&x.t>=1&&x.t<=12&&typeof x.s==='string').slice(0,35))}
-function hubScreen(t){hubTab=t;document.querySelectorAll('#hubtabs [data-ht]').forEach(b=>b.classList.toggle('on',b.dataset.ht===t));$('hubcreate').style.display=t==='create'?'block':'none';$('hublist').style.display=t==='create'?'none':'grid';$('hubnote').textContent=t==='story'?'Choose any story level. Each portal begins a fresh unsaved visit; existing save slots are not overwritten.':t==='community'?'12 challenge tapes and your imported creations. Clear a tape to mark it completed. All community tapes unlock after the story ending.':'Make a seeded custom level, copy its code, or import a code from a friend.';
+// Highest Chapter 2 index reached (0 = first level, 12 = chapter cleared).
+function chapter2Progress(){return Math.max(0,Math.min(HUB_FEATURED.length,+store.get('chapter2Progress',0)||0))}
+function chapter2Start(index){
+ if(!(stats.wins>0)||index<0||index>=HUB_FEATURED.length||index>chapter2Progress())return false;
+ if(stt!=='hub')openHub();
+ if(stt!=='hub')return false;
+ const o=HUB_FEATURED[index];hubEnter(o.t,o.s,Object.assign({},o,{chapter2:true,chapterIndex:index}));return true
+}
+function communityFinish(){
+ if(!communityActive)return;
+ const o=communityActive,cleared=communityCompleted();
+ cleared[o.id||('custom:'+o.n+':'+o.s)]=true;store.set('communityCleared',cleared);
+ if(o.chapter2){
+  const next=o.chapterIndex+1;
+  if(next>chapter2Progress())store.set('chapter2Progress',next);
+  communityActive=null;inRun=false;slot=null;document.body.classList.remove('cut');stt='loading';
+  sfx({f:659,dur:.55,v:.15});
+  if(next<HUB_FEATURED.length){
+   card('CHAPTER 2','LEVEL '+(o.chapterIndex+1)+' COMPLETE','NEXT: '+HUB_FEATURED[next].n);
+   setTimeout(()=>chapter2Start(next),1600);
+  }else{
+   card('CHAPTER 2 COMPLETE','You survived all twelve tapes.','The Hub awaits.');
+   setTimeout(()=>{openHub();hubScreen('chapter2');$('hubnote').textContent='CHAPTER 2 COMPLETE — All twelve levels cleared. Replay any level or explore community creations.'},2300);
+  }
+  return;
+ }
+ communityActive=null;inRun=false;slot=null;document.body.classList.remove('cut');stt='loading';sfx({f:659,dur:.55,v:.15});card('TAPE COMPLETE',o.n,'Returning to the Hub');setTimeout(()=>{openHub();hubScreen('community');$('hubnote').textContent='COMMUNITY LEVEL CLEARED: '+o.n},1250)
+}
+function hubCommunity(){return (store.get('community',[])||[]).filter(x=>x&&typeof x.n==='string'&&Number.isInteger(x.t)&&x.t>=1&&x.t<=12&&typeof x.s==='string').slice(0,35)}
+function hubScreen(t){
+ hubTab=t;document.querySelectorAll('#hubtabs [data-ht]').forEach(b=>b.classList.toggle('on',b.dataset.ht===t));
+ $('hubcreate').style.display=t==='create'?'block':'none';$('hublist').style.display=t==='create'?'none':'grid';
+ $('hubnote').textContent=t==='story'?'CHAPTER 1 — Revisit any original story level without overwriting your saves.':t==='chapter2'?'CHAPTER 2 — THE LOST TAPES. Twelve levels in order. Escape each one to unlock and automatically enter the next. Progress is saved after each exit.':t==='community'?'COMMUNITY LEVELS — Play custom levels created by you or imported with a shared code.':'Create a seeded custom level, copy its code, or import a code from a friend.';
  if(t==='story')$('hublist').innerHTML=TH.map((th,i)=>'<button data-l="'+(i+1)+'"><b>'+(i===12?'LEVEL ?':'LEVEL '+(i+1))+'</b><span>'+esc(th.n)+'</span><em>ENTER</em></button>').join('');
- else if(t==='community'){const done=communityCompleted();$('hublist').innerHTML=hubCommunity().map((o,i)=>{const clear=!!done[o.id||('custom:'+o.n+':'+o.s)];return '<button data-c="'+i+'" title="'+esc(o.d||'Seeded custom map')+'"><b>'+esc(o.n)+'</b><span>'+esc(o.d||TH[o.t-1].n)+'<br>'+esc(o.rules||'CUSTOM TAPE')+'</span><em>'+(clear?'CLEARED':'PLAY')+'</em></button>'}).join('')}}
+ else if(t==='chapter2'){
+  const progress=chapter2Progress();
+  $('hublist').innerHTML=HUB_FEATURED.map((o,i)=>{const locked=i>progress,cleared=i<progress;
+   return '<button data-ch="'+i+'" '+(locked?'disabled aria-disabled="true"':'')+' title="'+esc(o.d)+'"><b>'+(i+1)+'. '+esc(o.n)+'</b><span>'+esc(o.d)+'<br>'+esc(o.rules)+'</span><em>'+(locked?'LOCKED':cleared?'CLEARED':'NEXT')+'</em></button>'}).join('');
+ }else if(t==='community'){
+  const done=communityCompleted(),items=hubCommunity();
+  $('hublist').innerHTML=items.length?items.map((o,i)=>{const clear=!!done[o.id||('custom:'+o.n+':'+o.s)];return '<button data-c="'+i+'" title="'+esc(o.d||'Seeded custom map')+'"><b>'+esc(o.n)+'</b><span>'+esc(o.d||TH[o.t-1].n)+'</span><em>'+(clear?'CLEARED':'PLAY')+'</em></button>'}).join(''):'<p>No shared levels yet. Choose CREATE / IMPORT to add one.</p>';
+ }
+}
 function openHub(){if(NET.on){toMenu();return}if(!(stats.wins>0)){toMenu();return}
- if(stt==='play'||stt==='pause')saveGame();inRun=false;document.exitPointerLock&&document.exitPointerLock();$('ov').style.display='none';$('load').classList.add('off');$('mapw').style.display='none';$('inv').classList.remove('on');invOn=false;mapOn=false;document.body.classList.remove('menu','boss','armed','downed','hiding','invo','cut');$('adm').style.display='none';A.open=false;document.body.classList.add('hubmode');stt='hub';if(AC)MG.gain.setTargetAtTime(CFG.vol*.4,AC.currentTime,.2);hubScreen('story')}
+ if((stt==='play'||stt==='pause')&&!communityActive)saveGame();inRun=false;document.exitPointerLock&&document.exitPointerLock();$('ov').style.display='none';$('load').classList.add('off');$('mapw').style.display='none';$('inv').classList.remove('on');invOn=false;mapOn=false;document.body.classList.remove('menu','boss','armed','downed','hiding','invo','cut');$('adm').style.display='none';A.open=false;document.body.classList.add('hubmode');stt='hub';if(AC)MG.gain.setTargetAtTime(CFG.vol*.4,AC.currentTime,.2);hubScreen('story')}
 function hubFrame(dt){hubTime+=dt;hubCamera.aspect=innerWidth/innerHeight;hubCamera.updateProjectionMatrix();hubCamera.position.set(Math.sin(hubTime*.12)*1.0,2.35+Math.sin(hubTime*.27)*.11,4.5+Math.cos(hubTime*.1)*.3);hubCamera.lookAt(0,2.8,-14)}
 function hubEnter(l,s=null,community=null){if(stt!=='hub')return;
  communityActive=community;document.body.classList.remove('hubmode');stt='menu';document.body.classList.remove('menu');NET.on=false;slot=null;slotName=null;inRun=false;endless=false;thiC={};runSeed=s?hashStr(s):null;perma=!!(community&&community.one);noMap=!!(community&&community.nm);noWand=!!(community&&community.nw);level=l;DIFF=DF[CFG.diff]||DF.normal;
- startLoad();loadScreen(()=>{restart(l);inRun=false;if(community){if(community.st!=null)stam=community.st;if(community.bt!=null)bat=community.bt;hud()}stats.runs++;saveStats()},false,()=>{enterRun();if(community)setTimeout(()=>say('COMMUNITY TAPE: '+community.n+' — '+(community.rules||'CUSTOM'),4500),1200)})} 
+ startLoad();loadScreen(()=>{restart(l);inRun=false;if(community){if(community.st!=null)stam=community.st;if(community.bt!=null)bat=community.bt;hud()}stats.runs++;saveStats()},false,()=>{enterRun();if(community)setTimeout(()=>say((community.chapter2?'CHAPTER 2 · LEVEL '+(community.chapterIndex+1)+'/12: ':'COMMUNITY LEVEL: ')+community.n+' — '+(community.rules||'CUSTOM'),4500),1200)})} 
 $('hubentry').onclick=()=>openHub();
 $('hubtabs').onclick=e=>{const b=e.target.closest('[data-ht]');if(b)hubScreen(b.dataset.ht)};
-$('hublist').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.l)hubEnter(+b.dataset.l);else if(b.dataset.c){const o=hubCommunity()[+b.dataset.c];if(o)hubEnter(o.t,o.s,o)}};
+$('hublist').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.l)hubEnter(+b.dataset.l);else if(b.dataset.ch!==undefined)chapter2Start(+b.dataset.ch);else if(b.dataset.c){const o=hubCommunity()[+b.dataset.c];if(o)hubEnter(o.t,o.s,o)}};
 $('hubmenu').onclick=toMenu;
 $('hubpause').style.display='none';
 const hubThemeSel=$('hubtheme');TH.slice(0,12).forEach((t,i)=>{const o=document.createElement('option');o.value=i+1;o.textContent='Level '+(i+1)+' - '+t.n;hubThemeSel.appendChild(o)});
