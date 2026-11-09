@@ -499,6 +499,26 @@ body.hubmode #hub{display:block}body.hubmode #hud,body.hubmode #rec,body.hubmode
 #hubmenu{pointer-events:auto;white-space:nowrap}#hubmark{position:absolute;right:5vw;bottom:6vh;font:400 22px var(--fd);color:var(--mute)}
 body.hubmode #menu,body.hubmode #ov{display:none!important}
 @media(max-width:700px){#hubhead{top:3vh}#hubhead h1{font-size:58px}#hubhead p{font-size:11px;max-width:300px}#hubmain{bottom:3vh;width:90vw}#hublist{grid-template-columns:1fr;max-height:42vh}#hublist button{min-height:50px}#hublist button b{font-size:22px}#hubmark{display:none}#hubhead{right:3vw;left:4vw}#hubmenu{font-size:20px!important;padding:6px!important}}
+/* Patch notes dialog follows the in-game VHS menu styling. */
+#ver{border:0;background:transparent;padding:5px 8px;cursor:pointer;text-align:left;z-index:32;pointer-events:auto}
+#ver:hover,#ver:focus-visible{color:var(--ink);background:rgba(233,228,214,.12);outline:2px solid var(--ink);outline-offset:2px}
+#ver span{font-size:.8em;color:var(--hi)}
+#patchnotes{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(0,0,0,.85);backdrop-filter:blur(5px)}
+#patchnotes.open{display:flex}
+#patchbox{width:min(700px,95vw);max-height:min(82vh,780px);display:flex;flex-direction:column;overflow:hidden;background:#060606;border:2px solid var(--ink);box-shadow:0 0 0 6px rgba(0,0,0,.65);color:var(--ink)}
+#patchhead{display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:2px solid var(--ink);padding:12px 16px}
+#patchhead h2{font:400 clamp(30px,5vw,46px)/1 var(--fd);margin:0}
+#patchclose{background:transparent;border:2px solid var(--ink);padding:3px 12px;color:var(--ink);font:400 27px var(--fd);cursor:pointer}
+#patchclose:hover,#patchclose:focus-visible{background:var(--ink);color:#060606;outline:none}
+#patchbody{overflow-y:auto;overscroll-behavior:contain;padding:16px 22px;font:500 14px/1.6 var(--fb);user-select:text;-webkit-user-select:text}
+.patchentry{padding:0 0 16px;margin:0 0 16px;border-bottom:1px solid rgba(233,228,214,.24)}
+.patchentry:last-child{border-bottom:0;margin-bottom:0}
+.patchentry h3{font:400 30px/1.1 var(--fd);margin:0 0 6px;color:var(--hi)}
+.patchentry time{font:400 18px var(--fd);color:var(--mute);margin-left:8px}
+.patchentry ul{margin:6px 0 0;padding-left:22px}
+.patchentry li{margin:3px 0}
+#patchfoot{padding:10px 16px;border-top:1px solid rgba(233,228,214,.25);font:400 19px var(--fd);color:var(--mute)}
+@media(max-width:600px){#patchbody{padding:12px 15px}#ver span{display:none}}
 </style></head><body>
 <canvas id="grain" class="fx" width="160" height="90"></canvas><div id="scan" class="fx"></div><div id="vig" class="fx"></div><div id="dmg" class="fx"></div><div id="insane" class="fx"></div><div id="flash" class="fx"></div>
 <div id="mapw" class="glass"><div class="mh"><b>Map</b><span class="lbl" id="mtitle"></span></div><canvas id="mm" width="512" height="512"></canvas>
@@ -600,12 +620,47 @@ body.hubmode #menu,body.hubmode #ov{display:none!important}
 <div class="mcard"><h4><i>B</i>PLAYERS</h4><div id="mp_list"></div></div>
 <div id="mp_chat" class="mcard"><h4><i>C</i>CHAT</h4><div id="mp_chatlog"></div><div class="chrow"><input id="mp_chatin" type="text" maxlength="120" spellcheck="false" autocomplete="off" placeholder="Say hi to the room"><button class="btng" id="mp_chatgo">SEND</button></div></div></div><div id="mp_saves"></div><button class="btnp" id="mp_start">START NEW GAME</button></div>
 <div class="pfoot"><p id="mp_status"></p><div class="nrow"><button class="btng" id="mp_back">BACK</button></div></div></div>
-<div id="ver">v3.43 &middot; 2026-11-09</div></div>
+<button id="ver" type="button" aria-haspopup="dialog" aria-controls="patchnotes" title="View patch notes">v3.45 &middot; 2026-11-09 <span aria-hidden="true">[PATCH NOTES]</span></button></div>
+<div id="patchnotes" role="dialog" aria-modal="true" aria-labelledby="patchtitle" aria-hidden="true">
+ <div id="patchbox">
+  <div id="patchhead"><h2 id="patchtitle">PATCH NOTES <span style="color:var(--hi)">v3.45</span></h2><button id="patchclose" type="button" aria-label="Close patch notes">X CLOSE</button></div>
+  <div id="patchbody">
+   <section class="patchentry"><h3>v3.45 <time datetime="2026-11-09">NOV 09, 2026</time></h3><ul><li>Click the version number on the main menu to open the patch notes.</li><li>Added a scrollable update history popup with Escape and click-outside closing.</li></ul></section>
+   <section class="patchentry"><h3>v3.44 <time datetime="2026-11-09">NOV 09, 2026</time></h3><ul><li>Added twelve curated Community Level challenges after completing Story Mode.</li><li>Added community challenge restrictions and a CLEARED completion record.</li></ul></section>
+   <section class="patchentry"><h3>v3.43 <time datetime="2026-11-09">NOV 09, 2026</time></h3><ul><li>Added The Hub after the Story Mode finale, with a way to revisit story levels.</li><li>Added Community Levels, custom seeded levels, and shareable level codes.</li></ul></section>
+   <section class="patchentry"><h3>v3.42</h3><ul><li>Reset previously saved admin unlocks, requiring the admin code again after updating.</li></ul></section>
+   <section class="patchentry"><h3>v3.41</h3><ul><li>Added first-person, front-facing second-person, and behind-the-player third-person camera views.</li><li>Switch perspectives with V or the Camera setting.</li></ul></section>
+   <section class="patchentry"><h3>v3.40</h3><ul><li>Extended locker breath-holding duration.</li></ul></section>
+   <section class="patchentry"><h3>v3.39</h3><ul><li>Made the flashlight battery infinite on Levels 9 and 10.</li></ul></section>
+  </div>
+  <div id="patchfoot">[ESC] CLOSE &nbsp; / &nbsp; CLICK OUTSIDE TO CLOSE</div>
+ </div>
+</div>
 <div id="sydlg"><div class="sybox glass"><div class="lbl" id="sy_dk"></div><h3 id="sy_dt"></h3><div id="sy_db"></div><div class="sybtn" id="sy_dbtn"></div></div></div>
 <div id="ov" style="display:none"><div class="ovl"><div class="lbl" id="olbl">GAME PAUSED</div><div id="dkick"></div><h1 id="t">PAUSED</h1><i id="dline"></i><p id="s"></p><div id="dgrid"></div><div id="ostats"></div>
 <div class="obtn"><button id="btn" class="btnp">RESUME</button><button id="m2" class="btng">MAIN MENU</button><button id="hubpause" class="btng" style="display:none">RETURN TO HUB</button></div><p id="best"></p>
 <div id="keys"><span><b class="kbd">WASD</b>Move</span><span><b class="kbd">SHIFT</b>Sprint</span><span><b class="kbd">C</b>Crouch</span><span><b class="kbd">E</b>Hide</span><span><b class="kbd">M</b>Map</span><span><b class="kbd">I</b>Items</span><span><b class="kbd">1-4</b>/<b class="kbd">WHEEL</b>Hotbar</span><span><b class="kbd">R-CLICK</b>Use item</span></div></div>
 <div id="setPause" class="glass"><div class="lbl" style="margin-bottom:14px">Settings</div></div></div>
+<script>
+(function(){
+ const button=document.getElementById('ver');
+ const dialog=document.getElementById('patchnotes');
+ const close=document.getElementById('patchclose');
+ let previousFocus=null;
+ function openNotes(){previousFocus=document.activeElement;dialog.classList.add('open');dialog.setAttribute('aria-hidden','false');close.focus()}
+ function closeNotes(){dialog.classList.remove('open');dialog.setAttribute('aria-hidden','true');if(previousFocus&&previousFocus.focus)previousFocus.focus()}
+ button.addEventListener('click',openNotes);
+ close.addEventListener('click',closeNotes);
+ dialog.addEventListener('click',function(e){if(e.target===dialog)closeNotes()});
+ document.addEventListener('keydown',function(e){if(!dialog.classList.contains('open'))return;
+   if(e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();closeNotes()}
+   else if(e.key==='Tab'){
+    // The close button is the dialog's only interactive control.
+    e.preventDefault();close.focus()
+   }
+ },true);
+})();
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 'use strict';
