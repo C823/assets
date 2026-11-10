@@ -576,7 +576,7 @@ body.menu #objective348,body.hubmode #objective348,body.cut #objective348{displa
 </div></div>
 <div id="admpw" class="glass"><b>ADMIN PANEL</b><p>Enter an admin code to unlock the admin panel. You only need to do this once per code.</p><input id="pw_in" type="password" maxlength="24" autocomplete="off" spellcheck="false"><div class="r"><button class="btnp" id="pw_ok">UNLOCK</button><button class="btng" id="pw_x">CANCEL</button></div><p id="pw_msg"></p></div>
 
-<div id="hub"><div id="hubhead"><div><h1>THE HUB</h1><p>CHAPTER 1 COMPLETE. THE NEXT TAPE IS WAITING.<br>EXPLORE CHAPTER 2 OR REVISIT YOUR FAVORITE LEVELS.</p></div><button id="hubmenu">MAIN MENU</button></div><div id="hubmain"><div id="hubtabs"><button data-ht="story" class="on">STORY LEVELS</button><button data-ht="chapter2">CHAPTER 2</button><button data-ht="community">COMMUNITY LEVELS</button><button data-ht="create">CREATE / IMPORT</button></div><p id="hubnote"></p><div id="hublist"></div><div id="hubcreate"><label>LEVEL NAME<input id="hubname" type="text" maxlength="36" placeholder="The Forgotten Hallway"></label><label>ENVIRONMENT<select id="hubtheme"></select></label><label>WORLD SEED<input id="hubseed" type="text" maxlength="40" placeholder="Enter a seed or leave blank for random"></label><h4 style="margin:14px 0 4px;font:400 26px var(--fd)">VISUAL LEVEL EDITOR</h4><small>Paint a 12x12 layout. Objects snap to reachable rooms when your map is generated. Click or drag tiles to paint. Switches must be activated before escaping.</small><div class="edrow"><label style="flex:1;margin:0">BRUSH<select id="edbrush"><option value="wall">COVER / WALL</option><option value="enemy">ENTITY SPAWN</option><option value="supply">SUPPLY CACHE</option><option value="switch">GENERATOR SWITCH</option><option value="erase">ERASER</option></select></label><button id="edclear">CLEAR GRID</button></div><div id="editgrid"></div><small id="edcount">0 objects placed</small><div class="actions"><button id="hubmake">SAVE LEVEL + COPY CODE</button><button id="hubplaycustom">PLAY CUSTOM LEVEL</button></div><label style="margin-top:14px">IMPORT SHARED LEVEL CODE<input id="hubimport" type="text" maxlength="4000" placeholder="BR43-... or BR48-..."></label><div class="actions"><button id="hubadd">IMPORT LEVEL</button></div><small>Community levels support authored placements layered onto procedural rooms. Export a code to share; public online uploading still needs a server.</small><div id="hubmsg"></div></div></div><div id="hubmark">CH 02 &middot; THE LOST TAPES &middot; v3.51</div></div>
+<div id="hub"><div id="hubhead"><div><h1>THE HUB</h1><p>CHAPTER 1 COMPLETE. THE NEXT TAPE IS WAITING.<br>EXPLORE CHAPTER 2 OR REVISIT YOUR FAVORITE LEVELS.</p></div><button id="hubmenu">MAIN MENU</button></div><div id="hubmain"><div id="hubtabs"><button data-ht="story" class="on">STORY LEVELS</button><button data-ht="chapter2">CHAPTER 2</button><button data-ht="community">COMMUNITY LEVELS</button><button data-ht="create">CREATE / IMPORT</button></div><p id="hubnote"></p><div id="hublist"></div><div id="hubcreate"><label>LEVEL NAME<input id="hubname" type="text" maxlength="36" placeholder="The Forgotten Hallway"></label><label>ENVIRONMENT<select id="hubtheme"></select></label><label>WORLD SEED<input id="hubseed" type="text" maxlength="40" placeholder="Enter a seed or leave blank for random"></label><h4 style="margin:14px 0 4px;font:400 26px var(--fd)">VISUAL LEVEL EDITOR</h4><small>Paint a 12x12 layout. Objects snap to reachable rooms when your map is generated. Click or drag tiles to paint. Switches must be activated before escaping.</small><div class="edrow"><label style="flex:1;margin:0">BRUSH<select id="edbrush"><option value="wall">COVER / WALL</option><option value="enemy">ENTITY SPAWN</option><option value="supply">SUPPLY CACHE</option><option value="switch">GENERATOR SWITCH</option><option value="erase">ERASER</option></select></label><button id="edclear">CLEAR GRID</button></div><div id="editgrid"></div><small id="edcount">0 objects placed</small><div class="actions"><button id="hubmake">SAVE LEVEL + COPY CODE</button><button id="hubplaycustom">PLAY CUSTOM LEVEL</button></div><label style="margin-top:14px">IMPORT SHARED LEVEL CODE<input id="hubimport" type="text" maxlength="4000" placeholder="BR43-... or BR48-..."></label><div class="actions"><button id="hubadd">IMPORT LEVEL</button></div><small>Community levels support authored placements layered onto procedural rooms. Export a code to share; public online uploading still needs a server.</small><div id="hubmsg"></div></div></div><div id="hubmark">CH 02 &middot; THE NEW FRONTIER &middot; v3.54</div></div>
 <div id="menu">
 <div id="osd"><span id="osd_tr">&#9654; PLAY &nbsp;SP <b id="osd_t">0:00:00</b></span><span id="osd_br"></span><span id="osd_sync"></span><button id="osd_acct" style="display:none" title="Your site account"></button></div>
 <a id="mph" href="https://powerhouse.c823.workers.dev" target="_top" title="Powerhouse" aria-label="Go to Powerhouse"><img alt="Powerhouse" src="https://raw.githubusercontent.com/C823/Powerhouse/main/icons/POWERHOUSE-icon-dark.png" onerror="this.parentNode.textContent='PWR'"></a>
@@ -635,11 +635,12 @@ body.menu #objective348,body.hubmode #objective348,body.cut #objective348{displa
 <div class="mcard"><h4><i>B</i>PLAYERS</h4><div id="mp_list"></div></div>
 <div id="mp_chat" class="mcard"><h4><i>C</i>CHAT</h4><div id="mp_chatlog"></div><div class="chrow"><input id="mp_chatin" type="text" maxlength="120" spellcheck="false" autocomplete="off" placeholder="Say hi to the room"><button class="btng" id="mp_chatgo">SEND</button></div></div></div><div id="mp_saves"></div><button class="btnp" id="mp_start">START NEW GAME</button></div>
 <div class="pfoot"><p id="mp_status"></p><div class="nrow"><button class="btng" id="mp_back">BACK</button></div></div></div>
-<button id="ver" type="button" aria-haspopup="dialog" aria-controls="patchnotes" title="View patch notes">v3.53 &middot; 2026-11-09 <span aria-hidden="true">[PATCH NOTES]</span></button></div>
+<button id="ver" type="button" aria-haspopup="dialog" aria-controls="patchnotes" title="View patch notes">v3.54 &middot; 2026-11-10 <span aria-hidden="true">[PATCH NOTES]</span></button></div>
 <div id="patchnotes" role="dialog" aria-modal="true" aria-labelledby="patchtitle" aria-hidden="true">
  <div id="patchbox">
-  <div id="patchhead"><h2 id="patchtitle">PATCH NOTES <span style="color:var(--hi)">v3.53</span></h2><button id="patchclose" type="button" aria-label="Close patch notes">X CLOSE</button></div>
+  <div id="patchhead"><h2 id="patchtitle">PATCH NOTES <span style="color:var(--hi)">v3.54</span></h2><button id="patchclose" type="button" aria-label="Close patch notes">X CLOSE</button></div>
   <div id="patchbody">
+   <section class="patchentry"><h3>v3.54 <time datetime="2026-11-10">NOV 10, 2026</time></h3><ul><li>Replaced all 12 Chapter 2 challenge levels with original facility locations, layouts and level-specific puzzle mechanics.</li><li>New challenges include ordered terminals, timed power circuits, pressure valves, flashlight receivers, freezing and overheating systems, silence puzzles, decontamination holds, stamina-powered terminals and a combined final test.</li><li>Chapter 2 uses newly carved chamber layouts and dedicated industrial set dressing instead of abandoned Chapter 1 levels.</li><li>Preserved completed Chapter 2 progress, custom community levels, checkpoints and the Toethesis finale.</li></ul></section>
    <section class="patchentry"><h3>v3.53 <time datetime="2026-11-09">NOV 09, 2026</time></h3><ul><li>Removed the Iron Man and Ultron character suits; anyone with one equipped is returned to the default orange suit.</li><li>Added mix-and-match accessories: baseball cap, headphones, halo, backpack, crown, and safety goggles.</li><li>Accessories save to your settings, display in the suit preview, animate in camera views, and synchronize across multiplayer players.</li></ul></section>
    <section class="patchentry"><h3>v3.52 <time datetime="2026-11-09">NOV 09, 2026</time></h3><ul><li>Fixed collision on parked cars and office desks: the player now collides with their visible footprint instead of an entire floor tile.</li><li>Collision boxes follow furniture rotation; desk chairs have their own small hitbox.</li><li>Preserved enemy pathfinding and other solid obstacles while allowing movement around furniture edges.</li></ul></section>
    <section class="patchentry"><h3>v3.51 <time datetime="2026-11-09">NOV 09, 2026</time></h3><ul><li>Chapter 2 environments now resemble long-abandoned industrial test facilities, with decayed concrete, damaged panels and exposed equipment.</li><li>Procedural vegetation, hanging vines, moss-covered floors, ruined ceiling panels, rubble and suspended cables vary by level.</li><li>Retuned several Chapter 2 color palettes for a more desolate, green-overgrown atmosphere while preserving puzzle and AI paths.</li></ul></section>
@@ -1183,7 +1184,7 @@ dgeo.setAttribute('position',new THREE.BufferAttribute(dpos,3));const dust=new T
 // ---- world ----
 let world,w,key,door,mons=[],bats=[],openT=[],seen,dmap=null,lastPT='',level=1,hasKey=false,panelMesh=null,panelSt=[],surfM=[],waterM=null;
 function applyTheme(){cur=TH[thi()];
- if(communityActive&&communityActive.chapter2&&!communityActive.chapter2Boss){const v=CH2_VIS[communityActive.chapterIndex];if(v)cur=Object.assign({},cur,{n:communityActive.n,w:v[1],f:v[2],c:v[3],fog:v[4],pc:v[5],lc:v[5],fd:.062+(communityActive.chapterIndex%3)*.008,am:.25,sp:1.07})}
+ if(communityActive&&communityActive.chapter2&&!communityActive.chapter2Boss){const v=CH2_VIS[communityActive.chapterIndex];if(v)cur=Object.assign({},cur,{n:communityActive.n,w:v[1],f:v[2],c:v[3],fog:v[4],pc:v[5],lc:v[5],fd:.026+(communityActive.chapterIndex%3)*.007,am:.45,sp:1.04,lay:null,pr:null,lp:.10,ws:communityActive.chapterIndex%3===0?'tile':'conc',fs:communityActive.chapterIndex%3===1?'tile':'conc',pb:.85,pi:.85,water:communityActive.chapterIndex===2||communityActive.chapterIndex===8})}
  if(communityActive&&communityActive.chapter2Boss)cur=Object.assign({},cur,{n:'Toethesis',fog:0x13071c,lc:0xc78aff,pc:0xd6b8ff,am:.2});
  H=cur.h;setHum();
  scene.fog.color.setHex(cur.fog);scene.fog.density=cur.fd;scene.background.setHex(cur.fog);pl.color.setHex(cur.lc);amb.color.setHex(cur.lc);dust.material.color.setHex(cur.dcol??(cur.pb>0?cur.pc:cur.lc));dust.material.size=cur.dsz||.035;dust.material.opacity=cur.dop??.45}
@@ -1293,6 +1294,7 @@ function buildLevel(){
  houseMap=null;roadMap=null;let houses=[];const lampPts=[],lampSt=[];
  if(cur.lay==='suburb')houses=genSuburb(lampPts,lampSt);
  if(cur.lay){const dd=bfs(1,1);for(let y=0;y<S;y++)for(let x=0;x<S;x++)if(!w[y][x]&&dd[y*S+x]<0)w[y][x]=1}
+ if(communityActive&&communityActive.chapter2&&!communityActive.chapter2Boss)chapter2Architecture354();
  carveRooms();sealRooms();for(const r_ of roomsL){w[r_.dy][r_.dx]=0;w[r_.wy][r_.wx]=0}
  // props, merged into one lit mesh and one glowing mesh
  const pg=GB(),eg=GB(),M4=new THREE.Matrix4();
@@ -1406,8 +1408,8 @@ let san=100,bag={bat:1,aw:0},breakdown=0,phT=6,phantoms=[],waters=[],batWarn=0,s
 const E={stv:$('stv'),btv:$('btv'),infw:$('infw'),infb:$('infb'),stb:$('stb'),btb:$('btb'),dmg:$('dmg'),pose:$('pose'),tc:$('tc'),fade:$('fade')};
 function say(t,ms=2400){const m=$('msg'),e=x=>x.replace(/</g,'&lt;'),sp=t.match(/^(Wanderer|Verity|Racer): /);m.innerHTML=sp?'<b class="who">'+sp[1].toUpperCase()+'</b>'+e(t.slice(sp[0].length)):e(t);m.classList.add('on');clearTimeout(mt);mt=setTimeout(()=>m.classList.remove('on'),ms)}
 function card(t,s,k,cls,bw){const c=$('card');c.className=cls||'';c.innerHTML=(k?'<small class="k">'+k+'</small>':'')+'<h2>'+t+'</h2><i class="ln"></i><p>'+s+'</p>'+(bw?'<div class="bw">'+bw+'</div>':'');c.style.transition='none';c.style.opacity=1;clearTimeout(ct);ct=setTimeout(()=>{c.style.transition='opacity 1.5s';c.style.opacity=0},2300)}
-function levelCard(){cardPending=false;if(communityActive&&communityActive.chapter2Boss){card('CHAPTER 2 FINALE','Toethesis','A FINAL RECORDING','','Survive all three phases.');return}if(communityActive&&communityActive.chapter2){card('CHAPTER 2 · '+(communityActive.chapterIndex+1)+'/12',communityActive.n,'THE LOST TAPES','',communityActive.rules||'Find the exit');return}if(cur.boss){markSeen('L',TH.length-1,cur.n);card('LEVEL ?','The workshop of the Racer.','The final level','dead','Beat the Racer');return}markSeen('L',thi(),cur.n);const nm=[...new Set(mons.map(m=>m.k.n))];if(wins.length)nm.push('Windows');if(swarms.length)nm.push('Male Deathmoths');if(plague)nm.push('Hydrolitis Plague');card('LEVEL '+level,cur.n,endless?'Endless':(VZ?'Lead Verity to the TVs.':PZ?pzObj():'Find the key. Reach the exit.'),'',nm.length?'Watch out for: '+nm.join(', '):'')}
-function hud(){$('hud').innerHTML='<div class="hl">Level '+level+' <span>&ndash; '+cur.n+'</span></div><div class="obj'+(hasKey?' ok':'')+'">'+(cur.boss&&!bossMenu?(B&&B.mode==='dead'?(hasKey?'Go through the door.':'Take the key.'):(B&&B.obj)||'Beat the Racer.'):VZ?(hasKey?'Door unlocked. Get out.':'Lead Verity to the 4 TVs. Code: '+vzShown()):PZ?pzObj():hasKey?'Key found. Find the exit.':'Find the key.')+'</div><div class="lives">'+lives+(lives===1?' life':' lives')+' &middot; '+DIFF.n+(perma?' (one life)':'')+(endless?' &middot; Endless':'')+'</div>';$('mini').style.display=noMap?'none':''}
+function levelCard(){cardPending=false;if(communityActive&&communityActive.chapter2Boss){card('CHAPTER 2 FINALE','Toethesis','A FINAL RECORDING','','Survive all three phases.');return}if(communityActive&&communityActive.chapter2){card('CHAPTER 2 · '+(communityActive.chapterIndex+1)+'/12',communityActive.n,'THE NEW FRONTIER','',communityActive.rules||'Find the exit');return}if(cur.boss){markSeen('L',TH.length-1,cur.n);card('LEVEL ?','The workshop of the Racer.','The final level','dead','Beat the Racer');return}markSeen('L',thi(),cur.n);const nm=[...new Set(mons.map(m=>m.k.n))];if(wins.length)nm.push('Windows');if(swarms.length)nm.push('Male Deathmoths');if(plague)nm.push('Hydrolitis Plague');card('LEVEL '+level,cur.n,endless?'Endless':(VZ?'Lead Verity to the TVs.':PZ?pzObj():'Find the key. Reach the exit.'),'',nm.length?'Watch out for: '+nm.join(', '):'')}
+function hud(){$('hud').innerHTML='<div class="hl">'+(communityActive&&communityActive.chapter2&&!communityActive.chapter2Boss?'Chapter 2 · Level '+(communityActive.chapterIndex+1):'Level '+level)+' <span>&ndash; '+cur.n+'</span></div><div class="obj'+(hasKey?' ok':'')+'">'+(cur.boss&&!bossMenu?(B&&B.mode==='dead'?(hasKey?'Go through the door.':'Take the key.'):(B&&B.obj)||'Beat the Racer.'):(communityActive&&communityActive.chapter2&&!communityActive.chapter2Boss)?(hasKey?'Key acquired — finish facility objective and exit.':communityActive.rules):VZ?(hasKey?'Door unlocked. Get out.':'Lead Verity to the 4 TVs. Code: '+vzShown()):PZ?pzObj():hasKey?'Key found. Find the exit.':'Find the key.')+'</div><div class="lives">'+lives+(lives===1?' life':' lives')+' &middot; '+DIFF.n+(perma?' (one life)':'')+(endless?' &middot; Endless':'')+'</div>';$('mini').style.display=noMap?'none':''}
 const fmt=t=>[t/3600,t/60%60,t%60].map(v=>String(v|0).padStart(2,'0')).join(':');
 function startYaw(){for(const[a,b,y]of[[1,0,-Math.PI/2],[0,1,Math.PI],[-1,0,Math.PI/2],[0,-1,0]])if(!w[1+b][1+a])return y;return -Math.PI/2}
 function reset(){lvStart=runT;px=1.5*T;pz=1.5*T;yaw=startYaw();if(B&&B.spawn){px=B.spawn.x;pz=B.spawn.z;yaw=0}pitch=0;vx=vz=0;stam=1;exh=false;crouch=false;bob=0;hud();cardPending=true;
@@ -1709,7 +1711,7 @@ function mkGetaway(){const g=new THREE.Group(),B=(...a)=>pzBox(g,...a);B(0xd8a02
  const mk=glow(0xffc040,2.2,.5);mk.position.y=3;g.add(mk);return{g,hz,hl,mk,wh}}
 function pzSpread(r,cand,n){const pick=[cand[r()*cand.length|0]];while(pick.length<n){let b=null,bd=-1;for(let k=0;k<70;k++){const q=cand[r()*cand.length|0],d=Math.min(...pick.map(p_=>Math.hypot(p_[0]-q[0],p_[1]-q[1])));if(d>bd){bd=d;b=q}}pick.push(b)}return pick}
 function setupPZ(){if(PZ){for(const it of PZ.it)world.remove(it.o.g);if(PZ.st)world.remove(PZ.st.g);if(PZ.car)world.remove(PZ.car.g)}PZ=null;
- const d=PZD[thi()];if(!d||cur.boss||VZ||bossMenu)return;const r=mulberry((levelSeed^0x9e37)>>>0),dx=Math.floor(door.fx/T),dz=Math.floor(door.fz/T),n=d.t==='car'?1:d.n;
+ const d=PZD[thi()];if((communityActive&&communityActive.chapter2)||!d||cur.boss||VZ||bossMenu)return;const r=mulberry((levelSeed^0x9e37)>>>0),dx=Math.floor(door.fx/T),dz=Math.floor(door.fz/T),n=d.t==='car'?1:d.n;
  let cand=openT.filter(q=>q[2]>=7&&Math.hypot(q[0]-dx,q[1]-dz)>3);if(cand.length<n)cand=openT.slice();
  PZ={d,n,it:pzSpread(r,cand,n).map((q,i)=>{const o=pzModel(d.t==='car'?'carkey':d.mk),x=(q[0]+.5)*T,z=(q[1]+.5)*T;o.g.position.set(x,d.t==='act'?0:.9,z);o.g.rotation.y=r()*6.28;world.add(o.g);return{o,x,z,tx:q[0],tz:q[1],done:false,i}}),st:null,car:null,got:0};
  if(d.st){const q=openT.filter(p_=>{const k=Math.hypot(p_[0]-dx,p_[1]-dz);return k>=1&&k<=3.2&&!(p_[0]===dx&&p_[1]===dz)}).sort((a,b)=>a[2]-b[2]).pop()||openT.find(p_=>p_[0]===dx&&p_[1]===dz);
@@ -2389,7 +2391,7 @@ function update(dt){
  const dd=Math.hypot(door.fx-px,door.fz-pz);
  if(hasKey&&dd<6&&!door.snd){door.snd=1;sfx({n:1,ft:'lowpass',ff:600,dur:.25,v:.25,r:.5});sfx({t:'sawtooth',f:90,f2:140,dur:1.1,v:.05,ft:'bandpass',ff:600,q:6,a:.2,r:.6,d:.15})}
  door.open=lerp(door.open,hasKey&&dd<6?1:0,Math.min(1,dt*2.5));door.piv.rotation.y=-door.open*1.45;exitL.intensity=1.2+Math.sin(now/250)*.3+door.open;
- lockT-=dt;if(dd<1.25){if(hasKey&&extraCanExit348()&&!(PZ&&PZ.d.t==='car')){if(NET.on){if(NET.host)netNext();else netEscape();return}nextLevel();return}if(hasKey&&!extraCanExit348()){if(lockT<=0){lockT=1.6;say('Power is offline. Activate every generator switch.',2200)}}else if(VZ){if(lockT<=0&&!kpOn){lockT=3;kpOpen()}}else if(PZ&&lockT<=0){lockT=2.4;say(PZ.d.hint,2200);for(let i=0;i<2;i++)sfx({n:1,ft:'bandpass',ff:900,q:2,dur:.08,v:.15,d:i*.12})}else if(lockT<=0){lockT=1.6;say('The door is locked. Find the key.',1400);for(let i=0;i<3;i++)sfx({n:1,ft:'bandpass',ff:1800,q:2,dur:.06,v:.18,r:.3,d:i*.09})}}
+ lockT-=dt;if(dd<1.25){if(hasKey&&extraCanExit348()&&!(PZ&&PZ.d.t==='car')){if(NET.on){if(NET.host)netNext();else netEscape();return}nextLevel();return}if(hasKey&&!extraCanExit348()){if(lockT<=0){lockT=1.6;say(chapter2State354?chapter2State354.objective:'Power is offline. Activate every generator switch.',2200)}}else if(VZ){if(lockT<=0&&!kpOn){lockT=3;kpOpen()}}else if(PZ&&lockT<=0){lockT=2.4;say(PZ.d.hint,2200);for(let i=0;i<2;i++)sfx({n:1,ft:'bandpass',ff:900,q:2,dur:.08,v:.15,d:i*.12})}else if(lockT<=0){lockT=1.6;say('The door is locked. Find the key.',1400);for(let i=0;i<3;i++)sfx({n:1,ft:'bandpass',ff:1800,q:2,dur:.06,v:.18,r:.3,d:i*.09})}}
  // monsters
  let dmin=99,sting=0;chasing=false;vFear=0;
  const chaseSp=Math.min(3+level*.12,4.7+Math.min(1.2,endEx()*.04))*cur.sp*DIFF.ms,wanderSp=(1.6+level*.05)*cur.sp*DIFF.ms,searchSp=(chaseSp+wanderSp)/2,dark=cur.pb===0,seeR=(lit?(dark?15:17):(dark?6:12)*(crouch?.7:1))*DIFF.see,cfx=-Math.sin(yaw),cfz=-Math.cos(yaw);
@@ -3664,6 +3666,106 @@ function chapter2Abandoned351(avail){
  }
 }
 
+// ===== v3.54: NEW CHAPTER 2 FACILITIES AND MECHANICS =====
+let chapter2State354=null;
+// Carve four independently recognizable zones into each chapter 2 maze.
+// We only open passages here, preserving reachability to the base maze entrance and exit.
+function chapter2Architecture354(){
+ const idx=communityActive.chapterIndex|0,rr=mulberry((levelSeed^0x354c823^Math.imul(idx+1,1319))>>>0);
+ const rect=(cx,cz,rx,rz)=>{for(let z=Math.max(1,cz-rz);z<=Math.min(S-2,cz+rz);z++)for(let x=Math.max(1,cx-rx);x<=Math.min(S-2,cx+rx);x++)w[z][x]=0};
+ const line=(x1,z1,x2,z2)=>{let x=x1,z=z1;while(x!==x2||z!==z2){if(x>0&&z>0&&x<S-1&&z<S-1)w[z][x]=0;if(x!==x2&&(z===z2||rr()<.55))x+=Math.sign(x2-x);else z+=Math.sign(z2-z)}if(x>0&&z>0&&x<S-1&&z<S-1)w[z][x]=0};
+ const k=4+idx%3,points=[[5,5]];
+ for(let j=0;j<k;j++){const cx=7+Math.round((S-15)*(j%2? .72:.28))+Math.round((rr()-.5)*6),cz=7+Math.round((S-15)*(j<2?.27:.72))+Math.round((rr()-.5)*6),rx=3+idx%3,rz=3+(idx+j)%3;rect(cx,cz,rx,rz);points.push([cx,cz]);}
+ // Ring, cross and spoke corridors define a new, wider chapter geometry.
+ for(let j=1;j<points.length;j++)line(...points[j-1],...points[j]);
+ for(let j=1;j<points.length;j++)line(...points[j],...points[(j% (points.length-1))+1]);
+ if(idx%2===0){const c=S>>1;rect(c,c,4,4);line(2,c,S-3,c);line(c,2,c,S-3)}
+ else{for(const z of[9,S>>1,S-10]){line(3,z,S-4,z);rect(S>>1,z,4,2)}}
+ // The original start must always remain open.
+ rect(2,2,1,1);
+}
+function chapter2Terminal354(x,z,i){
+ const k=communityActive.chapterIndex|0,colors=[0x84d2ff,0xffa54a,0x62dbee,0xc7a4ff,0x86eeff,0xe49bff,0x91e9af,0xc295ff,0x83f0bd,0xff9c92,0xff914c,0xa7e7ff],col=colors[k];
+ const group=new THREE.Group();group.position.set(x,0,z);
+ const steel=new THREE.MeshLambertMaterial({color:0x343f4a}),accent=new THREE.MeshBasicMaterial({color:col}),off=new THREE.MeshBasicMaterial({color:0xff4343});
+ const cube=(w,h,d,X,Y,Z,mat)=>{const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);m.position.set(X,Y,Z);group.add(m);return m};
+ cube(1.25,.2,1.25,0,.12,0,steel);cube(.68,1.1,.56,0,.76,0,steel);cube(.9,.23,.62,0,1.42,-.10,accent);
+ const bulb=new THREE.Mesh(new THREE.SphereGeometry(.16,10,8),off);bulb.position.set(0,1.60,-.29);group.add(bulb);
+ for(const sx of[-1,1])cube(.09,.9,.08,sx*.42,.65,0,accent);
+ // Distinct facility props create a futuristic, active installation rather than an abandoned maze.
+ const beam=new THREE.Mesh(new THREE.CylinderGeometry(.025,.025,2.2,8),accent);beam.position.set(0,2.65,0);group.add(beam);
+ const sign=document.createElement('canvas');sign.width=128;sign.height=64;const c=sign.getContext('2d');c.fillStyle='#07111d';c.fillRect(0,0,128,64);c.fillStyle='#ffffff';c.font='bold 40px monospace';c.textAlign='center';c.fillText(String(i+1).padStart(2,'0'),64,47);
+ const panel=new THREE.Mesh(new THREE.PlaneGeometry(.6,.3),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(sign),side:THREE.DoubleSide}));panel.position.set(0,1,-.29);group.add(panel);
+ world.add(group);return{group,bulb};
+}
+function chapter2Build354(avail,take){
+ const idx=communityActive.chapterIndex|0,desc=HUB_FEATURED[idx],count=idx===11?4:3;
+ const state={index:idx,mech:desc.mech,nodes:[],seq:0,time:0,heat:0,hold:0,holdNode:-1,objective:desc.rules,lastHud:-1,announce:0};chapter2State354=state;
+ // Favor separated nodes but don't put one on the exit or key: all can be reached by BFS.
+ const pool=avail.filter(p=>p[2]>8).sort((a,b)=>a[2]-b[2]);
+ for(let i=0;i<count;i++){
+  const q=pool[Math.min(pool.length-1,Math.floor(pool.length*(.15+i*.73/Math.max(1,count-1))))];if(!q)continue;
+  const p=take(q[0],q[1]);if(!p)continue;
+  const x=(p[0]+.5)*T,z=(p[1]+.5)*T,vis=chapter2Terminal354(x,z,i);
+  state.nodes.push({x,z,on:false,i,bulb:vis.bulb,g:vis.group});
+ }
+ if(!state.nodes.length){chapter2State354=null;return}
+ chapter2Hud354();
+}
+function chapter2Hud354(){
+ const s=chapter2State354;if(!s)return;const el=$('objective348'),n=s.nodes.filter(p=>p.on).length;
+ let hint=s.mech==='light'?'FLASHLIGHT ON + E':s.mech==='lightoff'?'FLASHLIGHT OFF + E':s.mech==='quiet'?'CROUCH + FLASHLIGHT OFF + E':s.mech==='stamina'?'STAMINA ABOVE 35% + E':s.mech==='hold'?'STAND STILL NEAR A STATION':s.mech==='cold'?'HEATERS RESTORE WARMTH':s.mech==='heat'?'VENTS REDUCE REACTOR HEAT':s.mech==='final'?'EACH CORE REQUIRES A DIFFERENT ACTION':'PRESS E AT THE NEXT TERMINAL';
+ const clock=(s.mech==='timer'||s.mech==='ordertimer'||s.mech==='final')&&s.time>0?' · '+Math.ceil(s.time)+'S LEFT':'';
+ const danger=(s.mech==='cold'||s.mech==='heat')?' · '+(s.mech==='cold'?'COLD':'HEAT')+' '+Math.round(s.heat*100)+'%':'';
+ el.style.display='block';el.textContent='CH 2 · '+(s.index+1)+'/12 · '+n+'/'+s.nodes.length+' ACTIVE'+clock+danger+' · '+(n===s.nodes.length?'FIND KEY + EXIT':hint);
+}
+function chapter2CompleteNode354(s,node){
+ if(node.on)return;node.on=true;node.bulb.material.color.setHex(0x42ff8c);s.seq++;
+ sfx({t:'square',f:280+node.i*80,f2:840,dur:.37,v:.16});
+ say('FACILITY '+(s.index+1)+': STATION '+(node.i+1)+' ONLINE ('+s.seq+'/'+s.nodes.length+')',2150);
+ if(s.seq===s.nodes.length){s.time=0;note('SYSTEM RESTORED — FIND THE KEY AND EXIT');}
+ chapter2Hud354();
+}
+function chapter2Interact354(){
+ const s=chapter2State354;if(!s)return false;
+ const node=s.nodes.find(q=>!q.on&&Math.hypot(q.x-px,q.z-pz)<3.2);
+ if(!node)return false;
+ if(['order','ordertimer','final'].includes(s.mech)&&node.i!==s.seq){say('Wrong station. Activate station '+(s.seq+1)+' first.',1900);return true}
+ if(s.mech==='light'&&!flashOn){say('This receiver needs your flashlight. Switch it ON.',2000);return true}
+ if(s.mech==='lightoff'&&flashOn){say('The biofilter detects light. Turn the flashlight OFF.',2000);return true}
+ if(s.mech==='quiet'&&(!crouch||flashOn)){say('Radio silence: crouch and turn off your flashlight.',2200);return true}
+ if(s.mech==='stamina'&&stam<.35){say('Not enough energy. Recover your stamina first.',1800);return true}
+ if(s.mech==='final'){
+  const need=['light','quiet','stamina','lightoff'][node.i];
+  if(need==='light'&&!flashOn){say('Core 1: use your flashlight.',2000);return true}
+  if(need==='quiet'&&(!crouch||flashOn)){say('Core 2: crouch with your flashlight off.',2000);return true}
+  if(need==='stamina'&&stam<.35){say('Core 3: charge stamina above 35%.',2000);return true}
+  if(need==='lightoff'&&flashOn){say('Core 4: flashlight off.',2000);return true}
+ }
+ if(s.mech==='hold'){say('Remain still beside this terminal until it finishes decontamination.',2300);return true}
+ if(s.mech==='stamina'||(s.mech==='final'&&node.i===2))stam=Math.max(.05,stam-.28);
+ if(s.mech==='cold'||s.mech==='heat')s.heat=Math.max(0,s.heat-.44);
+ if((s.mech==='timer'||s.mech==='ordertimer'||s.mech==='final')&&s.seq===0)s.time=s.mech==='timer'?300:s.mech==='ordertimer'?300:420;
+ chapter2CompleteNode354(s,node);return true;
+}
+function chapter2Tick354(dt){
+ const s=chapter2State354;if(!s||stt!=='play'||B)return;
+ const n=s.nodes.filter(q=>q.on).length;
+ if(n<s.nodes.length&&s.time>0){s.time=Math.max(0,s.time-dt);if(s.time===0){for(const q of s.nodes){q.on=false;q.bulb.material.color.setHex(0xff4343)}s.seq=0;s.hold=0;s.holdNode=-1;note('CIRCUIT RESET — TRY THE SEQUENCE AGAIN');}}
+ if(s.mech==='cold'||s.mech==='heat'){
+  const near=s.nodes.some(q=>q.on&&Math.hypot(px-q.x,pz-q.z)<5)||extraProtected348();
+  s.heat=Math.max(0,Math.min(1,s.heat+dt*(near?-.18:.017)));
+  if(s.heat>.73)stam=Math.max(.08,stam-dt*.19);
+  if(s.heat>.92&&s.announce<=0){say(s.mech==='cold'?'FREEZING — reach an active heater!':'OVERHEATING — reach a vent!',2200);s.announce=6}
+ }
+ if(s.mech==='hold'&&n<s.nodes.length){
+  const q=s.nodes.find(q=>!q.on&&Math.hypot(px-q.x,pz-q.z)<2.8);
+  if(q&&!spr&&Math.hypot(vx,vz)<.4){if(s.holdNode!==q.i){s.hold=0;s.holdNode=q.i}s.hold+=dt;if(s.hold>=2.6){s.hold=0;chapter2CompleteNode354(s,q)}}else{s.hold=0;s.holdNode=-1}
+ }
+ if((s.mech==='light'||s.mech==='final')&&flashOn&&bat<.12&&s.seq<s.nodes.length)bat=Math.min(.16,bat+dt*.008);
+ s.announce-=dt;
+ if(Math.floor(performance.now()/300)!==s.lastHud){s.lastHud=Math.floor(performance.now()/300);chapter2Hud354()}
+}
 // ===== v3.48: gameplay additions =====
 // Generator puzzles, safe checkpoints and custom placables are built into existing generated maps.
 let extraSwitches348=[],extraCP348=null,extraDecoyState348=null,extraDecoyCd348=0,extraWalls348=[];
@@ -3676,7 +3778,7 @@ function extraGeom348(type,x,z,i){
  else if(type==='checkpoint'){cube(1.25,.35,1.25,.18,0x355a54);cube(.25,2,.25,1.2,0x77998f);const lamp=new THREE.Mesh(new THREE.SphereGeometry(.32,9,7),new THREE.MeshBasicMaterial({color:0x67ffc0}));lamp.position.y=2.35;g.add(lamp);g.add(new THREE.PointLight(0x67ffc0,1.4,7))}
  world.add(g);return g}
 function extraPlace348(type,q){const x=(q[0]+.5)*T,z=(q[1]+.5)*T;return extraGeom348(type,x,z)}
-function extraBuild348(){extraSwitches348=[];extraCP348=null;extraWalls348=[];extraDecoyState348=null;extraDecoyCd348=0;$('objective348').style.display='none';if(!communityActive||cur.boss||!openT.length)return;
+function extraBuild348(){chapter2State354=null;extraSwitches348=[];extraCP348=null;extraWalls348=[];extraDecoyState348=null;extraDecoyCd348=0;$('objective348').style.display='none';if(!communityActive||cur.boss||!openT.length)return;
  const avail=openT.filter(q=>q[2]>7&&Math.hypot((q[0]+.5)*T-door.fx,(q[1]+.5)*T-door.fz)>5&&Math.hypot((q[0]+.5)*T-key.position.x,(q[1]+.5)*T-key.position.z)>4);
  if(!avail.length)return;
  const used=new Set();function take(nx,ny){let out=null,bd=Infinity;for(const q of avail){const key=q[0]+','+q[1];if(used.has(key))continue;const d=(q[0]-nx)**2+(q[1]-ny)**2;if(d<bd){bd=d;out=q}}if(out)used.add(out[0]+','+out[1]);return out}
@@ -3687,16 +3789,16 @@ function extraBuild348(){extraSwitches348=[];extraCP348=null;extraWalls348=[];ex
   for(let j=0;j<Math.min(26,Math.floor(avail.length/15));j++){
    const q=avail[Math.floor((j+.5)*avail.length/Math.max(26,Math.floor(avail.length/15)))];if(!q)continue;
    const obj=new THREE.Group();obj.position.set((q[0]+.5)*T,0,(q[1]+.5)*T);
-   const h=theme==='subway'||theme==='metro'?2.4:theme==='lab'||theme==='ward'?1.6:theme==='archive'?2.5:1.3;
+   const h=['turbine','furnace','gravity','nexus'].includes(theme)?3.2:theme==='subway'||theme==='metro'?2.4:theme==='lab'||theme==='ward'?1.6:theme==='archive'?2.5:1.3;
    const m=new THREE.Mesh(new THREE.BoxGeometry(.5,h,.45),material);m.position.y=h/2;obj.add(m);
-   if(['arcade','mall','lab','ward'].includes(theme)){const glow=new THREE.Mesh(new THREE.PlaneGeometry(.36,.4),new THREE.MeshBasicMaterial({color:theme==='arcade'?0xff6ff1:0x9ce9e1}));glow.position.set(0,h*.65,-.238);obj.add(glow)}
-   if(['subway','metro','crypt','archive'].includes(theme)){const trim=new THREE.Mesh(new THREE.BoxGeometry(.7,.1,.7),new THREE.MeshLambertMaterial({color:0xabb1a3}));trim.position.y=h;obj.add(trim)}
+   if(['calibration','prism','cryo','radio','containment','gravity','greenhouse','junction','nexus','arcade','mall','lab','ward'].includes(theme)){const glow=new THREE.Mesh(new THREE.PlaneGeometry(.36,.4),new THREE.MeshBasicMaterial({color:['radio','gravity','prism'].includes(theme)?0xff6ff1:0x9ce9e1}));glow.position.set(0,h*.65,-.238);obj.add(glow)}
+   if(['turbine','reservoir','furnace','junction','nexus','subway','metro','crypt','archive'].includes(theme)){const trim=new THREE.Mesh(new THREE.BoxGeometry(.7,.1,.7),new THREE.MeshLambertMaterial({color:0xabb1a3}));trim.position.y=h;obj.add(trim)}
    world.add(obj);
   }
  }
- chapter2Abandoned351(avail);
+ if(!(communityActive&&communityActive.chapter2))chapter2Abandoned351(avail);
  // Chapter 2 provides three generator puzzles and a defensible checkpoint.
- if(communityActive.chapter2){const rr=mulberry(levelSeed^0x382a1);for(let i=0;i<3;i++){const q=avail[Math.min(avail.length-1,Math.floor(avail.length*(.2+i*.27)))];const p=take(q[0],q[1]);if(p){const g=extraPlace348('switch',p);extraSwitches348.push({x:g.position.x,z:g.position.z,g,on:false})}}}
+ if(communityActive.chapter2)chapter2Build354(avail,take);
  const cpq=avail[Math.floor(avail.length*.18)];const cp=take(cpq[0],cpq[1]);if(cp&&(communityActive.chapter2||communityActive.e&&communityActive.e.length)){const g=extraPlace348('checkpoint',cp);extraCP348={x:g.position.x,z:g.position.z,active:false};}
  // Authored objects follow normalized 12x12 editor grid, snapping to open reachable rooms.
  const edits=Array.isArray(communityActive.e)?communityActive.e:[];
@@ -3710,11 +3812,11 @@ function extraBuild348(){extraSwitches348=[];extraCP348=null;extraWalls348=[];ex
  }
  }
  extraHud348();}
-function extraHud348(){const el=$('objective348');if(extraSwitches348.length){const done=extraSwitches348.filter(q=>q.on).length;el.style.display='block';el.textContent='GENERATORS '+done+'/'+extraSwitches348.length+' · '+(done===extraSwitches348.length?'EXIT POWER RESTORED':'PRESS E NEAR A SWITCH')}else el.style.display='none'}
-function extraCanExit348(){return !extraSwitches348.length||extraSwitches348.every(q=>q.on)}
-function extraInteract348(){if(stt!=='play'||hid||down||B)return false;for(const o of extraSwitches348){const d=Math.hypot(o.x-px,o.z-pz);if(d<2.8){if(!o.on){o.on=true;o.g.userData.bulb.material.color.setHex(0x49ff8e);sfx({t:'square',f:240,f2:850,dur:.45,v:.16});say('Generator '+extraSwitches348.filter(x=>x.on).length+'/'+extraSwitches348.length+' activated.',2000);extraHud348()}else say('Generator already active.',1200);return true}}return false}
+function extraHud348(){if(chapter2State354){chapter2Hud354();return}const el=$('objective348');if(extraSwitches348.length){const done=extraSwitches348.filter(q=>q.on).length;el.style.display='block';el.textContent='GENERATORS '+done+'/'+extraSwitches348.length+' · '+(done===extraSwitches348.length?'EXIT POWER RESTORED':'PRESS E NEAR A SWITCH')}else el.style.display='none'}
+function extraCanExit348(){return (!chapter2State354||chapter2State354.nodes.every(q=>q.on))&&(!extraSwitches348.length||extraSwitches348.every(q=>q.on))}
+function extraInteract348(){if(stt!=='play'||hid||down||B)return false;if(chapter2Interact354())return true;for(const o of extraSwitches348){const d=Math.hypot(o.x-px,o.z-pz);if(d<2.8){if(!o.on){o.on=true;o.g.userData.bulb.material.color.setHex(0x49ff8e);sfx({t:'square',f:240,f2:850,dur:.45,v:.16});say('Generator '+extraSwitches348.filter(x=>x.on).length+'/'+extraSwitches348.length+' activated.',2000);extraHud348()}else say('Generator already active.',1200);return true}}return false}
 function extraProtected348(){return !!(extraCP348&&extraCP348.active&&Math.hypot(px-extraCP348.x,pz-extraCP348.z)<3.2)}
-function extraTick348(dt){if(extraDecoyCd348>0)extraDecoyCd348-=dt;if(extraDecoyState348){extraDecoyState348.t-=dt;if(extraDecoyState348.t<=0){extraDecoyState348.g.visible=false;extraDecoyState348=null}}
+function extraTick348(dt){chapter2Tick354(dt);if(extraDecoyCd348>0)extraDecoyCd348-=dt;if(extraDecoyState348){extraDecoyState348.t-=dt;if(extraDecoyState348.t<=0){extraDecoyState348.g.visible=false;extraDecoyState348=null}}
  if(!extraCP348)return;const near=Math.hypot(px-extraCP348.x,pz-extraCP348.z)<2.7;if(near&&!extraCP348.active){extraCP348.active=true;note('SAFE ROOM CHECKPOINT ACTIVATED');sfx({f:750,f2:1050,dur:.5,v:.13})}if(near){stam=Math.min(1,stam+dt*.18);if(bat<.85)bat=Math.min(.85,bat+dt*.018)}}
 function extraNoise348(x,z){return !!(extraDecoyState348&&Math.hypot(extraDecoyState348.x-x,extraDecoyState348.z-z)<19)}
 function extraDecoy348(){if(extraDecoyCd348>0){say('Noise maker recharging.',1000);return}extraDecoyCd348=25;const g=extraGeom348('supply',px,pz);g.scale.setScalar(.35);extraDecoyState348={x:px,z:pz,t:6,g};sfx({t:'square',f:420,f2:120,dur:.8,v:.24});say('Noise maker thrown. Monsters may investigate. [G] cooldown 25s.',2200)}
@@ -3737,34 +3839,34 @@ function hubPortal(title,sub,x,z,col){const g=new THREE.Group();g.position.set(x
 hubPortal('STORY','REVISIT',-9,-13,0xd8c46a);hubPortal('COMMUNITY','SHARED TAPES',0,-16,0x61aaff);hubPortal('CREATE','MAKE A TAPE',9,-13,0x8fd6a3);
 let hubTime=0,hubTab='story',hubReturning=false;
 // Chapter 2: twelve sequential post-boss levels with unique loadouts and restrictions.
+// Chapter 2: twelve purpose-built facilities with different layouts and mechanics.
 const HUB_FEATURED=[
- {id:'nightshift',n:'The Endless Shift',t:5,s:'nightshift-823',d:'No map. Find your way through the abandoned offices.',rules:'NO MAP',nm:1},
- {id:'deepwater',n:'Forgotten Pool',t:8,s:'forgotten-pool',d:'Start with half your stamina and make it to the exit.',rules:'LOW STAMINA',st:.5},
- {id:'hotel',n:'Midnight Hotel',t:6,s:'midnight-hotel',d:'A hotel you cannot map. One life to get out.',rules:'ONE LIFE / NO MAP',one:1,nm:1},
- {id:'dark',n:'Darkest Hour',t:10,s:'darkest-hour',d:'Lights Out with no map and only one life. Your flashlight still has infinite charge.',rules:'ONE LIFE / NO MAP',one:1,nm:1},
- {id:'pipes',n:'The Rust Tunnels',t:3,s:'rust-tunnels-823',d:'An industrial maze without any starting battery reserves.',rules:'NO SPARES',bt:.35},
- {id:'garage',n:'Concrete Maze',t:2,s:'concrete-maze-823',d:'Find the exit of the garage without consulting your map.',rules:'NO MAP',nm:1},
- {id:'static',n:'Static Signal',t:4,s:'static-signal-823',d:'The electrical station has become a one-life challenge.',rules:'ONE LIFE',one:1},
- {id:'funhouse',n:'The Last Party',t:7,s:'last-party-823',d:'No friendly survivors. No map. The party has ended.',rules:'NO HELP / NO MAP',nm:1,nw:1},
- {id:'redrun',n:'Red Tape',t:9,s:'red-tape-823',d:'A desperate run through red corridors with only one life.',rules:'ONE LIFE',one:1},
- {id:'caves',n:'Beneath the Walls',t:11,s:'beneath-the-walls-823',d:'Underground with diminished stamina and no map.',rules:'LOW STAMINA / NO MAP',nm:1,st:.6},
- {id:'neighborhood',n:'Empty Neighborhood',t:12,s:'empty-neighborhood-823',d:'Face the deserted streets with no friendly wanderers.',rules:'NO HELP',nw:1},
- {id:'yellow',n:'Back Where It Began',t:1,s:'origin-tape-823',d:'The original yellow maze. One chance, no map.',rules:'ONE LIFE / NO MAP',one:1,nm:1}
- ];
-// Distinct environments for Chapter 2 rather than identical copies of Chapter 1.
+ {id:'calibration',n:'Calibration Hall',t:2,s:'ch2-calibration-354',d:'A circular testing atrium with interlocked terminals.',rules:'ACTIVATE THREE TERMINALS IN ORDER',mech:'order'},
+ {id:'turbine',n:'Turbine Station',t:4,s:'ch2-turbine-354',d:'Power the industrial turbine before the circuits reset.',rules:'COMPLETE THE TIMED POWER CIRCUIT',mech:'timer'},
+ {id:'reservoir',n:'Tidal Reservoir',t:8,s:'ch2-reservoir-354',d:'Balance the pressure of the water-control system.',rules:'OPEN THE PRESSURE VALVES IN SEQUENCE',mech:'order'},
+ {id:'prism',n:'Prism Observatory',t:4,s:'ch2-prism-354',d:'A luminous light laboratory that only responds to your beam.',rules:'SHINE FLASHLIGHT ON THE RECEIVERS',mech:'light'},
+ {id:'cryogenic',n:'Cryogenic Vault',t:10,s:'ch2-cryo-354',d:'A cold storage compound. Find the heaters before you freeze.',rules:'WAKE HEATERS AND STAY WARM',mech:'cold'},
+ {id:'radio',n:'Radio Spire',t:4,s:'ch2-radio-354',d:'Interference rooms where the receivers demand radio silence.',rules:'CROUCH WITH FLASHLIGHT OFF AT RECEIVERS',mech:'quiet'},
+ {id:'containment',n:'Containment Lab',t:5,s:'ch2-containment-354',d:'Secure unstable specimen chambers one at a time.',rules:'HOLD STILL TO DECONTAMINATE EACH STATION',mech:'hold'},
+ {id:'gravity',n:'Gravity Engine',t:3,s:'ch2-gravity-354',d:'A magnetic engine whose terminals consume stamina.',rules:'CHARGE THE NODES WITH YOUR STAMINA',mech:'stamina'},
+ {id:'greenhouse',n:'Biofilter Greenhouse',t:8,s:'ch2-biofilter-354',d:'Cycle the living filters in a humidity-controlled dome.',rules:'OPERATE FILTERS WITH YOUR LIGHT OFF',mech:'lightoff'},
+ {id:'junction',n:'Transit Junction',t:2,s:'ch2-junction-354',d:'Switch the metro routing sequence before it expires.',rules:'ROUTE THE THREE TRACK SWITCHES IN TIME',mech:'ordertimer'},
+ {id:'furnace',n:'Furnace Sector',t:3,s:'ch2-furnace-354',d:'A reactor exhaust grid with dangerous rising heat.',rules:'VENT THE REACTOR WHILE MANAGING HEAT',mech:'heat'},
+ {id:'nexus',n:'Nexus Core',t:4,s:'ch2-nexus-354',d:'The final test combines light, silence, endurance and sequencing.',rules:'SOLVE ALL FOUR CORE TRIALS',mech:'final'}
+];
 const CH2_VIS=[
- ['Night Shift Complex','#8b988d','#303b34','#afb6aa',0x091712,0x9abca0,'office'],
- ['Flooded Transit','#83928a','#263d3d','#b0b9ab',0x061718,0x8ccaba,'subway'],
- ['Blackwood Manor','#6e4b64','#302033','#66505e',0x190717,0xff69c9,'manor'],
- ['The Unlit Ward','#42435d','#202131','#45435b',0x03020e,0x947bff,'ward'],
- ['Boiler City','#8e5b36','#39261d','#664637',0x1b0801,0xff9c40,'boiler'],
- ['Empty Mall','#989b8f','#353c36','#898f84',0x111911,0xc4dc9c,'mall'],
- ['Research Wing','#a0a99c','#293a35','#828c87',0x081914,0xa5dca4,'lab'],
- ['The Funhouse','#964b8b','#35193d','#b97479',0x190018,0xff68db,'arcade'],
- ['Emergency Line','#a75353','#2d1218','#66252d',0x200004,0xff4444,'metro'],
- ['The Catacombs','#635c48','#292519','#4c4835',0x090804,0xe9d484,'crypt'],
- ['Nocturne Estate','#4d6373','#26303b','#50616c',0x030a12,0x85b7ff,'street'],
- ['Archive Zero','#a0aaa1','#363f39','#878f83',0x0a1410,0xb5d8aa,'archive']
+ ['Calibration Hall','#c7d3dc','#263340','#d8edf0',0x071525,0x92d6f5,'calibration'],
+ ['Turbine Station','#b3a28d','#343333','#c7b7a0',0x201612,0xffaa58,'turbine'],
+ ['Tidal Reservoir','#8eb8c6','#143b49','#c3e6eb',0x041825,0x5bdfff,'reservoir'],
+ ['Prism Observatory','#d8d9ee','#29324c','#e2e5ff',0x090d26,0xb7a5ff,'prism'],
+ ['Cryogenic Vault','#c1e4ef','#183c50','#e4f9ff',0x031425,0x79d7ff,'cryo'],
+ ['Radio Spire','#c1afa1','#32283a','#d7c6ba',0x160b22,0xcc79ff,'radio'],
+ ['Containment Lab','#a1d5b2','#1e3d36','#d2efe3',0x061b12,0x83f6ad,'containment'],
+ ['Gravity Engine','#b7a4cc','#2d2545','#e4d5f6',0x100b29,0xbe86ff,'gravity'],
+ ['Biofilter Greenhouse','#9dc7a1','#174438','#c6edc0',0x08251d,0x87efb7,'greenhouse'],
+ ['Transit Junction','#bca4a1','#3b2833','#f4d2cc',0x240b16,0xff8f7b,'junction'],
+ ['Furnace Sector','#d2ab81','#442b29','#eed2a1',0x2c0c0a,0xff7d36,'furnace'],
+ ['Nexus Core','#9fadd9','#202d50','#d0e7fc',0x080e2d,0x6fe7ff,'nexus']
 ];
 let communityActive=null;
 function communityCompleted(){return store.get('communityCleared',{})||{}}
@@ -3789,7 +3891,7 @@ function communityFinish(){
    card('CHAPTER 2','LEVEL '+(o.chapterIndex+1)+' COMPLETE','NEXT: '+HUB_FEATURED[next].n);
    setTimeout(()=>chapter2Start(next),1600);
   }else{
-   card('THE LAST TAPE','All twelve tapes recovered.','TOETHESIS IS WAITING.');
+   card('THE CORE IS OPEN','All twelve facilities conquered.','TOETHESIS IS WAITING.');
    setTimeout(()=>{openHub();hubEnter(13,'toethesis-finale-823',{id:'toethesis',n:'Toethesis',chapter2Boss:true})},2200);
   }
   return;
@@ -3800,7 +3902,7 @@ function hubCommunity(){return (store.get('community',[])||[]).filter(x=>x&&type
 function hubScreen(t){
  hubTab=t;document.querySelectorAll('#hubtabs [data-ht]').forEach(b=>b.classList.toggle('on',b.dataset.ht===t));
  $('hubcreate').style.display=t==='create'?'block':'none';$('hublist').style.display=t==='create'?'none':'grid';
- $('hubnote').textContent=t==='story'?'CHAPTER 1 — Revisit any original story level without overwriting your saves.':t==='chapter2'?'CHAPTER 2 — THE LOST TAPES. Twelve abandoned, overgrown facility levels with generator puzzles and checkpoints. Escape each in order, then defeat Toethesis to complete the chapter.':t==='community'?'COMMUNITY LEVELS — Play custom levels created by you or imported with a shared code.':'Create a seeded custom level, copy its code, or import a code from a friend.';
+ $('hubnote').textContent=t==='story'?'CHAPTER 1 — Revisit any original story level without overwriting your saves.':t==='chapter2'?'CHAPTER 2 — THE NEW FRONTIER. Twelve new facilities with their own layouts and mechanics. Solve each facility’s objective, find the key and escape. Toethesis awaits at the end.':t==='community'?'COMMUNITY LEVELS — Play custom levels created by you or imported with a shared code.':'Create a seeded custom level, copy its code, or import a code from a friend.';
  if(t==='story')$('hublist').innerHTML=TH.map((th,i)=>'<button data-l="'+(i+1)+'"><b>'+(i===12?'LEVEL ?':'LEVEL '+(i+1))+'</b><span>'+esc(th.n)+'</span><em>ENTER</em></button>').join('');
  else if(t==='chapter2'){
   const progress=chapter2Progress();
