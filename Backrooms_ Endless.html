@@ -534,7 +534,35 @@ body.hubmode #menu,body.hubmode #ov{display:none!important}
 #hubcreate #editgrid button.wall{background:#65605b}#hubcreate #editgrid button.enemy{background:#692c2e}#hubcreate #editgrid button.supply{background:#2d6450}#hubcreate #editgrid button.switch{background:#675c21}#hubcreate #editgrid button:hover{outline:2px solid #fff}
 #objective348{position:fixed;left:50%;top:64px;transform:translateX(-50%);font:400 21px var(--fd);z-index:3;color:#e4cf74;text-shadow:2px 2px #000;pointer-events:none;text-align:center;display:none}
 body.menu #objective348,body.hubmode #objective348,body.cut #objective348{display:none!important}
-</style></head><body>
+</style>
+<style id="br355-redesign">
+/* v3.55 — consolidated visual system: neon-industrial / premium horror UI */
+:root{--ink:#edf5fa;--mute:#a0b1c1;--hi:#8eeaf1;--grn:#87ecbf;--fd: 'Arial Narrow',Impact,system-ui,sans-serif;--fb:Inter,'Segoe UI',system-ui,sans-serif}
+body{font-family:var(--fb);color:var(--ink)}
+#menu{background:radial-gradient(ellipse 55% 78% at 76% 32%,rgba(18,89,110,.28),transparent),linear-gradient(115deg,rgba(3,11,19,.64),rgba(5,12,17,.12))}
+#menu:before{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(0,0,0,.18),transparent 50%),repeating-linear-gradient(0deg,transparent 0 3px,rgba(125,190,205,.018) 3px 4px);z-index:0}
+#menu>#osd,#menu>#mph,#menu>#mlogo,#menu>#mchip,#menu>#mpanel,#menu>#msub,#menu>#newg,#menu>#mfoot,#menu>#slotp{z-index:2}
+#mlogo{filter:drop-shadow(0 6px 26px rgba(24,198,215,.13))}
+#mpanel.glass,#msub.glass,#newg.glass,#slotp.glass{background:rgba(8,19,28,.87)!important;border:1px solid rgba(136,205,224,.18)!important;box-shadow:0 22px 70px rgba(0,0,0,.4),inset 0 1px rgba(216,246,250,.1);backdrop-filter:blur(22px) saturate(120%);-webkit-backdrop-filter:blur(22px) saturate(120%);border-radius:16px!important}
+#mpanel{padding:12px!important;gap:3px}#mpanel .mb{border-radius:8px!important;padding:10px 18px!important;letter-spacing:.075em;transition:background .16s,border-color .16s,transform .16s;color:#e3eef4!important}#mpanel .mb:hover,#mpanel .mb.on{background:rgba(59,184,204,.17)!important;color:#aaf7ff!important;transform:translateX(2px)}
+#msub,#newg,#slotp{padding:clamp(20px,2.4vw,38px)!important;overflow-y:auto;scrollbar-color:rgba(96,194,212,.45) transparent}
+#msub h3,#newg h3,#slotp h3{color:#f1faff!important;letter-spacing:.06em;font-weight:750}#msub p,#newg p,#slotp p{line-height:1.58}
+#msub button,#newg button,#slotp button,#hub button,.btng,.btnp{transition:background .18s,border-color .18s,transform .18s,box-shadow .18s;border-radius:9px}#msub button:hover,#newg button:hover,#slotp button:hover,#hub button:hover,.btng:hover,.btnp:hover{box-shadow:0 5px 22px rgba(33,165,192,.12)}
+#newg select,#newg input:not([type=checkbox]),#msub select,#msub input:not([type=checkbox]):not([type=range]),#hub input,#hub select{background:rgba(5,18,28,.88)!important;color:#e9f7ff!important;border:1px solid rgba(131,200,219,.29)!important;border-radius:8px!important;padding:9px 12px;outline-offset:2px}
+#newg select:focus,#hub input:focus,#hub select:focus{outline:2px solid #73dce9!important}
+#newg .btnp,#m_new,.btnp{background:linear-gradient(120deg,#1f859d,#37b8bd)!important;color:#071319!important;border:1px solid rgba(164,246,245,.6)!important;font-weight:800!important}
+#newg .btnp:hover,.btnp:hover{background:linear-gradient(120deg,#43bacc,#96f0e9)!important}
+#hub{background:radial-gradient(ellipse at 50% 12%,rgba(34,100,135,.3),transparent 55%),rgba(2,10,18,.91)!important;backdrop-filter:blur(9px)}
+#hubhead{border-bottom:1px solid rgba(130,218,230,.18);padding-bottom:18px!important}#hubhead h1{color:#efffff!important;letter-spacing:.11em;text-shadow:0 0 30px rgba(88,213,235,.32)}#hubhead p{line-height:1.6;color:#a8c3d2}
+#hubtabs{border-bottom:1px solid rgba(170,220,235,.2);gap:6px!important}#hubtabs button{color:#a9c9d6!important;font-weight:700;letter-spacing:.07em}#hubtabs button.on{background:rgba(47,147,174,.32)!important;color:#bcf8ff!important;border-bottom:2px solid #83e5e7}
+#hublist button{background:linear-gradient(150deg,rgba(18,45,58,.96),rgba(9,22,33,.95))!important;border:1px solid rgba(132,208,230,.2)!important;border-radius:12px!important;padding:17px!important;text-align:left;min-height:112px}#hublist button:hover:not(:disabled){background:linear-gradient(145deg,rgba(32,77,93,.98),rgba(13,37,54,.96))!important;border-color:rgba(121,229,239,.78)!important;transform:translateY(-2px)}#hublist button:disabled{opacity:.35}#hublist button b{color:#e2faff!important}#hublist button em{color:#82f1cb!important}
+#hubmark,#osd{letter-spacing:.1em;color:#9ac4d1!important}
+#hud{border-radius:10px;background:linear-gradient(100deg,rgba(1,11,20,.81),rgba(1,18,26,.44));backdrop-filter:blur(8px);border:1px solid rgba(135,209,228,.2);padding:12px 15px!important;box-shadow:0 8px 28px rgba(0,0,0,.2)}
+#objective348{background:rgba(3,19,29,.79)!important;border:1px solid rgba(121,232,237,.35)!important;border-radius:10px;padding:9px 13px!important;color:#a8f4e5!important;box-shadow:0 8px 22px #0005}
+#patchnotes>div,#patchnotes .patchbox{border-radius:15px}#ver{color:#a4e4ee!important}#mchip{border-radius:12px;background:rgba(3,19,30,.75);border:1px solid rgba(125,212,230,.19);padding:8px 14px}
+@media(max-width:850px){#hubmain{max-height:68vh;overflow-y:auto}#hublist{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))!important}#newg{max-height:88vh;overflow:auto}#msub{max-height:86vh;overflow:auto}}
+</style>
+</head><body>
 <canvas id="grain" class="fx" width="160" height="90"></canvas><div id="scan" class="fx"></div><div id="vig" class="fx"></div><div id="dmg" class="fx"></div><div id="insane" class="fx"></div><div id="flash" class="fx"></div>
 <div id="mapw" class="glass"><div class="mh"><b>Map</b><span class="lbl" id="mtitle"></span></div><canvas id="mm" width="512" height="512"></canvas>
 <div class="leg"><span><i style="background:#fff"></i>You</span><span><img src="https://raw.githubusercontent.com/C823/assets/main/backrooms_key_icon.png" data-alt="assets/backrooms_key_icon.png|backrooms_key_icon.png" alt="" onerror="if(!imgAlt(this))this.outerHTML='<i style=&quot;background:#44ffee&quot;></i>'">Key</span><span><i style="background:#ff3344"></i>Exit</span><span><i style="background:#e0b43a"></i>Safe</span><span><i style="background:#e09a3a"></i>Door</span><span><i style="background:#b0ff70"></i>Battery</span><span><i style="background:#9fdcff"></i>Almond water</span><span><i style="background:#ffd84a"></i>Wanderer</span><span><i style="background:#ffb35a"></i>Light</span><span><i style="background:#3fae5a"></i>Plague</span></div></div>
@@ -576,7 +604,7 @@ body.menu #objective348,body.hubmode #objective348,body.cut #objective348{displa
 </div></div>
 <div id="admpw" class="glass"><b>ADMIN PANEL</b><p>Enter an admin code to unlock the admin panel. You only need to do this once per code.</p><input id="pw_in" type="password" maxlength="24" autocomplete="off" spellcheck="false"><div class="r"><button class="btnp" id="pw_ok">UNLOCK</button><button class="btng" id="pw_x">CANCEL</button></div><p id="pw_msg"></p></div>
 
-<div id="hub"><div id="hubhead"><div><h1>THE HUB</h1><p>CHAPTER 1 COMPLETE. THE NEXT TAPE IS WAITING.<br>EXPLORE CHAPTER 2 OR REVISIT YOUR FAVORITE LEVELS.</p></div><button id="hubmenu">MAIN MENU</button></div><div id="hubmain"><div id="hubtabs"><button data-ht="story" class="on">STORY LEVELS</button><button data-ht="chapter2">CHAPTER 2</button><button data-ht="community">COMMUNITY LEVELS</button><button data-ht="create">CREATE / IMPORT</button></div><p id="hubnote"></p><div id="hublist"></div><div id="hubcreate"><label>LEVEL NAME<input id="hubname" type="text" maxlength="36" placeholder="The Forgotten Hallway"></label><label>ENVIRONMENT<select id="hubtheme"></select></label><label>WORLD SEED<input id="hubseed" type="text" maxlength="40" placeholder="Enter a seed or leave blank for random"></label><h4 style="margin:14px 0 4px;font:400 26px var(--fd)">VISUAL LEVEL EDITOR</h4><small>Paint a 12x12 layout. Objects snap to reachable rooms when your map is generated. Click or drag tiles to paint. Switches must be activated before escaping.</small><div class="edrow"><label style="flex:1;margin:0">BRUSH<select id="edbrush"><option value="wall">COVER / WALL</option><option value="enemy">ENTITY SPAWN</option><option value="supply">SUPPLY CACHE</option><option value="switch">GENERATOR SWITCH</option><option value="erase">ERASER</option></select></label><button id="edclear">CLEAR GRID</button></div><div id="editgrid"></div><small id="edcount">0 objects placed</small><div class="actions"><button id="hubmake">SAVE LEVEL + COPY CODE</button><button id="hubplaycustom">PLAY CUSTOM LEVEL</button></div><label style="margin-top:14px">IMPORT SHARED LEVEL CODE<input id="hubimport" type="text" maxlength="4000" placeholder="BR43-... or BR48-..."></label><div class="actions"><button id="hubadd">IMPORT LEVEL</button></div><small>Community levels support authored placements layered onto procedural rooms. Export a code to share; public online uploading still needs a server.</small><div id="hubmsg"></div></div></div><div id="hubmark">CH 02 &middot; THE NEW FRONTIER &middot; v3.54</div></div>
+<div id="hub"><div id="hubhead"><div><h1>THE HUB</h1><p>THE JOURNEY CONTINUES.<br>REPLAY UNLOCKED LEVELS OR CREATE YOUR OWN.</p></div><button id="hubmenu">MAIN MENU</button></div><div id="hubmain"><div id="hubtabs"><button data-ht="story" class="on">ORIGINAL LEVELS</button><button data-ht="chapter2">DEEPER LEVELS</button><button data-ht="community">COMMUNITY LEVELS</button><button data-ht="create">CREATE / IMPORT</button></div><p id="hubnote"></p><div id="hublist"></div><div id="hubcreate"><label>LEVEL NAME<input id="hubname" type="text" maxlength="36" placeholder="The Forgotten Hallway"></label><label>ENVIRONMENT<select id="hubtheme"></select></label><label>WORLD SEED<input id="hubseed" type="text" maxlength="40" placeholder="Enter a seed or leave blank for random"></label><h4 style="margin:14px 0 4px;font:400 26px var(--fd)">VISUAL LEVEL EDITOR</h4><small>Paint a 12x12 layout. Objects snap to reachable rooms when your map is generated. Click or drag tiles to paint. Switches must be activated before escaping.</small><div class="edrow"><label style="flex:1;margin:0">BRUSH<select id="edbrush"><option value="wall">COVER / WALL</option><option value="enemy">ENTITY SPAWN</option><option value="supply">SUPPLY CACHE</option><option value="switch">GENERATOR SWITCH</option><option value="erase">ERASER</option></select></label><button id="edclear">CLEAR GRID</button></div><div id="editgrid"></div><small id="edcount">0 objects placed</small><div class="actions"><button id="hubmake">SAVE LEVEL + COPY CODE</button><button id="hubplaycustom">PLAY CUSTOM LEVEL</button></div><label style="margin-top:14px">IMPORT SHARED LEVEL CODE<input id="hubimport" type="text" maxlength="4000" placeholder="BR43-... or BR48-..."></label><div class="actions"><button id="hubadd">IMPORT LEVEL</button></div><small>Community levels support authored placements layered onto procedural rooms. Export a code to share; public online uploading still needs a server.</small><div id="hubmsg"></div></div></div><div id="hubmark">26 LEVELS &middot; ONE JOURNEY &middot; v3.55</div></div>
 <div id="menu">
 <div id="osd"><span id="osd_tr">&#9654; PLAY &nbsp;SP <b id="osd_t">0:00:00</b></span><span id="osd_br"></span><span id="osd_sync"></span><button id="osd_acct" style="display:none" title="Your site account"></button></div>
 <a id="mph" href="https://powerhouse.c823.workers.dev" target="_top" title="Powerhouse" aria-label="Go to Powerhouse"><img alt="Powerhouse" src="https://raw.githubusercontent.com/C823/Powerhouse/main/icons/POWERHOUSE-icon-dark.png" onerror="this.parentNode.textContent='PWR'"></a>
@@ -604,10 +632,10 @@ body.menu #objective348,body.hubmode #objective348,body.cut #objective348{displa
 <span>Progress<small style="display:block;font-size:12px;color:var(--mute)">Saved run, records and Encyclopedia</small></span><button id="rstp" class="btng" style="height:36px;font-size:15px">Reset progress</button>
 <button id="fs" class="btng">Toggle fullscreen</button></div></div></section>
 </div>
-<div id="newg" class="glass"><div class="phead"><h3>NEW GAME</h3><span class="pch"><b>&#9679;</b> CH 01 &middot; SINGLE PLAYER</span></div><p class="sub">Choose how deep into the Backrooms you want to go.</p>
+<div id="newg" class="glass"><div class="phead"><h3>NEW GAME</h3><span class="pch"><b>&#9679;</b> SINGLE PLAYER · STORY</span></div><p class="sub">Choose how deep into the Backrooms you want to go.</p>
 <div id="m_cwrap"><div class="lbl" style="color:var(--grn)">SAVED RUNS</div><div id="m_clist"></div></div>
 <div class="pcols"><div class="pcol">
-<h4><i>01</i>MODE</h4><div id="mode"><button data-md="story"><b>STORY</b><small>12 levels, then Level ?</small></button><button data-md="endless"><b>ENDLESS</b><small id="mode_e"></small></button></div>
+<h4><i>01</i>MODE</h4><div id="mode"><button data-md="story"><b>STORY</b><small>26 levels and two boss encounters</small></button><button data-md="endless"><b>ENDLESS</b><small id="mode_e"></small></button></div>
 <h4><i>02</i>DIFFICULTY</h4><div id="diff"><button data-d="easy"><b>EASY</b><small>5 lives &middot; forgiving</small></button><button data-d="normal"><b>NORMAL</b><small>3 lives &middot; intended</small></button><button data-d="hard"><b>HARD</b><small>2 lives &middot; sanity</small></button></div><p id="dtxt"></p>
 </div><div class="pcol">
 <h4><i>03</i>RUN OPTIONS</h4>
@@ -635,11 +663,12 @@ body.menu #objective348,body.hubmode #objective348,body.cut #objective348{displa
 <div class="mcard"><h4><i>B</i>PLAYERS</h4><div id="mp_list"></div></div>
 <div id="mp_chat" class="mcard"><h4><i>C</i>CHAT</h4><div id="mp_chatlog"></div><div class="chrow"><input id="mp_chatin" type="text" maxlength="120" spellcheck="false" autocomplete="off" placeholder="Say hi to the room"><button class="btng" id="mp_chatgo">SEND</button></div></div></div><div id="mp_saves"></div><button class="btnp" id="mp_start">START NEW GAME</button></div>
 <div class="pfoot"><p id="mp_status"></p><div class="nrow"><button class="btng" id="mp_back">BACK</button></div></div></div>
-<button id="ver" type="button" aria-haspopup="dialog" aria-controls="patchnotes" title="View patch notes">v3.54 &middot; 2026-11-10 <span aria-hidden="true">[PATCH NOTES]</span></button></div>
+<button id="ver" type="button" aria-haspopup="dialog" aria-controls="patchnotes" title="View patch notes">v3.55 &middot; 2026-11-11 <span aria-hidden="true">[PATCH NOTES]</span></button></div>
 <div id="patchnotes" role="dialog" aria-modal="true" aria-labelledby="patchtitle" aria-hidden="true">
  <div id="patchbox">
-  <div id="patchhead"><h2 id="patchtitle">PATCH NOTES <span style="color:var(--hi)">v3.54</span></h2><button id="patchclose" type="button" aria-label="Close patch notes">X CLOSE</button></div>
+  <div id="patchhead"><h2 id="patchtitle">PATCH NOTES <span style="color:var(--hi)">v3.55</span></h2><button id="patchclose" type="button" aria-label="Close patch notes">X CLOSE</button></div>
   <div id="patchbody">
+   <section class="patchentry"><h3>v3.55 <time datetime="2026-11-11">NOV 11, 2026</time></h3><ul><li>Removed chapter divisions: the original 13 levels lead directly to 12 unique facility levels and a Toethesis finale.</li><li>Levels 14–26 are named, unlock as New Game starting positions when reached, and update the shared best-level record.</li><li>Reduced cold-meter effects and made 100% cold nonlethal.</li><li>Refreshed menus, level selection, pause/heads-up presentation, and hub styling with a unified dark sci-fi theme.</li></ul></section>
    <section class="patchentry"><h3>v3.54 <time datetime="2026-11-10">NOV 10, 2026</time></h3><ul><li>Replaced all 12 Chapter 2 challenge levels with original facility locations, layouts and level-specific puzzle mechanics.</li><li>New challenges include ordered terminals, timed power circuits, pressure valves, flashlight receivers, freezing and overheating systems, silence puzzles, decontamination holds, stamina-powered terminals and a combined final test.</li><li>Chapter 2 uses newly carved chamber layouts and dedicated industrial set dressing instead of abandoned Chapter 1 levels.</li><li>Preserved completed Chapter 2 progress, custom community levels, checkpoints and the Toethesis finale.</li></ul></section>
    <section class="patchentry"><h3>v3.53 <time datetime="2026-11-09">NOV 09, 2026</time></h3><ul><li>Removed the Iron Man and Ultron character suits; anyone with one equipped is returned to the default orange suit.</li><li>Added mix-and-match accessories: baseball cap, headphones, halo, backpack, crown, and safety goggles.</li><li>Accessories save to your settings, display in the suit preview, animate in camera views, and synchronize across multiplayer players.</li></ul></section>
    <section class="patchentry"><h3>v3.52 <time datetime="2026-11-09">NOV 09, 2026</time></h3><ul><li>Fixed collision on parked cars and office desks: the player now collides with their visible footprint instead of an entire floor tile.</li><li>Collision boxes follow furniture rotation; desk chairs have their own small hitbox.</li><li>Preserved enemy pathfinding and other solid obstacles while allowing movement around furniture edges.</li></ul></section>
@@ -1408,8 +1437,8 @@ let san=100,bag={bat:1,aw:0},breakdown=0,phT=6,phantoms=[],waters=[],batWarn=0,s
 const E={stv:$('stv'),btv:$('btv'),infw:$('infw'),infb:$('infb'),stb:$('stb'),btb:$('btb'),dmg:$('dmg'),pose:$('pose'),tc:$('tc'),fade:$('fade')};
 function say(t,ms=2400){const m=$('msg'),e=x=>x.replace(/</g,'&lt;'),sp=t.match(/^(Wanderer|Verity|Racer): /);m.innerHTML=sp?'<b class="who">'+sp[1].toUpperCase()+'</b>'+e(t.slice(sp[0].length)):e(t);m.classList.add('on');clearTimeout(mt);mt=setTimeout(()=>m.classList.remove('on'),ms)}
 function card(t,s,k,cls,bw){const c=$('card');c.className=cls||'';c.innerHTML=(k?'<small class="k">'+k+'</small>':'')+'<h2>'+t+'</h2><i class="ln"></i><p>'+s+'</p>'+(bw?'<div class="bw">'+bw+'</div>':'');c.style.transition='none';c.style.opacity=1;clearTimeout(ct);ct=setTimeout(()=>{c.style.transition='opacity 1.5s';c.style.opacity=0},2300)}
-function levelCard(){cardPending=false;if(communityActive&&communityActive.chapter2Boss){card('CHAPTER 2 FINALE','Toethesis','A FINAL RECORDING','','Survive all three phases.');return}if(communityActive&&communityActive.chapter2){card('CHAPTER 2 · '+(communityActive.chapterIndex+1)+'/12',communityActive.n,'THE NEW FRONTIER','',communityActive.rules||'Find the exit');return}if(cur.boss){markSeen('L',TH.length-1,cur.n);card('LEVEL ?','The workshop of the Racer.','The final level','dead','Beat the Racer');return}markSeen('L',thi(),cur.n);const nm=[...new Set(mons.map(m=>m.k.n))];if(wins.length)nm.push('Windows');if(swarms.length)nm.push('Male Deathmoths');if(plague)nm.push('Hydrolitis Plague');card('LEVEL '+level,cur.n,endless?'Endless':(VZ?'Lead Verity to the TVs.':PZ?pzObj():'Find the key. Reach the exit.'),'',nm.length?'Watch out for: '+nm.join(', '):'')}
-function hud(){$('hud').innerHTML='<div class="hl">'+(communityActive&&communityActive.chapter2&&!communityActive.chapter2Boss?'Chapter 2 · Level '+(communityActive.chapterIndex+1):'Level '+level)+' <span>&ndash; '+cur.n+'</span></div><div class="obj'+(hasKey?' ok':'')+'">'+(cur.boss&&!bossMenu?(B&&B.mode==='dead'?(hasKey?'Go through the door.':'Take the key.'):(B&&B.obj)||'Beat the Racer.'):(communityActive&&communityActive.chapter2&&!communityActive.chapter2Boss)?(hasKey?'Key acquired — finish facility objective and exit.':communityActive.rules):VZ?(hasKey?'Door unlocked. Get out.':'Lead Verity to the 4 TVs. Code: '+vzShown()):PZ?pzObj():hasKey?'Key found. Find the exit.':'Find the key.')+'</div><div class="lives">'+lives+(lives===1?' life':' lives')+' &middot; '+DIFF.n+(perma?' (one life)':'')+(endless?' &middot; Endless':'')+'</div>';$('mini').style.display=noMap?'none':''}
+function levelCard(){cardPending=false;if(communityActive&&communityActive.chapter2Boss){card('LEVEL 26 · FINAL ENCOUNTER','Toethesis','A FINAL RECORDING','','Survive all three phases.');return}if(communityActive&&communityActive.chapter2){card('LEVEL '+level,communityActive.n,'THE DEEPER LEVELS','',communityActive.rules||'Find the exit');return}if(cur.boss){markSeen('L',TH.length-1,cur.n);card('LEVEL ?','The workshop of the Racer.','The first boss encounter','dead','Beat the Racer');return}markSeen('L',thi(),cur.n);const nm=[...new Set(mons.map(m=>m.k.n))];if(wins.length)nm.push('Windows');if(swarms.length)nm.push('Male Deathmoths');if(plague)nm.push('Hydrolitis Plague');card('LEVEL '+level,cur.n,endless?'Endless':(VZ?'Lead Verity to the TVs.':PZ?pzObj():'Find the key. Reach the exit.'),'',nm.length?'Watch out for: '+nm.join(', '):'')}
+function hud(){$('hud').innerHTML='<div class="hl">'+(communityActive&&communityActive.chapter2&&!communityActive.chapter2Boss?'Level '+level:'Level '+level)+' <span>&ndash; '+cur.n+'</span></div><div class="obj'+(hasKey?' ok':'')+'">'+(cur.boss&&!bossMenu?(B&&B.mode==='dead'?(hasKey?'Go through the door.':'Take the key.'):(B&&B.obj)||'Beat the Racer.'):(communityActive&&communityActive.chapter2&&!communityActive.chapter2Boss)?(hasKey?'Key acquired — finish facility objective and exit.':communityActive.rules):VZ?(hasKey?'Door unlocked. Get out.':'Lead Verity to the 4 TVs. Code: '+vzShown()):PZ?pzObj():hasKey?'Key found. Find the exit.':'Find the key.')+'</div><div class="lives">'+lives+(lives===1?' life':' lives')+' &middot; '+DIFF.n+(perma?' (one life)':'')+(endless?' &middot; Endless':'')+'</div>';$('mini').style.display=noMap?'none':''}
 const fmt=t=>[t/3600,t/60%60,t%60].map(v=>String(v|0).padStart(2,'0')).join(':');
 function startYaw(){for(const[a,b,y]of[[1,0,-Math.PI/2],[0,1,Math.PI],[-1,0,Math.PI/2],[0,-1,0]])if(!w[1+b][1+a])return y;return -Math.PI/2}
 function reset(){lvStart=runT;px=1.5*T;pz=1.5*T;yaw=startYaw();if(B&&B.spawn){px=B.spawn.x;pz=B.spawn.z;yaw=0}pitch=0;vx=vz=0;stam=1;exh=false;crouch=false;bob=0;hud();cardPending=true;
@@ -1436,7 +1465,7 @@ function levelPreview(){try{const sx=(menuSpot[0]+.5)*T,sz=(menuSpot[1]+.5)*T;le
  const p=$('lprev');p.style.backgroundImage='url('+url+')';p.classList.add('on');void 0}catch(e){}}
 function loadScreen(cb,quick,done){const L=$('load'),th=TH[thi()],hx=n=>'#'+n.toString(16).padStart(6,'0'),prev=stt;
  L.style.setProperty('--w',th.w);L.style.setProperty('--f',th.f);L.style.setProperty('--c',th.c);L.style.setProperty('--p',hx(th.pc));L.style.setProperty('--fog',hx(th.fog));
- invClose();$('lname').innerHTML='<small>LEVEL '+level+'</small>'+th.n;stt='loading';L.classList.remove('off');$('lprev').classList.remove('on');
+ invClose();$('lname').innerHTML='<small>LEVEL '+level+'</small>'+((!endless&&level>=14&&level<=26)?storyLevelName355(level):th.n);stt='loading';L.classList.remove('off');$('lprev').classList.remove('on');
  let sh=0,tg=0;const tk=setInterval(()=>{sh+=(tg-sh)*.12;if(tg-sh<.4)sh=tg;$('pct').textContent=Math.round(sh)+'%';$('pbar').style.width=sh+'%'},30);
  const tip=()=>{const s=$('tipt');s.style.opacity=0;setTimeout(()=>{s.textContent=TIPS[tipI++%TIPS.length];s.style.opacity=1},300)};
  tipI=rnd()*TIPS.length|0;tip();clearInterval(tipT);tipT=setInterval(tip,3600);
@@ -2110,8 +2139,8 @@ const endEx=()=>endless?Math.max(0,level-12):0;
 function remixTE(t){const r=mulberry((levelSeed^0x77)>>>0),K=['bacteria','skin','hound','smiler','scratcher','party','anim','fmoth'],k=K[r()*K.length|0],h=Object.assign({},t.h);h[k]=(h[k]||0)+1;return Object.assign({},t,{h})}
 function hashStr(t){let h=2166136261;for(const ch of t)h=Math.imul(h^ch.charCodeAt(0),16777619);return h>>>0}
 function openPlay(){if(SLOTS.sp.some(k=>slotGet(k))){menuUI();closePlay();showSaves();return}openSetup()}
-function openSetup(){menuUI();document.body.classList.add('np');$('newg').classList.toggle('fresh',SLOTS.sp.some(k=>slotGet(k)));const sel=$('o_start'),top=Math.max(1,best);sel.innerHTML='';
- for(let l=1;l<=top;l++){const o=document.createElement('option');o.value=l;o.textContent='Level '+l+' \u00b7 '+TH[(l-1)%TH.length].n;sel.appendChild(o)}
+function openSetup(){menuUI();document.body.classList.add('np');$('newg').classList.toggle('fresh',SLOTS.sp.some(k=>slotGet(k)));const sel=$('o_start'),top=Math.max(1,best,stats.wins?14:1,14+Math.max(0,+store.get('chapter2Progress',0)||0),store.get('chapter2BossCleared',false)?26:1);sel.innerHTML='';
+ for(let l=1;l<=Math.min(26,top);l++){const o=document.createElement('option');o.value=l;o.textContent='Level '+l+' · '+storyLevelName355(l);sel.appendChild(o)}
  sel.value=Math.min(RUN.start,top);$('o_seed').value=RUN.seed;$('o_perma').checked=RUN.perma;$('o_map').checked=RUN.map;$('o_wand').checked=RUN.wand;diffUI();($('m_clist').querySelector('button')||$('m_new')).focus()}
 function closePlay(){document.body.classList.remove('np')}
 function readRun(){RUN.start=+$('o_start').value||1;RUN.seed=$('o_seed').value.trim();RUN.perma=$('o_perma').checked;RUN.map=$('o_map').checked;RUN.wand=$('o_wand').checked;store.set('run',RUN);
@@ -2180,7 +2209,7 @@ function encUI(t){if(t)encTab=t;document.querySelectorAll('.etabs button').forEa
  $('enc_list').innerHTML=L.map(([ok,n,d],i)=>{const im=encTab==='E'?(ok&&ico[ks[i]]?'<img alt="" src="'+ico[ks[i]]+'">':'<i class="ph">?</i>'):'';return ok?'<div class="encx">'+im+'<div><b>'+n+'</b><span>'+d+'</span></div></div>':'<div class="encx lk">'+im+'<div><b>???</b><span>Not discovered yet.</span></div></div>'}).join('')}
 document.querySelector('.etabs').onclick=e=>{const b=e.target.closest('[data-t]');if(b){sfx({n:1,ft:'bandpass',ff:1200,dur:.05,v:.08});encUI(b.dataset.t)}};
 function saveStats(){store.set('stats',stats)}
-function bumpBest(){if(endless){if(level>(stats.endBest||0)){stats.endBest=level;saveStats()}return}if(level>best){best=level;store.set('best',best)}if(level>(stats[DIFF.key]||0)){stats[DIFF.key]=level;saveStats()}}
+function bumpBest(){if(endless){if(level>(stats.endBest||0)){stats.endBest=level;saveStats()}return}storyBest355(level)}
 let inRun=false,saveT=5,mT=0;
 // ---- save slots: 4 single-player (sp1-4) and 4 co-op (mp1-4). slot is null when the run isn't being saved ----
 let slot=null,slotName=null;const SLOTS={sp:['sp1','sp2','sp3','sp4'],mp:['mp1','mp2','mp3','mp4']};
@@ -2196,7 +2225,7 @@ function lastSave(){let b=null;for(const k of SLOTS.sp){const sv=slotGet(k);if(s
 {const old=store.get('save',null);if(old&&!store.get('save_sp1',null))store.set('save_sp1',old);try{localStorage.removeItem('br_save')}catch(e){}}
 function saveWhen(t){if(!t)return'';const d=new Date(t);return['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'][d.getMonth()]+'.'+d.getDate()+' '+(d.getHours()%12||12)+':'+String(d.getMinutes()).padStart(2,'0')+(d.getHours()<12?' AM':' PM')}
 function saveInfo(sv){const e_=endless,s_=endSeed,c_=thiC;endless=!!sv.endless;endSeed=sv.endSeed|0;thiC={};
- const t=(sv.mp?'Co-op \u00b7 ':sv.endless?'Endless \u00b7 ':'')+'Level '+sv.level+' \u00b7 '+TH[thi(sv.level)].n+' \u00b7 '+(DF[sv.diff]||DF.normal).n+' \u00b7 '+sv.lives+(sv.lives===1?' life':' lives')+' \u00b7 '+fmt(sv.runT||0)+(sv.mp&&sv.names?' \u00b7 '+sv.names.join(', '):'');
+ const t=(sv.mp?'Co-op \u00b7 ':sv.endless?'Endless \u00b7 ':'')+'Level '+sv.level+' \u00b7 '+storyLevelName355(sv.level)+' \u00b7 '+(DF[sv.diff]||DF.normal).n+' \u00b7 '+sv.lives+(sv.lives===1?' life':' lives')+' \u00b7 '+fmt(sv.runT||0)+(sv.mp&&sv.names?' \u00b7 '+sv.names.join(', '):'');
  endless=e_;endSeed=s_;thiC=c_;return t}
 // the slot picker: kind 'sp' or 'mp'; done(k) gets the chosen slot, or null for no save
 let slotCB=null;
@@ -2232,12 +2261,12 @@ function loadSave(){return slotGet(slot)}
 // co-op: the host keeps the run's seed, level and its own supplies; clients rejoin from the level start
 function mpSave(){if(!NET.on||!NET.host||!slot||slot[0]!=='m')return;
  store.set('save_'+slot,{v:1,mp:1,t:Date.now(),nm:slotName,level,seed:runSeed,diff:DIFF.key,lives,runT:Math.round(runT),bat,san,bag,names:[...NET.players.values()].map(q=>q.name)})}
-function newGame(d){communityActive=null;ach('start');CFG.diff=d;store.set('cfg',CFG);if(stt==='menu')readRun();closePlay();startLoad();level=RUN.start||1;loadScreen(()=>{restart(RUN.start);inRun=true;stats.runs++;saveStats();saveGame(1)},false,enterRun)}
+function newGame(d){communityActive=null;ach('start');CFG.diff=d;store.set('cfg',CFG);if(stt==='menu')readRun();closePlay();startLoad();level=RUN.start||1;if(!endless)setStoryLevel355(level);loadScreen(()=>{restart(RUN.start);inRun=true;stats.runs++;saveStats();saveGame(1)},false,enterRun)}
 // leaving the menu: grab audio + pointer lock while we still have the click, then play once the loading screen is done
 function startLoad(){if(!AC)audio();AC.resume();lockReq()}
 function enterRun(){go();if(!document.pointerLockElement&&!drag&&!touchMode)pause('Click RESUME to continue.')}
-function continueGame(k){communityActive=null;const sv=slotGet(k);if(!sv)return;slot=k;slotName=sv.nm||null;closePlay();startLoad();level=sv.level;endless=!!sv.endless;endSeed=sv.endSeed|0;thiC={};loadScreen(()=>contLoad(sv),false,enterRun)}
-function contLoad(sv){endless=!!sv.endless;endSeed=sv.endSeed|0;thiC={};runSeed=sv.runSeed??null;perma=!!sv.perma;noMap=!!sv.noMap;noWand=!!sv.noWand;DIFF=DF[sv.diff]||DF.normal;level=sv.level;build(sv.seed);reset();
+function continueGame(k){communityActive=null;const sv=slotGet(k);if(!sv)return;slot=k;slotName=sv.nm||null;closePlay();startLoad();level=sv.level;endless=!!sv.endless;endSeed=sv.endSeed|0;thiC={};if(!endless)setStoryLevel355(level);loadScreen(()=>contLoad(sv),false,enterRun)}
+function contLoad(sv){endless=!!sv.endless;endSeed=sv.endSeed|0;thiC={};runSeed=sv.runSeed??null;perma=!!sv.perma;noMap=!!sv.noMap;noWand=!!sv.noWand;DIFF=DF[sv.diff]||DF.normal;level=sv.level;if(!endless)setStoryLevel355(level);build(sv.seed);reset();
  lives=sv.lives;runT=sv.runT||0;bat=sv.bat;san=sv.san;bag=Object.assign({bat:0,aw:0},sv.bag);flashOn=sv.flashOn!==false;breakdown=0;wobG=0;$('insane').style.opacity=0;
  bag.w=bag.w||{};bag.choc=bag.choc||0;bag.nrg=bag.nrg||0;if(sv.hasKey)giveKey();if(sv.vtv&&VZ)vzSet(sv.vtv);if(sv.pz&&PZ)pzSet(sv.pz);
  [...(sv.rooms||'')].forEach((c,i)=>{if(c==='1'&&roomsL[i]){setRoomDoor(i,true,true);roomsL[i].ang=1.65}});[...(sv.ritems||'')].forEach((c,i)=>{if(c==='1'&&roomItems[i]){roomItems[i].taken=true;roomItems[i].g.visible=false}});
@@ -2253,7 +2282,7 @@ function menuUI(sec){const EC={bacteria:'#8a8a8a',skin:'#d8d0c0',hound:'#e8dcd0'
  $('m_ents').innerHTML='<p>Everything you run into is recorded in the <b>Encyclopedia</b>.</p><div class="lbl" style="margin-top:2vh">Controls</div>';document.body.classList.add('menu');const svs=SLOTS.sp.map(k=>[k,slotGet(k)]).filter(q=>q[1]);
  $('m_cwrap').style.display=svs.length?'block':'none';
  $('m_clist').innerHTML=svs.map(([k,sv])=>'<div class="crow"><p><b>'+esc(slotName_(sv,k))+'</b>'+(sv.nm?'<em>Slot '+k.slice(2)+' &middot; </em>':'')+saveInfo(sv)+'</p><button class="btnp" data-cs="'+k+'">CONTINUE</button></div>').join('');
- $('hubentry').style.display=(stats.wins||0)>0?'block':'none';$('m_rec').innerHTML='<div class="stats">'+[['Deepest level',Math.max(best,1)],['Runs started',stats.runs],['Deaths',stats.deaths],['Escapes',stats.wins||0],['Endless record',stats.endBest?'Level '+stats.endBest:'&ndash;'],['Best on Easy',stats.easy||'&ndash;'],['Best on Normal',stats.normal||'&ndash;'],['Best on Hard',stats.hard||'&ndash;']].map(([a,v])=>'<div class="st"><b>'+v+'</b><span>'+a+'</span></div>').join('')+'</div>';$('mc_best').textContent=Math.max(best,1);$('mc_runs').textContent=stats.runs;
+ $('hubentry').style.display=((stats.wins||0)>0||best>=14)?'block':'none';$('m_rec').innerHTML='<div class="stats">'+[['Deepest level','Level '+Math.max(best,1)+' · '+storyLevelName355(best)],['Runs started',stats.runs],['Deaths',stats.deaths],['Escapes',stats.wins||0],['Endless record',stats.endBest?'Level '+stats.endBest:'&ndash;'],['Best on Easy',stats.easy?'Level '+stats.easy+' · '+storyLevelName355(stats.easy):'&ndash;'],['Best on Normal',stats.normal?'Level '+stats.normal+' · '+storyLevelName355(stats.normal):'&ndash;'],['Best on Hard',stats.hard?'Level '+stats.hard+' · '+storyLevelName355(stats.hard):'&ndash;']].map(([a,v])=>'<div class="st"><b>'+v+'</b><span>'+a+'</span></div>').join('')+'</div>';$('mc_best').textContent=Math.max(best,1);$('mc_runs').textContent=stats.runs;
  openSub(sec||null)}
 // camcorder readouts on the main menu: tape counter and date stamp
 let osdT0=performance.now();setInterval(()=>{if(!document.body.classList.contains('menu'))return;const s_=(performance.now()-osdT0)/1000|0,d=new Date(),M=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'][d.getMonth()];
@@ -2723,11 +2752,11 @@ function breakProj(pr){world.remove(pr.m);projs=projs.filter(q=>q!==pr)}
 function roar(v){sfx({t:'sawtooth',f:110,f2:38,dur:2.2,v:.35*v,ft:'lowpass',ff:900,r:.9})}
 
 function bossWin(){if(communityActive&&communityActive.chapter2Boss){
-  communityActive=null;stt='loading';store.set('chapter2BossCleared',true);stats.wins=(stats.wins||0)+1;saveStats();inRun=false;slotClear();sfx({f:784,dur:1.5,v:.2});card('CHAPTER 2 COMPLETE','Toethesis has been defeated.','ALL TAPES RECOVERED');
-  setTimeout(()=>{B=null;document.body.classList.remove('boss');openHub();hubScreen('chapter2');$('hubnote').textContent='CHAPTER 2 COMPLETE — Toethesis defeated. The finale can be replayed.'},2600);return}
- stt='loading';ach('win');if(!stats.goldKey){stats.goldKey=1;saveStats()}ach('golden');setTimeout(()=>{try{mkHand()}catch(e){}},50);if(DIFF.key==='hard')ach('winhard');if(perma)ach('perma');bumpBest();stats.wins=(stats.wins||0)+1;const newRacer=!stats.racerWin;stats.racerWin=1;saveStats();inRun=false;slotClear();
+  communityActive=null;stt='loading';store.set('chapter2BossCleared',true);storyBest355(27);stats.wins=(stats.wins||0)+1;saveStats();inRun=false;slotClear();sfx({f:784,dur:1.5,v:.2});card('ESCAPE COMPLETE','Toethesis has been defeated.','YOU SURVIVED ALL 26 LEVELS');
+  setTimeout(()=>{B=null;document.body.classList.remove('boss');openHub();hubScreen('chapter2');$('hubnote').textContent='ALL LEVELS COMPLETE — Toethesis defeated. Replay any unlocked level.'},2600);return}
+ stt='loading';ach('win');if(!stats.goldKey){stats.goldKey=1;saveStats()}ach('golden');setTimeout(()=>{try{mkHand()}catch(e){}},50);if(DIFF.key==='hard')ach('winhard');if(perma)ach('perma');bumpBest();stats.wins=(stats.wins||0)+1;const newRacer=!stats.racerWin;stats.racerWin=1;saveStats();storyBest355(14);
  sfx({f:523,dur:1.2,v:.15,r:.6});sfx({f:659,dur:1.2,v:.15,r:.6,d:.2});sfx({f:784,dur:1.6,v:.15,r:.6,d:.4});const f=$('flash');f.style.transition='opacity 1.2s';f.style.opacity=1;
- setTimeout(()=>{card('CHAPTER 1 COMPLETE','The Racer is defeated. Your next nightmare begins.','CHAPTER 2 UNLOCKED');if(newRacer)setTimeout(()=>note('The C823 suit is yours. Find it in SUIT.'),1500);setTimeout(()=>{f.style.transition='opacity 1.5s';f.style.opacity=0;B=null;document.body.classList.remove('boss');openHub();chapter2Start(0)},3000)},1300)}
+ setTimeout(()=>{card('THE RACER IS DEFEATED','Something deeper is waiting.','LEVEL 14 · CALIBRATION HALL UNLOCKED');if(newRacer)setTimeout(()=>note('The C823 suit is yours. Find it in SUIT.'),1500);setTimeout(()=>{f.style.transition='opacity 1.5s';f.style.opacity=0;B=null;document.body.classList.remove('boss');level=14;setStoryLevel355(level);inRun=true;loadScreen(()=>{build();reset();saveGame(1)},true,enterRun)},3000)},1300)}
 
 
 // ================= Multiplayer: peer-to-peer co-op over WebRTC (PeerJS). The host simulates monsters; everyone else mirrors them =================
@@ -3681,6 +3710,35 @@ function chapter2Architecture354(){
  for(let j=1;j<points.length;j++)line(...points[j],...points[(j% (points.length-1))+1]);
  if(idx%2===0){const c=S>>1;rect(c,c,4,4);line(2,c,S-3,c);line(c,2,c,S-3)}
  else{for(const z of[9,S>>1,S-10]){line(3,z,S-4,z);rect(S>>1,z,4,2)}}
+ // Each facility has its own recognizable macro-layout. Only clear walls to
+ // preserve the existing maze's connectivity and objective reachability.
+ const mid=S>>1,far=S-7;
+ switch(idx){
+  case 0: // calibration: a central circular-ish testing court and four approach paths
+   rect(mid,mid,5,5);for(const [x,z] of [[5,mid],[far,mid],[mid,5],[mid,far]]){rect(x,z,2,2);line(x,z,mid,mid)}break;
+  case 1: // turbine: long turbine galleries with cross-sectional maintenance aisles
+   for(const z of [9,mid,far]){rect(mid,z,Math.max(4,mid-8),1);line(4,z,far,z)}break;
+  case 2: // reservoir: three water basins connected by controlled narrow paths
+   for(const x of [9,mid,far]){rect(x,mid,3,6);line(x,mid,x,5);line(x,mid,x,far)}break;
+  case 3: // observatory: radial arms focused on a central lens chamber
+   rect(mid,mid,6,6);for(const [dx,dz] of [[-1,-1],[1,-1],[-1,1],[1,1],[0,1],[1,0]])line(mid,mid,mid+dx*(mid-6),mid+dz*(mid-6));break;
+  case 4: // cryogenic: parallel rows of cold-storage capsules and thin links
+   for(let x=9;x<far;x+=9){rect(x,mid,2,mid-8);line(x,mid,mid,mid)}break;
+  case 5: // radio: long transmitter corridors, intersecting signal corridors
+   for(const z of [7,mid,far])line(5,z,far,z);for(const x of [7,mid,far])line(x,5,x,far);break;
+  case 6: // containment: isolated specimen pods off a broad central passage
+   line(4,mid,far,mid);for(const x of [11,mid,far-5])for(const z of [mid-8,mid+8]){rect(x,z,3,3);line(x,z,x,mid)}break;
+  case 7: // gravity: twin circular loops and a suspended axial corridor
+   for(const d of [5,10]){rect(mid-d,mid,2,3);rect(mid+d,mid,2,3);line(mid-d,mid,mid+d,mid)}break;
+  case 8: // greenhouse: symmetrical plant conservatories and open courtyards
+   for(const x of [mid-9,mid+9])for(const z of [mid-9,mid+9]){rect(x,z,5,4);line(x,z,mid,mid)}break;
+  case 9: // transit: wide platforms bisected by trackways
+   for(const z of [mid-8,mid,mid+8]){rect(mid,z,mid-7,2);line(3,z,far,z)}break;
+  case 10: // furnace: long furnace aisles with vertical ventilation shafts
+   for(const x of [8,mid,far]){rect(x,mid,2,mid-7);line(x,5,x,far)}break;
+  case 11: // nexus: four large trials connected to a central control room
+   rect(mid,mid,7,7);for(const [x,z] of [[mid-12,mid-12],[mid+12,mid-12],[mid-12,mid+12],[mid+12,mid+12]]){rect(x,z,4,4);line(x,z,mid,mid)}break;
+ }
  // The original start must always remain open.
  rect(2,2,1,1);
 }
@@ -3754,9 +3812,9 @@ function chapter2Tick354(dt){
  if(n<s.nodes.length&&s.time>0){s.time=Math.max(0,s.time-dt);if(s.time===0){for(const q of s.nodes){q.on=false;q.bulb.material.color.setHex(0xff4343)}s.seq=0;s.hold=0;s.holdNode=-1;note('CIRCUIT RESET — TRY THE SEQUENCE AGAIN');}}
  if(s.mech==='cold'||s.mech==='heat'){
   const near=s.nodes.some(q=>q.on&&Math.hypot(px-q.x,pz-q.z)<5)||extraProtected348();
-  s.heat=Math.max(0,Math.min(1,s.heat+dt*(near?-.18:.017)));
-  if(s.heat>.73)stam=Math.max(.08,stam-dt*.19);
-  if(s.heat>.92&&s.announce<=0){say(s.mech==='cold'?'FREEZING — reach an active heater!':'OVERHEATING — reach a vent!',2200);s.announce=6}
+  s.heat=Math.max(0,Math.min(1,s.heat+dt*(near?-.18:.017))); // 100% cold does not inflict fatal damage; only stamina strain
+  if(s.heat>.73)stam=Math.max(.08,stam-dt*(s.mech==='cold'?.06:.19));
+  if(s.heat>.92&&s.announce<=0){say(s.mech==='cold'?'MAXIMUM COLD — reach a heater to recover stamina!':'OVERHEATING — reach a vent!',2200);s.announce=6}
  }
  if(s.mech==='hold'&&n<s.nodes.length){
   const q=s.nodes.find(q=>!q.on&&Math.hypot(px-q.x,pz-q.z)<2.8);
@@ -3838,8 +3896,8 @@ function hubPortal(title,sub,x,z,col){const g=new THREE.Group();g.position.set(x
  const cv_=document.createElement('canvas');cv_.width=512;cv_.height=256;const ctx=cv_.getContext('2d');ctx.fillStyle='#070909';ctx.fillRect(0,0,512,256);ctx.strokeStyle='#a6adb1';ctx.strokeRect(5,5,502,246);ctx.textAlign='center';ctx.fillStyle='#f1eedc';ctx.font='bold 63px monospace';ctx.fillText(title,256,112);ctx.fillStyle='#bdc5c9';ctx.font='24px monospace';ctx.fillText(sub,256,173);const sign=new THREE.Mesh(new THREE.PlaneGeometry(3.7,1.85),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(cv_),transparent:false,side:THREE.DoubleSide}));sign.position.y=6.55;g.add(sign);const lamp=new THREE.PointLight(col,.8,7);lamp.position.y=3;g.add(lamp);return g}
 hubPortal('STORY','REVISIT',-9,-13,0xd8c46a);hubPortal('COMMUNITY','SHARED TAPES',0,-16,0x61aaff);hubPortal('CREATE','MAKE A TAPE',9,-13,0x8fd6a3);
 let hubTime=0,hubTab='story',hubReturning=false;
-// Chapter 2: twelve sequential post-boss levels with unique loadouts and restrictions.
-// Chapter 2: twelve purpose-built facilities with different layouts and mechanics.
+// Deep levels: sequential post-Racer facilities with their own mechanics.
+// Twelve purpose-built facilities with different layouts and mechanics.
 const HUB_FEATURED=[
  {id:'calibration',n:'Calibration Hall',t:2,s:'ch2-calibration-354',d:'A circular testing atrium with interlocked terminals.',rules:'ACTIVATE THREE TERMINALS IN ORDER',mech:'order'},
  {id:'turbine',n:'Turbine Station',t:4,s:'ch2-turbine-354',d:'Power the industrial turbine before the circuits reset.',rules:'COMPLETE THE TIMED POWER CIRCUIT',mech:'timer'},
@@ -3870,30 +3928,31 @@ const CH2_VIS=[
 ];
 let communityActive=null;
 function communityCompleted(){return store.get('communityCleared',{})||{}}
-// Highest Chapter 2 index reached (0 = first level, 12 = chapter cleared).
-function chapter2Progress(){return Math.max(0,Math.min(HUB_FEATURED.length,+store.get('chapter2Progress',0)||0))}
+// Legacy save keys are retained for compatibility; all post-Racer stages are now regular numbered levels.
+function chapter2Progress(){return Math.max(0,Math.min(HUB_FEATURED.length,Math.max(+store.get('chapter2Progress',0)||0,(best||0)-14)))}
+function storyLevelName355(l){l=+l||1;return l===26?'Toethesis — Final Showdown':l===13?'The Racer — Final Workshop':l>=14&&l<=25?HUB_FEATURED[l-14].n:l>=1&&l<=12?TH[l-1].n:l>=27?'Escape Complete':TH[0].n}
+function storyEntry355(l){if(l>=14&&l<=25){const o=HUB_FEATURED[l-14];return Object.assign({},o,{chapter2:true,chapterIndex:l-14})}if(l===26)return{id:'toethesis',n:'Toethesis',chapter2Boss:true};return null}
+function setStoryLevel355(l){communityActive=storyEntry355(l);if(l>=14&&!endless){store.set('chapter2Progress',Math.max(chapter2Progress(),Math.min(12,l-14)))}}
+function storyBest355(l){if(endless)return;const v=Math.max(1,Math.min(27,+l||1));if(v>best){best=v;store.set('best',best)}if(v>(stats[DIFF.key]||0)){stats[DIFF.key]=v;saveStats()}stats.bestName=storyLevelName355(best);stats.bestLevel=best;saveStats()}
 function chapter2Start(index){
- if(!(stats.wins>0)||index<0||index>=HUB_FEATURED.length||index>chapter2Progress())return false;
+ if(!(stats.wins>0||best>=14)||index<0||index>=HUB_FEATURED.length||index>chapter2Progress())return false;
  if(stt!=='hub')openHub();
  if(stt!=='hub')return false;
- const o=HUB_FEATURED[index];hubEnter(o.t,o.s,Object.assign({},o,{chapter2:true,chapterIndex:index}));return true
+ storyBest355(14+index);hubEnter(14+index,null,storyEntry355(14+index));return true
 }
 function communityFinish(){
  if(!communityActive)return;
  const o=communityActive,cleared=communityCompleted();
  cleared[o.id||('custom:'+o.n+':'+o.s)]=true;store.set('communityCleared',cleared);
  if(o.chapter2){
-  const next=o.chapterIndex+1;
-  if(next>chapter2Progress())store.set('chapter2Progress',next);
-  communityActive=null;inRun=false;slot=null;document.body.classList.remove('cut');stt='loading';
+  // Normal story progression: don't return to the hub and don't discard the save slot.
+  const next=14+o.chapterIndex+1;
+  store.set('chapter2Progress',Math.max(chapter2Progress(),Math.min(12,next-14)));
+  level=next;setStoryLevel355(level);storyBest355(level);
   sfx({f:659,dur:.55,v:.15});
-  if(next<HUB_FEATURED.length){
-   card('CHAPTER 2','LEVEL '+(o.chapterIndex+1)+' COMPLETE','NEXT: '+HUB_FEATURED[next].n);
-   setTimeout(()=>chapter2Start(next),1600);
-  }else{
-   card('THE CORE IS OPEN','All twelve facilities conquered.','TOETHESIS IS WAITING.');
-   setTimeout(()=>{openHub();hubEnter(13,'toethesis-finale-823',{id:'toethesis',n:'Toethesis',chapter2Boss:true})},2200);
-  }
+  san=Math.min(100,san+25);breakdown=0;
+  const bonus=(level-1)%3===0&&lives<5&&!perma;if(bonus)lives++;
+  loadScreen(()=>{build();reset();saveGame(1);mpSave();if(bonus)setTimeout(()=>say('+1 LIFE',1900),1900)},true);
   return;
  }
  communityActive=null;inRun=false;slot=null;document.body.classList.remove('cut');stt='loading';sfx({f:659,dur:.55,v:.15});card('TAPE COMPLETE',o.n,'Returning to the Hub');setTimeout(()=>{openHub();hubScreen('community');$('hubnote').textContent='COMMUNITY LEVEL CLEARED: '+o.n},1250)
@@ -3902,26 +3961,26 @@ function hubCommunity(){return (store.get('community',[])||[]).filter(x=>x&&type
 function hubScreen(t){
  hubTab=t;document.querySelectorAll('#hubtabs [data-ht]').forEach(b=>b.classList.toggle('on',b.dataset.ht===t));
  $('hubcreate').style.display=t==='create'?'block':'none';$('hublist').style.display=t==='create'?'none':'grid';
- $('hubnote').textContent=t==='story'?'CHAPTER 1 — Revisit any original story level without overwriting your saves.':t==='chapter2'?'CHAPTER 2 — THE NEW FRONTIER. Twelve new facilities with their own layouts and mechanics. Solve each facility’s objective, find the key and escape. Toethesis awaits at the end.':t==='community'?'COMMUNITY LEVELS — Play custom levels created by you or imported with a shared code.':'Create a seeded custom level, copy its code, or import a code from a friend.';
- if(t==='story')$('hublist').innerHTML=TH.map((th,i)=>'<button data-l="'+(i+1)+'"><b>'+(i===12?'LEVEL ?':'LEVEL '+(i+1))+'</b><span>'+esc(th.n)+'</span><em>ENTER</em></button>').join('');
+ $('hubnote').textContent=t==='story'?'REVISIT THE ORIGINAL LEVELS, OR CHOOSE A DEEPER UNLOCKED START FROM NEW GAME.':t==='chapter2'?'THE DEEPER LEVELS — Twelve original facilities with unique layouts and mechanics. Reach a level to unlock it as a starting level. Toethesis awaits at the end.':t==='community'?'COMMUNITY LEVELS — Play custom levels created by you or imported with a shared code.':'Create a seeded custom level, copy its code, or import a code from a friend.';
+ if(t==='story')$('hublist').innerHTML=TH.map((th,i)=>'<button data-l="'+(i+1)+'"><b>'+('LEVEL '+(i+1))+'</b><span>'+esc(th.n)+'</span><em>ENTER</em></button>').join('');
  else if(t==='chapter2'){
   const progress=chapter2Progress();
   $('hublist').innerHTML=HUB_FEATURED.map((o,i)=>{const locked=i>progress,cleared=i<progress;
-   return '<button data-ch="'+i+'" '+(locked?'disabled aria-disabled="true"':'')+' title="'+esc(o.d)+'"><b>'+(i+1)+'. '+esc(o.n)+'</b><span>'+esc(o.d)+'<br>'+esc(o.rules)+'</span><em>'+(locked?'LOCKED':cleared?'CLEARED':'NEXT')+'</em></button>'}).join('')+(progress>=HUB_FEATURED.length?'<button data-final="1"><b>13. TOETHESIS</b><span>Chapter 2 final boss encounter</span><em>'+(store.get('chapter2BossCleared',false)?'DEFEATED':'ENTER')+'</em></button>':'');
+   return '<button data-ch="'+i+'" '+(locked?'disabled aria-disabled="true"':'')+' title="'+esc(o.d)+'"><b>LEVEL '+(14+i)+' · '+esc(o.n)+'</b><span>'+esc(o.d)+'<br>'+esc(o.rules)+'</span><em>'+(locked?'LOCKED':cleared?'CLEARED':'NEXT')+'</em></button>'}).join('')+(progress>=HUB_FEATURED.length?'<button data-final="1"><b>LEVEL 26 · TOETHESIS</b><span>Final boss encounter</span><em>'+(store.get('chapter2BossCleared',false)?'DEFEATED':'ENTER')+'</em></button>':'');
  }else if(t==='community'){
   const done=communityCompleted(),items=hubCommunity();
   $('hublist').innerHTML=items.length?items.map((o,i)=>{const clear=!!done[o.id||('custom:'+o.n+':'+o.s)];return '<button data-c="'+i+'" title="'+esc(o.d||'Seeded custom map')+'"><b>'+esc(o.n)+'</b><span>'+esc(o.d||TH[o.t-1].n)+'</span><em>'+(clear?'CLEARED':'PLAY')+'</em></button>'}).join(''):'<p>No shared levels yet. Choose CREATE / IMPORT to add one.</p>';
  }
 }
-function openHub(){if(NET.on){toMenu();return}if(!(stats.wins>0)){toMenu();return}
+function openHub(){if(NET.on){toMenu();return}if(!(stats.wins>0||best>=14)){toMenu();return}
  if((stt==='play'||stt==='pause')&&!communityActive)saveGame();inRun=false;document.exitPointerLock&&document.exitPointerLock();$('objective348').style.display='none';$('ov').style.display='none';$('load').classList.add('off');$('mapw').style.display='none';$('inv').classList.remove('on');invOn=false;mapOn=false;document.body.classList.remove('menu','boss','armed','downed','hiding','invo','cut');$('adm').style.display='none';A.open=false;document.body.classList.add('hubmode');stt='hub';if(AC)MG.gain.setTargetAtTime(CFG.vol*.4,AC.currentTime,.2);hubScreen('story')}
 function hubFrame(dt){hubTime+=dt;hubCamera.aspect=innerWidth/innerHeight;hubCamera.updateProjectionMatrix();hubCamera.position.set(Math.sin(hubTime*.12)*1.0,2.35+Math.sin(hubTime*.27)*.11,4.5+Math.cos(hubTime*.1)*.3);hubCamera.lookAt(0,2.8,-14)}
 function hubEnter(l,s=null,community=null){if(stt!=='hub')return;
  communityActive=community;document.body.classList.remove('hubmode');stt='menu';document.body.classList.remove('menu');NET.on=false;slot=null;slotName=null;inRun=false;endless=false;thiC={};runSeed=s?hashStr(s):null;perma=!!(community&&community.one);noMap=!!(community&&community.nm);noWand=!!(community&&community.nw);level=l;DIFF=DF[CFG.diff]||DF.normal;
- startLoad();loadScreen(()=>{restart(l);inRun=false;if(community){if(community.st!=null)stam=community.st;if(community.bt!=null)bat=community.bt;hud()}stats.runs++;saveStats()},false,()=>{enterRun();if(community)setTimeout(()=>say((community.chapter2?'CHAPTER 2 · LEVEL '+(community.chapterIndex+1)+'/12: ':'COMMUNITY LEVEL: ')+community.n+' — '+(community.rules||'CUSTOM'),4500),1200)})} 
+ startLoad();loadScreen(()=>{restart(l);inRun=false;if(community){if(community.st!=null)stam=community.st;if(community.bt!=null)bat=community.bt;hud()}stats.runs++;saveStats()},false,()=>{enterRun();if(community)setTimeout(()=>say((community.chapter2?'LEVEL '+level+' · ':'COMMUNITY LEVEL: ')+community.n+' — '+(community.rules||'CUSTOM'),4500),1200)})} 
 $('hubentry').onclick=()=>openHub();
 $('hubtabs').onclick=e=>{const b=e.target.closest('[data-ht]');if(b)hubScreen(b.dataset.ht)};
-$('hublist').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.l)hubEnter(+b.dataset.l);else if(b.dataset.ch!==undefined)chapter2Start(+b.dataset.ch);else if(b.dataset.final){hubEnter(13,'toethesis-finale-823',{id:'toethesis',n:'Toethesis',chapter2Boss:true})}else if(b.dataset.c!==undefined){const o=hubCommunity()[+b.dataset.c];if(o)hubEnter(o.t,o.s,o)}};
+$('hublist').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.l)hubEnter(+b.dataset.l);else if(b.dataset.ch!==undefined)chapter2Start(+b.dataset.ch);else if(b.dataset.final){hubEnter(26,null,storyEntry355(26))}else if(b.dataset.c!==undefined){const o=hubCommunity()[+b.dataset.c];if(o)hubEnter(o.t,o.s,o)}};
 $('hubmenu').onclick=toMenu;
 $('hubpause').style.display='none';
 const hubThemeSel=$('hubtheme');TH.slice(0,12).forEach((t,i)=>{const o=document.createElement('option');o.value=i+1;o.textContent='Level '+(i+1)+' - '+t.n;hubThemeSel.appendChild(o)});
