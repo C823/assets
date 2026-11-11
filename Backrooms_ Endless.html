@@ -535,32 +535,79 @@ body.hubmode #menu,body.hubmode #ov{display:none!important}
 #objective348{position:fixed;left:50%;top:64px;transform:translateX(-50%);font:400 21px var(--fd);z-index:3;color:#e4cf74;text-shadow:2px 2px #000;pointer-events:none;text-align:center;display:none}
 body.menu #objective348,body.hubmode #objective348,body.cut #objective348{display:none!important}
 </style>
-<style id="br355-redesign">
-/* v3.55 — consolidated visual system: neon-industrial / premium horror UI */
-:root{--ink:#edf5fa;--mute:#a0b1c1;--hi:#8eeaf1;--grn:#87ecbf;--fd: 'Arial Narrow',Impact,system-ui,sans-serif;--fb:Inter,'Segoe UI',system-ui,sans-serif}
+<style id="br356-horror-ui">
+/* v3.56: Analog-horror visual language, in step with the actual Backrooms footage. */
+:root{
+ --ink:#e8e1ce;--y:#e8e1ce;--acc:#e8e1ce;
+ --mute:rgba(232,225,206,.64);--hi:#d1bd76;--grn:#9abd9d;
+ --line:rgba(232,225,206,.20);--panel:rgba(13,12,10,.93);
+ --fd:'VT323','Courier New',monospace;
+ --fb:'IBM Plex Mono',Consolas,'Courier New',monospace;
+ --fm:'VT323','Courier New',monospace;
+}
 body{font-family:var(--fb);color:var(--ink)}
-#menu{background:radial-gradient(ellipse 55% 78% at 76% 32%,rgba(18,89,110,.28),transparent),linear-gradient(115deg,rgba(3,11,19,.64),rgba(5,12,17,.12))}
-#menu:before{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(0,0,0,.18),transparent 50%),repeating-linear-gradient(0deg,transparent 0 3px,rgba(125,190,205,.018) 3px 4px);z-index:0}
+/* Leave the moving game scene and its film grain visible behind the menu. */
+#menu{background:linear-gradient(90deg,rgba(5,5,3,.84) 0%,rgba(6,6,4,.58) 44%,rgba(0,0,0,.12) 82%)}
+#menu::before{content:'';position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(0,0,0,.075) 3px 4px);opacity:.7}
 #menu>#osd,#menu>#mph,#menu>#mlogo,#menu>#mchip,#menu>#mpanel,#menu>#msub,#menu>#newg,#menu>#mfoot,#menu>#slotp{z-index:2}
-#mlogo{filter:drop-shadow(0 6px 26px rgba(24,198,215,.13))}
-#mpanel.glass,#msub.glass,#newg.glass,#slotp.glass{background:rgba(8,19,28,.87)!important;border:1px solid rgba(136,205,224,.18)!important;box-shadow:0 22px 70px rgba(0,0,0,.4),inset 0 1px rgba(216,246,250,.1);backdrop-filter:blur(22px) saturate(120%);-webkit-backdrop-filter:blur(22px) saturate(120%);border-radius:16px!important}
-#mpanel{padding:12px!important;gap:3px}#mpanel .mb{border-radius:8px!important;padding:10px 18px!important;letter-spacing:.075em;transition:background .16s,border-color .16s,transform .16s;color:#e3eef4!important}#mpanel .mb:hover,#mpanel .mb.on{background:rgba(59,184,204,.17)!important;color:#aaf7ff!important;transform:translateX(2px)}
-#msub,#newg,#slotp{padding:clamp(20px,2.4vw,38px)!important;overflow-y:auto;scrollbar-color:rgba(96,194,212,.45) transparent}
-#msub h3,#newg h3,#slotp h3{color:#f1faff!important;letter-spacing:.06em;font-weight:750}#msub p,#newg p,#slotp p{line-height:1.58}
-#msub button,#newg button,#slotp button,#hub button,.btng,.btnp{transition:background .18s,border-color .18s,transform .18s,box-shadow .18s;border-radius:9px}#msub button:hover,#newg button:hover,#slotp button:hover,#hub button:hover,.btng:hover,.btnp:hover{box-shadow:0 5px 22px rgba(33,165,192,.12)}
-#newg select,#newg input:not([type=checkbox]),#msub select,#msub input:not([type=checkbox]):not([type=range]),#hub input,#hub select{background:rgba(5,18,28,.88)!important;color:#e9f7ff!important;border:1px solid rgba(131,200,219,.29)!important;border-radius:8px!important;padding:9px 12px;outline-offset:2px}
-#newg select:focus,#hub input:focus,#hub select:focus{outline:2px solid #73dce9!important}
-#newg .btnp,#m_new,.btnp{background:linear-gradient(120deg,#1f859d,#37b8bd)!important;color:#071319!important;border:1px solid rgba(164,246,245,.6)!important;font-weight:800!important}
-#newg .btnp:hover,.btnp:hover{background:linear-gradient(120deg,#43bacc,#96f0e9)!important}
-#hub{background:radial-gradient(ellipse at 50% 12%,rgba(34,100,135,.3),transparent 55%),rgba(2,10,18,.91)!important;backdrop-filter:blur(9px)}
-#hubhead{border-bottom:1px solid rgba(130,218,230,.18);padding-bottom:18px!important}#hubhead h1{color:#efffff!important;letter-spacing:.11em;text-shadow:0 0 30px rgba(88,213,235,.32)}#hubhead p{line-height:1.6;color:#a8c3d2}
-#hubtabs{border-bottom:1px solid rgba(170,220,235,.2);gap:6px!important}#hubtabs button{color:#a9c9d6!important;font-weight:700;letter-spacing:.07em}#hubtabs button.on{background:rgba(47,147,174,.32)!important;color:#bcf8ff!important;border-bottom:2px solid #83e5e7}
-#hublist button{background:linear-gradient(150deg,rgba(18,45,58,.96),rgba(9,22,33,.95))!important;border:1px solid rgba(132,208,230,.2)!important;border-radius:12px!important;padding:17px!important;text-align:left;min-height:112px}#hublist button:hover:not(:disabled){background:linear-gradient(145deg,rgba(32,77,93,.98),rgba(13,37,54,.96))!important;border-color:rgba(121,229,239,.78)!important;transform:translateY(-2px)}#hublist button:disabled{opacity:.35}#hublist button b{color:#e2faff!important}#hublist button em{color:#82f1cb!important}
-#hubmark,#osd{letter-spacing:.1em;color:#9ac4d1!important}
-#hud{border-radius:10px;background:linear-gradient(100deg,rgba(1,11,20,.81),rgba(1,18,26,.44));backdrop-filter:blur(8px);border:1px solid rgba(135,209,228,.2);padding:12px 15px!important;box-shadow:0 8px 28px rgba(0,0,0,.2)}
-#objective348{background:rgba(3,19,29,.79)!important;border:1px solid rgba(121,232,237,.35)!important;border-radius:10px;padding:9px 13px!important;color:#a8f4e5!important;box-shadow:0 8px 22px #0005}
-#patchnotes>div,#patchnotes .patchbox{border-radius:15px}#ver{color:#a4e4ee!important}#mchip{border-radius:12px;background:rgba(3,19,30,.75);border:1px solid rgba(125,212,230,.19);padding:8px 14px}
-@media(max-width:850px){#hubmain{max-height:68vh;overflow-y:auto}#hublist{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))!important}#newg{max-height:88vh;overflow:auto}#msub{max-height:86vh;overflow:auto}}
+#mlogo{filter:drop-shadow(2px 3px 3px rgba(0,0,0,.95))}
+#mpanel.glass{border:0!important;background:transparent!important;box-shadow:none!important;backdrop-filter:none!important;padding:1vh 0 0!important}
+#mpanel .mb{border:0;border-radius:0!important;color:var(--ink)!important;text-align:left;letter-spacing:.03em;font:400 clamp(26px,4.6vh,46px)/1 var(--fd);background:transparent;transition:color .12s,background .12s}
+#mpanel .mb:hover:not(:disabled),#mpanel .mb:focus-visible,#mpanel .mb.on{color:#0b0a08!important;background:var(--ink)!important;text-shadow:none;transform:none}
+#msub.glass,#newg.glass,#slotp.glass,#mp.glass,.glass,#setPause,#inv,#mapw,#adm{
+ background:rgba(9,9,7,.92)!important;border:2px solid rgba(232,225,206,.68)!important;
+ border-radius:0!important;box-shadow:0 8px 45px rgba(0,0,0,.54)!important;
+ backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+}
+#msub,#newg,#slotp,#mp{scrollbar-color:rgba(232,225,206,.48) transparent}
+#msub h3,#newg h3,#mp h3,#slotp h3,#admpw b,#setPause .lbl:first-child{
+ background:var(--ink)!important;color:#090907!important;font:400 clamp(26px,4vh,36px)/1 var(--fd)!important;
+ letter-spacing:.025em!important;padding:3px 10px 1px!important;text-shadow:none!important;border-radius:0!important;
+}
+#msub p,#newg p,#slotp p{line-height:1.6}
+.btnp,.btng,#hub button,#msub button,#newg button,#slotp button{
+ border-radius:0!important;transform:none!important;transition:background-color .12s,color .12s,border-color .12s!important;
+ box-shadow:none!important;
+}
+.btnp,#newg .btnp,#m_new{background:var(--ink)!important;color:#090907!important;border:2px solid var(--ink)!important;font:400 30px/1 var(--fd)!important;letter-spacing:.035em!important}
+.btnp:hover,#newg .btnp:hover,#m_new:hover{background:#fff8e9!important;border-color:#fff8e9!important}
+.btng{background:rgba(5,5,4,.78)!important;color:var(--ink)!important;border:2px solid rgba(232,225,206,.65)!important}
+.btng:hover{background:var(--ink)!important;color:#090907!important}
+#newg select,#newg input:not([type=checkbox]):not([type=range]),#msub select,#msub input:not([type=checkbox]):not([type=range]),#hub input,#hub select,#slotp input{
+ background:#11100d!important;color:var(--ink)!important;border:1px solid rgba(232,225,206,.45)!important;
+ border-radius:0!important;box-shadow:none!important;font-family:var(--fb)!important;
+}
+#newg select:focus,#newg input:focus,#msub input:focus,#hub input:focus,#hub select:focus{outline:1px solid var(--ink)!important;outline-offset:2px}
+#newg h4,#mp h4,.ssub{font:400 24px/1 var(--fd)!important;color:var(--ink)!important}
+#newg h4::after,#mp h4::after,.ssub::after{background:rgba(232,225,206,.25)}
+#newg .pcols,#mp .mcols{column-gap:2vw}
+#mode button,#diff button,.mcard,#m_cwrap,#nsum,#slotl button,#m_clist button{border-radius:0!important;box-shadow:inset 0 0 0 1px rgba(232,225,206,.32)!important;background:rgba(25,24,19,.7)!important}
+#mode button:hover,#diff button:hover,#slotl button:hover{background:rgba(232,225,206,.12)!important}
+#hub{background:transparent!important;backdrop-filter:none!important}
+#hub::before{background:linear-gradient(90deg,rgba(3,3,3,.93) 0%,rgba(4,4,3,.77) 54%,rgba(4,4,3,.28) 100%)!important}
+#hubhead{border:0!important;padding:0!important}#hubhead h1{color:var(--ink)!important;text-shadow:var(--osd)!important;letter-spacing:.02em!important}
+#hubhead p,#hubmark{color:var(--mute)!important;letter-spacing:.03em!important}
+#hubtabs{gap:6px!important;border:0!important}
+#hubtabs button{font:400 23px/1 var(--fd)!important;letter-spacing:.02em!important;border:2px solid rgba(232,225,206,.6)!important;color:var(--ink)!important;background:rgba(5,5,4,.95)!important}
+#hubtabs button:hover,#hubtabs button.on{background:var(--ink)!important;color:#0a0907!important;border-color:var(--ink)!important}
+#hublist button{min-height:70px!important;padding:10px 12px!important;background:rgba(9,9,8,.95)!important;border:1px solid rgba(232,225,206,.5)!important;border-radius:0!important;text-align:left!important}
+#hublist button:hover:not(:disabled){background:var(--ink)!important;color:#090907!important;border-color:var(--ink)!important;transform:none!important}
+#hublist button b{color:inherit!important;font:400 27px/1 var(--fd)!important}
+#hublist button em{color:var(--hi)!important}#hublist button:hover em{color:#413513!important}
+#hublist button span{color:var(--mute)}#hublist button:hover span{color:#4a4539}
+#hubnote,#hubcreate{background:rgba(9,9,7,.95)!important;color:var(--ink);border:1px solid rgba(232,225,206,.4);border-radius:0!important}
+#hubcreate button{border-radius:0!important}
+#hubmark,#osd{color:var(--mute)!important;text-shadow:var(--osd)!important}
+/* No dashboard cards floating over the footage: HUD remains camcorder text. */
+#hud{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;backdrop-filter:none!important;border-radius:0!important;text-shadow:var(--osd),0 2px 7px #000!important}
+#objective348{background:rgba(0,0,0,.75)!important;color:var(--hi)!important;border:1px solid rgba(232,225,206,.4)!important;border-radius:0!important;padding:4px 12px!important;box-shadow:none!important;text-shadow:var(--osd)!important}
+#bars .tr{background:rgba(232,225,206,.22)}
+#hint,#rec,#comp,#mchip{color:var(--mute)!important}
+#patchbox{border-radius:0!important;background:#0a0907!important;border:2px solid var(--ink)!important;box-shadow:0 0 0 8px rgba(0,0,0,.75)!important}
+#ver{color:var(--mute)!important;border-radius:0!important}#ver:hover{color:var(--ink)!important}
+#mchip{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+@media(max-width:850px){#hubmain{max-height:67vh;overflow-y:auto}#hublist{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}#newg{max-height:88vh;overflow:auto}#msub{max-height:86vh;overflow:auto}}
+@media(max-width:520px){#hubtabs button{font-size:20px!important;padding:7px!important}#mpanel .mb{font-size:clamp(23px,5vh,39px)!important}#hubhead h1{font-size:clamp(47px,10vw,72px)!important}}
 </style>
 </head><body>
 <canvas id="grain" class="fx" width="160" height="90"></canvas><div id="scan" class="fx"></div><div id="vig" class="fx"></div><div id="dmg" class="fx"></div><div id="insane" class="fx"></div><div id="flash" class="fx"></div>
@@ -604,7 +651,7 @@ body{font-family:var(--fb);color:var(--ink)}
 </div></div>
 <div id="admpw" class="glass"><b>ADMIN PANEL</b><p>Enter an admin code to unlock the admin panel. You only need to do this once per code.</p><input id="pw_in" type="password" maxlength="24" autocomplete="off" spellcheck="false"><div class="r"><button class="btnp" id="pw_ok">UNLOCK</button><button class="btng" id="pw_x">CANCEL</button></div><p id="pw_msg"></p></div>
 
-<div id="hub"><div id="hubhead"><div><h1>THE HUB</h1><p>THE JOURNEY CONTINUES.<br>REPLAY UNLOCKED LEVELS OR CREATE YOUR OWN.</p></div><button id="hubmenu">MAIN MENU</button></div><div id="hubmain"><div id="hubtabs"><button data-ht="story" class="on">ORIGINAL LEVELS</button><button data-ht="chapter2">DEEPER LEVELS</button><button data-ht="community">COMMUNITY LEVELS</button><button data-ht="create">CREATE / IMPORT</button></div><p id="hubnote"></p><div id="hublist"></div><div id="hubcreate"><label>LEVEL NAME<input id="hubname" type="text" maxlength="36" placeholder="The Forgotten Hallway"></label><label>ENVIRONMENT<select id="hubtheme"></select></label><label>WORLD SEED<input id="hubseed" type="text" maxlength="40" placeholder="Enter a seed or leave blank for random"></label><h4 style="margin:14px 0 4px;font:400 26px var(--fd)">VISUAL LEVEL EDITOR</h4><small>Paint a 12x12 layout. Objects snap to reachable rooms when your map is generated. Click or drag tiles to paint. Switches must be activated before escaping.</small><div class="edrow"><label style="flex:1;margin:0">BRUSH<select id="edbrush"><option value="wall">COVER / WALL</option><option value="enemy">ENTITY SPAWN</option><option value="supply">SUPPLY CACHE</option><option value="switch">GENERATOR SWITCH</option><option value="erase">ERASER</option></select></label><button id="edclear">CLEAR GRID</button></div><div id="editgrid"></div><small id="edcount">0 objects placed</small><div class="actions"><button id="hubmake">SAVE LEVEL + COPY CODE</button><button id="hubplaycustom">PLAY CUSTOM LEVEL</button></div><label style="margin-top:14px">IMPORT SHARED LEVEL CODE<input id="hubimport" type="text" maxlength="4000" placeholder="BR43-... or BR48-..."></label><div class="actions"><button id="hubadd">IMPORT LEVEL</button></div><small>Community levels support authored placements layered onto procedural rooms. Export a code to share; public online uploading still needs a server.</small><div id="hubmsg"></div></div></div><div id="hubmark">26 LEVELS &middot; ONE JOURNEY &middot; v3.55</div></div>
+<div id="hub"><div id="hubhead"><div><h1>THE HUB</h1><p>THE JOURNEY CONTINUES.<br>REPLAY UNLOCKED LEVELS OR CREATE YOUR OWN.</p></div><button id="hubmenu">MAIN MENU</button></div><div id="hubmain"><div id="hubtabs"><button data-ht="story" class="on">ORIGINAL LEVELS</button><button data-ht="chapter2">DEEPER LEVELS</button><button data-ht="community">COMMUNITY LEVELS</button><button data-ht="create">CREATE / IMPORT</button></div><p id="hubnote"></p><div id="hublist"></div><div id="hubcreate"><label>LEVEL NAME<input id="hubname" type="text" maxlength="36" placeholder="The Forgotten Hallway"></label><label>ENVIRONMENT<select id="hubtheme"></select></label><label>WORLD SEED<input id="hubseed" type="text" maxlength="40" placeholder="Enter a seed or leave blank for random"></label><h4 style="margin:14px 0 4px;font:400 26px var(--fd)">VISUAL LEVEL EDITOR</h4><small>Paint a 12x12 layout. Objects snap to reachable rooms when your map is generated. Click or drag tiles to paint. Switches must be activated before escaping.</small><div class="edrow"><label style="flex:1;margin:0">BRUSH<select id="edbrush"><option value="wall">COVER / WALL</option><option value="enemy">ENTITY SPAWN</option><option value="supply">SUPPLY CACHE</option><option value="switch">GENERATOR SWITCH</option><option value="erase">ERASER</option></select></label><button id="edclear">CLEAR GRID</button></div><div id="editgrid"></div><small id="edcount">0 objects placed</small><div class="actions"><button id="hubmake">SAVE LEVEL + COPY CODE</button><button id="hubplaycustom">PLAY CUSTOM LEVEL</button></div><label style="margin-top:14px">IMPORT SHARED LEVEL CODE<input id="hubimport" type="text" maxlength="4000" placeholder="BR43-... or BR48-..."></label><div class="actions"><button id="hubadd">IMPORT LEVEL</button></div><small>Community levels support authored placements layered onto procedural rooms. Export a code to share; public online uploading still needs a server.</small><div id="hubmsg"></div></div></div><div id="hubmark">26 LEVELS &middot; ONE JOURNEY &middot; v3.56</div></div>
 <div id="menu">
 <div id="osd"><span id="osd_tr">&#9654; PLAY &nbsp;SP <b id="osd_t">0:00:00</b></span><span id="osd_br"></span><span id="osd_sync"></span><button id="osd_acct" style="display:none" title="Your site account"></button></div>
 <a id="mph" href="https://powerhouse.c823.workers.dev" target="_top" title="Powerhouse" aria-label="Go to Powerhouse"><img alt="Powerhouse" src="https://raw.githubusercontent.com/C823/Powerhouse/main/icons/POWERHOUSE-icon-dark.png" onerror="this.parentNode.textContent='PWR'"></a>
@@ -651,7 +698,7 @@ body{font-family:var(--fb);color:var(--ink)}
 <div id="slotp" class="glass"><div class="phead"><h3 id="slott">SAVE SLOT</h3><span class="pch" id="slotch"></span></div><p id="slotd"></p><div id="slotl"></div>
 <div id="slotn" style="display:none"><h4 class="ssub"><i>&#9654;</i>NAME THIS SAVE</h4><input id="slot_nm" type="text" maxlength="24" spellcheck="false" autocomplete="off"><p>Shown on the save list so you can tell your runs apart.</p></div>
 <div class="pfoot"><p></p><div class="nrow"><button class="btng" id="slot_back">BACK</button><button class="btnp" id="slot_go" style="display:none">START</button></div></div></div>
-<div id="mp" class="glass"><div class="phead"><h3>MULTIPLAYER</h3><span class="pch"><b>&#9679;</b> CH 02 &middot; CO-OP &middot; UP TO 4</span></div>
+<div id="mp" class="glass"><div class="phead"><h3>MULTIPLAYER</h3><span class="pch"><b>&#9679;</b> CO-OP &middot; UP TO 4</span></div>
 <p class="mpd">Everyone explores the same levels together, shares the key, and has to reach the exit door.</p>
 <div class="opt"><span>Your name<small id="mp_namehint">Shown to the other players</small></span><input id="mp_name" type="text" maxlength="16" spellcheck="false" placeholder="Player"></div>
 <div id="mp_home"><div class="mcard" id="mp_pubw"><h4><i>&#9679;</i>PUBLIC LOBBIES<span id="mp_pubn"></span></h4><div id="mp_publist"></div></div><div class="mcols">
@@ -663,11 +710,12 @@ body{font-family:var(--fb);color:var(--ink)}
 <div class="mcard"><h4><i>B</i>PLAYERS</h4><div id="mp_list"></div></div>
 <div id="mp_chat" class="mcard"><h4><i>C</i>CHAT</h4><div id="mp_chatlog"></div><div class="chrow"><input id="mp_chatin" type="text" maxlength="120" spellcheck="false" autocomplete="off" placeholder="Say hi to the room"><button class="btng" id="mp_chatgo">SEND</button></div></div></div><div id="mp_saves"></div><button class="btnp" id="mp_start">START NEW GAME</button></div>
 <div class="pfoot"><p id="mp_status"></p><div class="nrow"><button class="btng" id="mp_back">BACK</button></div></div></div>
-<button id="ver" type="button" aria-haspopup="dialog" aria-controls="patchnotes" title="View patch notes">v3.55 &middot; 2026-11-11 <span aria-hidden="true">[PATCH NOTES]</span></button></div>
+<button id="ver" type="button" aria-haspopup="dialog" aria-controls="patchnotes" title="View patch notes">v3.56 &middot; 2026-11-11 <span aria-hidden="true">[PATCH NOTES]</span></button></div>
 <div id="patchnotes" role="dialog" aria-modal="true" aria-labelledby="patchtitle" aria-hidden="true">
  <div id="patchbox">
-  <div id="patchhead"><h2 id="patchtitle">PATCH NOTES <span style="color:var(--hi)">v3.55</span></h2><button id="patchclose" type="button" aria-label="Close patch notes">X CLOSE</button></div>
+  <div id="patchhead"><h2 id="patchtitle">PATCH NOTES <span style="color:var(--hi)">v3.56</span></h2><button id="patchclose" type="button" aria-label="Close patch notes">X CLOSE</button></div>
   <div id="patchbody">
+   <section class="patchentry"><h3>v3.56 <time datetime="2026-11-11">NOV 11, 2026</time></h3><ul><li>Rebuilt the UI around the game’s original VHS camcorder look, with warm monochrome colors and analog typography.</li><li>Removed the cyan sci-fi dashboard theme, rounded panels and bright glossy buttons.</li><li>Restyled the main menu, level selection, Hub, in-game HUD, settings and popup controls while keeping existing features.</li></ul></section>
    <section class="patchentry"><h3>v3.55 <time datetime="2026-11-11">NOV 11, 2026</time></h3><ul><li>Removed chapter divisions: the original 13 levels lead directly to 12 unique facility levels and a Toethesis finale.</li><li>Levels 14–26 are named, unlock as New Game starting positions when reached, and update the shared best-level record.</li><li>Reduced cold-meter effects and made 100% cold nonlethal.</li><li>Refreshed menus, level selection, pause/heads-up presentation, and hub styling with a unified dark sci-fi theme.</li></ul></section>
    <section class="patchentry"><h3>v3.54 <time datetime="2026-11-10">NOV 10, 2026</time></h3><ul><li>Replaced all 12 Chapter 2 challenge levels with original facility locations, layouts and level-specific puzzle mechanics.</li><li>New challenges include ordered terminals, timed power circuits, pressure valves, flashlight receivers, freezing and overheating systems, silence puzzles, decontamination holds, stamina-powered terminals and a combined final test.</li><li>Chapter 2 uses newly carved chamber layouts and dedicated industrial set dressing instead of abandoned Chapter 1 levels.</li><li>Preserved completed Chapter 2 progress, custom community levels, checkpoints and the Toethesis finale.</li></ul></section>
    <section class="patchentry"><h3>v3.53 <time datetime="2026-11-09">NOV 09, 2026</time></h3><ul><li>Removed the Iron Man and Ultron character suits; anyone with one equipped is returned to the default orange suit.</li><li>Added mix-and-match accessories: baseball cap, headphones, halo, backpack, crown, and safety goggles.</li><li>Accessories save to your settings, display in the suit preview, animate in camera views, and synchronize across multiplayer players.</li></ul></section>
