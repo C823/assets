@@ -710,11 +710,12 @@ body{font-family:var(--fb);color:var(--ink)}
 <div class="mcard"><h4><i>B</i>PLAYERS</h4><div id="mp_list"></div></div>
 <div id="mp_chat" class="mcard"><h4><i>C</i>CHAT</h4><div id="mp_chatlog"></div><div class="chrow"><input id="mp_chatin" type="text" maxlength="120" spellcheck="false" autocomplete="off" placeholder="Say hi to the room"><button class="btng" id="mp_chatgo">SEND</button></div></div></div><div id="mp_saves"></div><button class="btnp" id="mp_start">START NEW GAME</button></div>
 <div class="pfoot"><p id="mp_status"></p><div class="nrow"><button class="btng" id="mp_back">BACK</button></div></div></div>
-<button id="ver" type="button" aria-haspopup="dialog" aria-controls="patchnotes" title="View patch notes">v3.56 &middot; 2026-11-11 <span aria-hidden="true">[PATCH NOTES]</span></button></div>
+<button id="ver" type="button" aria-haspopup="dialog" aria-controls="patchnotes" title="View patch notes">v3.57 &middot; 2026-11-11 <span aria-hidden="true">[PATCH NOTES]</span></button></div>
 <div id="patchnotes" role="dialog" aria-modal="true" aria-labelledby="patchtitle" aria-hidden="true">
  <div id="patchbox">
-  <div id="patchhead"><h2 id="patchtitle">PATCH NOTES <span style="color:var(--hi)">v3.56</span></h2><button id="patchclose" type="button" aria-label="Close patch notes">X CLOSE</button></div>
+  <div id="patchhead"><h2 id="patchtitle">PATCH NOTES <span style="color:var(--hi)">v3.57</span></h2><button id="patchclose" type="button" aria-label="Close patch notes">X CLOSE</button></div>
   <div id="patchbody">
+   <section class="patchentry"><h3>v3.57 <time datetime="2026-11-11">NOV 11, 2026</time></h3><ul><li>Updated the main menu background to showcase the newer story levels instead of sticking to the old menu backdrop logic.</li><li>If you have an active save, the menu now reflects that saved level. Otherwise it selects from your unlocked levels, including the deeper levels and final boss once reached.</li></ul></section>
    <section class="patchentry"><h3>v3.56 <time datetime="2026-11-11">NOV 11, 2026</time></h3><ul><li>Rebuilt the UI around the game’s original VHS camcorder look, with warm monochrome colors and analog typography.</li><li>Removed the cyan sci-fi dashboard theme, rounded panels and bright glossy buttons.</li><li>Restyled the main menu, level selection, Hub, in-game HUD, settings and popup controls while keeping existing features.</li></ul></section>
    <section class="patchentry"><h3>v3.55 <time datetime="2026-11-11">NOV 11, 2026</time></h3><ul><li>Removed chapter divisions: the original 13 levels lead directly to 12 unique facility levels and a Toethesis finale.</li><li>Levels 14–26 are named, unlock as New Game starting positions when reached, and update the shared best-level record.</li><li>Reduced cold-meter effects and made 100% cold nonlethal.</li><li>Refreshed menus, level selection, pause/heads-up presentation, and hub styling with a unified dark sci-fi theme.</li></ul></section>
    <section class="patchentry"><h3>v3.54 <time datetime="2026-11-10">NOV 10, 2026</time></h3><ul><li>Replaced all 12 Chapter 2 challenge levels with original facility locations, layouts and level-specific puzzle mechanics.</li><li>New challenges include ordered terminals, timed power circuits, pressure valves, flashlight receivers, freezing and overheating systems, silence puzzles, decontamination holds, stamina-powered terminals and a combined final test.</li><li>Chapter 2 uses newly carved chamber layouts and dedicated industrial set dressing instead of abandoned Chapter 1 levels.</li><li>Preserved completed Chapter 2 progress, custom community levels, checkpoints and the Toethesis finale.</li></ul></section>
@@ -2545,8 +2546,18 @@ $('m_x').onclick=()=>{sfx({n:1,ft:'bandpass',ff:900,dur:.05,v:.08});openSub(null
 
 // ================= Level ?: the final level =================
 let B=null,bossMenu=false,php=100,hurtF=0,bShake=0,bRoll=0,lastHurt=0,projs=[],hazs=[],bossS1=null;
-// main menu background: Level ? once the game has been beaten, otherwise the level your saved run is on (Level 0 with no save); monsters hidden
-function menuBG(){endless=false;thiC={};const L_=level,rs_=runSeed,sv=lastSave(),won=(stats.wins||0)>0;level=won?TH.length:sv?sv.level:1;runSeed=null;bossMenu=true;build(won?4242:sv?sv.seed:4242);bossMenu=false;
+// main menu background: show the current saved run when there is one, otherwise showcase any unlocked story level (including the new deeper levels); monsters hidden
+function menuBG(){endless=false;thiC={};const L_=level,rs_=runSeed,sv=lastSave(),mx=Math.max(1,Math.min(26,best||1));
+ let showcase=1,seed=4242;
+ if(sv&&sv.level){showcase=Math.max(1,Math.min(26,sv.level));seed=sv.seed||4242}
+ else{
+  const pool=[];
+  for(let i=1;i<=mx;i++)pool.push(i);
+  if((stats.wins||0)>0&&mx<26)pool.push(26);
+  showcase=pool.length?pool[(Math.random()*pool.length)|0]:1;
+  seed=4242+showcase*97;
+ }
+ level=showcase;runSeed=null;bossMenu=(showcase===13||showcase===26);build(seed);bossMenu=false;
  for(const m of mons)m.g.visible=false;for(const n of npcs)n.g.visible=false;for(const s_ of swarms)s_.pts.visible=false;level=L_;runSeed=rs_}
 function mkThingModel(mat,eye){const g=mkEntity(mat,null,{leg:2.4,lw:.3,th:2.3,tw:1,arm:3,aw:.2,hw:1,hh:1,hunch:.4,ribs:1,claw:3,noHead:1,lc:0x111111}),u=g.userData;
  const dc=cv(512,256),dtx=new THREE.CanvasTexture(dc);vTex(dc,3);const hd=new THREE.Mesh(new THREE.SphereGeometry(.8,24,16),new THREE.MeshPhongMaterial({map:dtx,emissive:0x5a4000,emissiveMap:dtx,shininess:30}));hd.position.set(0,.7,.05);u.head.add(hd);
