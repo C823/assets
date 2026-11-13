@@ -651,7 +651,7 @@ body{font-family:var(--fb);color:var(--ink)}
 </div></div>
 <div id="admpw" class="glass"><b>ADMIN PANEL</b><p>Enter an admin code to unlock the admin panel. You only need to do this once per code.</p><input id="pw_in" type="password" maxlength="24" autocomplete="off" spellcheck="false"><div class="r"><button class="btnp" id="pw_ok">UNLOCK</button><button class="btng" id="pw_x">CANCEL</button></div><p id="pw_msg"></p></div>
 
-<div id="hub"><div id="hubhead"><div><h1>THE HUB</h1><p>THE JOURNEY CONTINUES.<br>REPLAY UNLOCKED LEVELS OR CREATE YOUR OWN.</p></div><button id="hubmenu">MAIN MENU</button></div><div id="hubmain"><div id="hubtabs"><button data-ht="story" class="on">ORIGINAL LEVELS</button><button data-ht="chapter2">DEEPER LEVELS</button><button data-ht="community">COMMUNITY LEVELS</button><button data-ht="create">CREATE / IMPORT</button></div><p id="hubnote"></p><div id="hublist"></div><div id="hubcreate"><label>LEVEL NAME<input id="hubname" type="text" maxlength="36" placeholder="The Forgotten Hallway"></label><label>ENVIRONMENT<select id="hubtheme"></select></label><label>WORLD SEED<input id="hubseed" type="text" maxlength="40" placeholder="Enter a seed or leave blank for random"></label><h4 style="margin:14px 0 4px;font:400 26px var(--fd)">VISUAL LEVEL EDITOR</h4><small>Paint a 12x12 layout. Objects snap to reachable rooms when your map is generated. Click or drag tiles to paint. Switches must be activated before escaping.</small><div class="edrow"><label style="flex:1;margin:0">BRUSH<select id="edbrush"><option value="wall">COVER / WALL</option><option value="enemy">ENTITY SPAWN</option><option value="supply">SUPPLY CACHE</option><option value="switch">GENERATOR SWITCH</option><option value="erase">ERASER</option></select></label><button id="edclear">CLEAR GRID</button></div><div id="editgrid"></div><small id="edcount">0 objects placed</small><div class="actions"><button id="hubmake">SAVE LEVEL + COPY CODE</button><button id="hubplaycustom">PLAY CUSTOM LEVEL</button></div><label style="margin-top:14px">IMPORT SHARED LEVEL CODE<input id="hubimport" type="text" maxlength="4000" placeholder="BR43-... or BR48-..."></label><div class="actions"><button id="hubadd">IMPORT LEVEL</button></div><small>Community levels support authored placements layered onto procedural rooms. Export a code to share; public online uploading still needs a server.</small><div id="hubmsg"></div></div></div><div id="hubmark">26 LEVELS &middot; ONE JOURNEY &middot; v3.56</div></div>
+<div id="hub"><div id="hubhead"><div><h1>THE HUB</h1><p>THE JOURNEY CONTINUES.<br>REPLAY UNLOCKED LEVELS OR CREATE YOUR OWN.</p></div><button id="hubmenu">MAIN MENU</button></div><div id="hubmain"><div id="hubtabs"><button data-ht="story" class="on">ORIGINAL LEVELS</button><button data-ht="chapter2">DEEPER LEVELS</button><button data-ht="community">COMMUNITY LEVELS</button><button data-ht="create">CREATE / IMPORT</button></div><p id="hubnote"></p><div id="hublist"></div><div id="hubcreate"><label>LEVEL NAME<input id="hubname" type="text" maxlength="36" placeholder="The Forgotten Hallway"></label><label>ENVIRONMENT<select id="hubtheme"></select></label><label>WORLD SEED<input id="hubseed" type="text" maxlength="40" placeholder="Enter a seed or leave blank for random"></label><h4 style="margin:14px 0 4px;font:400 26px var(--fd)">VISUAL LEVEL EDITOR</h4><small>Paint a 12x12 layout. Objects snap to reachable rooms when your map is generated. Click or drag tiles to paint. Switches must be activated before escaping.</small><div class="edrow"><label style="flex:1;margin:0">BRUSH<select id="edbrush"><option value="wall">COVER / WALL</option><option value="enemy">ENTITY SPAWN</option><option value="supply">SUPPLY CACHE</option><option value="switch">GENERATOR SWITCH</option><option value="erase">ERASER</option></select></label><button id="edclear">CLEAR GRID</button></div><div id="editgrid"></div><small id="edcount">0 objects placed</small><div class="actions"><button id="hubmake">SAVE LEVEL + COPY CODE</button><button id="hubplaycustom">PLAY CUSTOM LEVEL</button></div><label style="margin-top:14px">IMPORT SHARED LEVEL CODE<input id="hubimport" type="text" maxlength="4000" placeholder="BR43-... or BR48-..."></label><div class="actions"><button id="hubadd">IMPORT LEVEL</button></div><small>Community levels support authored placements layered onto procedural rooms. Export a code to share; public online uploading still needs a server.</small><div id="hubmsg"></div></div></div><div id="hubmark">33 LEVELS &middot; ONE JOURNEY &middot; v3.58</div></div>
 <div id="menu">
 <div id="osd"><span id="osd_tr">&#9654; PLAY &nbsp;SP <b id="osd_t">0:00:00</b></span><span id="osd_br"></span><span id="osd_sync"></span><button id="osd_acct" style="display:none" title="Your site account"></button></div>
 <a id="mph" href="https://powerhouse.c823.workers.dev" target="_top" title="Powerhouse" aria-label="Go to Powerhouse"><img alt="Powerhouse" src="https://raw.githubusercontent.com/C823/Powerhouse/main/icons/POWERHOUSE-icon-dark.png" onerror="this.parentNode.textContent='PWR'"></a>
@@ -710,11 +710,12 @@ body{font-family:var(--fb);color:var(--ink)}
 <div class="mcard"><h4><i>B</i>PLAYERS</h4><div id="mp_list"></div></div>
 <div id="mp_chat" class="mcard"><h4><i>C</i>CHAT</h4><div id="mp_chatlog"></div><div class="chrow"><input id="mp_chatin" type="text" maxlength="120" spellcheck="false" autocomplete="off" placeholder="Say hi to the room"><button class="btng" id="mp_chatgo">SEND</button></div></div></div><div id="mp_saves"></div><button class="btnp" id="mp_start">START NEW GAME</button></div>
 <div class="pfoot"><p id="mp_status"></p><div class="nrow"><button class="btng" id="mp_back">BACK</button></div></div></div>
-<button id="ver" type="button" aria-haspopup="dialog" aria-controls="patchnotes" title="View patch notes">v3.57 &middot; 2026-11-11 <span aria-hidden="true">[PATCH NOTES]</span></button></div>
+<button id="ver" type="button" aria-haspopup="dialog" aria-controls="patchnotes" title="View patch notes">v3.58 &middot; 2026-11-13 <span aria-hidden="true">[PATCH NOTES]</span></button></div>
 <div id="patchnotes" role="dialog" aria-modal="true" aria-labelledby="patchtitle" aria-hidden="true">
  <div id="patchbox">
-  <div id="patchhead"><h2 id="patchtitle">PATCH NOTES <span style="color:var(--hi)">v3.57</span></h2><button id="patchclose" type="button" aria-label="Close patch notes">X CLOSE</button></div>
+  <div id="patchhead"><h2 id="patchtitle">PATCH NOTES <span style="color:var(--hi)">v3.58</span></h2><button id="patchclose" type="button" aria-label="Close patch notes">X CLOSE</button></div>
   <div id="patchbody">
+   <section class="patchentry"><h3>v3.58 <time datetime="2026-11-13">NOV 13, 2026</time></h3><ul><li>Rebuilt Toethesis as a skating hockey battle in a custom ice rink. Dodge and return hockey pucks to win three periods; no bike, breakers or crusher challenges.</li><li>Added six new named story levels after Toethesis, each with its own facility theme, architecture seed and interactive objective.</li><li>Added Uncle Joe as the new final boss with a derelict family-room arena, a cane-wielding uncle model, thrown household objects and a three-round confrontation.</li><li>Continuous story now ends at Level 33; unlocked starting levels, saved progress, and patch notes support the extension.</li></ul></section>
    <section class="patchentry"><h3>v3.57 <time datetime="2026-11-11">NOV 11, 2026</time></h3><ul><li>Updated the main menu background to showcase the newer story levels instead of sticking to the old menu backdrop logic.</li><li>If you have an active save, the menu now reflects that saved level. Otherwise it selects from your unlocked levels, including the deeper levels and final boss once reached.</li></ul></section>
    <section class="patchentry"><h3>v3.56 <time datetime="2026-11-11">NOV 11, 2026</time></h3><ul><li>Rebuilt the UI around the game’s original VHS camcorder look, with warm monochrome colors and analog typography.</li><li>Removed the cyan sci-fi dashboard theme, rounded panels and bright glossy buttons.</li><li>Restyled the main menu, level selection, Hub, in-game HUD, settings and popup controls while keeping existing features.</li></ul></section>
    <section class="patchentry"><h3>v3.55 <time datetime="2026-11-11">NOV 11, 2026</time></h3><ul><li>Removed chapter divisions: the original 13 levels lead directly to 12 unique facility levels and a Toethesis finale.</li><li>Levels 14–26 are named, unlock as New Game starting positions when reached, and update the shared best-level record.</li><li>Reduced cold-meter effects and made 100% cold nonlethal.</li><li>Refreshed menus, level selection, pause/heads-up presentation, and hub styling with a unified dark sci-fi theme.</li></ul></section>
@@ -1263,7 +1264,8 @@ dgeo.setAttribute('position',new THREE.BufferAttribute(dpos,3));const dust=new T
 let world,w,key,door,mons=[],bats=[],openT=[],seen,dmap=null,lastPT='',level=1,hasKey=false,panelMesh=null,panelSt=[],surfM=[],waterM=null;
 function applyTheme(){cur=TH[thi()];
  if(communityActive&&communityActive.chapter2&&!communityActive.chapter2Boss){const v=CH2_VIS[communityActive.chapterIndex];if(v)cur=Object.assign({},cur,{n:communityActive.n,w:v[1],f:v[2],c:v[3],fog:v[4],pc:v[5],lc:v[5],fd:.026+(communityActive.chapterIndex%3)*.007,am:.45,sp:1.04,lay:null,pr:null,lp:.10,ws:communityActive.chapterIndex%3===0?'tile':'conc',fs:communityActive.chapterIndex%3===1?'tile':'conc',pb:.85,pi:.85,water:communityActive.chapterIndex===2||communityActive.chapterIndex===8})}
- if(communityActive&&communityActive.chapter2Boss)cur=Object.assign({},cur,{n:'Toethesis',fog:0x13071c,lc:0xc78aff,pc:0xd6b8ff,am:.2});
+ if(communityActive&&communityActive.chapter2Boss)cur=Object.assign({},cur,{n:'Toethesis',boss:1,fog:0x0a2332,lc:0xb1eaff,pc:0xb2e6ff,fd:.018,am:.63});
+ if(communityActive&&communityActive.uncleBoss)cur=Object.assign({},cur,{n:'Uncle Joe',boss:1,fog:0x20150e,lc:0xffd1a0,pc:0xf5cf91,fd:.025,am:.45});
  H=cur.h;setHum();
  scene.fog.color.setHex(cur.fog);scene.fog.density=cur.fd;scene.background.setHex(cur.fog);pl.color.setHex(cur.lc);amb.color.setHex(cur.lc);dust.material.color.setHex(cur.dcol??(cur.pb>0?cur.pc:cur.lc));dust.material.size=cur.dsz||.035;dust.material.opacity=cur.dop??.45}
 function bfs(sx,sz){const d=new Int16Array(S*S).fill(-1),q=[[sx,sz]],s0=slabT&&slabT.get(sz*S+sx),sk=s0&&(s0.win||!s0.rm.open)?s0:null;d[sz*S+sx]=0;for(let i=0;i<q.length;i++){const[x,z]=q[i];for(const[a,b]of D){if(i===0&&sk&&a===sk.a&&b===sk.b)continue;const nx=x+a,nz=z+b;if(nx>=0&&nz>=0&&nx<S&&nz<S&&!w[nz][nx]&&d[nz*S+nx]<0){d[nz*S+nx]=d[z*S+x]+1;q.push([nx,nz])}}}return d}
@@ -1355,7 +1357,7 @@ function pipeRun(g,fx,fz,a,b){const m=new THREE.Matrix4(),q=new THREE.Quaternion
  for(const[r,y,col,o]of[[.12,H-.42,0x6a4a35,.17],[.065,H-.74,0x55585a,.1],[.05,.38,0x3a3532,.08]]){if(r<.1&&rnd()<.35)continue;m.compose(v.set(fx+a*o,y,fz+b*o),q,sc.set(r,T,r));g.add(CYL,m,c.setHex(col))}}
 function buildLevel(){
  extraWalls348=[];extraSwitches348=[];extraCP348=null;furnitureCollision.clear();disposeWorld();world=new THREE.Group();scene.add(world);
- applyTheme();unHide();invClose();kpClose();VZ=null;PZ=null;slabT=null;if(down)endDown();prot=0;roomsL=[];roomItems=[];lockers=[];dropL=[];safeO=null;narrow=null;B=null;clearBossFx();exitL.distance=12;document.body.classList.toggle('boss',!!cur.boss&&!bossMenu);if(cur.boss){buildBoss();if(!bossMenu)bossArm();return}
+ applyTheme();unHide();invClose();kpClose();VZ=null;PZ=null;slabT=null;if(down)endDown();prot=0;roomsL=[];roomItems=[];lockers=[];dropL=[];safeO=null;narrow=null;B=null;clearBossFx();exitL.distance=12;document.body.classList.toggle('boss',!!cur.boss&&!bossMenu);if(cur.boss){buildBoss();if(communityActive&&(communityActive.chapter2Boss||communityActive.uncleBoss))buildSpecialBoss358();if(!bossMenu)bossArm();return}
  rnd=mulberry((levelSeed^0x51a7e1)>>>0);S=Math.min(29+2*level,61);const ST=S*T;
  w=Array.from({length:S},()=>Array(S).fill(1));
  const st=[[1,1]];w[1][1]=0;
@@ -1486,7 +1488,7 @@ let san=100,bag={bat:1,aw:0},breakdown=0,phT=6,phantoms=[],waters=[],batWarn=0,s
 const E={stv:$('stv'),btv:$('btv'),infw:$('infw'),infb:$('infb'),stb:$('stb'),btb:$('btb'),dmg:$('dmg'),pose:$('pose'),tc:$('tc'),fade:$('fade')};
 function say(t,ms=2400){const m=$('msg'),e=x=>x.replace(/</g,'&lt;'),sp=t.match(/^(Wanderer|Verity|Racer): /);m.innerHTML=sp?'<b class="who">'+sp[1].toUpperCase()+'</b>'+e(t.slice(sp[0].length)):e(t);m.classList.add('on');clearTimeout(mt);mt=setTimeout(()=>m.classList.remove('on'),ms)}
 function card(t,s,k,cls,bw){const c=$('card');c.className=cls||'';c.innerHTML=(k?'<small class="k">'+k+'</small>':'')+'<h2>'+t+'</h2><i class="ln"></i><p>'+s+'</p>'+(bw?'<div class="bw">'+bw+'</div>':'');c.style.transition='none';c.style.opacity=1;clearTimeout(ct);ct=setTimeout(()=>{c.style.transition='opacity 1.5s';c.style.opacity=0},2300)}
-function levelCard(){cardPending=false;if(communityActive&&communityActive.chapter2Boss){card('LEVEL 26 · FINAL ENCOUNTER','Toethesis','A FINAL RECORDING','','Survive all three phases.');return}if(communityActive&&communityActive.chapter2){card('LEVEL '+level,communityActive.n,'THE DEEPER LEVELS','',communityActive.rules||'Find the exit');return}if(cur.boss){markSeen('L',TH.length-1,cur.n);card('LEVEL ?','The workshop of the Racer.','The first boss encounter','dead','Beat the Racer');return}markSeen('L',thi(),cur.n);const nm=[...new Set(mons.map(m=>m.k.n))];if(wins.length)nm.push('Windows');if(swarms.length)nm.push('Male Deathmoths');if(plague)nm.push('Hydrolitis Plague');card('LEVEL '+level,cur.n,endless?'Endless':(VZ?'Lead Verity to the TVs.':PZ?pzObj():'Find the key. Reach the exit.'),'',nm.length?'Watch out for: '+nm.join(', '):'')}
+function levelCard(){cardPending=false;if(B&&B.special){card('LEVEL '+level,B.special==='rink'?'TOETHESIS — FROZEN OVERTIME':'UNCLE JOE — THE LAST VISIT','FINAL ENCOUNTER','dead',B.obj||'Survive the encounter.');return}if(communityActive&&communityActive.chapter2Boss){card('LEVEL 26 · FINAL ENCOUNTER','Toethesis','A FINAL RECORDING','','Survive all three phases.');return}if(communityActive&&communityActive.chapter2){card('LEVEL '+level,communityActive.n,'THE DEEPER LEVELS','',communityActive.rules||'Find the exit');return}if(cur.boss){markSeen('L',TH.length-1,cur.n);card('LEVEL ?','The workshop of the Racer.','The first boss encounter','dead','Beat the Racer');return}markSeen('L',thi(),cur.n);const nm=[...new Set(mons.map(m=>m.k.n))];if(wins.length)nm.push('Windows');if(swarms.length)nm.push('Male Deathmoths');if(plague)nm.push('Hydrolitis Plague');card('LEVEL '+level,cur.n,endless?'Endless':(VZ?'Lead Verity to the TVs.':PZ?pzObj():'Find the key. Reach the exit.'),'',nm.length?'Watch out for: '+nm.join(', '):'')}
 function hud(){$('hud').innerHTML='<div class="hl">'+(communityActive&&communityActive.chapter2&&!communityActive.chapter2Boss?'Level '+level:'Level '+level)+' <span>&ndash; '+cur.n+'</span></div><div class="obj'+(hasKey?' ok':'')+'">'+(cur.boss&&!bossMenu?(B&&B.mode==='dead'?(hasKey?'Go through the door.':'Take the key.'):(B&&B.obj)||'Beat the Racer.'):(communityActive&&communityActive.chapter2&&!communityActive.chapter2Boss)?(hasKey?'Key acquired — finish facility objective and exit.':communityActive.rules):VZ?(hasKey?'Door unlocked. Get out.':'Lead Verity to the 4 TVs. Code: '+vzShown()):PZ?pzObj():hasKey?'Key found. Find the exit.':'Find the key.')+'</div><div class="lives">'+lives+(lives===1?' life':' lives')+' &middot; '+DIFF.n+(perma?' (one life)':'')+(endless?' &middot; Endless':'')+'</div>';$('mini').style.display=noMap?'none':''}
 const fmt=t=>[t/3600,t/60%60,t%60].map(v=>String(v|0).padStart(2,'0')).join(':');
 function startYaw(){for(const[a,b,y]of[[1,0,-Math.PI/2],[0,1,Math.PI],[-1,0,Math.PI/2],[0,-1,0]])if(!w[1+b][1+a])return y;return -Math.PI/2}
@@ -1514,7 +1516,7 @@ function levelPreview(){try{const sx=(menuSpot[0]+.5)*T,sz=(menuSpot[1]+.5)*T;le
  const p=$('lprev');p.style.backgroundImage='url('+url+')';p.classList.add('on');void 0}catch(e){}}
 function loadScreen(cb,quick,done){const L=$('load'),th=TH[thi()],hx=n=>'#'+n.toString(16).padStart(6,'0'),prev=stt;
  L.style.setProperty('--w',th.w);L.style.setProperty('--f',th.f);L.style.setProperty('--c',th.c);L.style.setProperty('--p',hx(th.pc));L.style.setProperty('--fog',hx(th.fog));
- invClose();$('lname').innerHTML='<small>LEVEL '+level+'</small>'+((!endless&&level>=14&&level<=26)?storyLevelName355(level):th.n);stt='loading';L.classList.remove('off');$('lprev').classList.remove('on');
+ invClose();$('lname').innerHTML='<small>LEVEL '+level+'</small>'+((!endless&&level>=14&&level<=33)?storyLevelName355(level):th.n);stt='loading';L.classList.remove('off');$('lprev').classList.remove('on');
  let sh=0,tg=0;const tk=setInterval(()=>{sh+=(tg-sh)*.12;if(tg-sh<.4)sh=tg;$('pct').textContent=Math.round(sh)+'%';$('pbar').style.width=sh+'%'},30);
  const tip=()=>{const s=$('tipt');s.style.opacity=0;setTimeout(()=>{s.textContent=TIPS[tipI++%TIPS.length];s.style.opacity=1},300)};
  tipI=rnd()*TIPS.length|0;tip();clearInterval(tipT);tipT=setInterval(tip,3600);
@@ -1523,7 +1525,7 @@ function loadScreen(cb,quick,done){const L=$('load'),th=TH[thi()],hx=n=>'#'+n.to
   if(i===4)setTimeout(()=>{L.classList.add('off');stt=prev;clearInterval(tk);clearInterval(tipT);E.fade.style.opacity=0;if(done){done();return}
    if(prev==='play'){if(!document.pointerLockElement&&!drag&&!touchMode&&!A.open)pause('Click RESUME to continue.');else levelCard()}},600)},T0*i/4))}
 function nextLevel(){if(stt!=='play')return;if(cur.boss||bossMenu){nextLevelNow();return}const i=thi();csPlay(CSK[i]||'door',CSC[i]||'You stepped through the door into somewhere new.',()=>nextLevelNow())}
-function nextLevelNow(){if(stt!=='play')return;if(communityActive&&!communityActive.chapter2Boss){communityFinish();return;}if(NET.on){const was=NET.spec||!!down||lives<=0;NET.spec=false;lives=Math.max(lives,1);R.domElement.style.filter='';if(down)endDown();if(was)setTimeout(()=>say('New level. You are back on your feet.',2800),2800)}else if(NET.spec){NET.spec=false;lives=Math.max(lives,1);R.domElement.style.filter=''}if(cur.boss){bossWin();return}level++;bumpBest();if(runT-lvStart<60&&level>1)ach('speed');if(level>=2)ach('deeper');if(level>=6)ach('half');if(!endless){if(level>=12)ach('home');if(level>=13)ach('finale')}else if(level>=25)ach('endless');
+function nextLevelNow(){if(stt!=='play')return;if(communityActive&&!communityActive.chapter2Boss&&!communityActive.uncleBoss){communityFinish();return;}if(NET.on){const was=NET.spec||!!down||lives<=0;NET.spec=false;lives=Math.max(lives,1);R.domElement.style.filter='';if(down)endDown();if(was)setTimeout(()=>say('New level. You are back on your feet.',2800),2800)}else if(NET.spec){NET.spec=false;lives=Math.max(lives,1);R.domElement.style.filter=''}if(cur.boss){bossWin();return}level++;bumpBest();if(runT-lvStart<60&&level>1)ach('speed');if(level>=2)ach('deeper');if(level>=6)ach('half');if(!endless){if(level>=12)ach('home');if(level>=13)ach('finale')}else if(level>=25)ach('endless');
  sfx({f:523,dur:.7,v:.18,r:.5});sfx({f:659,dur:.7,v:.18,r:.5,d:.15});sfx({f:784,dur:1,v:.18,r:.5,d:.3});sfx({n:1,ft:'bandpass',ff:200,ff2:4000,q:1,dur:1.2,v:.15,a:.6});
  const fs=$('flash');fs.style.transition='opacity .5s';fs.style.opacity=1;setTimeout(()=>{fs.style.transition='opacity 1.2s';fs.style.opacity=0},500);
  san=Math.min(100,san+25);breakdown=0;const bonus=(level-1)%(endless?5:3)===0&&lives<5&&!perma;if(bonus)lives++;
@@ -2188,8 +2190,8 @@ const endEx=()=>endless?Math.max(0,level-12):0;
 function remixTE(t){const r=mulberry((levelSeed^0x77)>>>0),K=['bacteria','skin','hound','smiler','scratcher','party','anim','fmoth'],k=K[r()*K.length|0],h=Object.assign({},t.h);h[k]=(h[k]||0)+1;return Object.assign({},t,{h})}
 function hashStr(t){let h=2166136261;for(const ch of t)h=Math.imul(h^ch.charCodeAt(0),16777619);return h>>>0}
 function openPlay(){if(SLOTS.sp.some(k=>slotGet(k))){menuUI();closePlay();showSaves();return}openSetup()}
-function openSetup(){menuUI();document.body.classList.add('np');$('newg').classList.toggle('fresh',SLOTS.sp.some(k=>slotGet(k)));const sel=$('o_start'),top=Math.max(1,best,stats.wins?14:1,14+Math.max(0,+store.get('chapter2Progress',0)||0),store.get('chapter2BossCleared',false)?26:1);sel.innerHTML='';
- for(let l=1;l<=Math.min(26,top);l++){const o=document.createElement('option');o.value=l;o.textContent='Level '+l+' · '+storyLevelName355(l);sel.appendChild(o)}
+function openSetup(){menuUI();document.body.classList.add('np');$('newg').classList.toggle('fresh',SLOTS.sp.some(k=>slotGet(k)));const sel=$('o_start'),top=Math.max(1,best,stats.wins?14:1,14+Math.max(0,+store.get('chapter2Progress',0)||0),store.get('chapter2BossCleared',false)?27:1);sel.innerHTML='';
+ for(let l=1;l<=Math.min(33,top);l++){const o=document.createElement('option');o.value=l;o.textContent='Level '+l+' · '+storyLevelName355(l);sel.appendChild(o)}
  sel.value=Math.min(RUN.start,top);$('o_seed').value=RUN.seed;$('o_perma').checked=RUN.perma;$('o_map').checked=RUN.map;$('o_wand').checked=RUN.wand;diffUI();($('m_clist').querySelector('button')||$('m_new')).focus()}
 function closePlay(){document.body.classList.remove('np')}
 function readRun(){RUN.start=+$('o_start').value||1;RUN.seed=$('o_seed').value.trim();RUN.perma=$('o_perma').checked;RUN.map=$('o_map').checked;RUN.wand=$('o_wand').checked;store.set('run',RUN);
@@ -2547,17 +2549,17 @@ $('m_x').onclick=()=>{sfx({n:1,ft:'bandpass',ff:900,dur:.05,v:.08});openSub(null
 // ================= Level ?: the final level =================
 let B=null,bossMenu=false,php=100,hurtF=0,bShake=0,bRoll=0,lastHurt=0,projs=[],hazs=[],bossS1=null;
 // main menu background: show the current saved run when there is one, otherwise showcase any unlocked story level (including the new deeper levels); monsters hidden
-function menuBG(){endless=false;thiC={};const L_=level,rs_=runSeed,sv=lastSave(),mx=Math.max(1,Math.min(26,best||1));
+function menuBG(){endless=false;thiC={};const L_=level,rs_=runSeed,sv=lastSave(),mx=Math.max(1,Math.min(33,best||1));
  let showcase=1,seed=4242;
- if(sv&&sv.level){showcase=Math.max(1,Math.min(26,sv.level));seed=sv.seed||4242}
+ if(sv&&sv.level){showcase=Math.max(1,Math.min(33,sv.level));seed=sv.seed||4242}
  else{
   const pool=[];
   for(let i=1;i<=mx;i++)pool.push(i);
-  if((stats.wins||0)>0&&mx<26)pool.push(26);
+  // Only showcase a boss arena after that level has actually been reached.
   showcase=pool.length?pool[(Math.random()*pool.length)|0]:1;
   seed=4242+showcase*97;
  }
- level=showcase;runSeed=null;bossMenu=(showcase===13||showcase===26);build(seed);bossMenu=false;
+ level=showcase;runSeed=null;const oldEntry=communityActive;communityActive=storyEntry355(showcase);bossMenu=(showcase===13||showcase===26||showcase===33);build(seed);bossMenu=false;communityActive=oldEntry;
  for(const m of mons)m.g.visible=false;for(const n of npcs)n.g.visible=false;for(const s_ of swarms)s_.pts.visible=false;level=L_;runSeed=rs_}
 function mkThingModel(mat,eye){const g=mkEntity(mat,null,{leg:2.4,lw:.3,th:2.3,tw:1,arm:3,aw:.2,hw:1,hh:1,hunch:.4,ribs:1,claw:3,noHead:1,lc:0x111111}),u=g.userData;
  const dc=cv(512,256),dtx=new THREE.CanvasTexture(dc);vTex(dc,3);const hd=new THREE.Mesh(new THREE.SphereGeometry(.8,24,16),new THREE.MeshPhongMaterial({map:dtx,emissive:0x5a4000,emissiveMap:dtx,shininess:30}));hd.position.set(0,.7,.05);u.head.add(hd);
@@ -2633,7 +2635,7 @@ const RACER_SAYS={
  death:['Back to the start. I love this part.','Again! Do it again!','That one looked like it hurt.']};
 const TOETHESIS_SAYS={intro:['You crossed all twelve tapes? Welcome to my rink.','Overtime starts now. Let us see if you can survive the final period.'],shift:['Line change!','Watch the boards!','New formation!'],brk:['That is a penalty!','You took out my power play!','Third period, no mercy.'],drop:['Watch the ice!'],dark:['Lights out at the rink.'],theme:['New arena, same rules.'],p2:'My teammates are coming onto the ice.',crush:['That was a hard hit.','You are still in this game?','Time for sudden death.'],p3:'Final period. You had better skate fast.',crash:['Big collision!','My helmet!','You won the championship...'],hit:['Body check!','You got benched!'],death:['Back to the faceoff!','Another round!']};
 function toethesisSay(k,i){const a=TOETHESIS_SAYS[k]||TOETHESIS_SAYS.shift;return Array.isArray(a)?a[i!=null?Math.min(i,a.length-1):rnd()*a.length|0]:a}
-function bossName(){return communityActive&&communityActive.chapter2Boss?'Toethesis':'The Racer'}
+function bossName(){return communityActive&&communityActive.uncleBoss?'Uncle Joe':communityActive&&communityActive.chapter2Boss?'Toethesis':'The Racer'}
 function racerSay(k,i){const L=RACER_SAYS[k],t=Array.isArray(L)?L[i!=null?Math.min(i,L.length-1):rnd()*L.length|0]:L;sfx({n:1,ft:'bandpass',ff:2200,q:1.5,dur:.22,v:.06});say((communityActive&&communityActive.chapter2Boss?'Toethesis':'Racer')+': '+(communityActive&&communityActive.chapter2Boss?toethesisSay(k,i):t),Math.max(2600,t.length*70))}
 function buildBoss(){S=31;H=8;const ST=S*T,c=S>>1,CT=(c+.5)*T,R_=mulberry(0x2ace9);
  // static walls: the border and a few plain pillars. Everything that moves or breaks is kept out of the static mesh
@@ -2731,8 +2733,8 @@ function updPits(dt){const b=B,ptx=Math.floor(px/T),ptz=Math.floor(pz/T);
 function clearPits(){const b=B;for(const p of b.pits){world.remove(p.m);p.m.geometry.dispose();p.m.material.dispose()}b.pits=[]}
 // ---- E near a breaker ----
 function nearBreaker(){const b=B;if(!b||b.mode!=='p1')return null;for(const k of b.brks)if(!k.on&&Math.hypot(px-k.x,pz-k.z)<2.4)return k;return null}
-function bossPrompt(){const k=nearBreaker();return k?'Pull the breaker':null}
-function bossUse(){const k=nearBreaker();if(!k)return;const b=B,i=b.brks.filter(q=>q.on).length;k.on=1;k.lv.rotation.x=.9;k.lt.material.color.setHex(0x30ff60);k.gl.material.color.setHex(0x30ff60);
+function bossPrompt(){if(B&&B.special)return specialBossPrompt358();const k=nearBreaker();return k?'Pull the breaker':null}
+function bossUse(){if(B&&B.special){specialBossUse358();return}const k=nearBreaker();if(!k)return;const b=B,i=b.brks.filter(q=>q.on).length;k.on=1;k.lv.rotation.x=.9;k.lt.material.color.setHex(0x30ff60);k.gl.material.color.setHex(0x30ff60);
  sfx({n:1,ft:'bandpass',ff:700,dur:.12,v:.35});sfx({t:'square',f:180,f2:60,dur:.5,v:.12,d:.05});bShake=.05;b.bl.intensity*=.6;racerSay('brk',i);bossUI();
  if(i+1>=3)setTimeout(()=>{if(B===b&&b.mode==='p1')startP2()},2600)}
 // ---- phase 2: monsters and crushers ----
@@ -2776,7 +2778,7 @@ function bikeCrash(blk){const b=B,k=b.bike;blk.broken=1;for(const[x,y]of blk.cs)
  sfx({n:1,ft:'lowpass',ff:1400,ff2:90,dur:1.6,v:.7,a:.004,r:1});sfx({f:60,f2:22,dur:1.2,v:.45});bShake=.3;b.crashes++;racerSay('crash',b.crashes-1);bossUI();
  if(b.crashes>=3){if(!b.runOver)ach('heads');k.st='wreck';k.t=0;b.mode='dead';b.obj='';setTimeout(()=>{if(B===b)bossVictory()},2400)}else{k.st='stun';k.t=2.1}}
 // ---- the frame ----
-function updBoss(dt,now){const b=B;if(wEq==='pistol')gunUpd(dt);bShake=Math.max(0,bShake-dt*.12);chasing=b.mode==='p2'||b.mode==='p3';
+function updBoss(dt,now){if(B&&B.special)return updSpecialBoss358(dt,now);const b=B;if(wEq==='pistol')gunUpd(dt);bShake=Math.max(0,bShake-dt*.12);chasing=b.mode==='p2'||b.mode==='p3';
  if(php<100&&now-lastHurt>5500)php=Math.min(100,php+2*dt);$('hpb').style.width=php+'%';const hv=Math.ceil(php);if($('hpv').textContent!=hv)$('hpv').textContent=hv;
  const rg=b.g;b.de=Math.hypot(px-b.CT,pz-b.CT);if(rg.visible){let da=Math.atan2(px-b.CT,pz-b.CT)-rg.rotation.y;da=Math.atan2(Math.sin(da),Math.cos(da));rg.rotation.y+=da*Math.min(1,dt*3);const u=rg.userData;if(u.shR)u.shR.rotation.x=b.talk>0?-1.2+Math.sin(now/120)*.4:0;b.talk=Math.max(0,b.talk-dt)}
  updShutters(dt);updPits(dt);
@@ -2787,7 +2789,7 @@ function updBoss(dt,now){const b=B;if(wEq==='pistol')gunUpd(dt);bShake=Math.max(
  else if(b.mode==='p2')updP2(dt,now);
  else if(b.mode==='p3'||b.mode==='dead')updP3(dt,now);
  return stt!=='play'}
-function bossUI(){if(!B)return;$('bossui').querySelector('.bn').firstChild.textContent=communityActive&&communityActive.chapter2Boss?'TOETHESIS':'THE RACER';const b=B,ph=b.mode==='dead'?4:b.ph,prog=ph===1?b.brks.filter(q=>q.on).length:ph===2?b.crushed:ph===3?b.crashes:3;
+function bossUI(){if(!B)return;if(B.special){specialBossUI358();return}$('bossui').querySelector('.bn').firstChild.textContent=communityActive&&communityActive.chapter2Boss?'TOETHESIS':'THE RACER';const b=B,ph=b.mode==='dead'?4:b.ph,prog=ph===1?b.brks.filter(q=>q.on).length:ph===2?b.crushed:ph===3?b.crashes:3;
  $('bhearts').innerHTML=[1,2,3].map(i=>'<i class="'+(i>=ph?'on':'')+'"></i>').join('');$('bhp').style.width=(ph>3?0:(1-prog/3)*100)+'%';
  $('bstage').textContent=ph>3?'Beaten':['','Phase 1 · Power','Phase 2 · Lure','Phase 3 · Chase'][ph]+' · '+prog+'/3';
  b.obj=ph===1?'Pull the breakers ('+prog+'/3).':ph===2?'Lead the monsters onto the crusher plates ('+prog+'/3).':ph===3?'Make the bike crash into the UNSAFE blocks ('+prog+'/3).':'';hud()}
@@ -2796,7 +2798,7 @@ function bossVictory(){const dd=bfs(Math.floor(px/T),Math.floor(pz/T));let far=n
   let kx=px-Math.sin(yaw)*2.2,kz=pz-Math.cos(yaw)*2.2;if(!openTile(kx,kz)){kx=px;kz=pz-.01}key.position.set(kx,1.05,kz);key.visible=true;keyL.position.copy(key.position);keyL.intensity=1;hasKey=false;lockDoor();
   card('TAKE THE KEY','A door has opened in the distance.');say('Take the key.',3500);hud();bossUI()},1600)}
 // dying restarts the phase you were on
-function bossRespawn(){const b=B;php=100;px=b.spawn.x;pz=b.spawn.z;yaw=0;vx=vz=0;b.dark=0;flickT=0;clearPits();if(b.theme>0){b.theme=0;setTheme(b.base)}
+function bossRespawn(){if(B&&B.special){specialBossRespawn358();return}const b=B;php=100;px=b.spawn.x;pz=b.spawn.z;yaw=0;vx=vz=0;b.dark=0;flickT=0;clearPits();if(b.theme>0){b.theme=0;setTheme(b.base)}
  if(b.mode==='p1'){for(const k of b.brks){k.on=0;k.lv.rotation.x=-.6;k.lt.material.color.setHex(0xff3020);k.gl.material.color.setHex(0xff3020)}b.bl.intensity=1.4;shiftTo(0,true);b.shiftT=3.5;b.trickT=7}
  else if(b.mode==='p2'){for(const m of b.mins)world.remove(m.g);b.mins=[];b.crushed=0;b.nextMin=2.2;for(const p_ of b.plates){p_.t=0;p_.cd=0}}
  else if(b.mode==='p3'&&b.bike){const k=b.bike;b.runOver=0;for(const blk of b.blocks)if(blk.broken){blk.broken=0;blk.m.visible=true;for(const[x,y]of blk.cs)w[y][x]=1}b.crashes=0;k.g.position.set(k.home.x,0,k.home.z);k.st='aim';k.t=2;k.g.userData.bk.rotation.z=0}
@@ -2810,13 +2812,152 @@ function dmgBoss(){}
 function breakProj(pr){world.remove(pr.m);projs=projs.filter(q=>q!==pr)}
 function roar(v){sfx({t:'sawtooth',f:110,f2:38,dur:2.2,v:.35*v,ft:'lowpass',ff:900,r:.9})}
 
-function bossWin(){if(communityActive&&communityActive.chapter2Boss){
-  communityActive=null;stt='loading';store.set('chapter2BossCleared',true);storyBest355(27);stats.wins=(stats.wins||0)+1;saveStats();inRun=false;slotClear();sfx({f:784,dur:1.5,v:.2});card('ESCAPE COMPLETE','Toethesis has been defeated.','YOU SURVIVED ALL 26 LEVELS');
-  setTimeout(()=>{B=null;document.body.classList.remove('boss');openHub();hubScreen('chapter2');$('hubnote').textContent='ALL LEVELS COMPLETE — Toethesis defeated. Replay any unlocked level.'},2600);return}
+function bossWin(){if(communityActive&&(communityActive.chapter2Boss||communityActive.uncleBoss)){
+  const uncle=!!communityActive.uncleBoss;
+  stt='loading';if(!uncle){store.set('chapter2BossCleared',true);storyBest355(27);stats.wins=(stats.wins||0)+1;saveStats();sfx({f:784,dur:1.5,v:.2});card('TOETHESIS DEFEATED','The rink goes silent. Beyond the boards, another doorway opens.','LEVEL 27 · THE DROWNED BOATHOUSE');
+   setTimeout(()=>{if(B)B=null;document.body.classList.remove('boss');level=27;setStoryLevel355(level);inRun=true;loadScreen(()=>{build();reset();saveGame(1)},true,enterRun)},2700);return}
+  storyBest355(34);stats.wins=(stats.wins||0)+1;saveStats();inRun=false;slotClear();sfx({f:784,dur:1.6,v:.24});card('ESCAPE COMPLETE','Uncle Joe has been defeated. The last door is open.','YOU SURVIVED ALL 33 LEVELS');
+  setTimeout(()=>{B=null;document.body.classList.remove('boss');openHub();hubScreen('chapter2');$('hubnote').textContent='ALL 33 LEVELS COMPLETE — Uncle Joe defeated. Replay any unlocked level.'},2600);return}
+
  stt='loading';ach('win');if(!stats.goldKey){stats.goldKey=1;saveStats()}ach('golden');setTimeout(()=>{try{mkHand()}catch(e){}},50);if(DIFF.key==='hard')ach('winhard');if(perma)ach('perma');bumpBest();stats.wins=(stats.wins||0)+1;const newRacer=!stats.racerWin;stats.racerWin=1;saveStats();storyBest355(14);
  sfx({f:523,dur:1.2,v:.15,r:.6});sfx({f:659,dur:1.2,v:.15,r:.6,d:.2});sfx({f:784,dur:1.6,v:.15,r:.6,d:.4});const f=$('flash');f.style.transition='opacity 1.2s';f.style.opacity=1;
  setTimeout(()=>{card('THE RACER IS DEFEATED','Something deeper is waiting.','LEVEL 14 · CALIBRATION HALL UNLOCKED');if(newRacer)setTimeout(()=>note('The C823 suit is yours. Find it in SUIT.'),1500);setTimeout(()=>{f.style.transition='opacity 1.5s';f.style.opacity=0;B=null;document.body.classList.remove('boss');level=14;setStoryLevel355(level);inRun=true;loadScreen(()=>{build();reset();saveGame(1)},true,enterRun)},3000)},1300)}
 
+
+// ===== v3.58: independent arena bosses (no Racer phase/recycled bike logic) =====
+function mkUncleJoe358(){
+ const M=(c)=>new THREE.MeshLambertMaterial({color:c});
+ const g=mkEntity(M(0x6a4b37),null,{tw:.47,th:.8,lw:.15,aw:.11,hw:.26,hh:.34,hunch:.12,hc:0xd8b39b,lc:0x352e27,shoes:1,shoe:0x1a1714,hand:0xd8b39b,arm:1.2,leg:1.0});
+ const u=g.userData;const add=(p,geo,c,sx,sy,sz,x,y,z)=>{const m=new THREE.Mesh(geo,M(c));m.scale.set(sx,sy,sz);m.position.set(x,y,z);p.add(m);return m};
+ // Grey combed hair and eyebrows, bifocals, cardigan, trousers and old cane.
+ add(u.head,SPH,0xbfc1bc,.23,.11,.23,0,.37,-.025);
+ for(const side of[-1,1]){add(u.head,UB,0xaaaaa6,.09,.055,.07,side*.15,.34,.04);
+  const lens=add(u.head,new THREE.TorusGeometry(.075,.012,6,14),0x343231,1,1,1,side*.105,.205,.224);lens.rotation.y=side*.12;
+  add(u.head,UB,0x8e8a83,.07,.018,.025,side*.105,.31,.23)}
+ add(u.head,UB,0x343231,.07,.018,.02,0,.207,.245);
+ add(u.up,UB,0xb8b3a6,.11,.48,.03,0,.47,.32);
+ add(u.up,UB,0x765a42,.14,.08,.27,0,.13,0);
+ for(const sh of[u.shL,u.shR])add(sh,UB,0x71543c,.12,.24,.12,0,-.13,0);
+ const cane=new THREE.Group();cane.position.set(.06,-.38,.13);u.elR.add(cane);
+ add(cane,CYL,0x51351e,.024,.91,.024,0,-.48,.05);
+ const hook=new THREE.Mesh(new THREE.TorusGeometry(.10,.023,7,18,Math.PI),M(0x51351e));hook.rotation.z=Math.PI/2;hook.position.set(.05,.02,.05);cane.add(hook);
+ return g
+}
+function buildSpecialBoss358(){
+ const isIce=!!(communityActive&&communityActive.chapter2Boss),isJoe=!!(communityActive&&communityActive.uncleBoss);
+ if(!isIce&&!isJoe)return;
+ if(bossS1)bossS1.visible=false;
+ const old=B,c=15,CT=(c+.5)*T,lim=12.4*T;
+ w=Array.from({length:S},(_,z)=>Array.from({length:S},(_,x)=>x===0||z===0||x===S-1||z===S-1?1:0));
+ openT=[];for(let z=1;z<S-1;z++)for(let x=1;x<S-1;x++)openT.push([x,z,Math.abs(x-c)+Math.abs(z-25)]);
+ const g=new THREE.Group();world.add(g);const mat=color=>new THREE.MeshLambertMaterial({color});
+ const ice=0xc4e8ed,wall=isIce?0x31516a:0x4b392d,light=isIce?0xcdf6ff:0xfbc986;
+ const box=(x,y,z,w,h,d,color)=>{const m=new THREE.Mesh(UB,mat(color));m.scale.set(w,h,d);m.position.set(x,y,z);g.add(m);return m};
+ box(CT,-.17,CT,29*T,.32,29*T,isIce?0x9ad5e2:0x494032);
+ box(CT,6.1,CT,29*T,.25,29*T,isIce?0x364c5a:0x31251e);
+ for(const sign of[-1,1]){
+  box(CT+sign*14.6*T,1.5,CT,.4,3.0,29*T,wall);
+  box(CT,1.5,CT+sign*14.6*T,29*T,3,.4,wall);
+  box(CT+sign*14.4*T,.9,CT,.12,1.8,28*T,isIce?0xe4edf0:0x7a5c43);
+  box(CT,.9,CT+sign*14.4*T,28*T,1.8,.12,isIce?0xe4edf0:0x7a5c43);
+ }
+ if(isIce){
+  // Visible rink centerline, two blue lines, circles, goals and plexiglass boards.
+  box(CT,.013,CT,27*T,.025,.22,0xc93f4e);
+  for(const zz of[-7,7])box(CT,.016,CT+zz*T,27*T,.025,.17,0x367dba);
+  for(const zz of[-1,1]){
+   const ring=new THREE.Mesh(new THREE.TorusGeometry(5,.085,7,54),new THREE.MeshBasicMaterial({color:0xbd444c}));ring.rotation.x=-Math.PI/2;ring.position.set(CT,.035,CT+zz*8*T);g.add(ring);
+   box(CT,.5,CT+zz*12*T,4,1,.3,0xb92b37);
+   box(CT,1.3,CT+zz*12*T,4,.13,.3,0xb92b37);
+  }
+  const ring=new THREE.Mesh(new THREE.TorusGeometry(6,.11,7,64),new THREE.MeshBasicMaterial({color:0xbd414b}));ring.rotation.x=-Math.PI/2;ring.position.set(CT,.045,CT);g.add(ring);
+  const sheen=new THREE.Mesh(new THREE.PlaneGeometry(28*T,28*T),new THREE.MeshPhongMaterial({color:ice,transparent:true,opacity:.45,shininess:95,specular:0xffffff,depthWrite:false}));sheen.rotation.x=-Math.PI/2;sheen.position.set(CT,.03,CT);g.add(sheen);
+  for(const sign of[-1,1])for(let i=-10;i<=10;i+=4)box(CT+i*T,3,CT+sign*14.3*T,3.4*T,2.2,.085,0x668fa3);
+ }else{
+  // Antique lounge: checkerboard rug, living-room wall frames, lamps and grandfather clock.
+  for(let z=-12;z<=12;z++)for(let x=-12;x<=12;x++)if((x+z)%2===0)box(CT+x*T,.012,CT+z*T,T,.024,T,0x665340);
+  box(CT,.04,CT,15*T,.08,12*T,0x783f37);
+  for(const sign of[-1,1])for(let n=-5;n<=5;n+=2){box(CT+n*2*T,2.8,CT+sign*14.2*T,2.4,2.6,.13,0x9d774a);box(CT+n*2*T,2.8,CT+sign*14.08*T,1.9,2.1,.14,0x2a2522)}
+  for(const sign of[-1,1]){box(CT+sign*10*T,.8,CT,3,1.6,2,0x65462c);box(CT+sign*10*T,1.6,CT,3,.15,2,0x39281f)}
+  box(CT,2.3,CT-12*T,1.3,4.5,1,0x442e19);box(CT,4.5,CT-12*T,1.4,.13,1.2,0xa98855);
+ }
+ for(const x of[-10,0,10])for(const z of[-10,0,10]){const l=new THREE.PointLight(light,1.3,23,1.5);l.position.set(CT+x*T,5.8,CT+z*T);g.add(l);box(CT+x*T,5.9,CT+z*T,1.4,.12,1.4,isIce?0xefffff:0xffdfa0)}
+ const score=new THREE.Group();score.position.set(CT,5.1,CT-12*T);g.add(score);box(CT,5.1,CT-12*T,6,1.45,.22,isIce?0x13283c:0x2b2118);
+ const s=cv(512,128),cx=s.getContext('2d');cx.fillStyle='#f7f1dd';cx.font='bold 49px monospace';cx.textAlign='center';cx.fillText(isIce?'TOETHESIS · ICE ARENA':'UNCLE JOE · FINAL VISIT',256,83);
+ const sign=new THREE.Mesh(new THREE.PlaneGeometry(5.7,1.2),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(s),transparent:true}));sign.position.set(CT,5.1,CT-12*T+.13);g.add(sign);
+ // Allow the same victory key+exit system without using the Racer's power/bike puzzle.
+ menuSpot=[c,25];
+ if(bossMenu){const avatar=isIce?mkSuitBody('toethesis',(a,b)=>b?new THREE.MeshBasicMaterial({color:a}):mat(a)):mkUncleJoe358();avatar.position.set(CT,0,CT);avatar.scale.setScalar(2.2);g.add(avatar);return}
+ if(old&&old.g)old.g.visible=false;
+ const actor=isIce?mkSuitBody('toethesis',(a,b)=>b?new THREE.MeshBasicMaterial({color:a}):mat(a)):mkUncleJoe358();actor.scale.setScalar(2.1);g.add(actor);
+ actor.position.set(CT,0,CT-5*T);
+ px=CT;pz=CT+10*T;yaw=0;vx=vz=0;
+ B={special:isIce?'rink':'uncle',g:actor,actor,arena:g,CT,spawn:{x:px,z:pz},de:40,mode:isIce?'rink':'uncle',ph:1,returns:0,shots:[],cool:2.7,move:0,pulse:0,hurt:0,aim:0,obj:'',hp:9,shotCount:0,round:0};
+ php=100;chasing=false;bossUI();
+ setTimeout(()=>{if(B&&B.special)card('LEVEL '+level,isIce?'TOETHESIS · FROZEN OVERTIME':'UNCLE JOE · THE LAST VISIT',isIce?'Dodge flying pucks. Return the stopped pucks with E.':'Dodge thrown objects. Return them with E.','dead')},1700);
+}
+function specialBossPrompt358(){const b=B;if(!b||!b.special||b.mode==='dead')return null;
+ const pr=b.shots.find(q=>q.life>0&&q.stopped&&Math.hypot(px-q.m.position.x,pz-q.m.position.z)<3.4);
+ return pr?(b.special==='rink'?'Return puck [E]':'Throw object back [E]'):null
+}
+function specialBossUse358(){const b=B;if(!b||!b.special||b.mode==='dead')return;
+ const pr=b.shots.find(q=>q.stopped&&Math.hypot(px-q.m.position.x,pz-q.m.position.z)<3.4);
+ if(!pr){say('Wait until a puck or thrown object stops, then press E to send it back!',2000);return}
+ world.remove(pr.m);b.shots=b.shots.filter(q=>q!==pr);b.returns++;b.hp=Math.max(0,9-b.returns);
+ burst(b.actor.position.x,1.35,b.actor.position.z,22,b.special==='rink'?0x8addf5:0xf1bc80,3);
+ sfx({f:350,f2:110,dur:.27,v:.27});b.pulse=.6;
+ if(b.returns===3||b.returns===6){b.ph++;b.cool=2.3;card('ROUND '+b.ph,b.special==='rink'?'TOETHESIS PICKS UP THE PACE':'UNCLE JOE IS GETTING GRUMPIER','KEEP DODGING','dead');}
+ if(b.returns>=9){b.mode='dead';b.obj='Collect the key and escape.';b.actor.rotation.z=-1.2;b.actor.position.y=.35;b.shots.forEach(q=>world.remove(q.m));b.shots=[];bossUI();setTimeout(()=>{if(B===b)bossVictory()},1100);return}
+ bossUI();say('DIRECT HIT! '+b.returns+'/9 RETURNS',1700)
+}
+function specialBossUI358(){const b=B;if(!b||!b.special)return;
+ const name=b.special==='rink'?'TOETHESIS':'UNCLE JOE';$('bossui').querySelector('.bn').firstChild.textContent=name;
+ $('bhearts').innerHTML=[1,2,3].map(i=>'<i class="'+(i>=b.ph?'on':'')+'"></i>').join('');
+ $('bhp').style.width=(b.hp/9*100)+'%';
+ $('bstage').textContent=b.mode==='dead'?'DEFEATED':(b.special==='rink'?'PERIOD ':'ROUND ')+b.ph+' · '+b.returns+'/9 RETURNS';
+ b.obj=b.mode==='dead'?'Take the key and find the door.':b.special==='rink'?'DODGE PUCKS. PRESS E NEAR A STOPPED PUCK TO RETURN IT ('+b.returns+'/9).':'DODGE THE THROWS. PRESS E NEAR A STOPPED OBJECT TO RETURN IT ('+b.returns+'/9).';hud()
+}
+function specialBossRespawn358(){const b=B;if(!b)return;php=100;px=b.spawn.x;pz=b.spawn.z;yaw=0;vx=vz=0;b.shots.forEach(q=>world.remove(q.m));b.shots=[];b.cool=2.5;b.hurt=0;lastHurt=performance.now();bossUI()}
+function updSpecialBoss358(dt,now){const b=B;if(!b||!b.special)return false;
+ if(wEq==='pistol')gunUpd(dt);bShake=Math.max(0,bShake-dt*.12);chasing=b.mode!=='dead';
+ if(php<100&&now-lastHurt>7500)php=Math.min(100,php+1.1*dt);
+ $('hpb').style.width=php+'%';$('hpv').textContent=Math.ceil(php);
+ if(b.mode==='dead')return false;
+ const g=b.actor,isIce=b.special==='rink',t=(b.move+=dt),speed=1+b.ph*.21;
+ const cx=b.CT,cz=b.CT;
+ // Toethesis carves fast figure-eight skating lines; Uncle Joe patrols in a shorter, deliberate shuffle.
+ const tx=cx+(isIce?Math.sin(t*.48*speed)*17:Math.sin(t*.22*speed)*9),tz=cz-9+Math.sin(t*(isIce?.88:.41)*speed)*(isIce?13:7);
+ const dx=tx-g.position.x,dz=tz-g.position.z,dist=Math.hypot(dx,dz)||1;
+ g.position.x+=dx*Math.min(1,dt*(isIce?1.65:1.15));g.position.z+=dz*Math.min(1,dt*(isIce?1.65:1.15));
+ let facing=Math.atan2(px-g.position.x,pz-g.position.z);let da=Math.atan2(Math.sin(facing-g.rotation.y),Math.cos(facing-g.rotation.y));g.rotation.y+=da*Math.min(1,dt*3.3);
+ if(g.userData){const u=g.userData;if(u.legL)u.legL.rotation.x=Math.sin(t*(isIce?10:4))*(isIce?.34:.16);if(u.legR)u.legR.rotation.x=-Math.sin(t*(isIce?10:4))*(isIce?.34:.16);if(u.shR)u.shR.rotation.x=-.45+Math.sin(t*5)*.25}
+ b.de=Math.hypot(px-g.position.x,pz-g.position.z);
+ if(b.de<2&&!A.god&&(b.hurt-=dt)<=0){b.hurt=1.5;hurt(14,'Checked by '+(isIce?'Toethesis':'Uncle Joe')+'.')}
+ b.cool-=dt;
+ if(b.cool<=0){const d=Math.hypot(px-g.position.x,pz-g.position.z)||1;
+  const qty=b.ph>=3?3:b.ph===2?2:1;
+  for(let i=0;i<qty;i++){
+   const a=Math.atan2(px-g.position.x,pz-g.position.z)+(i-(qty-1)/2)*(.23+b.ph*.04),spd=(isIce?12:9)+b.ph*2;
+   const p=new THREE.Mesh(isIce?new THREE.CylinderGeometry(.30,.30,.10,16):new THREE.SphereGeometry(.27,10,8),new THREE.MeshPhongMaterial({color:isIce?0x17191c:0xbba17a,specular:0x9a9a9a,shininess:45}));
+   p.position.set(g.position.x, isIce?.17:1.25,g.position.z);world.add(p);
+   b.shots.push({m:p,vx:Math.sin(a)*spd,vz:Math.cos(a)*spd,life:9,stopped:false,hit:false,angle:a});
+  }
+  b.cool=(isIce?3.65:4.25)-b.ph*.55+(DIFF.key==='hard'?-1:DIFF.key==='easy'?.8:0);
+  sfx({f:isIce?420:180,f2:90,dur:.22,v:.2});
+  if(b.shotCount++%3===0)say(isIce?'TOETHESIS: HEADS UP!':'UNCLE JOE: YOU LITTLE RASCAL!',1750)
+ }
+ for(const q of [...b.shots]){
+  q.life-=dt;if(q.life<=0){world.remove(q.m);b.shots=b.shots.filter(x=>x!==q);continue}
+  if(!q.stopped){q.m.position.x+=q.vx*dt;q.m.position.z+=q.vz*dt;
+   q.m.rotation.x+=dt*9;if(!isIce)q.m.position.y=1.1+Math.sin((9-q.life)*8)*.4;
+   if(Math.abs(q.m.position.x-cx)>12.6*T||Math.abs(q.m.position.z-cz)>12.6*T){q.stopped=true;q.m.position.x=Math.max(cx-12*T,Math.min(cx+12*T,q.m.position.x));q.m.position.z=Math.max(cz-12*T,Math.min(cz+12*T,q.m.position.z))}
+   if(!q.hit&&Math.hypot(px-q.m.position.x,pz-q.m.position.z)<1.15){q.hit=true;q.stopped=true;hurt(isIce?19:24,isIce?'Hit by a hockey puck.':'Hit by Uncle Joe’s throw.');vx+=q.vx*.32;vz+=q.vz*.32}
+   if(q.life<5.5)q.stopped=true;
+  }
+  if(q.stopped){q.m.position.y=.18;q.m.rotation.x=0;if(q.life<1.5)q.m.scale.setScalar(Math.max(.1,q.life/1.5));}
+ }
+ return stt!=='play'
+}
 
 // ================= Multiplayer: peer-to-peer co-op over WebRTC (PeerJS). The host simulates monsters; everyone else mirrors them =================
 // ================= co-op chat and the word filter =================
@@ -3656,7 +3797,7 @@ const gc=$('grain').getContext('2d'),gi=gc.createImageData(160,90),_c=new THREE.
 const CH2_DECAY351=[.76,.94,.83,.69,.55,.85,.93,.63,.51,.82,.99,.89];
 function chapter2Abandoned351(avail){
  if(!communityActive||!communityActive.chapter2||communityActive.chapter2Boss||!avail.length)return;
- const idx=Math.max(0,Math.min(11,communityActive.chapterIndex||0)),rng=mulberry((levelSeed^0x3518231^Math.imul(idx+1,193))>>>0),density=CH2_DECAY351[idx];
+ const idx=Math.max(0,communityActive.chapterIndex||0),rng=mulberry((levelSeed^0x3518231^Math.imul(idx+1,193))>>>0),density=CH2_DECAY351[idx%CH2_DECAY351.length];
  const plantHeavy=[0,1,2,5,6,9,10,11].includes(idx),industrial=[1,4,6,8,11].includes(idx);
  const moss=idx===4?0x4a4e31:idx===8?0x344d37:0x456d42,leaf=idx===1?0x446c48:0x56804b;
  const buckets={};
@@ -3797,12 +3938,24 @@ function chapter2Architecture354(){
    for(const x of [8,mid,far]){rect(x,mid,2,mid-7);line(x,5,x,far)}break;
   case 11: // nexus: four large trials connected to a central control room
    rect(mid,mid,7,7);for(const [x,z] of [[mid-12,mid-12],[mid+12,mid-12],[mid-12,mid+12],[mid+12,mid+12]]){rect(x,z,4,4);line(x,z,mid,mid)}break;
+  case 12: // boathouse: parallel docks connected by narrow planked crosswalks
+   for(const x of [8,mid,far-5]){line(x,3,x,far);for(const z of [9,mid,far-6])rect(x,z,2,4)}break;
+  case 13: // transmitter tower: concentric antenna service platforms
+   rect(mid,mid,3,3);for(const rad of [7,14])for(let t=0;t<16;t++){const a=t*Math.PI/8;const x=mid+Math.round(Math.cos(a)*rad),z=mid+Math.round(Math.sin(a)*rad);rect(x,z,1,1)}for(const a of [[3,mid],[far,mid],[mid,3],[mid,far]])line(...a,mid,mid);break;
+  case 14: // substation: dense transformer bays flanking a central service spine
+   line(mid,2,mid,far);for(const x of [mid-13,mid+13])for(const z of [7,mid,far-6]){rect(x,z,4,3);line(x,z,mid,z)}break;
+  case 15: // observatory: telescope galleries radiating from a star chart
+   rect(mid,mid,8,8);for(let k=0;k<8;k++){const a=k*Math.PI/4;const x=mid+Math.round(Math.cos(a)*(mid-6)),z=mid+Math.round(Math.sin(a)*(mid-6));rect(x,z,3,3);line(mid,mid,x,z)}break;
+  case 16: // memory archive: alternating shelves separated by long aisles
+   for(let z=8;z<far;z+=9){rect(mid,z,mid-6,2);for(const x of [9,mid,far-5])rect(x,z,2,3)}line(mid,4,mid,far);break;
+  case 17: // old family home: connected rooms around a central landing
+   rect(mid,mid,6,6);for(const x of [mid-14,mid+14])for(const z of [mid-12,mid+12]){rect(x,z,5,5);line(x,z,mid,mid)}break;
  }
  // The original start must always remain open.
  rect(2,2,1,1);
 }
 function chapter2Terminal354(x,z,i){
- const k=communityActive.chapterIndex|0,colors=[0x84d2ff,0xffa54a,0x62dbee,0xc7a4ff,0x86eeff,0xe49bff,0x91e9af,0xc295ff,0x83f0bd,0xff9c92,0xff914c,0xa7e7ff],col=colors[k];
+ const k=communityActive.chapterIndex|0,colors=[0x84d2ff,0xffa54a,0x62dbee,0xc7a4ff,0x86eeff,0xe49bff,0x91e9af,0xc295ff,0x83f0bd,0xff9c92,0xff914c,0xa7e7ff,0x6db6ca,0xf6ae69,0x99d57a,0x9bcdf6,0xf2a3b0,0xf1c67f],col=colors[k%colors.length];
  const group=new THREE.Group();group.position.set(x,0,z);
  const steel=new THREE.MeshLambertMaterial({color:0x343f4a}),accent=new THREE.MeshBasicMaterial({color:col}),off=new THREE.MeshBasicMaterial({color:0xff4343});
  const cube=(w,h,d,X,Y,Z,mat)=>{const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);m.position.set(X,Y,Z);group.add(m);return m};
@@ -3834,7 +3987,7 @@ function chapter2Hud354(){
  let hint=s.mech==='light'?'FLASHLIGHT ON + E':s.mech==='lightoff'?'FLASHLIGHT OFF + E':s.mech==='quiet'?'CROUCH + FLASHLIGHT OFF + E':s.mech==='stamina'?'STAMINA ABOVE 35% + E':s.mech==='hold'?'STAND STILL NEAR A STATION':s.mech==='cold'?'HEATERS RESTORE WARMTH':s.mech==='heat'?'VENTS REDUCE REACTOR HEAT':s.mech==='final'?'EACH CORE REQUIRES A DIFFERENT ACTION':'PRESS E AT THE NEXT TERMINAL';
  const clock=(s.mech==='timer'||s.mech==='ordertimer'||s.mech==='final')&&s.time>0?' · '+Math.ceil(s.time)+'S LEFT':'';
  const danger=(s.mech==='cold'||s.mech==='heat')?' · '+(s.mech==='cold'?'COLD':'HEAT')+' '+Math.round(s.heat*100)+'%':'';
- el.style.display='block';el.textContent='CH 2 · '+(s.index+1)+'/12 · '+n+'/'+s.nodes.length+' ACTIVE'+clock+danger+' · '+(n===s.nodes.length?'FIND KEY + EXIT':hint);
+ el.style.display='block';el.textContent='LEVEL '+level+' · '+n+'/'+s.nodes.length+' ACTIVE'+clock+danger+' · '+(n===s.nodes.length?'FIND KEY + EXIT':hint);
 }
 function chapter2CompleteNode354(s,node){
  if(node.on)return;node.on=true;node.bulb.material.color.setHex(0x42ff8c);s.seq++;
@@ -3969,7 +4122,13 @@ const HUB_FEATURED=[
  {id:'greenhouse',n:'Biofilter Greenhouse',t:8,s:'ch2-biofilter-354',d:'Cycle the living filters in a humidity-controlled dome.',rules:'OPERATE FILTERS WITH YOUR LIGHT OFF',mech:'lightoff'},
  {id:'junction',n:'Transit Junction',t:2,s:'ch2-junction-354',d:'Switch the metro routing sequence before it expires.',rules:'ROUTE THE THREE TRACK SWITCHES IN TIME',mech:'ordertimer'},
  {id:'furnace',n:'Furnace Sector',t:3,s:'ch2-furnace-354',d:'A reactor exhaust grid with dangerous rising heat.',rules:'VENT THE REACTOR WHILE MANAGING HEAT',mech:'heat'},
- {id:'nexus',n:'Nexus Core',t:4,s:'ch2-nexus-354',d:'The final test combines light, silence, endurance and sequencing.',rules:'SOLVE ALL FOUR CORE TRIALS',mech:'final'}
+ {id:'nexus',n:'Nexus Core',t:4,s:'ch2-nexus-354',d:'The final test combines light, silence, endurance and sequencing.',rules:'SOLVE ALL FOUR CORE TRIALS',mech:'final'},
+ {id:'boathouse',n:'The Drowned Boathouse',t:8,s:'deep-boathouse-358',d:'Waterlogged docks and storm-battered storage huts.',rules:'RESTORE THE DOCK POWER RELAYS',mech:'timer'},
+ {id:'signal',n:'Dead Signal Tower',t:4,s:'deep-signal-358',d:'An antenna shaft filled with static and maintenance walkways.',rules:'ALIGN THE SIGNAL TERMINALS IN ORDER',mech:'order'},
+ {id:'substation',n:'Overgrown Substation',t:5,s:'deep-substation-358',d:'An abandoned power plant split by vines and fallen steel.',rules:'CHARGE THE POWER NODES WITH STAMINA',mech:'stamina'},
+ {id:'observatory',n:'Hollow Observatory',t:10,s:'deep-observatory-358',d:'Broken rotating domes beneath a frozen sky.',rules:'ILLUMINATE THE TRACKING LENSES',mech:'light'},
+ {id:'memory',n:'Memory Archive',t:2,s:'deep-memory-358',d:'A maze of recording stacks and fractured display rooms.',rules:'DECODE THE ORDERED RECORDING CONSOLES',mech:'order'},
+ {id:'unclehall',n:'Uncle Joe’s House',t:6,s:'deep-unclehall-358',d:'A deserted family home full of old radios and half-remembered noises.',rules:'SILENCE THE RADIOS WITHOUT YOUR FLASHLIGHT',mech:'lightoff'}
 ];
 const CH2_VIS=[
  ['Calibration Hall','#c7d3dc','#263340','#d8edf0',0x071525,0x92d6f5,'calibration'],
@@ -3983,21 +4142,27 @@ const CH2_VIS=[
  ['Biofilter Greenhouse','#9dc7a1','#174438','#c6edc0',0x08251d,0x87efb7,'greenhouse'],
  ['Transit Junction','#bca4a1','#3b2833','#f4d2cc',0x240b16,0xff8f7b,'junction'],
  ['Furnace Sector','#d2ab81','#442b29','#eed2a1',0x2c0c0a,0xff7d36,'furnace'],
- ['Nexus Core','#9fadd9','#202d50','#d0e7fc',0x080e2d,0x6fe7ff,'nexus']
+ ['Nexus Core','#9fadd9','#202d50','#d0e7fc',0x080e2d,0x6fe7ff,'nexus'],
+ ['The Drowned Boathouse','#a8c8c4','#243e44','#a5c4c0',0x081b24,0x6cb9be,'boathouse'],
+ ['Dead Signal Tower','#d2bfa5','#302b3a','#c8d3dc',0x11111d,0xf2a965,'signal'],
+ ['Overgrown Substation','#a9be9b','#29382c','#bdc5a9',0x0a2012,0xa5d76e,'substation'],
+ ['Hollow Observatory','#d0d9e6','#263949','#dceaf0',0x0a1726,0x7baee6,'observatory'],
+ ['Memory Archive','#c8b6b1','#40313a','#eee1ce',0x1d0c12,0xed8ab0,'memory'],
+ ['Uncle Joe’s House','#c2ad88','#4a3731','#cdb996',0x211610,0xf3bc70,'unclehall']
 ];
 let communityActive=null;
 function communityCompleted(){return store.get('communityCleared',{})||{}}
 // Legacy save keys are retained for compatibility; all post-Racer stages are now regular numbered levels.
-function chapter2Progress(){return Math.max(0,Math.min(HUB_FEATURED.length,Math.max(+store.get('chapter2Progress',0)||0,(best||0)-14)))}
-function storyLevelName355(l){l=+l||1;return l===26?'Toethesis — Final Showdown':l===13?'The Racer — Final Workshop':l>=14&&l<=25?HUB_FEATURED[l-14].n:l>=1&&l<=12?TH[l-1].n:l>=27?'Escape Complete':TH[0].n}
-function storyEntry355(l){if(l>=14&&l<=25){const o=HUB_FEATURED[l-14];return Object.assign({},o,{chapter2:true,chapterIndex:l-14})}if(l===26)return{id:'toethesis',n:'Toethesis',chapter2Boss:true};return null}
-function setStoryLevel355(l){communityActive=storyEntry355(l);if(l>=14&&!endless){store.set('chapter2Progress',Math.max(chapter2Progress(),Math.min(12,l-14)))}}
-function storyBest355(l){if(endless)return;const v=Math.max(1,Math.min(27,+l||1));if(v>best){best=v;store.set('best',best)}if(v>(stats[DIFF.key]||0)){stats[DIFF.key]=v;saveStats()}stats.bestName=storyLevelName355(best);stats.bestLevel=best;saveStats()}
+function chapter2Progress(){return Math.max(0,Math.min(HUB_FEATURED.length,Math.max(+store.get('chapter2Progress',0)||0, (best||0)>=27?12+Math.max(0,(best||0)-27):Math.max(0,(best||0)-14))))}
+function storyLevelName355(l){l=+l||1;return l===33?'Uncle Joe — The Last Visit':l===26?'Toethesis — Frozen Overtime':l===13?'The Racer — Final Workshop':l>=27&&l<=32?HUB_FEATURED[l-15].n:l>=14&&l<=25?HUB_FEATURED[l-14].n:l>=1&&l<=12?TH[l-1].n:l>=34?'Escape Complete':TH[0].n}
+function storyEntry355(l){if(l>=14&&l<=25){const o=HUB_FEATURED[l-14];return Object.assign({},o,{chapter2:true,chapterIndex:l-14})}if(l>=27&&l<=32){const o=HUB_FEATURED[l-15];return Object.assign({},o,{chapter2:true,chapterIndex:l-15})}if(l===26)return{id:'toethesis',n:'Toethesis',chapter2Boss:true};if(l===33)return{id:'unclejoe',n:'Uncle Joe',uncleBoss:true};return null}
+function setStoryLevel355(l){communityActive=storyEntry355(l);if(l>=14&&!endless){store.set('chapter2Progress',Math.max(chapter2Progress(),l>=27?12+(l-27):Math.min(12,l-14)))}}
+function storyBest355(l){if(endless)return;const v=Math.max(1,Math.min(34,+l||1));if(v>best){best=v;store.set('best',best)}if(v>(stats[DIFF.key]||0)){stats[DIFF.key]=v;saveStats()}stats.bestName=storyLevelName355(best);stats.bestLevel=best;saveStats()}
 function chapter2Start(index){
- if(!(stats.wins>0||best>=14)||index<0||index>=HUB_FEATURED.length||index>chapter2Progress())return false;
+ if(!(stats.wins>0||best>=14)||index<0||index>=HUB_FEATURED.length||index>chapter2Progress()||(index>=12&&!(store.get('chapter2BossCleared',false)||best>=27)))return false;
  if(stt!=='hub')openHub();
  if(stt!=='hub')return false;
- storyBest355(14+index);hubEnter(14+index,null,storyEntry355(14+index));return true
+ const n=index<12?14+index:15+index;storyBest355(n);hubEnter(n,null,storyEntry355(n));return true
 }
 function communityFinish(){
  if(!communityActive)return;
@@ -4005,8 +4170,8 @@ function communityFinish(){
  cleared[o.id||('custom:'+o.n+':'+o.s)]=true;store.set('communityCleared',cleared);
  if(o.chapter2){
   // Normal story progression: don't return to the hub and don't discard the save slot.
-  const next=14+o.chapterIndex+1;
-  store.set('chapter2Progress',Math.max(chapter2Progress(),Math.min(12,next-14)));
+  const next=o.chapterIndex<12?14+o.chapterIndex+1:27+(o.chapterIndex-12)+1;
+  store.set('chapter2Progress',Math.max(chapter2Progress(),next>=27?12+(next-27):Math.min(12,next-14)));
   level=next;setStoryLevel355(level);storyBest355(level);
   sfx({f:659,dur:.55,v:.15});
   san=Math.min(100,san+25);breakdown=0;
@@ -4020,12 +4185,12 @@ function hubCommunity(){return (store.get('community',[])||[]).filter(x=>x&&type
 function hubScreen(t){
  hubTab=t;document.querySelectorAll('#hubtabs [data-ht]').forEach(b=>b.classList.toggle('on',b.dataset.ht===t));
  $('hubcreate').style.display=t==='create'?'block':'none';$('hublist').style.display=t==='create'?'none':'grid';
- $('hubnote').textContent=t==='story'?'REVISIT THE ORIGINAL LEVELS, OR CHOOSE A DEEPER UNLOCKED START FROM NEW GAME.':t==='chapter2'?'THE DEEPER LEVELS — Twelve original facilities with unique layouts and mechanics. Reach a level to unlock it as a starting level. Toethesis awaits at the end.':t==='community'?'COMMUNITY LEVELS — Play custom levels created by you or imported with a shared code.':'Create a seeded custom level, copy its code, or import a code from a friend.';
+ $('hubnote').textContent=t==='story'?'REVISIT THE ORIGINAL LEVELS, OR CHOOSE A DEEPER UNLOCKED START FROM NEW GAME.':t==='chapter2'?'THE DEEPER LEVELS — 18 distinct facilities. Defeat Toethesis to discover six more, then challenge Uncle Joe.':t==='community'?'COMMUNITY LEVELS — Play custom levels created by you or imported with a shared code.':'Create a seeded custom level, copy its code, or import a code from a friend.';
  if(t==='story')$('hublist').innerHTML=TH.map((th,i)=>'<button data-l="'+(i+1)+'"><b>'+('LEVEL '+(i+1))+'</b><span>'+esc(th.n)+'</span><em>ENTER</em></button>').join('');
  else if(t==='chapter2'){
-  const progress=chapter2Progress();
-  $('hublist').innerHTML=HUB_FEATURED.map((o,i)=>{const locked=i>progress,cleared=i<progress;
-   return '<button data-ch="'+i+'" '+(locked?'disabled aria-disabled="true"':'')+' title="'+esc(o.d)+'"><b>LEVEL '+(14+i)+' · '+esc(o.n)+'</b><span>'+esc(o.d)+'<br>'+esc(o.rules)+'</span><em>'+(locked?'LOCKED':cleared?'CLEARED':'NEXT')+'</em></button>'}).join('')+(progress>=HUB_FEATURED.length?'<button data-final="1"><b>LEVEL 26 · TOETHESIS</b><span>Final boss encounter</span><em>'+(store.get('chapter2BossCleared',false)?'DEFEATED':'ENTER')+'</em></button>':'');
+  const progress=chapter2Progress(),deepUnlocked=!!(store.get('chapter2BossCleared',false)||best>=27);
+  $('hublist').innerHTML=HUB_FEATURED.map((o,i)=>{const locked=i>progress||(i>=12&&!deepUnlocked),cleared=i<progress;
+   return '<button data-ch="'+i+'" '+(locked?'disabled aria-disabled="true"':'')+' title="'+esc(o.d)+'"><b>LEVEL '+(i<12?14+i:15+i)+' · '+esc(o.n)+'</b><span>'+esc(o.d)+'<br>'+esc(o.rules)+'</span><em>'+(locked?'LOCKED':cleared?'CLEARED':'NEXT')+'</em></button>'}).join('')+(progress>=12?'<button data-final="1"><b>LEVEL 26 · TOETHESIS</b><span>Ice-rink boss: return his pucks</span><em>'+(store.get('chapter2BossCleared',false)?'DEFEATED':'ENTER')+'</em></button>':'')+(progress>=HUB_FEATURED.length?'<button data-final="2"><b>LEVEL 33 · UNCLE JOE</b><span>Final boss: the last visit</span><em>'+(best>=34?'DEFEATED':'ENTER')+'</em></button>':'');
  }else if(t==='community'){
   const done=communityCompleted(),items=hubCommunity();
   $('hublist').innerHTML=items.length?items.map((o,i)=>{const clear=!!done[o.id||('custom:'+o.n+':'+o.s)];return '<button data-c="'+i+'" title="'+esc(o.d||'Seeded custom map')+'"><b>'+esc(o.n)+'</b><span>'+esc(o.d||TH[o.t-1].n)+'</span><em>'+(clear?'CLEARED':'PLAY')+'</em></button>'}).join(''):'<p>No shared levels yet. Choose CREATE / IMPORT to add one.</p>';
@@ -4039,7 +4204,7 @@ function hubEnter(l,s=null,community=null){if(stt!=='hub')return;
  startLoad();loadScreen(()=>{restart(l);inRun=false;if(community){if(community.st!=null)stam=community.st;if(community.bt!=null)bat=community.bt;hud()}stats.runs++;saveStats()},false,()=>{enterRun();if(community)setTimeout(()=>say((community.chapter2?'LEVEL '+level+' · ':'COMMUNITY LEVEL: ')+community.n+' — '+(community.rules||'CUSTOM'),4500),1200)})} 
 $('hubentry').onclick=()=>openHub();
 $('hubtabs').onclick=e=>{const b=e.target.closest('[data-ht]');if(b)hubScreen(b.dataset.ht)};
-$('hublist').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.l)hubEnter(+b.dataset.l);else if(b.dataset.ch!==undefined)chapter2Start(+b.dataset.ch);else if(b.dataset.final){hubEnter(26,null,storyEntry355(26))}else if(b.dataset.c!==undefined){const o=hubCommunity()[+b.dataset.c];if(o)hubEnter(o.t,o.s,o)}};
+$('hublist').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.l)hubEnter(+b.dataset.l);else if(b.dataset.ch!==undefined)chapter2Start(+b.dataset.ch);else if(b.dataset.final){const n=b.dataset.final==='2'?33:26;hubEnter(n,null,storyEntry355(n))}else if(b.dataset.c!==undefined){const o=hubCommunity()[+b.dataset.c];if(o)hubEnter(o.t,o.s,o)}};
 $('hubmenu').onclick=toMenu;
 $('hubpause').style.display='none';
 const hubThemeSel=$('hubtheme');TH.slice(0,12).forEach((t,i)=>{const o=document.createElement('option');o.value=i+1;o.textContent='Level '+(i+1)+' - '+t.n;hubThemeSel.appendChild(o)});
