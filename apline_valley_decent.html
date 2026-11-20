@@ -1,0 +1,2356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Apline Valley Decent</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;0,900;1,900&family=Teko:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #0b111e;
+      color: #f8fafc;
+      touch-action: manipulation;
+      user-select: none;
+      -webkit-user-select: none;
+      overflow: hidden;
+    }
+    .font-teko {
+      font-family: 'Teko', sans-serif;
+    }
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      transition: filter 0.85s ease-out;
+    }
+    canvas.grayscale-wipeout {
+      filter: grayscale(100%) contrast(1.12) brightness(0.92);
+    }
+    .hud-glass {
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .btn-action {
+      transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4);
+    }
+    .btn-action:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(2, 132, 199, 0.6);
+      background: linear-gradient(135deg, #0369a1, #075985);
+    }
+    .btn-action:active {
+      transform: translateY(1px);
+    }
+    .touch-btn {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1.5px solid rgba(56, 189, 248, 0.4);
+      backdrop-filter: blur(6px);
+    }
+    .touch-btn:active {
+      background: rgba(56, 189, 248, 0.35);
+      border-color: #38bdf8;
+    }
+    .combo-text {
+      text-shadow: 0 0 12px rgba(56, 189, 248, 0.8), 0 2px 4px rgba(0,0,0,0.8);
+    }
+  </style>
+</head>
+<body class="w-screen h-screen flex flex-col justify-between items-center relative bg-slate-950 overflow-hidden">
+
+  <!-- HUD OVERLAY -->
+  <header class="absolute top-3 left-3 right-3 flex justify-between items-start z-10 pointer-events-none">
+    <!-- Left: Score & Multiplier -->
+    <div class="hud-glass px-4 py-2 rounded-2xl flex flex-col space-y-0 pointer-events-auto">
+      <div class="flex items-baseline space-x-2">
+        <span class="text-xs font-bold text-sky-400 tracking-wider">SCORE</span>
+        <span id="hud-score" class="font-teko text-3xl sm:text-4xl leading-none font-bold text-white tracking-wide">0</span>
+      </div>
+      <div class="flex items-center space-x-3 text-xs">
+        <span class="text-slate-400">BEST: <span id="hud-best-score" class="text-amber-300 font-bold">0</span></span>
+        <span class="text-slate-400">MULTIPLIER: <span id="hud-multiplier" class="text-cyan-400 font-bold">x1.0</span></span>
+      </div>
+    </div>
+
+    <!-- Center: Distance & Speed -->
+    <div class="hud-glass px-5 py-2 rounded-2xl flex flex-col items-center pointer-events-auto shadow-lg">
+      <span class="text-[10px] font-extrabold text-sky-300 tracking-widest uppercase">DESCENT DISTANCE</span>
+      <div class="flex items-baseline space-x-1">
+        <span id="hud-distance" class="font-teko text-4xl sm:text-5xl leading-none font-black text-amber-400 tracking-wider">0</span>
+        <span class="text-xs font-bold text-amber-300">m</span>
+      </div>
+      <div class="w-full bg-slate-800/80 h-1.5 rounded-full overflow-hidden mt-1 max-w-[120px]">
+        <div id="hud-speed-bar" class="bg-gradient-to-r from-sky-400 to-amber-400 h-full w-0 transition-all duration-75"></div>
+      </div>
+    </div>
+
+    <!-- Right: Controls & Sound Toggle -->
+    <div class="flex space-x-2 pointer-events-auto">
+      <button id="btn-menu" class="hud-glass px-3.5 py-2.5 rounded-2xl hover:bg-slate-800/80 transition text-amber-300 font-teko text-lg font-bold tracking-wider uppercase" title="Main Menu">
+        MENU
+      </button>
+      <button id="btn-audio" class="hud-glass p-3 rounded-2xl hover:bg-slate-800/80 transition text-sky-300" title="Toggle Mute (M)">
+        <svg id="icon-audio-on" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
+        <svg id="icon-audio-off" class="w-5 h-5 text-rose-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15zM17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"></path></svg>
+      </button>
+      <button id="btn-restart-quick" class="hud-glass p-3 rounded-2xl hover:bg-slate-800/80 transition text-sky-300" title="Quick Restart (R)">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- DYNAMIC COMBO NOTIFIER BANNER -->
+  <div id="combo-banner" class="absolute top-24 left-1/2 transform -translate-x-1/2 text-center pointer-events-none z-10 transition-all duration-300 opacity-0 scale-90">
+    <div id="combo-name" class="font-teko text-3xl sm:text-5xl font-black text-cyan-300 italic tracking-wider combo-text uppercase"></div>
+    <div id="combo-points" class="text-sm sm:text-base font-extrabold text-amber-300 tracking-wide"></div>
+  </div>
+
+  <!-- MAIN GAME CANVAS -->
+  <canvas id="gameCanvas" class="w-full h-full"></canvas>
+
+  <!-- START / MAIN MENU MODAL -->
+  <div id="modal-start" class="absolute inset-0 bg-slate-950/85 backdrop-blur-md flex flex-col justify-center items-center z-20 p-4 sm:p-6 text-center overflow-y-auto">
+    <div class="max-w-3xl w-full space-y-4 my-auto">
+      <div class="space-y-1">
+        <span class="text-xs font-black tracking-widest text-sky-400 uppercase">CHOOSE YOUR RUN</span>
+        <h1 class="font-teko text-5xl sm:text-7xl font-black italic tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-cyan-200 to-amber-300 filter drop-shadow-[0_0_20px_rgba(56,189,248,0.5)]">
+          APLINE VALLEY DECENT
+        </h1>
+        <p class="text-xs text-slate-300 font-semibold tracking-wider uppercase">BACKCOUNTRY &amp; TERRAIN PARK</p>
+      </div>
+
+      <!-- LEVEL SELECTION CARDS -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
+        <!-- Level 1: Terrain Park -->
+        <button id="btn-select-park" class="group hud-glass p-4 sm:p-5 rounded-3xl border-2 border-cyan-400/50 hover:border-cyan-300 bg-slate-900/70 hover:bg-slate-800/80 transition-all duration-200 flex flex-col justify-between space-y-3 shadow-[0_0_25px_rgba(56,189,248,0.18)] hover:shadow-[0_0_35px_rgba(56,189,248,0.35)] hover:-translate-y-1">
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black tracking-wider bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 uppercase">FREESTYLE</span>
+              <span class="text-cyan-300 font-teko text-xl font-bold group-hover:translate-x-1 transition-transform">PLAY ►</span>
+            </div>
+            <h2 class="font-teko text-3xl sm:text-4xl font-black italic text-white tracking-wide">TERRAIN PARK</h2>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Groomed freestyle line packed with kicker ramps, long grind rails, and giant snow tubs to boost out of for massive combos.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-1.5 pt-1 text-[10px] font-bold text-cyan-200">
+            <span class="px-2 py-0.5 rounded bg-slate-800/90">RAILS</span>
+            <span class="px-2 py-0.5 rounded bg-slate-800/90">RAMPS</span>
+            <span class="px-2 py-0.5 rounded bg-slate-800/90">SNOW TUBS</span>
+          </div>
+        </button>
+
+        <!-- Level 2: Rough Mountain -->
+        <button id="btn-select-mountain" class="group hud-glass p-4 sm:p-5 rounded-3xl border-2 border-amber-400/50 hover:border-amber-300 bg-slate-900/70 hover:bg-slate-800/80 transition-all duration-200 flex flex-col justify-between space-y-3 shadow-[0_0_25px_rgba(251,191,36,0.18)] hover:shadow-[0_0_35px_rgba(251,191,36,0.35)] hover:-translate-y-1">
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black tracking-wider bg-amber-500/20 text-amber-300 border border-amber-400/30 uppercase">BACKCOUNTRY</span>
+              <span class="text-amber-300 font-teko text-xl font-bold group-hover:translate-x-1 transition-transform">PLAY ►</span>
+            </div>
+            <h2 class="font-teko text-3xl sm:text-4xl font-black italic text-white tracking-wide">ROUGH MOUNTAIN</h2>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Endless rugged backcountry descent. Carve rough slopes, launch off steep cliff drops, and survive huge natural jumps.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-1.5 pt-1 text-[10px] font-bold text-amber-200">
+            <span class="px-2 py-0.5 rounded bg-slate-800/90">CLIFF JUMPS</span>
+            <span class="px-2 py-0.5 rounded bg-slate-800/90">BIG AIR</span>
+            <span class="px-2 py-0.5 rounded bg-slate-800/90">ROUGH TERRAIN</span>
+          </div>
+        </button>
+      </div>
+
+      <!-- RIDER CUSTOMIZER PANEL -->
+      <div class="hud-glass p-4 rounded-3xl text-left border border-cyan-500/25 shadow-lg">
+        <div class="flex items-center justify-between border-b border-slate-700/80 pb-1.5 mb-3">
+          <p class="font-bold text-cyan-300 font-teko text-lg tracking-wide uppercase">CUSTOMIZE RIDER</p>
+          <button id="btn-reset-outfit" class="text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-lg bg-slate-800/90 hover:bg-slate-700 text-slate-300 border border-slate-600/50 transition">
+            RESET DEFAULT
+          </button>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center gap-4">
+          <!-- Live Rider Preview Box -->
+          <div class="w-full sm:w-40 h-32 rounded-2xl bg-gradient-to-b from-slate-900 via-indigo-950/70 to-slate-800/90 border border-slate-700/70 flex flex-col items-center justify-center relative overflow-hidden shrink-0">
+            <canvas id="previewCanvas" width="160" height="128" class="w-full h-full"></canvas>
+            <span class="absolute bottom-1.5 text-[9px] font-bold tracking-widest text-slate-400 uppercase">LIVE PREVIEW</span>
+          </div>
+
+          <!-- Customization Controls Grid -->
+          <div class="flex-1 w-full grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs">
+            <!-- Jacket Color -->
+            <div class="bg-slate-900/70 p-2 rounded-xl border border-slate-800 flex flex-col justify-between space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-bold text-slate-300 uppercase">Jacket</span>
+                <input type="color" id="custom-jacket" value="#0284c7" class="w-5 h-5 rounded cursor-pointer bg-transparent border-0 p-0">
+              </div>
+              <div class="flex gap-1" data-target="custom-jacket">
+                <button type="button" data-color="#0f172a" class="swatch-btn w-4 h-4 rounded-full bg-[#0f172a] border border-white/40"></button>
+                <button type="button" data-color="#0284c7" class="swatch-btn w-4 h-4 rounded-full bg-[#0284c7] border border-white/40"></button>
+                <button type="button" data-color="#e11d48" class="swatch-btn w-4 h-4 rounded-full bg-[#e11d48] border border-white/40"></button>
+                <button type="button" data-color="#10b981" class="swatch-btn w-4 h-4 rounded-full bg-[#10b981] border border-white/40"></button>
+                <button type="button" data-color="#f59e0b" class="swatch-btn w-4 h-4 rounded-full bg-[#f59e0b] border border-white/40"></button>
+                <button type="button" data-color="#8b5cf6" class="swatch-btn w-4 h-4 rounded-full bg-[#8b5cf6] border border-white/40"></button>
+              </div>
+            </div>
+
+            <!-- Pants Color -->
+            <div class="bg-slate-900/70 p-2 rounded-xl border border-slate-800 flex flex-col justify-between space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-bold text-slate-300 uppercase">Pants</span>
+                <input type="color" id="custom-pants" value="#1e293b" class="w-5 h-5 rounded cursor-pointer bg-transparent border-0 p-0">
+              </div>
+              <div class="flex gap-1" data-target="custom-pants">
+                <button type="button" data-color="#0f172a" class="swatch-btn w-4 h-4 rounded-full bg-[#0f172a] border border-white/40"></button>
+                <button type="button" data-color="#1e293b" class="swatch-btn w-4 h-4 rounded-full bg-[#1e293b] border border-white/40"></button>
+                <button type="button" data-color="#d97706" class="swatch-btn w-4 h-4 rounded-full bg-[#d97706] border border-white/40"></button>
+                <button type="button" data-color="#4d7c0f" class="swatch-btn w-4 h-4 rounded-full bg-[#4d7c0f] border border-white/40"></button>
+                <button type="button" data-color="#e2e8f0" class="swatch-btn w-4 h-4 rounded-full bg-[#e2e8f0] border border-white/40"></button>
+                <button type="button" data-color="#be123c" class="swatch-btn w-4 h-4 rounded-full bg-[#be123c] border border-white/40"></button>
+              </div>
+            </div>
+
+            <!-- Pants Fit (Normal vs Baggy) -->
+            <div class="bg-slate-900/70 p-2 rounded-xl border border-slate-800 flex flex-col justify-between space-y-1.5">
+              <span class="text-[10px] font-bold text-slate-300 uppercase">Pants Fit</span>
+              <div class="grid grid-cols-2 gap-1 bg-slate-950 p-0.5 rounded-lg border border-slate-800">
+                <button type="button" id="btn-fit-normal" class="py-1 rounded-md text-[10px] font-extrabold uppercase transition bg-sky-600 text-white">Normal</button>
+                <button type="button" id="btn-fit-baggy" class="py-1 rounded-md text-[10px] font-extrabold uppercase transition text-slate-400 hover:text-white">Baggy</button>
+              </div>
+            </div>
+
+            <!-- Helmet Color -->
+            <div class="bg-slate-900/70 p-2 rounded-xl border border-slate-800 flex flex-col justify-between space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-bold text-slate-300 uppercase">Helmet</span>
+                <input type="color" id="custom-helmet" value="#f8fafc" class="w-5 h-5 rounded cursor-pointer bg-transparent border-0 p-0">
+              </div>
+              <div class="flex gap-1" data-target="custom-helmet">
+                <button type="button" data-color="#0f172a" class="swatch-btn w-4 h-4 rounded-full bg-[#0f172a] border border-white/40"></button>
+                <button type="button" data-color="#f8fafc" class="swatch-btn w-4 h-4 rounded-full bg-[#f8fafc] border border-white/40"></button>
+                <button type="button" data-color="#ef4444" class="swatch-btn w-4 h-4 rounded-full bg-[#ef4444] border border-white/40"></button>
+                <button type="button" data-color="#38bdf8" class="swatch-btn w-4 h-4 rounded-full bg-[#38bdf8] border border-white/40"></button>
+                <button type="button" data-color="#facc15" class="swatch-btn w-4 h-4 rounded-full bg-[#facc15] border border-white/40"></button>
+              </div>
+            </div>
+
+            <!-- Goggles Color -->
+            <div class="bg-slate-900/70 p-2 rounded-xl border border-slate-800 flex flex-col justify-between space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-bold text-slate-300 uppercase">Goggles</span>
+                <input type="color" id="custom-goggles" value="#f97316" class="w-5 h-5 rounded cursor-pointer bg-transparent border-0 p-0">
+              </div>
+              <div class="flex gap-1" data-target="custom-goggles">
+                <button type="button" data-color="#0f172a" class="swatch-btn w-4 h-4 rounded-full bg-[#0f172a] border border-white/40"></button>
+                <button type="button" data-color="#f97316" class="swatch-btn w-4 h-4 rounded-full bg-[#f97316] border border-white/40"></button>
+                <button type="button" data-color="#06b6d4" class="swatch-btn w-4 h-4 rounded-full bg-[#06b6d4] border border-white/40"></button>
+                <button type="button" data-color="#ec4899" class="swatch-btn w-4 h-4 rounded-full bg-[#ec4899] border border-white/40"></button>
+                <button type="button" data-color="#a3e635" class="swatch-btn w-4 h-4 rounded-full bg-[#a3e635] border border-white/40"></button>
+                <button type="button" data-color="#a855f7" class="swatch-btn w-4 h-4 rounded-full bg-[#a855f7] border border-white/40"></button>
+              </div>
+            </div>
+
+            <!-- Board Color -->
+            <div class="bg-slate-900/70 p-2 rounded-xl border border-slate-800 flex flex-col justify-between space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-bold text-slate-300 uppercase">Board</span>
+                <input type="color" id="custom-board" value="#f59e0b" class="w-5 h-5 rounded cursor-pointer bg-transparent border-0 p-0">
+              </div>
+              <div class="flex gap-1" data-target="custom-board">
+                <button type="button" data-color="#0f172a" class="swatch-btn w-4 h-4 rounded-full bg-[#0f172a] border border-white/40"></button>
+                <button type="button" data-color="#f59e0b" class="swatch-btn w-4 h-4 rounded-full bg-[#f59e0b] border border-white/40"></button>
+                <button type="button" data-color="#06b6d4" class="swatch-btn w-4 h-4 rounded-full bg-[#06b6d4] border border-white/40"></button>
+                <button type="button" data-color="#f43f5e" class="swatch-btn w-4 h-4 rounded-full bg-[#f43f5e] border border-white/40"></button>
+                <button type="button" data-color="#22c55e" class="swatch-btn w-4 h-4 rounded-full bg-[#22c55e] border border-white/40"></button>
+                <button type="button" data-color="#f8fafc" class="swatch-btn w-4 h-4 rounded-full bg-[#f8fafc] border border-white/40"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTROLS GUIDE -->
+      <div class="hud-glass p-3.5 rounded-2xl text-left text-xs space-y-1.5 text-slate-300 border border-sky-500/20 shadow-inner">
+        <p class="font-bold text-sky-300 border-b border-slate-700/80 pb-1 font-teko text-base tracking-wide uppercase">CONTROLS & TRICK COMBOS</p>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-1.5 text-xs">
+          <div><span class="text-amber-400 font-mono font-bold">W / ↑</span> : Go / Push</div>
+          <div><span class="text-amber-400 font-mono font-bold">Q (Ground)</span> : Slow Down</div>
+          <div><span class="text-amber-400 font-mono font-bold">SHIFT</span> : Speed Up</div>
+          <div><span class="text-amber-400 font-mono font-bold">SPACE</span> : Jump / 360 / Hold Rail</div>
+          <div><span class="text-amber-400 font-mono font-bold">A / D</span> : Backflip / Frontflip</div>
+          <div><span class="text-amber-400 font-mono font-bold">Q / E (Air)</span> : Nose / Tail Grab</div>
+          <div><span class="text-amber-400 font-mono font-bold">P (Rail)</span> : Rail Spin</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAME OVER / WIPEOUT MODAL -->
+  <div id="modal-wipeout" class="absolute inset-0 bg-slate-950/90 backdrop-blur-md flex flex-col justify-center items-center z-20 p-6 text-center hidden">
+    <div class="max-w-sm w-full hud-glass p-6 rounded-3xl text-center space-y-5 border border-rose-500/30 shadow-[0_0_40px_rgba(244,63,94,0.25)]">
+      <div>
+        <span id="wipeout-cause" class="text-xs font-black tracking-widest text-rose-400 uppercase">WIPEOUT!</span>
+        <h2 id="wipeout-heading" class="font-teko text-5xl font-black text-white italic tracking-wide">CAUGHT IN SNOW!</h2>
+      </div>
+
+      <div class="bg-slate-900/80 p-4 rounded-2xl space-y-2 border border-slate-800">
+        <div class="flex justify-between items-center text-sm">
+          <span class="text-slate-400 font-bold">DESCENT</span>
+          <span id="summary-distance" class="font-teko text-2xl font-bold text-amber-400">0 m</span>
+        </div>
+        <div class="flex justify-between items-center text-sm">
+          <span class="text-slate-400 font-bold">TRICK SCORE</span>
+          <span id="summary-score" class="font-teko text-2xl font-bold text-sky-400">0</span>
+        </div>
+        <div class="flex justify-between items-center text-sm border-t border-slate-800 pt-2">
+          <span class="text-slate-400 font-bold">BEST DISTANCE</span>
+          <span id="summary-best-dist" class="font-teko text-2xl font-bold text-amber-300">0 m</span>
+        </div>
+      </div>
+
+      <div class="flex space-x-2.5">
+        <button id="btn-wipeout-menu" class="w-1/3 py-3.5 rounded-2xl hud-glass hover:bg-slate-800 text-slate-200 font-teko text-xl font-bold tracking-wider uppercase transition">
+          MENU
+        </button>
+        <button id="btn-restart-game" class="w-2/3 py-3.5 rounded-2xl text-white font-teko text-2xl font-bold italic tracking-wider btn-action uppercase">
+          SHRED AGAIN
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ON-SCREEN TOUCH CONTROLS FOR MOBILE -->
+  <div id="touch-controls" class="absolute bottom-4 left-4 right-4 flex justify-between items-end z-10 select-none sm:hidden pointer-events-none">
+    <div class="flex space-x-1.5 pointer-events-auto">
+      <button id="touch-left" class="w-12 h-14 rounded-2xl touch-btn flex items-center justify-center text-sky-300 text-xl font-bold active:scale-95" title="Backflip">◄</button>
+      <button id="touch-right" class="w-12 h-14 rounded-2xl touch-btn flex items-center justify-center text-sky-300 text-xl font-bold active:scale-95" title="Frontflip">►</button>
+      <button id="touch-nose" class="w-12 h-14 rounded-2xl touch-btn border-rose-400/50 flex items-center justify-center text-rose-300 font-teko text-sm font-bold active:scale-95">Q/NOSE</button>
+      <button id="touch-tail" class="w-12 h-14 rounded-2xl touch-btn border-purple-400/50 flex items-center justify-center text-purple-300 font-teko text-sm font-bold active:scale-95">E/TAIL</button>
+    </div>
+    <div class="flex space-x-1.5 pointer-events-auto">
+      <button id="touch-push" class="w-12 h-14 rounded-2xl touch-btn border-emerald-400/50 flex items-center justify-center text-emerald-300 font-teko text-lg font-bold active:scale-95">GO</button>
+      <button id="touch-tuck" class="w-12 h-14 rounded-2xl touch-btn border-amber-400/50 flex items-center justify-center text-amber-300 font-teko text-lg font-bold active:scale-95">SHIFT</button>
+      <button id="touch-jump" class="w-14 h-14 rounded-2xl touch-btn border-cyan-400/80 flex items-center justify-center text-cyan-300 font-teko text-lg font-black active:scale-95">JMP/360</button>
+    </div>
+  </div>
+
+  <script>
+    /* ==========================================================================
+       AUDIO SYNTHESIZER (Web Audio API)
+       ========================================================================== */
+    class AudioEngine {
+      constructor() {
+        this.ctx = null;
+        this.muted = false;
+        this.carveGain = null;
+        this.carveFilter = null;
+        this.carveNoise = null;
+        this.windGain = null;
+        this.windFilter = null;
+        this.grindGain = null;
+        this.grindOsc = null;
+      }
+
+      init() {
+        if (this.ctx) {
+          if (this.ctx.state === 'suspended') this.ctx.resume();
+          return;
+        }
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        this.ctx = new AudioCtx();
+
+        // White Noise Buffer Generator
+        const bufferSize = this.ctx.sampleRate * 2;
+        const noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          output[i] = Math.random() * 2 - 1;
+        }
+
+        // Snow Carving Sound Loop
+        this.carveNoise = this.ctx.createBufferSource();
+        this.carveNoise.buffer = noiseBuffer;
+        this.carveNoise.loop = true;
+
+        this.carveFilter = this.ctx.createBiquadFilter();
+        this.carveFilter.type = 'bandpass';
+        this.carveFilter.frequency.value = 800;
+        this.carveFilter.Q.value = 1.2;
+
+        this.carveGain = this.ctx.createGain();
+        this.carveGain.gain.value = 0;
+
+        this.carveNoise.connect(this.carveFilter);
+        this.carveFilter.connect(this.carveGain);
+        this.carveGain.connect(this.ctx.destination);
+        this.carveNoise.start();
+
+        // Wind Air Sound Loop
+        const windNoise = this.ctx.createBufferSource();
+        windNoise.buffer = noiseBuffer;
+        windNoise.loop = true;
+
+        this.windFilter = this.ctx.createBiquadFilter();
+        this.windFilter.type = 'lowpass';
+        this.windFilter.frequency.value = 400;
+
+        this.windGain = this.ctx.createGain();
+        this.windGain.gain.value = 0;
+
+        windNoise.connect(this.windFilter);
+        this.windFilter.connect(this.windGain);
+        this.windGain.connect(this.ctx.destination);
+        windNoise.start();
+
+        // Rail Grind Buzz Loop
+        this.grindOsc = this.ctx.createOscillator();
+        this.grindOsc.type = 'sawtooth';
+        this.grindOsc.frequency.value = 140;
+
+        this.grindGain = this.ctx.createGain();
+        this.grindGain.gain.value = 0;
+
+        this.grindOsc.connect(this.grindGain);
+        this.grindGain.connect(this.ctx.destination);
+        this.grindOsc.start();
+      }
+
+      updateCarve(speedRatio, grounded) {
+        if (!this.ctx || this.muted) return;
+        if (grounded && speedRatio > 0.05) {
+          this.carveGain.gain.setTargetAtTime(Math.min(0.25, speedRatio * 0.25), this.ctx.currentTime, 0.05);
+          this.carveFilter.frequency.setTargetAtTime(600 + speedRatio * 1400, this.ctx.currentTime, 0.05);
+        } else {
+          this.carveGain.gain.setTargetAtTime(0, this.ctx.currentTime, 0.08);
+        }
+      }
+
+      updateWind(airSpeedRatio) {
+        if (!this.ctx || this.muted) return;
+        this.windGain.gain.setTargetAtTime(Math.min(0.2, airSpeedRatio * 0.2), this.ctx.currentTime, 0.08);
+        this.windFilter.frequency.setTargetAtTime(300 + airSpeedRatio * 800, this.ctx.currentTime, 0.08);
+      }
+
+      updateGrind(isGrinding) {
+        if (!this.ctx || this.muted) return;
+        if (isGrinding) {
+          this.grindGain.gain.setTargetAtTime(0.12, this.ctx.currentTime, 0.03);
+        } else {
+          this.grindGain.gain.setTargetAtTime(0, this.ctx.currentTime, 0.05);
+        }
+      }
+
+      playJump() {
+        if (!this.ctx || this.muted) return;
+        try {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(220, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(520, this.ctx.currentTime + 0.12);
+          gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.12);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.12);
+        } catch (e) {}
+      }
+
+      playLanding(impactSpeed) {
+        if (!this.ctx || this.muted) return;
+        try {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(120, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(40, this.ctx.currentTime + 0.15);
+          const volume = Math.min(0.3, impactSpeed * 0.02);
+          gain.gain.setValueAtTime(volume, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.15);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.15);
+        } catch (e) {}
+      }
+
+      playGem() {
+        if (!this.ctx || this.muted) return;
+        try {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(659.25, this.ctx.currentTime);
+          osc.frequency.setValueAtTime(987.77, this.ctx.currentTime + 0.08);
+          gain.gain.setValueAtTime(0.15, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.2);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.2);
+        } catch (e) {}
+      }
+
+      playTrickChime(count) {
+        if (!this.ctx || this.muted) return;
+        try {
+          const baseF = 440 * Math.pow(1.05946, (count % 8) * 2);
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(baseF, this.ctx.currentTime);
+          gain.gain.setValueAtTime(0.18, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.3);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.3);
+        } catch (e) {}
+      }
+
+      playCrash() {
+        if (!this.ctx || this.muted) return;
+        try {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(180, this.ctx.currentTime);
+          osc.frequency.linearRampToValueAtTime(30, this.ctx.currentTime + 0.4);
+          gain.gain.setValueAtTime(0.35, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.4);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.4);
+        } catch (e) {}
+      }
+    }
+
+    const audio = new AudioEngine();
+
+    /* ==========================================================================
+       GAME ENGINE & TERRAIN GENERATOR
+       ========================================================================== */
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let width = 0;
+    let height = 0;
+
+    function resizeCanvas() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // Key input tracking
+    const keys = {
+      left: false,
+      right: false,
+      go: false,
+      qDown: false,
+      eDown: false,
+      pPressed: false,
+      downArrow: false,
+      shift: false,
+      jump: false,
+      jumpPressed: false
+    };
+
+    // Rider Appearance & Outfit Configuration
+    const DEFAULT_OUTFIT = {
+      jacketColor: '#0284c7',
+      pantsColor: '#1e293b',
+      helmetColor: '#f8fafc',
+      gogglesColor: '#f97316',
+      boardColor: '#f59e0b',
+      baggyPants: false
+    };
+
+    function loadRiderOutfit() {
+      try {
+        const saved = JSON.parse(localStorage.getItem('alpine2_rider_outfit') || 'null');
+        return saved ? { ...DEFAULT_OUTFIT, ...saved } : { ...DEFAULT_OUTFIT };
+      } catch (e) {
+        return { ...DEFAULT_OUTFIT };
+      }
+    }
+
+    const riderOutfit = loadRiderOutfit();
+
+    function saveRiderOutfit() {
+      try {
+        localStorage.setItem('alpine2_rider_outfit', JSON.stringify(riderOutfit));
+      } catch (e) {}
+    }
+
+    function shadeHexColor(hex, percent) {
+      const clean = hex.replace('#', '');
+      const num = parseInt(clean.length === 3 ? clean.split('').map(c => c + c).join('') : clean, 16);
+      if (Number.isNaN(num)) return hex;
+      const amt = Math.round(2.55 * percent);
+      const r = Math.min(255, Math.max(0, (num >> 16) + amt));
+      const g = Math.min(255, Math.max(0, ((num >> 8) & 0x00FF) + amt));
+      const b = Math.min(255, Math.max(0, (num & 0x0000FF) + amt));
+      return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+    }
+
+    class TerrainSystem {
+      constructor() {
+        this.mode = 'PARK';
+        this.nodes = [];
+        this.rails = [];
+        this.trees = [];
+        this.gems = [];
+        this.tubs = [];
+        this.step = 90;
+        this.lastX = -400;
+        this.lastY = 400;
+        this.reset('PARK');
+      }
+
+      reset(mode = this.mode) {
+        this.mode = mode;
+        this.nodes = [];
+        this.rails = [];
+        this.trees = [];
+        this.gems = [];
+        this.tubs = [];
+        this.lastX = -400;
+        this.lastY = 400;
+
+        // Generate gentle starting slope
+        for (let i = 0; i < 16; i++) {
+          this.lastX += this.step;
+          this.lastY += 15;
+          this.nodes.push({ x: this.lastX, y: this.lastY, isCliff: false, isTub: false });
+        }
+      }
+
+      update(playerX) {
+        while (this.lastX < playerX + width + 1200) {
+          this.generateNextSegment();
+        }
+
+        // Cleanup old off-screen terrain
+        const cullX = playerX - 1500;
+        while (this.nodes.length > 2 && this.nodes[1].x < cullX) {
+          this.nodes.shift();
+        }
+        this.rails = this.rails.filter(r => r.x2 > cullX);
+        this.trees = this.trees.filter(t => t.x > cullX);
+        this.gems = this.gems.filter(g => g.x > cullX && !g.collected);
+        this.tubs = this.tubs.filter(tb => tb.x2 > cullX);
+      }
+
+      generateNextSegment() {
+        if (this.mode === 'PARK') {
+          this.generateParkSegment();
+        } else {
+          this.generateMountainSegment();
+        }
+      }
+
+      // LEVEL 1: TERRAIN PARK (Frequent Rails, Ramps/Jumps, and Snow Tubs)
+      generateParkSegment() {
+        const rand = Math.random();
+        let featureType = 'RAMP';
+        if (rand < 0.34) featureType = 'RAIL';
+        else if (rand < 0.68) featureType = 'RAMP';
+        else if (rand < 0.90) featureType = 'TUB';
+        else featureType = 'CRUISER';
+
+        if (featureType === 'TUB') {
+          // Giant Snow Tub / Halfpipe Bowl sculpted into the snow
+          const tubStartX = this.lastX;
+          const tubStartY = this.lastY;
+          const tubSteps = 10;
+          const tubDepth = 95 + Math.random() * 25;
+
+          for (let i = 1; i <= tubSteps; i++) {
+            const t = i / tubSteps;
+            this.lastX += this.step * 0.85;
+            // Smooth U-shaped bowl curve with slight downhill exit lip
+            const bowlCurve = Math.sin(t * Math.PI) * tubDepth;
+            const exitLip = t > 0.75 ? (t - 0.75) * 90 : 0;
+            this.lastY = tubStartY + (t * 65) + bowlCurve - exitLip;
+            this.nodes.push({ x: this.lastX, y: this.lastY, isCliff: false, isTub: true });
+          }
+
+          this.tubs.push({
+            x1: tubStartX,
+            x2: this.lastX,
+            centerX: (tubStartX + this.lastX) * 0.5,
+            lipY: this.lastY
+          });
+
+          // Arc of crystal gems launching out of the tub exit lip
+          for (let g = 0; g < 5; g++) {
+            this.gems.push({
+              x: this.lastX + 45 + g * 65,
+              y: this.lastY - 65 - Math.sin((g / 4) * Math.PI) * 85,
+              collected: false
+            });
+          }
+
+          // Smooth landing deck after tub
+          for (let i = 0; i < 4; i++) {
+            this.lastX += this.step;
+            this.lastY += 20;
+            this.nodes.push({ x: this.lastX, y: this.lastY, isCliff: false, isTub: false });
+          }
+        } else if (featureType === 'RAMP') {
+          // Big Park Kicker Jump + Table Top Landing
+          for (let i = 0; i < 4; i++) {
+            this.lastX += this.step;
+            this.lastY -= (15 - i * 4);
+            this.nodes.push({ x: this.lastX, y: this.lastY, isCliff: false, isTub: false });
+          }
+          // Gem arc above jump
+          for (let g = 0; g < 4; g++) {
+            this.gems.push({
+              x: this.lastX + 35 + g * 65,
+              y: this.lastY - 75 - Math.sin((g / 3) * Math.PI) * 65,
+              collected: false
+            });
+          }
+          // Sloped landing deck
+          for (let i = 0; i < 5; i++) {
+            this.lastX += this.step;
+            this.lastY += 26;
+            this.nodes.push({ x: this.lastX, y: this.lastY, isCliff: false, isTub: false });
+          }
+        } else if (featureType === 'RAIL') {
+          // Elevated Grind Rail (often preceded by a mini bump)
+          const startX = this.lastX + this.step;
+          const railLength = Math.floor(Math.random() * 4 + 5) * this.step;
+          const startY = this.lastY + 14;
+          const isWooden = Math.random() < 0.45;
+
+          for (let i = 0; i < railLength / this.step; i++) {
+            this.lastX += this.step;
+            this.lastY += 15;
+            this.nodes.push({ x: this.lastX, y: this.lastY, isCliff: false, isTub: false });
+          }
+
+          const railY1 = startY - 38;
+          const railY2 = this.lastY - 38;
+          this.rails.push({ x1: startX, y1: railY1, x2: this.lastX, y2: railY2, isWooden });
+
+          for (let rG = 0; rG < railLength; rG += 95) {
+            this.gems.push({
+              x: startX + rG,
+              y: railY1 + (rG / railLength) * (railY2 - railY1) - 26,
+              collected: false
+            });
+          }
+        } else {
+          // Short connector with snow-capped pine trees on the sides
+          for (let i = 0; i < 3; i++) {
+            this.lastX += this.step;
+            this.lastY += 15;
+            this.nodes.push({ x: this.lastX, y: this.lastY, isCliff: false, isTub: false });
+            if (Math.random() < 0.45) {
+              this.trees.push({
+                x: this.lastX,
+                y: this.lastY,
+                height: Math.random() * 45 + 55,
+                width: Math.random() * 22 + 32,
+                shade: '#064e3b'
+              });
+            }
+          }
+        }
+      }
+
+      // LEVEL 2: ROUGH MOUNTAIN (Infinite rugged terrain, steep cliff jumps & natural kickers)
+      generateMountainSegment() {
+        const rand = Math.random();
+        const distMeters = Math.max(0, this.lastX / 10);
+        const steepnessMultiplier = Math.min(1.5, 1 + distMeters / 3200);
+
+        let featureType = 'ROUGH';
+        if (rand < 0.36) featureType = 'CLIFF_JUMP';
+        else if (rand < 0.66) featureType = 'NATURAL_RAMP';
+        else featureType = 'ROUGH';
+
+        if (featureType === 'CLIFF_JUMP') {
+          // Flat/slightly lipped cliff edge followed by dramatic steep rocky cliff drop
+          for (let i = 0; i < 2; i++) {
+            this.lastX += this.step;
+            this.lastY -= 4;
+            this.nodes.push({ x: this.lastX, y: this.lastY, isCliff: false, isTub: false });
+          }
+
+          // Gem trail off the cliff lip
+          for (let g = 0; g < 4; g++) {
+            this.gems.push({
+              x: this.lastX + 40 + g * 75,
+              y: this.lastY - 25 + g * 32,
+              collected: false
+            });
+          }
+
+          // Steep cliff drop
+          const dropSteps = Math.floor(Math.random() * 3 + 4);
+          for (let i = 0; i < dropSteps; i++) {
+            this.lastX += this.step;
+            this.lastY += (42 + Math.random() * 16) * steepnessMultiplier;
+            this.nodes.push({ x: this.lastX, y: this.lastY, isCliff: true, isTub: false });
+          }
+
+          // Smooth transition run-out at bottom of cliff
+          for (let i = 0; i < 3; i++) {
+            this.lastX += this.step;
+            this.lastY += 20;
+            this.nodes.push({ x: this.lastX, y: this.lastY, isCliff: false, isTub: false });
+          }
+        } else if (featureType === 'NATURAL_RAMP') {
+          // Snowdrift kicker ramp on mountain face
+          for (let i = 0; i < 3; i++) {
+            this.lastX += this.step;
+            this.lastY -= (14 - i * 5);
+            this.nodes.push({ x: this.lastX, y: this.lastY, isCliff: false, isTub: false });
+          }
+          for (let i = 0; i < 5; i++) {
+            this.lastX += this.step;
+            this.lastY += 30 * steepnessMultiplier;
+            this.nodes.push({ x: this.lastX, y: this.lastY, isCliff: true, isTub: false });
+          }
+        } else {
+          // Rough jagged mountain terrain with uneven bumps & alpine pines
+          const segmentLength = Math.floor(Math.random() * 5 + 5);
+          for (let i = 0; i < segmentLength; i++) {
+            this.lastX += this.step;
+            const roughJitter = (Math.random() * 24 - 8);
+            this.lastY += Math.max(4, (16 + roughJitter) * steepnessMultiplier);
+            this.nodes.push({ x: this.lastX, y: this.lastY, isCliff: false, isTub: false });
+
+            if (Math.random() < 0.38) {
+              this.trees.push({
+                x: this.lastX,
+                y: this.lastY,
+                height: Math.random() * 55 + 65,
+                width: Math.random() * 26 + 34,
+                shade: Math.random() > 0.5 ? '#043927' : '#064e3b'
+              });
+            }
+          }
+        }
+      }
+
+      getHeightAt(x) {
+        for (let i = 0; i < this.nodes.length - 1; i++) {
+          const n1 = this.nodes[i];
+          const n2 = this.nodes[i + 1];
+          if (x >= n1.x && x <= n2.x) {
+            const t = (x - n1.x) / (n2.x - n1.x);
+            const y = n1.y + t * (n2.y - n1.y);
+            const angle = Math.atan2(n2.y - n1.y, n2.x - n1.x);
+            return { y, angle };
+          }
+        }
+        return { y: this.lastY, angle: 0.2 };
+      }
+    }
+
+    /* ==========================================================================
+       SNOWBOARDER PLAYER PHYSICS & TRICK SYSTEM
+       ========================================================================== */
+    class Snowboarder {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = 0;
+        this.y = 350;
+        this.vx = 2.5;
+        this.vy = 0;
+        this.rot = 0.18;
+        this.vRot = 0;
+        this.state = 'GROUNDED'; // GROUNDED, AIRBORNE, GRINDING, TUMBLING
+        this.tucking = false;
+        this.braking = false;
+        this.pushing = false;
+        this.airRotation = 0;
+        this.spinAngle = 0;
+        this.spinsCompleted = 0;
+        this.grabState = 'NONE'; // 'NONE', 'NOSE', 'TAIL'
+        this.noseGrabTime = 0;
+        this.tailGrabTime = 0;
+        this.airTime = 0;
+        this.currentRail = null;
+        this.railGrindTime = 0;
+        this.railSpinAngle = 0;
+        this.railSpins = 0;
+        this.snowTrail = [];
+        this.wipeout = false;
+      }
+
+      startTumble() {
+        this.wipeout = true;
+        this.state = 'TUMBLING';
+        this.grabState = 'NONE';
+        this.spinAngle = 0;
+        this.tucking = false;
+        this.braking = false;
+
+        // Stay strapped to the board and tumble forward down the slope
+        this.vx = Math.max(4.5, this.vx * 0.85);
+        this.vy = 0;
+        this.vRot = 0.24;
+      }
+
+      updateTumble(terrain) {
+        // Slide and tumble smoothly along the snow surface while staying on the board
+        const terrInfo = terrain.getHeightAt(this.x);
+        this.x += this.vx;
+        this.y = terrInfo.y - 17;
+        this.rot += this.vRot;
+
+        // Gradually slow down the tumble along the slope
+        this.vx *= 0.955;
+        this.vRot = this.vx * 0.045;
+
+        if (this.vx < 0.25) {
+          this.vx = 0;
+          this.vRot = 0;
+        } else if (Math.random() < 0.6) {
+          triggerSnowParticles(this.x, this.y + 12, 2, '#ffffff', 2.0);
+        }
+      }
+
+      update(terrain) {
+        if (this.state === 'TUMBLING') {
+          this.updateTumble(terrain);
+          return;
+        }
+        if (this.wipeout) return;
+
+        // Age existing snow trail segments
+        for (let i = this.snowTrail.length - 1; i >= 0; i--) {
+          this.snowTrail[i].alpha -= 0.012;
+          if (this.snowTrail[i].alpha <= 0) {
+            this.snowTrail.splice(i, 1);
+          }
+        }
+
+        const terrInfo = terrain.getHeightAt(this.x);
+
+        // State Machine logic
+        if (this.state === 'GROUNDED') {
+          this.airTime = 0;
+          this.grabState = 'NONE';
+          this.spinAngle = 0;
+
+          // Ground Controls & Acceleration
+          this.tucking = keys.shift;
+          this.braking = keys.qDown || keys.downArrow;
+          this.pushing = keys.go;
+
+          const slopeAngle = terrInfo.angle;
+          // Gentle gravity acceleration down the mountain
+          const gravityAccel = Math.sin(slopeAngle) * 0.16;
+
+          // Base Speed Dynamics (Relaxed cruising)
+          let targetMaxSpeed = 11.5;
+          let friction = 0.985;
+
+          if (this.tucking) {
+            targetMaxSpeed = 16.5;
+            friction = 0.993;
+            this.vx += 0.14 + (slopeAngle > 0 ? gravityAccel * 0.7 : 0);
+          } else if (this.pushing) {
+            this.vx += 0.12;
+          }
+
+          // Q / DOWN: Snow Brake / Sideways Scrape
+          if (this.braking) {
+            this.vx *= 0.89;
+            if (this.vx > 1.2) {
+              triggerSnowSpray(this.x, this.y + 10, this.vx * 1.2, '#ffffff', 3);
+            }
+          }
+
+          // Natural gravity pull down slope
+          if (slopeAngle > 0) {
+            this.vx += gravityAccel;
+          } else {
+            this.vx -= 0.08;
+          }
+
+          this.vx *= friction;
+          if (this.vx < 0) this.vx = 0;
+          if (this.vx > targetMaxSpeed) this.vx = targetMaxSpeed;
+
+          // Align Y & board rotation to slope
+          this.y = terrInfo.y - 17;
+          this.vy = Math.sin(slopeAngle) * this.vx;
+
+          let angleDiff = slopeAngle - this.rot;
+          while (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
+          while (angleDiff > Math.PI) angleDiff -= Math.PI * 2;
+          this.rot += angleDiff * 0.25;
+
+          // Forward motion
+          this.x += this.vx;
+
+          // Record continuous snow trail behind the snowboard's tail
+          const tailX = this.x - Math.cos(this.rot) * 22;
+          const tailY = this.y + 15 - Math.sin(this.rot) * 22;
+          this.snowTrail.push({
+            x: tailX,
+            y: tailY,
+            alpha: this.braking ? 0.95 : 0.72,
+            width: this.braking ? 7 : 4.2,
+            connected: this.snowTrail.length > 0 && this.snowTrail[this.snowTrail.length - 1].grounded
+          , grounded: true
+          });
+          if (this.snowTrail.length > 90) this.snowTrail.shift();
+
+          // Carve snow particles
+          if (this.vx > 2 && Math.random() < 0.45) {
+            triggerSnowParticles(this.x - 12, this.y + 12, 1, '#f8fafc', 1.5);
+          }
+
+          // Jump Command (Space) - Scales height based on ramp/kicker slope angle
+          if (keys.jumpPressed) {
+            keys.jumpPressed = false;
+            this.state = 'AIRBORNE';
+            // Upward kicker ramps have negative slopeAngle; boost jump height proportionally
+            const rampPopBoost = slopeAngle < -0.02 ? Math.min(7.5, Math.abs(slopeAngle) * 18 + this.vx * 0.22) : 0;
+            this.vy = -7.2 - rampPopBoost - (this.vx * 0.04);
+            this.vRot = 0;
+            this.spinAngle = 0;
+            this.spinsCompleted = 0;
+            this.noseGrabTime = 0;
+            this.tailGrabTime = 0;
+            audio.playJump();
+            triggerSnowParticles(this.x, this.y + 10, rampPopBoost > 1 ? 22 : 12, '#ffffff', rampPopBoost > 1 ? 4 : 2.5);
+          } else if (terrInfo.angle < -0.25 && this.vx > 7.5) {
+            // Crest launch off kicker
+            this.state = 'AIRBORNE';
+            this.vy = Math.sin(slopeAngle) * this.vx - 3.6;
+            this.spinAngle = 0;
+            this.spinsCompleted = 0;
+            this.noseGrabTime = 0;
+            this.tailGrabTime = 0;
+          }
+
+        } else if (this.state === 'AIRBORNE') {
+          if (this.snowTrail.length > 0) {
+            this.snowTrail[this.snowTrail.length - 1].grounded = false;
+          }
+          this.airTime++;
+          this.vy += 0.34; // Floatier gravity so tricks feel great
+
+          // 1. Mid-air Flips (A / D)
+          const FLIP_SPEED = terrain.mode === 'PARK' ? 0.105 : 0.072;
+          if (keys.left) {
+            this.vRot = -FLIP_SPEED; // Backflip
+          } else if (keys.right) {
+            this.vRot = FLIP_SPEED;  // Frontflip
+          } else {
+            this.vRot *= 0.85;
+          }
+
+          this.rot += this.vRot;
+          this.airRotation += Math.abs(this.vRot);
+
+          // 2. Mid-air 360 Spins (Hold or Tap Space while airborne)
+          const SPIN_SPEED = terrain.mode === 'PARK' ? 0.16 : 0.13;
+          if (keys.jump || keys.jumpPressed) {
+            keys.jumpPressed = false;
+            this.spinAngle += SPIN_SPEED;
+            if (this.spinAngle >= Math.PI * 2) {
+              this.spinAngle -= Math.PI * 2;
+              this.spinsCompleted++;
+              audio.playTrickChime(this.spinsCompleted);
+            }
+          } else if (this.spinAngle > 0.05) {
+            // Smoothly finish current 360 rotation if released past 40%
+            if (this.spinAngle > Math.PI * 0.8) {
+              this.spinAngle += SPIN_SPEED * 1.15;
+              if (this.spinAngle >= Math.PI * 2) {
+                this.spinAngle = 0;
+                this.spinsCompleted++;
+                audio.playTrickChime(this.spinsCompleted);
+              }
+            } else {
+              this.spinAngle *= 0.82;
+              if (this.spinAngle < 0.05) this.spinAngle = 0;
+            }
+          }
+
+          // 3. Mid-air Nose Grab (Q) & Tail Grab (E)
+          if (keys.qDown) {
+            this.grabState = 'NOSE';
+            this.noseGrabTime++;
+          } else if (keys.eDown) {
+            this.grabState = 'TAIL';
+            this.tailGrabTime++;
+          } else {
+            this.grabState = 'NONE';
+          }
+
+          this.x += this.vx;
+          this.y += this.vy;
+
+          // Check Rail Grind Lock-on (Requires holding Space)
+          if (this.vy > -1.5 && keys.jump) {
+            for (const rail of terrain.rails) {
+              if (this.x >= rail.x1 && this.x <= rail.x2) {
+                const t = (this.x - rail.x1) / (rail.x2 - rail.x1);
+                const railY = rail.y1 + t * (rail.y2 - rail.y1);
+                if (Math.abs((this.y + 17) - railY) < 26) {
+                  this.state = 'GRINDING';
+                  this.grabState = 'NONE';
+                  this.spinAngle = 0;
+                  this.currentRail = rail;
+                  this.railGrindTime = 0;
+                  this.railSpinAngle = 0;
+                  this.railSpins = 0;
+                  this.y = railY - 17;
+                  this.vy = 0;
+                  this.rot = Math.atan2(rail.y2 - rail.y1, rail.x2 - rail.x1);
+                  keys.jumpPressed = false;
+                  this.evaluateAirTricks(true);
+                  break;
+                }
+              }
+            }
+          }
+
+          // Check Mountain Ground Landing
+          if (this.state === 'AIRBORNE' && this.y + 17 >= terrInfo.y) {
+            this.y = terrInfo.y - 17;
+            let landDiff = this.rot - terrInfo.angle;
+            while (landDiff < -Math.PI) landDiff += Math.PI * 2;
+            while (landDiff > Math.PI) landDiff -= Math.PI * 2;
+
+            // Generous landing angle tolerance (1.15 rad ~ 65 deg)
+            if (Math.abs(landDiff) > 1.15) {
+              triggerWipeout('BAD LANDING ANGLE!');
+              return;
+            }
+
+            this.state = 'GROUNDED';
+            this.grabState = 'NONE';
+            this.spinAngle = 0;
+            this.rot = terrInfo.angle;
+            audio.playLanding(this.vy);
+            triggerSnowParticles(this.x, this.y + 15, 18, '#ffffff', 3.5);
+            this.evaluateAirTricks(false);
+            this.vy = 0;
+          }
+
+        } else if (this.state === 'GRINDING') {
+          if (this.snowTrail.length > 0) {
+            this.snowTrail[this.snowTrail.length - 1].grounded = false;
+          }
+          this.railGrindTime++;
+          this.grabState = 'NONE';
+
+          // Rail Spin mechanic (P Key)
+          if (keys.pPressed) {
+            keys.pPressed = false;
+            if (this.railSpinAngle <= 0.05) {
+              this.railSpinAngle = 0.25;
+              this.railSpins++;
+              audio.playTrickChime(this.railSpins);
+            }
+          }
+          if (this.railSpinAngle > 0) {
+            this.railSpinAngle += 0.24;
+            if (this.railSpinAngle >= Math.PI * 2) {
+              this.railSpinAngle = 0;
+            }
+          }
+
+          const r = this.currentRail;
+          const railAngle = Math.atan2(r.y2 - r.y1, r.x2 - r.x1);
+          this.rot = railAngle;
+
+          // Maintain good rail sliding speed
+          this.vx = Math.max(this.vx * 0.996, 8.2);
+          this.x += this.vx;
+
+          const t = (this.x - r.x1) / (r.x2 - r.x1);
+          this.y = (r.y1 + t * (r.y2 - r.y1)) - 17;
+
+          if (Math.random() < 0.65) {
+            triggerSnowParticles(this.x, this.y + 15, 2, r.isWooden ? '#fbbf24' : '#38bdf8', 2.2);
+          }
+
+          // Release Space to hop off rail, or slide off the end of the rail
+          if (!keys.jump) {
+            this.state = 'AIRBORNE';
+            this.vy = -6.8;
+            this.airTime = 0;
+            this.airRotation = 0;
+            this.spinAngle = 0;
+            this.spinsCompleted = 0;
+            this.noseGrabTime = 0;
+            this.tailGrabTime = 0;
+            this.railSpinAngle = 0;
+            audio.playJump();
+            this.finishRailGrind();
+          } else if (this.x > r.x2) {
+            this.state = 'AIRBORNE';
+            this.vy = Math.sin(railAngle) * this.vx - 2.2;
+            this.airTime = 0;
+            this.airRotation = 0;
+            this.spinAngle = 0;
+            this.spinsCompleted = 0;
+            this.noseGrabTime = 0;
+            this.tailGrabTime = 0;
+            this.railSpinAngle = 0;
+            this.finishRailGrind();
+          }
+        }
+
+        // Collect nearby Snow Gems
+        terrain.gems.forEach(gem => {
+          if (!gem.collected) {
+            const dist = Math.hypot(this.x - gem.x, this.y - gem.y);
+            if (dist < 32) {
+              gem.collected = true;
+              audio.playGem();
+              triggerSnowParticles(gem.x, gem.y, 10, '#38bdf8', 2.5);
+              scoreManager.addBonus(100, 'SNOW GEM!');
+            }
+          }
+        });
+      }
+
+      finishRailGrind() {
+        const grindPoints = Math.round(this.railGrindTime * 4) + (this.railSpins * 250);
+        if (grindPoints > 30) {
+          const label = this.railSpins > 0
+            ? `RAIL SLIDE + ${this.railSpins * 360}° SPIN!`
+            : 'RAIL SLIDE!';
+          scoreManager.addCombo(label, grindPoints, 1 + this.railSpins);
+        }
+        this.railGrindTime = 0;
+        this.railSpins = 0;
+      }
+
+      evaluateAirTricks(ontoRail) {
+        const flips = Math.round(this.airRotation / (Math.PI * 1.65));
+        const spins = this.spinsCompleted;
+        const hasNoseGrab = this.noseGrabTime > 8;
+        const hasTailGrab = this.tailGrabTime > 8;
+        const bigAir = this.airTime > 52;
+
+        let trickParts = [];
+        let basePoints = 0;
+        let comboSteps = 0;
+
+        if (flips > 0) {
+          trickParts.push(`${flips * 360}° FLIP`);
+          basePoints += flips * 350;
+          comboSteps += flips;
+        }
+        if (spins > 0) {
+          trickParts.push(`${spins * 360}° SPIN`);
+          basePoints += spins * 300;
+          comboSteps += spins;
+        }
+        if (hasNoseGrab) {
+          trickParts.push('NOSE GRAB');
+          basePoints += 200;
+          comboSteps += 1;
+        }
+        if (hasTailGrab) {
+          trickParts.push('TAIL GRAB');
+          basePoints += 200;
+          comboSteps += 1;
+        }
+        if (bigAir && trickParts.length === 0) {
+          trickParts.push('BIG AIR');
+          basePoints += 150;
+          comboSteps += 1;
+        }
+        if (ontoRail) {
+          trickParts.push('TO RAIL LOCK');
+          basePoints += 250;
+          comboSteps += 1;
+        }
+
+        if (trickParts.length > 0) {
+          if (trickParts.length >= 2) {
+            basePoints = Math.round(basePoints * (1 + (trickParts.length - 1) * 0.35));
+          }
+          scoreManager.addCombo(trickParts.join(' + '), basePoints, comboSteps);
+        }
+
+        this.airRotation = 0;
+        this.spinsCompleted = 0;
+        this.noseGrabTime = 0;
+        this.tailGrabTime = 0;
+        this.airTime = 0;
+      }
+
+      renderTrail() {
+        if (this.snowTrail.length < 2) return;
+        ctx.save();
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        for (let i = 1; i < this.snowTrail.length; i++) {
+          const p0 = this.snowTrail[i - 1];
+          const p1 = this.snowTrail[i];
+          if (!p1.connected) continue;
+          const progress = i / this.snowTrail.length;
+
+          // Shadow groove carved into snow
+          ctx.strokeStyle = `rgba(148, 163, 184, ${p1.alpha * 0.45 * progress})`;
+          ctx.lineWidth = p1.width * progress + 2;
+          ctx.beginPath();
+          ctx.moveTo(p0.x, p0.y + 2);
+          ctx.lineTo(p1.x, p1.y + 2);
+          ctx.stroke();
+
+          // Crisp sunlit snow spray ribbon
+          ctx.strokeStyle = `rgba(255, 255, 255, ${p1.alpha * 0.9 * progress})`;
+          ctx.lineWidth = p1.width * progress;
+          ctx.beginPath();
+          ctx.moveTo(p0.x, p0.y);
+          ctx.lineTo(p1.x, p1.y);
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+
+      render() {
+        this.renderTrail();
+
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rot);
+
+        // Visual 360 Horizontal Spin Foreshortening (Air 360 or Rail P-Spin) + Dynamic Grab Tilt
+        const activeSpinAngle = this.state === 'AIRBORNE'
+          ? this.spinAngle
+          : (this.state === 'GRINDING' ? this.railSpinAngle : 0);
+        const spinScaleX = Math.cos(activeSpinAngle);
+        const grabTilt = this.grabState === 'NOSE' ? 0.26 : (this.grabState === 'TAIL' ? -0.26 : 0);
+        ctx.rotate(grabTilt);
+        const riderScale = 1.24;
+        ctx.scale((Math.abs(spinScaleX) < 0.08 ? (spinScaleX >= 0 ? 0.08 : -0.08) : spinScaleX) * riderScale, riderScale);
+
+        this.drawRiderModel(ctx, true);
+        ctx.restore();
+      }
+
+      drawSnowboardOnly(targetCtx) {
+        const outfit = riderOutfit;
+        // Snowboard Shadow & Curved Twin-Tip Deck
+        targetCtx.fillStyle = 'rgba(15, 23, 42, 0.35)';
+        targetCtx.beginPath();
+        targetCtx.moveTo(-23, 12);
+        targetCtx.quadraticCurveTo(-20, 15, -14, 15);
+        targetCtx.lineTo(14, 15);
+        targetCtx.quadraticCurveTo(20, 15, 23, 12);
+        targetCtx.closePath();
+        targetCtx.fill();
+
+        const boardGrad = targetCtx.createLinearGradient(-23, 0, 23, 0);
+        boardGrad.addColorStop(0, shadeHexColor(outfit.boardColor, -22));
+        boardGrad.addColorStop(0.5, outfit.boardColor);
+        boardGrad.addColorStop(1, shadeHexColor(outfit.boardColor, 20));
+        targetCtx.fillStyle = boardGrad;
+        targetCtx.beginPath();
+        targetCtx.moveTo(-23, 8);
+        targetCtx.quadraticCurveTo(-20, 13.5, -14, 13.5);
+        targetCtx.lineTo(14, 13.5);
+        targetCtx.quadraticCurveTo(20, 13.5, 23, 8);
+        targetCtx.lineTo(21, 7.5);
+        targetCtx.quadraticCurveTo(18, 11, 14, 11);
+        targetCtx.lineTo(-14, 11);
+        targetCtx.quadraticCurveTo(-18, 11, -21, 7.5);
+        targetCtx.closePath();
+        targetCtx.fill();
+
+        // Bindings
+        targetCtx.fillStyle = '#0f172a';
+        targetCtx.beginPath();
+        targetCtx.roundRect(-12, 6.5, 6.5, 4.5, 1.5);
+        targetCtx.roundRect(5.5, 6.5, 6.5, 4.5, 1.5);
+        targetCtx.fill();
+      }
+
+      drawRiderModel(targetCtx, includeBoard = true) {
+        const outfit = riderOutfit;
+        const isBaggy = outfit.baggyPants;
+
+        if (includeBoard) {
+          this.drawSnowboardOnly(targetCtx);
+        }
+
+        const isGrabbing = this.grabState !== 'NONE';
+        const crouch = this.state === 'TUMBLING'
+          ? 5.5
+          : ((this.tucking || isGrabbing) ? 4.5 : (this.state === 'AIRBORNE' ? 2.5 : 0));
+
+        // Articulated Legs (Thighs & Shins with Normal or Baggy Fit)
+        targetCtx.strokeStyle = outfit.pantsColor;
+        targetCtx.lineWidth = isBaggy ? 8.2 : 5.2;
+        targetCtx.lineCap = 'round';
+        targetCtx.lineJoin = 'round';
+
+        // Back Leg (strapped onto board)
+        targetCtx.beginPath();
+        targetCtx.moveTo(-5, -5 + crouch);
+        targetCtx.lineTo(-9.5, 1 + crouch * 0.4);
+        targetCtx.lineTo(-8.5, 7);
+        targetCtx.stroke();
+
+        // Front Leg (strapped onto board)
+        targetCtx.beginPath();
+        targetCtx.moveTo(4, -5 + crouch);
+        targetCtx.lineTo(9.5, 1 + crouch * 0.4);
+        targetCtx.lineTo(8.5, 7);
+        targetCtx.stroke();
+
+        // Baggy Pant Cuffs & Knee Folds
+        if (isBaggy) {
+          targetCtx.strokeStyle = shadeHexColor(outfit.pantsColor, -24);
+          targetCtx.lineWidth = 1.6;
+          targetCtx.beginPath();
+          targetCtx.moveTo(-12.5, 2 + crouch * 0.4);
+          targetCtx.lineTo(-6.5, 1 + crouch * 0.4);
+          targetCtx.moveTo(6.5, 1 + crouch * 0.4);
+          targetCtx.lineTo(12.5, 2 + crouch * 0.4);
+          targetCtx.moveTo(-12.5, 6.5);
+          targetCtx.lineTo(-5, 6.5);
+          targetCtx.moveTo(5, 6.5);
+          targetCtx.lineTo(12.5, 6.5);
+          targetCtx.stroke();
+        } else {
+          // Normal Knee Highlight Seams
+          targetCtx.strokeStyle = shadeHexColor(outfit.pantsColor, 22);
+          targetCtx.lineWidth = 1.5;
+          targetCtx.beginPath();
+          targetCtx.moveTo(-11, 1 + crouch * 0.4);
+          targetCtx.lineTo(-7.5, 1 + crouch * 0.4);
+          targetCtx.moveTo(7.5, 1 + crouch * 0.4);
+          targetCtx.lineTo(11, 1 + crouch * 0.4);
+          targetCtx.stroke();
+        }
+
+        targetCtx.translate(0, crouch);
+
+        // Torso Lean (Forward for tuck/nose grab, backward for tail grab)
+        const bodyLean = this.grabState === 'NOSE'
+          ? 0.42
+          : (this.grabState === 'TAIL' ? -0.38 : (this.tucking ? 0.32 : 0.12));
+        targetCtx.save();
+        targetCtx.translate(0, -4);
+        targetCtx.rotate(bodyLean);
+
+        // Ergonomic Backpack
+        targetCtx.fillStyle = '#0f172a';
+        targetCtx.beginPath();
+        targetCtx.roundRect(-9.5, -14, 4.5, 11, 2);
+        targetCtx.fill();
+
+        // Realistic Contoured Ski Jacket Torso
+        const jacketGrad = targetCtx.createLinearGradient(-7, -16, 7, 0);
+        jacketGrad.addColorStop(0, shadeHexColor(outfit.jacketColor, 16));
+        jacketGrad.addColorStop(0.6, outfit.jacketColor);
+        jacketGrad.addColorStop(1, shadeHexColor(outfit.jacketColor, -24));
+        targetCtx.fillStyle = jacketGrad;
+        targetCtx.beginPath();
+        targetCtx.moveTo(-6, -15);
+        targetCtx.quadraticCurveTo(0, -17, 6, -14);
+        targetCtx.lineTo(7, -1);
+        targetCtx.quadraticCurveTo(0, 1, -6.5, -1);
+        targetCtx.closePath();
+        targetCtx.fill();
+
+        // Jacket Chest Reflective Stripe
+        targetCtx.strokeStyle = shadeHexColor(outfit.jacketColor, 42);
+        targetCtx.lineWidth = 2;
+        targetCtx.beginPath();
+        targetCtx.moveTo(-6, -9);
+        targetCtx.lineTo(6.5, -8.5);
+        targetCtx.stroke();
+
+        // Neck & Head with Ski Helmet
+        targetCtx.fillStyle = '#fed7aa';
+        targetCtx.beginPath();
+        targetCtx.arc(1.5, -19.5, 5.2, 0, Math.PI * 2);
+        targetCtx.fill();
+
+        // Aerodynamic Matte Ski Helmet
+        const helmetGrad = targetCtx.createLinearGradient(-4, -25, 7, -17);
+        helmetGrad.addColorStop(0, shadeHexColor(outfit.helmetColor, 15));
+        helmetGrad.addColorStop(1, shadeHexColor(outfit.helmetColor, -22));
+        targetCtx.fillStyle = helmetGrad;
+        targetCtx.beginPath();
+        targetCtx.arc(1, -20.5, 6.4, Math.PI * 0.85, Math.PI * 0.12);
+        targetCtx.lineTo(5.5, -18);
+        targetCtx.quadraticCurveTo(0, -17.5, -4.5, -18.5);
+        targetCtx.closePath();
+        targetCtx.fill();
+
+        // Wrap-Around Reflective Mirror Goggles
+        const goggGrad = targetCtx.createLinearGradient(1, -22, 7.5, -18.5);
+        goggGrad.addColorStop(0, shadeHexColor(outfit.gogglesColor, 32));
+        goggGrad.addColorStop(0.5, outfit.gogglesColor);
+        goggGrad.addColorStop(1, shadeHexColor(outfit.gogglesColor, -26));
+        targetCtx.fillStyle = goggGrad;
+        targetCtx.beginPath();
+        targetCtx.roundRect(1.5, -21.8, 6, 3.8, 1.8);
+        targetCtx.fill();
+        targetCtx.strokeStyle = '#0f172a';
+        targetCtx.lineWidth = 1.2;
+        targetCtx.stroke();
+
+        // Articulated Arms & Gloves
+        targetCtx.strokeStyle = shadeHexColor(outfit.jacketColor, -14);
+        targetCtx.lineWidth = 4;
+        targetCtx.lineCap = 'round';
+        targetCtx.lineJoin = 'round';
+
+        if (isGrabbing) {
+          const targetX = this.grabState === 'NOSE' ? 16 : -16;
+          targetCtx.beginPath();
+          targetCtx.moveTo(1, -12);
+          targetCtx.lineTo(targetX * 0.55, -2);
+          targetCtx.lineTo(targetX, 11);
+          targetCtx.stroke();
+
+          targetCtx.fillStyle = '#fbbf24';
+          targetCtx.beginPath();
+          targetCtx.arc(targetX, 11, 2.8, 0, Math.PI * 2);
+          targetCtx.fill();
+
+          targetCtx.beginPath();
+          targetCtx.moveTo(-1, -12);
+          targetCtx.lineTo(-targetX * 0.65, -14);
+          targetCtx.stroke();
+        } else if (this.tucking) {
+          targetCtx.beginPath();
+          targetCtx.moveTo(1, -12);
+          targetCtx.lineTo(8, -8);
+          targetCtx.lineTo(11, -12);
+          targetCtx.stroke();
+        } else {
+          const armSwing = this.state === 'AIRBORNE' ? -4 : Math.sin(Date.now() * 0.008) * 1.5;
+          targetCtx.beginPath();
+          targetCtx.moveTo(-1, -12);
+          targetCtx.lineTo(-8, -8 + armSwing);
+          targetCtx.lineTo(-13, -10 + armSwing);
+          targetCtx.stroke();
+          targetCtx.fillStyle = '#0f172a';
+          targetCtx.beginPath();
+          targetCtx.arc(-13.5, -10 + armSwing, 2.3, 0, Math.PI * 2);
+          targetCtx.fill();
+
+          targetCtx.beginPath();
+          targetCtx.moveTo(2, -12);
+          targetCtx.lineTo(9, -8 - armSwing);
+          targetCtx.lineTo(14, -10 - armSwing);
+          targetCtx.stroke();
+          targetCtx.beginPath();
+          targetCtx.arc(14.5, -10 - armSwing, 2.3, 0, Math.PI * 2);
+          targetCtx.fill();
+        }
+
+        targetCtx.restore();
+      }
+    }
+
+    /* ==========================================================================
+       PARTICLES, SCORE MANAGER & GAME STATE
+       ========================================================================== */
+    let particles = [];
+
+    function triggerSnowParticles(x, y, count, color, speedScale) {
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: x + (Math.random() - 0.5) * 12,
+          y: y + (Math.random() - 0.5) * 6,
+          vx: (Math.random() - 0.5) * 3 * speedScale,
+          vy: -Math.random() * 2.5 * speedScale,
+          size: Math.random() * 3.5 + 1.5,
+          color: color,
+          life: 1.0,
+          decay: Math.random() * 0.03 + 0.02
+        });
+      }
+    }
+
+    function triggerSnowSpray(x, y, speed, color, count) {
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: x + 8,
+          y: y,
+          vx: speed * (0.4 + Math.random() * 0.6),
+          vy: -Math.random() * 4 - 1,
+          size: Math.random() * 4 + 2,
+          color: color,
+          life: 1.0,
+          decay: 0.035
+        });
+      }
+    }
+
+    function updateParticles() {
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.15;
+        p.life -= p.decay;
+        if (p.life <= 0) {
+          particles.splice(i, 1);
+        }
+      }
+    }
+
+    function renderParticles() {
+      particles.forEach(p => {
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, p.life);
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      });
+    }
+
+    let comboBannerTimer = null;
+    function showComboBanner(title, pointsText) {
+      const banner = document.getElementById('combo-banner');
+      const nameEl = document.getElementById('combo-name');
+      const ptsEl = document.getElementById('combo-points');
+
+      nameEl.textContent = title;
+      ptsEl.textContent = pointsText;
+
+      banner.classList.remove('opacity-0', 'scale-90');
+      banner.classList.add('opacity-100', 'scale-100');
+
+      if (comboBannerTimer) clearTimeout(comboBannerTimer);
+      comboBannerTimer = setTimeout(() => {
+        banner.classList.remove('opacity-100', 'scale-100');
+        banner.classList.add('opacity-0', 'scale-90');
+      }, 2200);
+    }
+
+    class ScoreManager {
+      constructor() {
+        this.score = 0;
+        this.distance = 0;
+        this.multiplier = 1.0;
+        this.comboCount = 0;
+        this.bestScore = parseInt(localStorage.getItem('alpine_best_score') || '0', 10);
+        this.bestDistance = parseInt(localStorage.getItem('alpine_best_dist') || '0', 10);
+        this.updateHUD();
+      }
+
+      reset() {
+        this.score = 0;
+        this.distance = 0;
+        this.multiplier = 1.0;
+        this.comboCount = 0;
+        this.updateHUD();
+      }
+
+      updateDistance(playerX) {
+        const newDist = Math.max(0, Math.floor(playerX / 10));
+        if (newDist > this.distance) {
+          this.score += (newDist - this.distance);
+          this.distance = newDist;
+          if (this.distance > this.bestDistance) {
+            this.bestDistance = this.distance;
+            localStorage.setItem('alpine_best_dist', String(this.bestDistance));
+          }
+          if (this.score > this.bestScore) {
+            this.bestScore = this.score;
+            localStorage.setItem('alpine_best_score', String(this.bestScore));
+          }
+          this.updateHUD();
+        }
+      }
+
+      addCombo(name, basePoints, trickSteps = 1) {
+        this.comboCount += Math.max(1, trickSteps);
+        this.multiplier = Math.min(8.0, 1.0 + this.comboCount * 0.25);
+        const total = Math.round(basePoints * this.multiplier);
+        this.score += total;
+
+        if (this.score > this.bestScore) {
+          this.bestScore = this.score;
+          localStorage.setItem('alpine_best_score', String(this.bestScore));
+        }
+
+        audio.playTrickChime(this.comboCount);
+        showComboBanner(name, `+${total} PTS (x${this.multiplier.toFixed(1)})`);
+        this.updateHUD();
+      }
+
+      addBonus(points, label) {
+        const total = Math.round(points * this.multiplier);
+        this.score += total;
+        if (this.score > this.bestScore) {
+          this.bestScore = this.score;
+          localStorage.setItem('alpine_best_score', String(this.bestScore));
+        }
+        showComboBanner(label, `+${total}`);
+        this.updateHUD();
+      }
+
+      updateHUD() {
+        document.getElementById('hud-score').textContent = this.score.toLocaleString();
+        document.getElementById('hud-best-score').textContent = this.bestScore.toLocaleString();
+        document.getElementById('hud-multiplier').textContent = `x${this.multiplier.toFixed(1)}`;
+        document.getElementById('hud-distance').textContent = this.distance.toLocaleString();
+      }
+    }
+
+    const terrain = new TerrainSystem();
+    const player = new Snowboarder();
+    const scoreManager = new ScoreManager();
+
+    let gameState = 'START'; // START, PLAYING, WIPEOUT
+    let camX = 0;
+    let camY = 350;
+    let camZoom = 1.0;
+    let wipeoutModalTimeout = null;
+
+    function startGame(selectedMode) {
+      if (selectedMode) {
+        terrain.mode = selectedMode;
+      }
+      if (wipeoutModalTimeout) {
+        clearTimeout(wipeoutModalTimeout);
+        wipeoutModalTimeout = null;
+      }
+      canvas.classList.remove('grayscale-wipeout');
+      audio.init();
+      terrain.reset(terrain.mode);
+      player.reset();
+      scoreManager.reset();
+      particles = [];
+      camX = player.x;
+      camY = player.y;
+      camZoom = 1.0;
+      gameState = 'PLAYING';
+      document.getElementById('modal-start').classList.add('hidden');
+      document.getElementById('modal-wipeout').classList.add('hidden');
+    }
+
+    function openMainMenu() {
+      if (wipeoutModalTimeout) {
+        clearTimeout(wipeoutModalTimeout);
+        wipeoutModalTimeout = null;
+      }
+      canvas.classList.remove('grayscale-wipeout');
+      gameState = 'START';
+      audio.updateCarve(0, false);
+      audio.updateWind(0);
+      audio.updateGrind(false);
+      document.getElementById('modal-wipeout').classList.add('hidden');
+      document.getElementById('modal-start').classList.remove('hidden');
+    }
+
+    function triggerWipeout(causeText) {
+      if (gameState === 'WIPEOUT') return;
+      gameState = 'WIPEOUT';
+      player.startTumble();
+      canvas.classList.add('grayscale-wipeout');
+      audio.playCrash();
+      audio.updateCarve(0, false);
+      audio.updateWind(0);
+      audio.updateGrind(false);
+      triggerSnowParticles(player.x, player.y, 35, '#ffffff', 5);
+
+      document.getElementById('wipeout-cause').textContent = 'WIPEOUT!';
+      document.getElementById('wipeout-heading').textContent = causeText || 'CRASHED IN POWDER!';
+      document.getElementById('summary-distance').textContent = `${scoreManager.distance.toLocaleString()} m`;
+      document.getElementById('summary-score').textContent = scoreManager.score.toLocaleString();
+      document.getElementById('summary-best-dist').textContent = `${scoreManager.bestDistance.toLocaleString()} m`;
+
+      wipeoutModalTimeout = setTimeout(() => {
+        if (gameState === 'WIPEOUT') {
+          document.getElementById('modal-wipeout').classList.remove('hidden');
+        }
+      }, 1650);
+    }
+
+    /* ==========================================================================
+       ATMOSPHERIC RENDERING & MAIN LOOP
+       ========================================================================== */
+    const ambientSnow = Array.from({ length: 75 }, () => ({
+      x: Math.random() * 2000,
+      y: Math.random() * 1200,
+      r: Math.random() * 2.2 + 0.8,
+      speedY: Math.random() * 0.8 + 0.4,
+      drift: Math.random() * 0.6 - 0.3,
+      alpha: Math.random() * 0.5 + 0.25
+    }));
+
+    function renderAmbientSnow() {
+      if (width <= 0 || height <= 0) return;
+      ctx.save();
+      ambientSnow.forEach(flake => {
+        flake.y += flake.speedY;
+        flake.x += flake.drift - (player.vx * 0.15);
+        if (flake.y > height) flake.y = -10;
+        if (flake.x < 0) flake.x += width;
+        if (flake.x > width) flake.x -= width;
+
+        ctx.fillStyle = `rgba(255, 255, 255, ${flake.alpha})`;
+        ctx.beginPath();
+        ctx.arc(flake.x, flake.y, flake.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      ctx.restore();
+    }
+
+    function renderSky() {
+      if (width <= 0 || height <= 0) return;
+
+      const skyGrad = ctx.createLinearGradient(0, 0, 0, height);
+      skyGrad.addColorStop(0, '#090d24');    // Deep Twilight Zenith
+      skyGrad.addColorStop(0.32, '#2e1065'); // Royal Violet
+      skyGrad.addColorStop(0.62, '#c2410c'); // Burnt Sunset Orange
+      skyGrad.addColorStop(0.84, '#f59e0b'); // Golden Horizon
+      skyGrad.addColorStop(1.0, '#fef08a');  // Warm Sunlit Mist
+
+      ctx.fillStyle = skyGrad;
+      ctx.fillRect(0, 0, width, height);
+
+      // Subtle Upper-Sky Twinkling Stars
+      ctx.save();
+      const time = Date.now() * 0.002;
+      for (let s = 0; s < 35; s++) {
+        const sx = ((s * 197) % Math.max(1, width));
+        const sy = ((s * 83) % Math.max(1, height * 0.32));
+        const twinkle = 0.3 + 0.5 * Math.sin(time + s);
+        ctx.fillStyle = `rgba(255, 255, 255, ${twinkle})`;
+        ctx.beginPath();
+        ctx.arc(sx, sy, (s % 2 === 0 ? 1.4 : 0.9), 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+
+      // Sunset Sun Disc & Diagonal God Rays
+      ctx.save();
+      const safeWidth = Math.max(1, width);
+      const sunX = width * 0.72 - ((camX * 0.015) % safeWidth);
+      const sunY = height * 0.38;
+
+      if (Number.isFinite(sunX) && Number.isFinite(sunY)) {
+        ctx.save();
+        ctx.translate(sunX, sunY);
+        for (let r = 0; r < 6; r++) {
+          ctx.rotate(0.45);
+          const rayGrad = ctx.createLinearGradient(0, 0, 0, 380);
+          rayGrad.addColorStop(0, 'rgba(254, 240, 138, 0.14)');
+          rayGrad.addColorStop(1, 'rgba(254, 240, 138, 0)');
+          ctx.fillStyle = rayGrad;
+          ctx.beginPath();
+          ctx.moveTo(-25, 0);
+          ctx.lineTo(25, 0);
+          ctx.lineTo(95, 380);
+          ctx.lineTo(-95, 380);
+          ctx.closePath();
+          ctx.fill();
+        }
+        ctx.restore();
+
+        const sunGlow = ctx.createRadialGradient(sunX, sunY, 18, sunX, sunY, 240);
+        sunGlow.addColorStop(0, 'rgba(254, 249, 195, 1)');
+        sunGlow.addColorStop(0.25, 'rgba(251, 146, 60, 0.55)');
+        sunGlow.addColorStop(1, 'rgba(251, 146, 60, 0)');
+
+        ctx.fillStyle = sunGlow;
+        ctx.beginPath();
+        ctx.arc(sunX, sunY, 240, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Soft Layered Cloud Bands
+      ctx.fillStyle = 'rgba(254, 215, 170, 0.14)';
+      for (let c = 0; c < 5; c++) {
+        const cloudX = (width * 0.22 * c - camX * 0.03) % (safeWidth * 1.4);
+        ctx.beginPath();
+        ctx.ellipse(cloudX, height * 0.24 + c * 26, 170 + c * 32, 22, 0, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    function renderParallaxMountains() {
+      ctx.save();
+      const farGrad = ctx.createLinearGradient(0, height * 0.35, 0, height * 0.8);
+      farGrad.addColorStop(0, '#581c87');
+      farGrad.addColorStop(1, '#2e1065');
+      ctx.fillStyle = farGrad;
+      ctx.beginPath();
+      ctx.moveTo(0, height);
+      for (let x = 0; x <= width + 60; x += 70) {
+        const worldX = camX * 0.1 + x;
+        const peakY = height * 0.50 - Math.sin(worldX * 0.0018) * 145 - Math.cos(worldX * 0.0042) * 75;
+        ctx.lineTo(x, peakY);
+      }
+      ctx.lineTo(width, height);
+      ctx.fill();
+
+      // Rim-Light Highlight on Far Peaks
+      ctx.strokeStyle = 'rgba(253, 186, 116, 0.35)';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // Mid Ridge
+      const midGrad = ctx.createLinearGradient(0, height * 0.5, 0, height);
+      midGrad.addColorStop(0, '#312e81');
+      midGrad.addColorStop(1, '#1e1b4b');
+      ctx.fillStyle = midGrad;
+      ctx.beginPath();
+      ctx.moveTo(0, height);
+      for (let x = 0; x <= width + 60; x += 55) {
+        const worldX = camX * 0.22 + x;
+        const peakY = height * 0.63 - Math.sin(worldX * 0.0034) * 85 - Math.cos(worldX * 0.007) * 30;
+        ctx.lineTo(x, peakY);
+      }
+      ctx.lineTo(width, height);
+      ctx.fill();
+
+      // Near Tree-Line Ridge
+      ctx.fillStyle = '#0f172a';
+      ctx.beginPath();
+      ctx.moveTo(0, height);
+      for (let x = 0; x <= width + 50; x += 40) {
+        const worldX = camX * 0.36 + x;
+        const treeLineY = height * 0.78 - Math.sin(worldX * 0.007) * 45;
+        ctx.lineTo(x, treeLineY);
+      }
+      ctx.lineTo(width, height);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function render() {
+      renderSky();
+      renderParallaxMountains();
+
+      ctx.save();
+      ctx.translate(width * 0.3, height * 0.55);
+      ctx.scale(camZoom, camZoom);
+      ctx.translate(-camX, -camY);
+
+      // 1. Draw Layered Pine Trees with Snow Caps & Shadows
+      terrain.trees.forEach(tree => {
+        const drawX = tree.x;
+        const drawY = tree.y;
+
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.2)';
+        ctx.beginPath();
+        ctx.ellipse(drawX, drawY + 2, tree.width * 0.55, 5, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#271a12';
+        ctx.fillRect(drawX - 3.5, drawY - 12, 7, 14);
+
+        ctx.fillStyle = tree.shade;
+        ctx.beginPath();
+        ctx.moveTo(drawX, drawY - tree.height * 0.72);
+        ctx.lineTo(drawX - tree.width * 0.55, drawY - 10);
+        ctx.lineTo(drawX + tree.width * 0.55, drawY - 10);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(drawX, drawY - tree.height);
+        ctx.lineTo(drawX - tree.width * 0.42, drawY - tree.height * 0.42);
+        ctx.lineTo(drawX + tree.width * 0.42, drawY - tree.height * 0.42);
+        ctx.fill();
+
+        ctx.fillStyle = '#f8fafc';
+        ctx.beginPath();
+        ctx.moveTo(drawX, drawY - tree.height);
+        ctx.lineTo(drawX - tree.width * 0.22, drawY - tree.height * 0.68);
+        ctx.lineTo(drawX + tree.width * 0.22, drawY - tree.height * 0.68);
+        ctx.fill();
+      });
+
+      // 2. Draw Grind Rails
+      terrain.rails.forEach(rail => {
+        ctx.strokeStyle = '#334155';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(rail.x1 + 15, rail.y1);
+        ctx.lineTo(rail.x1 + 15, rail.y1 + 45);
+        ctx.moveTo(rail.x2 - 15, rail.y2);
+        ctx.lineTo(rail.x2 - 15, rail.y2 + 45);
+        ctx.stroke();
+
+        ctx.strokeStyle = rail.isWooden ? '#d97706' : '#38bdf8';
+        ctx.lineWidth = 6;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(rail.x1, rail.y1);
+        ctx.lineTo(rail.x2, rail.y2);
+        ctx.stroke();
+
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(rail.x1, rail.y1 - 1.5);
+        ctx.lineTo(rail.x2, rail.y2 - 1.5);
+        ctx.stroke();
+      });
+
+      // 3. Draw Floating Snow Gems
+      const gemPulse = Math.sin(Date.now() * 0.006) * 4;
+      terrain.gems.forEach(gem => {
+        if (gem.collected) return;
+        ctx.save();
+        ctx.translate(gem.x, gem.y + gemPulse);
+        ctx.fillStyle = '#38bdf8';
+        ctx.shadowColor = '#38bdf8';
+        ctx.shadowBlur = 12;
+        ctx.beginPath();
+        ctx.moveTo(0, -10);
+        ctx.lineTo(8, 0);
+        ctx.lineTo(0, 10);
+        ctx.lineTo(-8, 0);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = '#e0f2fe';
+        ctx.beginPath();
+        ctx.moveTo(0, -5);
+        ctx.lineTo(4, 0);
+        ctx.lineTo(0, 5);
+        ctx.lineTo(-4, 0);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      });
+
+      // 4. Draw Pristine Mountain Snow Terrain
+      if (terrain.nodes.length > 1) {
+        // Draw dark rocky cliff faces under steep mountain cliff jumps
+        for (let i = 0; i < terrain.nodes.length - 1; i++) {
+          const n1 = terrain.nodes[i];
+          const n2 = terrain.nodes[i + 1];
+          if (n1.isCliff || n2.isCliff) {
+            ctx.fillStyle = '#334155';
+            ctx.beginPath();
+            ctx.moveTo(n1.x, n1.y);
+            ctx.lineTo(n2.x, n2.y);
+            ctx.lineTo(n2.x, n2.y + 420);
+            ctx.lineTo(n1.x, n1.y + 420);
+            ctx.closePath();
+            ctx.fill();
+          }
+        }
+
+        const snowGrad = ctx.createLinearGradient(0, camY - 200, 0, camY + height + 600);
+        snowGrad.addColorStop(0, '#ffffff');
+        snowGrad.addColorStop(0.25, '#f1f5f9');
+        snowGrad.addColorStop(0.7, '#cbd5e1');
+        snowGrad.addColorStop(1, '#94a3b8');
+
+        ctx.fillStyle = snowGrad;
+        ctx.beginPath();
+        ctx.moveTo(terrain.nodes[0].x, terrain.nodes[0].y);
+
+        for (let i = 1; i < terrain.nodes.length - 1; i++) {
+          const xc = (terrain.nodes[i].x + terrain.nodes[i + 1].x) / 2;
+          const yc = (terrain.nodes[i].y + terrain.nodes[i + 1].y) / 2;
+          ctx.quadraticCurveTo(terrain.nodes[i].x, terrain.nodes[i].y, xc, yc);
+        }
+
+        ctx.lineTo(terrain.nodes[terrain.nodes.length - 1].x, terrain.nodes[terrain.nodes.length - 1].y);
+        ctx.lineTo(terrain.nodes[terrain.nodes.length - 1].x, camY + height + 1000);
+        ctx.lineTo(terrain.nodes[0].x, camY + height + 1000);
+        ctx.closePath();
+        ctx.fill();
+
+        // Warm Golden Rim Outline along Snow Crest
+        ctx.strokeStyle = '#fef3c7';
+        ctx.lineWidth = 4.5;
+        ctx.stroke();
+
+        // Subtle Sub-Surface Ice Contour Line
+        ctx.save();
+        ctx.translate(0, 16);
+        ctx.strokeStyle = 'rgba(186, 230, 253, 0.55)';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+        ctx.restore();
+
+        // Draw Cyan Park Coping / Rim Markers on Snow Tubs
+        terrain.tubs.forEach(tub => {
+          ctx.save();
+          ctx.strokeStyle = '#38bdf8';
+          ctx.lineWidth = 5;
+          ctx.lineCap = 'round';
+          ctx.beginPath();
+          ctx.moveTo(tub.x2 - 22, tub.lipY + 6);
+          ctx.lineTo(tub.x2 + 6, tub.lipY - 2);
+          ctx.stroke();
+          ctx.restore();
+        });
+      }
+
+      // 5. Draw Particles & Snowboarder
+      renderParticles();
+      player.render();
+
+      ctx.restore();
+
+      // Foreground Falling Snowflakes
+      renderAmbientSnow();
+    }
+
+    function gameLoop() {
+      if (gameState === 'PLAYING' || gameState === 'WIPEOUT') {
+        terrain.update(player.x);
+        player.update(terrain);
+        updateParticles();
+
+        if (gameState === 'PLAYING') {
+          scoreManager.updateDistance(player.x);
+
+          audio.updateCarve(player.vx / 15, player.state === 'GROUNDED');
+          audio.updateWind(Math.abs(player.vy) / 14);
+          audio.updateGrind(player.state === 'GRINDING');
+        }
+
+        const targetCamX = player.x;
+        const targetCamY = player.y;
+        camX += (targetCamX - camX) * 0.1;
+        camY += (targetCamY - camY) * 0.1;
+
+        const targetZoom = gameState === 'WIPEOUT'
+          ? 1.08
+          : Math.max(0.84, 1.05 - (player.vx / 60) - (Math.abs(player.vy) / 80));
+        camZoom += (targetZoom - camZoom) * 0.05;
+
+        const speedPct = Math.min(100, (player.vx / 17) * 100);
+        document.getElementById('hud-speed-bar').style.width = `${speedPct}%`;
+      }
+
+      render();
+      if (gameState === 'START') {
+        renderRiderPreview();
+      }
+      requestAnimationFrame(gameLoop);
+    }
+
+    /* ==========================================================================
+       RIDER CUSTOMIZER UI & LIVE PREVIEW
+       ========================================================================== */
+    const previewCanvas = document.getElementById('previewCanvas');
+    const previewCtx = previewCanvas ? previewCanvas.getContext('2d') : null;
+
+    function renderRiderPreview() {
+      if (!previewCtx) return;
+      previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+
+      // Subtle snow slope in preview box
+      previewCtx.fillStyle = '#e2e8f0';
+      previewCtx.beginPath();
+      previewCtx.moveTo(0, 82);
+      previewCtx.lineTo(160, 102);
+      previewCtx.lineTo(160, 128);
+      previewCtx.lineTo(0, 128);
+      previewCtx.closePath();
+      previewCtx.fill();
+
+      previewCtx.strokeStyle = '#fef3c7';
+      previewCtx.lineWidth = 2.5;
+      previewCtx.beginPath();
+      previewCtx.moveTo(0, 82);
+      previewCtx.lineTo(160, 102);
+      previewCtx.stroke();
+
+      previewCtx.save();
+      previewCtx.translate(80, 68);
+      previewCtx.rotate(0.12);
+      previewCtx.scale(2.15, 2.15);
+      player.drawRiderModel(previewCtx);
+      previewCtx.restore();
+    }
+
+    function syncCustomizerUI() {
+      document.getElementById('custom-jacket').value = riderOutfit.jacketColor;
+      document.getElementById('custom-pants').value = riderOutfit.pantsColor;
+      document.getElementById('custom-helmet').value = riderOutfit.helmetColor;
+      document.getElementById('custom-goggles').value = riderOutfit.gogglesColor;
+      document.getElementById('custom-board').value = riderOutfit.boardColor;
+
+      const btnNormal = document.getElementById('btn-fit-normal');
+      const btnBaggy = document.getElementById('btn-fit-baggy');
+      if (riderOutfit.baggyPants) {
+        btnBaggy.className = 'py-1 rounded-md text-[10px] font-extrabold uppercase transition bg-sky-600 text-white';
+        btnNormal.className = 'py-1 rounded-md text-[10px] font-extrabold uppercase transition text-slate-400 hover:text-white';
+      } else {
+        btnNormal.className = 'py-1 rounded-md text-[10px] font-extrabold uppercase transition bg-sky-600 text-white';
+        btnBaggy.className = 'py-1 rounded-md text-[10px] font-extrabold uppercase transition text-slate-400 hover:text-white';
+      }
+      renderRiderPreview();
+    }
+
+    function initCustomizer() {
+      const colorMap = [
+        { id: 'custom-jacket', key: 'jacketColor' },
+        { id: 'custom-pants', key: 'pantsColor' },
+        { id: 'custom-helmet', key: 'helmetColor' },
+        { id: 'custom-goggles', key: 'gogglesColor' },
+        { id: 'custom-board', key: 'boardColor' }
+      ];
+
+      colorMap.forEach(({ id, key }) => {
+        const input = document.getElementById(id);
+        if (!input) return;
+        input.addEventListener('input', (e) => {
+          riderOutfit[key] = e.target.value;
+          saveRiderOutfit();
+          renderRiderPreview();
+        });
+      });
+
+      document.querySelectorAll('.swatch-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetId = btn.parentElement.getAttribute('data-target');
+          const color = btn.getAttribute('data-color');
+          const input = document.getElementById(targetId);
+          if (input && color) {
+            input.value = color;
+            input.dispatchEvent(new Event('input'));
+          }
+        });
+      });
+
+      document.getElementById('btn-fit-normal').addEventListener('click', () => {
+        riderOutfit.baggyPants = false;
+        saveRiderOutfit();
+        syncCustomizerUI();
+      });
+
+      document.getElementById('btn-fit-baggy').addEventListener('click', () => {
+        riderOutfit.baggyPants = true;
+        saveRiderOutfit();
+        syncCustomizerUI();
+      });
+
+      document.getElementById('btn-reset-outfit').addEventListener('click', () => {
+        Object.assign(riderOutfit, DEFAULT_OUTFIT);
+        saveRiderOutfit();
+        syncCustomizerUI();
+      });
+
+      syncCustomizerUI();
+    }
+
+    initCustomizer();
+
+    /* ==========================================================================
+       INPUT LISTENERS & BOOTSTRAP
+       ========================================================================== */
+    window.addEventListener('keydown', (e) => {
+      if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(e.code)) {
+        e.preventDefault();
+      }
+      if (e.code === 'KeyA' || e.code === 'ArrowLeft') keys.left = true;
+      if (e.code === 'KeyD' || e.code === 'ArrowRight') keys.right = true;
+      if (e.code === 'KeyW' || e.code === 'ArrowUp') keys.go = true;
+      if (e.code === 'KeyQ') keys.qDown = true;
+      if (e.code === 'KeyE') keys.eDown = true;
+      if (e.code === 'KeyP' && !e.repeat) keys.pPressed = true;
+      if (e.code === 'ArrowDown') keys.downArrow = true;
+      if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') keys.shift = true;
+      if (e.code === 'Space') {
+        if (!keys.jump) keys.jumpPressed = true;
+        keys.jump = true;
+      }
+      if (e.code === 'KeyR' && gameState !== 'START') startGame();
+      if (e.code === 'KeyM') toggleMute();
+    });
+
+    window.addEventListener('keyup', (e) => {
+      if (e.code === 'KeyA' || e.code === 'ArrowLeft') keys.left = false;
+      if (e.code === 'KeyD' || e.code === 'ArrowRight') keys.right = false;
+      if (e.code === 'KeyW' || e.code === 'ArrowUp') keys.go = false;
+      if (e.code === 'KeyQ') keys.qDown = false;
+      if (e.code === 'KeyE') keys.eDown = false;
+      if (e.code === 'ArrowDown') keys.downArrow = false;
+      if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') keys.shift = false;
+      if (e.code === 'Space') {
+        keys.jump = false;
+        keys.jumpPressed = false;
+      }
+    });
+
+    function bindTouchButton(id, onDown, onUp) {
+      const btn = document.getElementById(id);
+      if (!btn) return;
+      btn.addEventListener('touchstart', (e) => { e.preventDefault(); onDown(); }, { passive: false });
+      btn.addEventListener('touchend', (e) => { e.preventDefault(); onUp(); }, { passive: false });
+      btn.addEventListener('mousedown', (e) => { e.preventDefault(); onDown(); });
+      btn.addEventListener('mouseup', (e) => { e.preventDefault(); onUp(); });
+      btn.addEventListener('mouseleave', () => { onUp(); });
+    }
+
+    bindTouchButton('touch-left', () => { keys.left = true; }, () => { keys.left = false; });
+    bindTouchButton('touch-right', () => { keys.right = true; }, () => { keys.right = false; });
+    bindTouchButton('touch-nose', () => { keys.qDown = true; }, () => { keys.qDown = false; });
+    bindTouchButton('touch-tail', () => { keys.eDown = true; }, () => { keys.eDown = false; });
+    bindTouchButton('touch-push', () => { keys.go = true; }, () => { keys.go = false; });
+    bindTouchButton('touch-tuck', () => { keys.shift = true; }, () => { keys.shift = false; });
+    bindTouchButton('touch-jump', () => {
+      if (!keys.jump) keys.jumpPressed = true;
+      keys.jump = true;
+    }, () => {
+      keys.jump = false;
+      keys.jumpPressed = false;
+    });
+
+    function toggleMute() {
+      audio.init();
+      audio.muted = !audio.muted;
+      if (audio.muted) {
+        audio.updateCarve(0, false);
+        audio.updateWind(0);
+        audio.updateGrind(false);
+      }
+      document.getElementById('icon-audio-on').classList.toggle('hidden', audio.muted);
+      document.getElementById('icon-audio-off').classList.toggle('hidden', !audio.muted);
+    }
+
+    document.getElementById('btn-select-park').addEventListener('click', () => startGame('PARK'));
+    document.getElementById('btn-select-mountain').addEventListener('click', () => startGame('MOUNTAIN'));
+    document.getElementById('btn-menu').addEventListener('click', openMainMenu);
+    document.getElementById('btn-wipeout-menu').addEventListener('click', openMainMenu);
+    document.getElementById('btn-restart-game').addEventListener('click', () => startGame());
+    document.getElementById('btn-restart-quick').addEventListener('click', () => {
+      if (gameState !== 'START') startGame();
+    });
+    document.getElementById('btn-audio').addEventListener('click', toggleMute);
+
+    window.onload = function () {
+      renderRiderPreview();
+      requestAnimationFrame(gameLoop);
+    };
+  </script>
+</body>
+</html>
